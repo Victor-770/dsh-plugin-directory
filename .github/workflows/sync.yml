@@ -15,10 +15,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+      # 无需配置 secret：Actions 自动注入的内置 GITHUB_TOKEN 已满足搜索 API 额度（30 次/分钟）
       - name: Run sync pipeline
         run: node scripts/sync.mjs
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       - name: Commit updated data
         uses: stefanzweifel/git-auto-commit-action@v5
         with:

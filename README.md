@@ -5,7 +5,7 @@ DeepSeek Harness 插件目录：中英双语、按功能分类、README 全文�
 - 数据源：`https://github.com/topics/dsh-plugin`（GitHub Actions 每 6 小时同步，当前 ~990 个仓库）
 - 前端：Cloudflare Pages（Astro 静态站，深色开发工具美学）
 - 搜索：Cloudflare Worker（search-core 纯函数库，中英别名互搜）
-- 测试：`npm test`（node:test，唯一 seam = search-core）
+- 测试：`npm test`（node:test 32 例，唯一 seam = search-core）
 
 ## 结构
 
@@ -22,7 +22,7 @@ functions/              # Pages Functions：/api/search 代理到 Worker（必�
 ## 本地开发
 
 ```bash
-npm test                          # search-core 测试（25 例）
+npm test                          # search-core + i18n 测试（32 例）
 node scripts/sync.mjs             # 拉取数据（可选 GITHUB_TOKEN=xxx 提速）
 cd site && npm install && npm run dev   # 本地浏览站（需先 sync 生成数据）
 node worker/smoke.mjs             # Worker 本地冒烟（需先 sync）
