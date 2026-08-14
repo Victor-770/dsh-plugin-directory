@@ -6,7 +6,8 @@ let cache = null;
 
 async function loadData(env, requestOrigin) {
   if (cache) return cache;
-  const base = (env && env.SITE_ORIGIN) || requestOrigin;
+  // 实际访问域名（Referer）优先：站点换域名也无需改 Worker 配置；SITE_ORIGIN 仅直连兜底
+  const base = requestOrigin || (env && env.SITE_ORIGIN);
   if (!base) throw new Error("SITE_ORIGIN not configured and no referer origin available");
   const [idx, pl] = await Promise.all([
     fetch(base + "/data/index.json", { cf: { cacheTtl: 300 } }),
