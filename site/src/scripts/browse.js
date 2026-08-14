@@ -144,5 +144,9 @@ export function BrowseApp({ STR, CATEGORY_ORDER }) {
     state.all = data.plugins || [];
     renderStrings();
     if (state.q) { els.input.value = state.q; runSearch(); } else { apply(); }
-  }).catch(() => { els.grid.innerHTML = "<p class='text-sm text-muted'>browse.json not found — run npm run sync first.</p>"; });
+  }).catch(() => {
+    // 数据加载失败（如 robots 屏蔽、本地未 sync）：保留 SSR 预渲染的卡片，不清空网格。
+    renderStrings();
+    els.grid.setAttribute("aria-busy", "false");
+  });
 }
