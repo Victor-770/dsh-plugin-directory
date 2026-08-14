@@ -16,6 +16,7 @@ search-core/            # 纯函数库（tokenize/buildIndex/expandAliases/searc
 worker/                 # Cloudflare Worker：GET /api/search
 site/                   # Astro 静态站
 site/public/data/       # 同步产物（Pages 静态服务，Worker 同源拉取）
+functions/              # Pages Functions：/api/search 代理到 Worker（必须位于仓库根，Pages 自动检测）
 ```
 
 ## 本地开发

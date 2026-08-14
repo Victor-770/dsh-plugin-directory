@@ -36,6 +36,14 @@ test("无匹配词返回空（含常见词也 AND 拒掉）", () => {
   const r = search(index, { q: "zzz-no-such-term-zzz" });
   assert.equal(r.total, 0);
 });
+test("别名：搜『文件』命中英文 file 文档", () => {
+  const r = search(index, { q: "文件" });
+  assert.ok(names(r).includes("tool/file-organizer"));
+});
+test("别名：搜 file 命中中文文档", () => {
+  const r = search(index, { q: "file" });
+  assert.ok(names(r).includes("tool/file-organizer"));
+});
 test("词级 AND：skin terminal 只命中两者都有的文档", () => {
   const r = search(index, { q: "skin terminal" });
   assert.ok(names(r).includes("skin-maker/skin-maker"));   // 标题 skin + 描述 terminal
@@ -44,10 +52,10 @@ test("词级 AND：skin terminal 只命中两者都有的文档", () => {
 });
 test("相关性排序：标题命中 > 描述命中 > README", () => {
   const r = search(index, { q: "skin" });
-  // skin-maker(0) 标题含 skin(3分) > dsh-web-ui(3) 描述含 skin(2分) > readme-only(6) 仅 README 含 skin(1分)
+  // skin-maker(0) 标题含 skin(3分) > dsh-web-ui(3) 描述含 skin(2分) > readme-only(7) 仅 README 含 skin(1分)
   assert.equal(r.ids[0], 0);
   assert.ok(r.ids.indexOf(0) < r.ids.indexOf(3));
-  assert.ok(r.ids.indexOf(3) < r.ids.indexOf(6));
+  assert.ok(r.ids.indexOf(3) < r.ids.indexOf(7));
 });
 test("star tiebreak：同分时 star 高者在前", () => {
   const r = search(index, { q: "ocr" });

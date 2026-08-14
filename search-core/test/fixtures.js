@@ -37,6 +37,12 @@ export const FIXTURE_RECORDS = [
     readme_text: "nothing relevant here.",
   },
   {
+    full_name: "tool/file-organizer", description: "organize files for dsh", stars: 20,
+    language: "JavaScript", pushed_at: "2026-07-01T00:00:00Z", topics: ["file"],
+    categories: ["工具/开发"], tags: ["file"],
+    readme_text: "file manager to keep your workspace tidy.",
+  },
+  {
     full_name: "readme-only/readme-only", description: "misc helper", stars: 10,
     language: "Rust", pushed_at: "2025-12-01T00:00:00Z", topics: [],
     categories: ["其他"], tags: [],

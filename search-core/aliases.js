@@ -39,4 +39,15 @@ export const ALIASES = Object.assign(Object.create(null), {
   "游戏": "game", "game": "游戏", "广告": "ads", "ads": "广告",
   "微信": "wechat", "wechat": "微信", "状态": "status", "status": "状态",
   "时钟": "clock", "clock": "时钟", "动画": "animation", "animation": "动画",
+  // 常用查询扩充（r4）
+  "文件": "file", "file": "文件", "接口": "api", "api": "接口",
+  "市场": "market", "market": "市场", "插件市场": ["plugin", "market"], "plugin market": ["插件", "市场"],
+  "仓库": "repo", "repo": "仓库", "设置": "settings", "settings": "设置",
+  "配置": "config", "config": "配置", "侧栏": "sidebar", "生成": "generate", "generate": "生成",
+  "写作": "writing", "writing": "写作", "摘要": "summary", "summary": "摘要", "总结": "summary",
+  "检查": "check", "check": "检查", "审查": "review", "review": "审查",
+  "分析": "analysis", "analysis": "分析", "数据": "data", "data": "数据",
+  "爬虫": "crawler", "crawler": "爬虫", "抓取": "scrape", "scrape": "抓取",
+  "订阅": "subscribe", "subscribe": "订阅", "播客": "podcast", "podcast": "播客",
+  "聊天机器人": "chatbot", "chatbot": "聊天", "文件管理": ["file", "manager"], "管理": "manager",
 });
