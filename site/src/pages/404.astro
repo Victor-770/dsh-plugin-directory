@@ -14,11 +14,15 @@ const s = STR.zh;
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 </head>
 <body class="min-h-screen bg-bg text-ink antialiased">
+  <a class="skip-link" href="#main-content">{s.skipToContent}</a>
   <div class="mx-auto flex min-h-screen max-w-xl flex-col items-center justify-center px-4 text-center">
     <p class="font-mono text-5xl font-bold text-accent">404</p>
-    <h1 class="mt-4 text-lg font-semibold">页面不存在</h1>
+    <h1 id="main-content" class="mt-4 text-lg font-semibold">页面不存在</h1>
     <p class="mt-2 text-sm text-muted">你访问的地址不存在或已被移除，返回目录继续浏览 DSH 插件。</p>
-    <a href="/" class="mt-6 rounded-lg bg-accent/15 px-5 py-2.5 text-sm font-medium text-accent hover:bg-accent/25">← {s.siteName}</a>
+    <a href="/" class="mt-6 inline-flex items-center gap-1.5 rounded-lg bg-accent/15 px-5 py-2.5 text-sm font-medium text-accent hover:bg-accent/25">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      {s.siteName}
+    </a>
   </div>
 </body>
 </html>

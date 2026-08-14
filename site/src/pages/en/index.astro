@@ -109,6 +109,7 @@ const jsonLd = {
   </script>
 </head>
 <body class="min-h-screen">
+  <a class="skip-link" href="#main-content" data-i18n="skipToContent">{s.skipToContent}</a>
   <div class="mx-auto max-w-7xl px-4 pb-16">
     <!-- 顶栏 -->
     <header class="sticky top-0 z-20 border-b border-line bg-bg/90 backdrop-blur">
@@ -121,7 +122,10 @@ const jsonLd = {
           aria-label={s.searchPlaceholder}
           class="ml-2 min-w-0 flex-1 rounded-lg border border-line bg-surface px-3 py-2 text-sm outline-none transition focus:border-accent" />
         <a id="lang-toggle" href={lang === "en" ? "/" : "/en/"} class="shrink-0 rounded-lg border border-line bg-surface px-3 py-2 text-xs font-medium hover:border-accent" data-i18n="langName" hreflang={lang === "en" ? "zh" : "en"}>{s.langName}</a>
-        <button id="theme-toggle" class="shrink-0 rounded-lg border border-line bg-surface px-3 py-2 text-xs" title={s.theme} aria-label={s.theme}>◐</button>
+        <button id="theme-toggle" class="shrink-0 rounded-lg border border-line bg-surface px-3 py-2 text-xs" title={s.theme} aria-label={s.theme}>
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </button>
       </div>
     </header>
     <div class="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs text-muted">
@@ -135,7 +139,11 @@ const jsonLd = {
     <div class="mt-6 flex flex-col gap-6 md:flex-row">
       <!-- 分类侧栏（移动端抽屉） -->
       <aside class="shrink-0 md:w-56">
-        <div class="rounded-xl border border-line bg-surface p-4">
+        <button id="filter-toggle" class="mb-3 flex w-full items-center justify-between rounded-lg border border-line bg-surface px-3 py-2 text-sm font-medium md:hidden" aria-expanded="false" aria-controls="filter-panel">
+          <span data-i18n="filter">{s.filter}</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div id="filter-panel" class="rounded-xl border border-line bg-surface p-4">
           <h2 class="mb-3 text-xs font-semibold uppercase tracking-wider text-muted" data-i18n="category">{s.category}</h2>
           <button id="category-all" class="category-item mb-1 flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-sm hover:bg-surface2" data-cat="">
             <span data-i18n="all">{s.all}</span><span class="cat-count text-xs text-muted">0</span>
@@ -153,21 +161,27 @@ const jsonLd = {
       </aside>
 
       <!-- 主区 -->
-      <main class="min-w-0 flex-1">
+      <main id="main-content" class="min-w-0 flex-1">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <p class="text-sm text-muted"><span id="result-count">0</span> <span data-i18n="results">{s.results}</span></p>
+          <p class="text-sm text-muted" role="status" aria-live="polite"><span id="result-count">0</span> <span data-i18n="results">{s.results}</span></p>
           <select id="sort-select" class="rounded-lg border border-line bg-surface px-3 py-1.5 text-sm" aria-label={s.sortStars}>
             <option value="stars" data-i18n="sortStars">{s.sortStars}</option>
             <option value="relevance" data-i18n="sortRelevance">{s.sortRelevance}</option>
           </select>
         </div>
         <div id="empty-state" class="hidden rounded-xl border border-line bg-surface p-10 text-center text-sm text-muted">
-          <p data-i18n="noResults">{s.noResults}</p>
-          <button id="clear-filters" class="mt-3 rounded-lg border border-line px-3 py-1.5 text-xs hover:border-accent" data-i18n="clearFilters">{s.clearFilters}</button>
+          <svg class="mx-auto h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <p class="mt-3" data-i18n="noResults">{s.noResults}</p>
+          <p class="mt-1 text-xs" data-i18n="noResultsHint">{s.noResultsHint}</p>
+          <div class="mt-4 flex flex-wrap items-center justify-center gap-2">
+            <button id="clear-filters" class="rounded-lg border border-line px-3 py-2 text-xs hover:border-accent" data-i18n="clearFilters">{s.clearFilters}</button>
+            <a id="browse-all" href={langPrefix + "/"} class="rounded-lg bg-accent/15 px-3 py-2 text-xs font-medium text-accent hover:bg-accent/25" data-i18n="browseAll">{s.browseAll}</a>
+          </div>
         </div>
-        <div id="card-grid" class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        <div id="card-grid" class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3" aria-busy="false">
           {top50.map((p) => (
-            <a href={`${langPrefix}/plugin/${p.full_name}/`} class="plugin-card block rounded-xl border border-line bg-surface p-4 transition hover:border-accent/60 hover:bg-surface2">
+            <div class="plugin-card relative block rounded-xl border border-line bg-surface p-4 transition hover:border-accent/60 hover:bg-surface2">
+              <a href={`${langPrefix}/plugin/${p.full_name}/`} class="absolute inset-0" aria-label={p.full_name} tabindex="-1" aria-hidden="true"></a>
               <div class="flex items-start justify-between gap-2">
                 <span class="font-mono text-[13px] font-medium break-all">{p.full_name}</span>
                 <span class="shrink-0 text-xs text-muted">★ {p.stars.toLocaleString()}</span>
@@ -176,10 +190,10 @@ const jsonLd = {
               <div class="mt-3 flex flex-wrap items-center gap-1.5 text-[11px]">
                 {p.language && <span class="flex items-center gap-1 rounded-full bg-surface2 px-2 py-0.5"><span class="inline-block h-1.5 w-1.5 rounded-full bg-accent"></span>{p.language}</span>}
                 {(p.categories || []).slice(0, 2).map((c) => CATEGORY_SLUGS[c]
-                  ? <a href={`${langPrefix}/category/${CATEGORY_SLUGS[c]}/`} class="rounded-full bg-accent/10 px-2 py-0.5 text-accent hover:bg-accent/20">{c}</a>
-                  : <span class="rounded-full bg-accent/10 px-2 py-0.5 text-accent">{c}</span>)}
+                  ? <a href={`${langPrefix}/category/${CATEGORY_SLUGS[c]}/`} class="relative z-10 rounded-full bg-accent/10 px-2 py-0.5 text-accent hover:bg-accent/20">{s.languages[c] || c}</a>
+                  : <span class="rounded-full bg-accent/10 px-2 py-0.5 text-accent">{s.languages[c] || c}</span>)}
               </div>
-            </a>
+            </div>
           ))}
         </div>
       </main>

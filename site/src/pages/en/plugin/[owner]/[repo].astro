@@ -138,6 +138,7 @@ const jsonLd = {
   </script>
 </head>
 <body class="min-h-screen">
+  <a class="skip-link" href="#main-content" data-i18n="skipToContent">{s.skipToContent}</a>
   <div class="mx-auto max-w-4xl px-4 pb-16">
     <header class="sticky top-0 z-20 border-b border-line bg-bg/90 backdrop-blur">
       <div class="flex items-center justify-between gap-3 py-3">
@@ -147,7 +148,10 @@ const jsonLd = {
         </a>
         <div class="flex items-center gap-2">
           <a id="lang-toggle" href={lang === "en" ? "/" : "/en/"} class="shrink-0 rounded-lg border border-line bg-surface px-3 py-2 text-xs font-medium hover:border-accent" hreflang={lang === "en" ? "zh" : "en"}>{s.langName}</a>
-          <button id="theme-toggle" class="shrink-0 rounded-lg border border-line bg-surface px-3 py-2 text-xs" title={s.theme} aria-label={s.theme}>◐</button>
+          <button id="theme-toggle" class="shrink-0 rounded-lg border border-line bg-surface px-3 py-2 text-xs" title={s.theme} aria-label={s.theme}>
+          <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        </button>
         </div>
       </div>
     </header>
@@ -162,7 +166,7 @@ const jsonLd = {
       </ol>
     </nav>
 
-    <main class="mt-6">
+    <main id="main-content" class="mt-6">
       <div class="flex flex-wrap items-start justify-between gap-3">
         <div class="min-w-0">
           <h1 class="font-mono text-xl font-semibold break-all">{p.full_name}</h1>
@@ -173,8 +177,9 @@ const jsonLd = {
             {updated && <span><span aria-hidden="true"> · </span>{s.lastSync}: {updated}</span>}
           </p>
         </div>
-        <a href={p.html_url} target="_blank" rel="noopener" class="rounded-lg bg-accent/15 px-4 py-2 text-sm font-medium text-accent hover:bg-accent/25">
-          {s.openGitHub} ↗
+        <a href={p.html_url} target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 rounded-lg bg-accent/15 px-4 py-2 text-sm font-medium text-accent hover:bg-accent/25">
+          {s.openGitHub}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
         </a>
       </div>
 
