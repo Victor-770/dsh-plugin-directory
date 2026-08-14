@@ -1,9 +1,10 @@
 ---
-import { STR, CATEGORY_ORDER } from "../lib/i18n.js";
-import { CATEGORY_SLUGS } from "../lib/category-meta.js";
+import { STR, CATEGORY_ORDER } from "../../lib/i18n.js";
+import { CATEGORY_SLUGS } from "../../lib/category-meta.js";
 import { readFileSync } from "node:fs";
 import path from "node:path";
-import "../styles/global.css";
+import "../../styles/global.css";
+
 // Vite 构建会重写 import.meta.url，不能用来定位源文件；构建时 cwd 恒为 site/
 const browsePath = path.join(process.cwd(), "public", "data", "browse.json");
 let browse = [];
@@ -15,18 +16,22 @@ try {
 } catch { /* 数据未生成时站点仍可构建（空列表） */ }
 const top50 = browse.slice().sort((a, b) => b.stars - a.stars).slice(0, 50);
 
-// --- i18n：zh 走根路径 /（en 版本在 /en/，两棵静态路由树） ---
-const lang = "zh";
+// --- i18n：zh 走根路径 /，en 走 /en/（astro.config i18n.routing.prefixDefaultLocale=false） ---
+const lang = "en";
 const s = STR[lang];
-const langPrefix = "";
+const langPrefix = "/en";
 
 // --- SEO: 站点 URL 与元信息（构建期确定，保证绝对地址；canonical 域名 = .online） ---
 const site = (Astro.site?.origin) || "https://dsh-plugin-directory.online";
 const pluginCount = browse.length || 0;
-const canonical = site + "/";
+const canonical = site + langPrefix + "/";
 const ogImage = site + "/og.png";
-const pageTitle = `DeepSeek Harness 插件目录（${pluginCount} 款）— DSH 插件目录`;
-const pageDescription = `DeepSeek Harness（DSH）插件一站式目录：收录 GitHub dsh-plugin 话题下 ${pluginCount} 款插件，支持中英文全文搜索、按分类与标签筛选，一键直达 GitHub 仓库。`;
+const pageTitle = lang === "en"
+  ? `DeepSeek Harness Plugin Directory (${pluginCount} plugins) — DSH Plugin Directory`
+  : `DeepSeek Harness 插件目录（${pluginCount} 款）— DSH 插件目录`;
+const pageDescription = lang === "en"
+  ? `One-stop catalog of DeepSeek Harness (DSH) plugins: ${pluginCount} plugins from the GitHub dsh-plugin topic, with bilingual CN/EN full-text search, category & tag filters, and one-click access to GitHub repos.`
+  : `DeepSeek Harness（DSH）插件一站式目录：收录 GitHub dsh-plugin 话题下 ${pluginCount} 款插件，支持中英文全文搜索、按分类与标签筛选，一键直达 GitHub 仓库。`;
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
@@ -34,13 +39,13 @@ const jsonLd = {
       "@type": "WebSite",
       "@id": canonical + "#website",
       "name": s.siteName,
-      "alternateName": "DeepSeek Harness Plugin Directory",
+      "alternateName": lang === "en" ? "DSH 插件目录" : "DeepSeek Harness Plugin Directory",
       "url": canonical,
       "description": pageDescription,
-      "inLanguage": "zh-CN",
+      "inLanguage": lang === "en" ? "en" : "zh-CN",
       "potentialAction": {
         "@type": "SearchAction",
-        "target": { "@type": "EntryPoint", "urlTemplate": site + "/?q={search_term_string}" },
+        "target": { "@type": "EntryPoint", "urlTemplate": site + langPrefix + "/?q={search_term_string}" },
         "query-input": "required name=search_term_string"
       }
     },
@@ -55,20 +60,20 @@ const jsonLd = {
     {
       "@type": "ItemList",
       "@id": canonical + "#top-plugins",
-      "name": "热门 DSH 插件",
+      "name": lang === "en" ? "Popular DSH plugins" : "热门 DSH 插件",
       "numberOfItems": top50.length,
       "itemListElement": top50.map((p, i) => ({
         "@type": "ListItem",
         "position": i + 1,
         "name": p.full_name,
-        "url": site + "/plugin/" + p.full_name + "/"
+        "url": site + langPrefix + "/plugin/" + p.full_name + "/"
       }))
     }
   ]
 };
 ---
 <!doctype html>
-<html lang="zh" class="dark">
+<html lang={lang} class="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -108,21 +113,21 @@ const jsonLd = {
     <!-- 顶栏 -->
     <header class="sticky top-0 z-20 border-b border-line bg-bg/90 backdrop-blur">
       <div class="flex items-center gap-3 py-3">
-        <a href="/" class="flex items-center gap-2 shrink-0" aria-label={s.siteName}>
+        <a href={langPrefix + "/"} class="flex items-center gap-2 shrink-0" aria-label={s.siteName}>
           <span class="grid h-8 w-8 place-items-center rounded-lg bg-accent/15 text-accent font-bold" aria-hidden="true">D</span>
           <h1 class="font-semibold tracking-tight" data-i18n="siteName">{s.siteName}</h1>
         </a>
         <input id="search-input" type="search" data-i18n-placeholder="searchPlaceholder" placeholder={s.searchPlaceholder}
           aria-label={s.searchPlaceholder}
           class="ml-2 min-w-0 flex-1 rounded-lg border border-line bg-surface px-3 py-2 text-sm outline-none transition focus:border-accent" />
-        <a id="lang-toggle" href="/en/" class="shrink-0 rounded-lg border border-line bg-surface px-3 py-2 text-xs font-medium hover:border-accent" data-i18n="langName" hreflang="en">{s.langName}</a>
+        <a id="lang-toggle" href={lang === "en" ? "/" : "/en/"} class="shrink-0 rounded-lg border border-line bg-surface px-3 py-2 text-xs font-medium hover:border-accent" data-i18n="langName" hreflang={lang === "en" ? "zh" : "en"}>{s.langName}</a>
         <button id="theme-toggle" class="shrink-0 rounded-lg border border-line bg-surface px-3 py-2 text-xs" title={s.theme} aria-label={s.theme}>◐</button>
       </div>
     </header>
     <div class="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs text-muted">
       <span data-i18n="category">{s.category}</span>
       {CATEGORY_ORDER.map((c) => (
-        <a href={`/category/${CATEGORY_SLUGS[c]}/`} class="rounded-full border border-line px-2.5 py-1 hover:border-accent hover:text-accent">{s.languages[c]}</a>
+        <a href={`${langPrefix}/category/${CATEGORY_SLUGS[c]}/`} class="rounded-full border border-line px-2.5 py-1 hover:border-accent hover:text-accent">{s.languages[c]}</a>
       ))}
     </div>
 
@@ -162,7 +167,7 @@ const jsonLd = {
         </div>
         <div id="card-grid" class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {top50.map((p) => (
-            <a href={`/plugin/${p.full_name}/`} class="plugin-card block rounded-xl border border-line bg-surface p-4 transition hover:border-accent/60 hover:bg-surface2">
+            <a href={`${langPrefix}/plugin/${p.full_name}/`} class="plugin-card block rounded-xl border border-line bg-surface p-4 transition hover:border-accent/60 hover:bg-surface2">
               <div class="flex items-start justify-between gap-2">
                 <span class="font-mono text-[13px] font-medium break-all">{p.full_name}</span>
                 <span class="shrink-0 text-xs text-muted">★ {p.stars.toLocaleString()}</span>
@@ -181,12 +186,12 @@ const jsonLd = {
     </div>
 
     <footer class="mt-12 border-t border-line pt-4 text-xs text-muted">
-      <p>DSH Plugin Directory · {generatedAt ? s.lastSync + ": " + generatedAt.slice(0, 10) : ""} · GitHub topic <a class="underline" href="https://github.com/topics/dsh-plugin" rel="noopener">dsh-plugin</a> · <a class="underline" href="/about/" rel="noopener">关于</a> · <a class="underline" href="https://github.com/Kristin130/dsh-plugin-directory" rel="noopener">开源仓库</a></p>
+      <p>DSH Plugin Directory · {generatedAt ? s.lastSync + ": " + generatedAt.slice(0, 10) : ""} · GitHub topic <a class="underline" href="https://github.com/topics/dsh-plugin" rel="noopener">dsh-plugin</a> · <a class="underline" href="/en/about/" rel="noopener">About</a> · <a class="underline" href="https://github.com/Kristin130/dsh-plugin-directory" rel="noopener">Source</a></p>
     </footer>
   </div>
   <script>
-    import { STR, CATEGORY_ORDER } from "../lib/i18n.js";
-    import { BrowseApp } from "../scripts/browse.js";
+    import { STR, CATEGORY_ORDER } from "../../lib/i18n.js";
+    import { BrowseApp } from "../../scripts/browse.js";
     BrowseApp({ STR, CATEGORY_ORDER });
   </script>
 </body>

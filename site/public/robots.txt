@@ -1,2 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /data/
+Disallow: /api/
+
+Sitemap: https://dsh-plugin-directory.online/sitemap.xml

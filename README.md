@@ -16,6 +16,11 @@ search-core/            # 纯函数库（tokenize/buildIndex/expandAliases/searc
 worker/                 # Cloudflare Worker：GET /api/search
 site/                   # Astro 静态站
 site/public/data/       # 同步产物（Pages 静态服务，Worker 同源拉取）
+site/src/pages/plugin/  # 每插件详情页（构建期生成，SEO 长尾入口；/en/ 下有英文版）
+site/src/pages/en/       # 英文版页面树（真实 URL /en/，配 hreflang，zh 在根路径）
+site/src/pages/category/ # 分类落地页（/category/{slug}/，中英，空分类不生成）
+site/src/pages/sitemap.xml.ts  # 构建期生成 sitemap.xml（中英 URL + hreflang alternate）
+site/scripts/og-images.mjs  # 构建期生成每插件 OG 图（纯 Node PNG，1200x630）
 functions/              # Pages Functions：/api/search 代理到 Worker（必须位于仓库根，Pages 自动检测）
 ```
 

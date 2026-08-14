@@ -1,0 +1,24 @@
+---
+import { STR } from "../lib/i18n.js";
+const s = STR.zh;
+---
+<!doctype html>
+<html lang="zh" class="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>404 — {s.siteName}</title>
+  <meta name="description" content="页面不存在。返回 DSH 插件目录继续浏览。" />
+  <meta name="robots" content="noindex" />
+  <link rel="canonical" href="https://dsh-plugin-directory.online/" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+</head>
+<body class="min-h-screen bg-bg text-ink antialiased">
+  <div class="mx-auto flex min-h-screen max-w-xl flex-col items-center justify-center px-4 text-center">
+    <p class="font-mono text-5xl font-bold text-accent">404</p>
+    <h1 class="mt-4 text-lg font-semibold">页面不存在</h1>
+    <p class="mt-2 text-sm text-muted">你访问的地址不存在或已被移除，返回目录继续浏览 DSH 插件。</p>
+    <a href="/" class="mt-6 rounded-lg bg-accent/15 px-5 py-2.5 text-sm font-medium text-accent hover:bg-accent/25">← {s.siteName}</a>
+  </div>
+</body>
+</html>

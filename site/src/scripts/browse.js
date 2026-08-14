@@ -1,5 +1,6 @@
 // 浏览端应用（Ticket 04 基线）：拉 browse.json，客户端分类/标签过滤 + 排序 + 中英切换 + 移动端抽屉。
 // Ticket 05 将搜索框升级为 Worker 全文搜索（本文件保持接口兼容）。
+import { CATEGORY_SLUGS } from "../lib/category-meta.js";
 export function BrowseApp({ STR, CATEGORY_ORDER }) {
   const state = { lang: "zh", q: "", cat: "", tags: new Set(), sort: "stars", all: [], filtered: [] };
   const $ = (id) => document.getElementById(id);
@@ -14,7 +15,9 @@ export function BrowseApp({ STR, CATEGORY_ORDER }) {
 
   function renderCard(p) {
     const s = STR[state.lang];
-    return `<a href="${esc(p.html_url)}" target="_blank" rel="noopener" class="plugin-card block rounded-xl border border-line bg-surface p-4 transition hover:border-accent/60 hover:bg-surface2">
+    // SEO: 卡片指向站内插件详情页（详情页再提供 GitHub 外链），形成站内链接结构
+    const pageUrl = `/plugin/${esc(p.full_name)}/`;
+    return `<a href="${pageUrl}" class="plugin-card block rounded-xl border border-line bg-surface p-4 transition hover:border-accent/60 hover:bg-surface2">
       <div class="flex items-start justify-between gap-2">
         <span class="font-mono text-[13px] font-medium break-all">${esc(p.full_name)}</span>
         <span class="shrink-0 text-xs text-muted">★ ${Number(p.stars || 0).toLocaleString()}</span>
@@ -22,7 +25,9 @@ export function BrowseApp({ STR, CATEGORY_ORDER }) {
       <p class="line-clamp-2 mt-2 min-h-[2.5rem] text-sm text-muted">${esc(p.description) || "—"}</p>
       <div class="mt-3 flex flex-wrap items-center gap-1.5 text-[11px]">
         ${p.language ? `<span class="flex items-center gap-1 rounded-full bg-surface2 px-2 py-0.5"><span class="inline-block h-1.5 w-1.5 rounded-full bg-accent"></span>${esc(p.language)}</span>` : ""}
-        ${(p.categories || []).slice(0, 2).map((c) => `<span class="rounded-full bg-accent/10 px-2 py-0.5 text-accent">${esc(s.languages[c] || c)}</span>`).join("")}
+        ${(p.categories || []).slice(0, 2).map((c) => CATEGORY_SLUGS[c]
+                  ? `<a href="${state.lang === "en" ? "/en" : ""}/category/${CATEGORY_SLUGS[c]}/" class="rounded-full bg-accent/10 px-2 py-0.5 text-accent hover:bg-accent/20">${esc(s.languages[c] || c)}</a>`
+                  : `<span class="rounded-full bg-accent/10 px-2 py-0.5 text-accent">${esc(s.languages[c] || c)}</span>`).join("")}
       </div>
     </a>`;
   }
@@ -96,11 +101,10 @@ export function BrowseApp({ STR, CATEGORY_ORDER }) {
   }
   els.sort.addEventListener("change", (e) => { state.sort = e.target.value; apply(); });
   els.lang.addEventListener("click", () => {
-    state.lang = state.lang === "zh" ? "en" : "zh";
-    renderStrings(); apply();
-    const url = new URL(location.href);
-    url.searchParams.set("lang", state.lang);
-    history.replaceState(null, "", url);
+    // 语言切换 = 站点内跳转（/ <-> /en/），保留当前搜索词
+    const q = new URLSearchParams(location.search).get("q");
+    const target = state.lang === "en" ? "/" : "/en/";
+    location.href = q ? target + "?q=" + encodeURIComponent(q) : target;
   });
   els.clear.addEventListener("click", () => { state.q = ""; state.cat = ""; state.tags.clear(); els.input.value = ""; apply(); });
   document.addEventListener("click", (e) => {

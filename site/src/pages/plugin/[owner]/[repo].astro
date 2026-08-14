@@ -1,0 +1,225 @@
+---
+import { STR } from "../../../lib/i18n.js";
+import { CATEGORY_SLUGS } from "../../../lib/category-meta.js";
+import { readFileSync } from "node:fs";
+import path from "node:path";
+import "../../../styles/global.css";
+
+export async function getStaticPaths() {
+  // 构建时 cwd 恒为 site/；数据加载必须位于本函数内（Astro 编译约束）
+  const browsePath = path.join(process.cwd(), "public", "data", "browse.json");
+  let browse = [];
+  try {
+    browse = JSON.parse(readFileSync(browsePath, "utf8")).plugins || [];
+  } catch (e) { /* 数据未生成时站点仍可构建（忽略） */ }
+  // README 摘要：从 plugins.json 取 readme_text（内容增强，避免详情页过薄）
+  const readmeMap = new Map();
+  try {
+    const raw = JSON.parse(readFileSync(path.join(process.cwd(), "public", "data", "plugins.json"), "utf8"));
+    for (const x of raw.plugins || []) if (x.readme_text) readmeMap.set(x.full_name, String(x.readme_text));
+  } catch (e) { /* 无数据时详情页仅展示元信息 */ }
+  // 仅收录含 "owner/repo" 形态的条目，避免生成畸形路径
+  return browse
+    .filter((p) => typeof p.full_name === "string" && p.full_name.includes("/") && !p.full_name.includes(".."))
+    .map((p) => {
+      const [owner, repo] = p.full_name.split("/");
+      return { params: { owner, repo }, props: { plugin: p, all: browse, readmeText: readmeMap.get(p.full_name) || "" } };
+    });
+}
+
+const { plugin: p, all, readmeText } = Astro.props;
+// --- i18n：zh 走根路径 /plugin/...（en 版本在 /en/plugin/...，两棵静态路由树） ---
+const lang = "zh";
+const s = STR[lang];
+const langPrefix = "";
+const site = (Astro.site?.origin) || "https://dsh-plugin-directory.online";
+const [owner, repo] = p.full_name.split("/");
+const canonical = site + "/plugin/" + p.full_name + "/";
+const zhUrl = site + "/plugin/" + p.full_name + "/";
+const enUrl = site + "/en/plugin/" + p.full_name + "/";
+const catLabel = (p.categories && p.categories.length)
+  ? (s.languages[p.categories[0]] || p.categories[0])
+  : null;
+const pageTitle = catLabel
+  ? `${p.full_name} — ${catLabel} DSH 插件`
+  : `${p.full_name} — DSH 插件`;
+let pageDescription = p.description
+  ? p.description
+  : `DeepSeek Harness（DSH）插件 ${p.full_name}：${catLabel ? catLabel + " 分类，" : ""}GitHub ★ ${p.stars}，主要语言 ${p.language || "未知"}。`;
+pageDescription = pageDescription.replace(/\s+/g, " ").slice(0, 155).trim();
+const ogImage = site + "/og/plugin/" + p.full_name + "/index.png";
+const updated = p.pushed_at ? p.pushed_at.slice(0, 10) : null;
+const siteNameZh = STR.zh.siteName;
+const siteNameEn = STR.en.siteName;
+
+const related = all
+  .filter((x) => x.full_name !== p.full_name && (x.categories || []).some((c) => (p.categories || []).includes(c)))
+  .sort((a, b) => b.stars - a.stars)
+  .slice(0, 3);
+
+// README 摘要：去掉代码块/markdown 符号，压缩空白，截断 1200 字符
+function readmeExcerpt(md) {
+  if (!md) return "";
+  let t = String(md)
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/[#*_>`~|]{1,}/g, " ")
+    .replace(/-{3,}/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (t.length < 80) return "";
+  return t.length > 1200 ? t.slice(0, 1200) + "…" : t;
+}
+const excerpt = readmeExcerpt(readmeText);
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": p.full_name,
+      "alternateName": repo,
+      "description": pageDescription,
+      "url": canonical,
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Any",
+      "inLanguage": "zh-CN",
+      "dateModified": p.pushed_at || undefined,
+      "author": {
+        "@type": "Organization",
+        "name": owner,
+        "url": `https://github.com/${owner}`
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": siteNameZh, "item": site + "/" },
+        { "@type": "ListItem", "position": 2, "name": p.full_name, "item": canonical }
+      ]
+    }
+  ]
+};
+---
+<!doctype html>
+<html lang="zh" class="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{pageTitle}</title>
+  <meta name="description" content={pageDescription} />
+  <link rel="canonical" href={canonical} />
+  <link rel="alternate" hreflang="zh" href={zhUrl} />
+  <link rel="alternate" hreflang="en" href={enUrl} />
+  <link rel="alternate" hreflang="x-default" href={zhUrl} />
+  <meta name="theme-color" content="#0b0e14" />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={pageDescription} />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:site_name" content={s.siteName} />
+  <meta property="og:image" content={ogImage} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={pageDescription} />
+  <meta name="twitter:image" content={ogImage} />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
+  <script is:inline>
+    (function () {
+      var saved = null; try { saved = localStorage.getItem("dsh-theme"); } catch (e) {}
+      var dark = saved ? saved === "dark" : window.matchMedia("(prefers-color-scheme: light)").matches ? false : true;
+      document.documentElement.classList.toggle("dark", dark);
+      document.documentElement.classList.toggle("light", !dark);
+    })();
+  </script>
+</head>
+<body class="min-h-screen">
+  <div class="mx-auto max-w-4xl px-4 pb-16">
+    <header class="sticky top-0 z-20 border-b border-line bg-bg/90 backdrop-blur">
+      <div class="flex items-center justify-between gap-3 py-3">
+        <a href="/" class="flex items-center gap-2" aria-label={s.siteName}>
+          <span class="grid h-8 w-8 place-items-center rounded-lg bg-accent/15 text-accent font-bold" aria-hidden="true">D</span>
+          <span class="font-semibold tracking-tight">{s.siteName}</span>
+        </a>
+        <div class="flex items-center gap-2">
+          <a id="lang-toggle" href="/en/" class="shrink-0 rounded-lg border border-line bg-surface px-3 py-2 text-xs font-medium hover:border-accent" hreflang="en">{s.langName}</a>
+          <button id="theme-toggle" class="shrink-0 rounded-lg border border-line bg-surface px-3 py-2 text-xs" title={s.theme} aria-label={s.theme}>◐</button>
+        </div>
+      </div>
+    </header>
+
+    <nav class="mt-5 text-xs text-muted" aria-label="面包屑">
+      <ol class="flex items-center gap-1.5">
+        <li><a href="/" class="hover:text-accent">{s.siteName}</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href="/" class="hover:text-accent">{s.all}</a></li>
+        <li aria-hidden="true">/</li>
+        <li class="truncate text-ink" aria-current="page">{p.full_name}</li>
+      </ol>
+    </nav>
+
+    <main class="mt-6">
+      <div class="flex flex-wrap items-start justify-between gap-3">
+        <div class="min-w-0">
+          <h1 class="font-mono text-xl font-semibold break-all">{p.full_name}</h1>
+          <p class="mt-1 text-sm text-muted">
+            <a href={`https://github.com/${owner}`} class="hover:text-accent" rel="noopener">{owner}</a>
+            <span aria-hidden="true"> · </span>★ {Number(p.stars).toLocaleString()}
+            {p.language && <span><span aria-hidden="true"> · </span>{p.language}</span>}
+            {updated && <span><span aria-hidden="true"> · </span>{s.lastSync}: {updated}</span>}
+          </p>
+        </div>
+        <a href={p.html_url} target="_blank" rel="noopener" class="rounded-lg bg-accent/15 px-4 py-2 text-sm font-medium text-accent hover:bg-accent/25">
+          {s.openGitHub} ↗
+        </a>
+      </div>
+
+      <p class="mt-5 text-[15px] leading-relaxed text-ink">{p.description || "—"}</p>
+
+      {excerpt && (
+        <section class="mt-8">
+          <h2 class="text-sm font-semibold text-ink">README 摘要</h2>
+          <p class="mt-3 text-sm leading-relaxed text-muted">{excerpt}</p>
+          <a href={p.html_url} target="_blank" rel="noopener" class="mt-3 inline-block text-xs text-accent hover:underline">在 GitHub 查看完整 README →</a>
+        </section>
+      )}
+
+      <div class="mt-5 flex flex-wrap gap-1.5 text-[11px]">
+        {(p.categories || []).map((c) => CATEGORY_SLUGS[c]
+          ? <a href={`/category/${CATEGORY_SLUGS[c]}/`} class="rounded-full bg-accent/10 px-2.5 py-1 text-accent hover:bg-accent/20">{s.languages[c] || c}</a>
+          : <span class="rounded-full bg-accent/10 px-2.5 py-1 text-accent">{s.languages[c] || c}</span>)}
+        {(p.tags || []).slice(0, 8).map((t) => <span class="rounded-full border border-line px-2.5 py-1 text-muted">{t}</span>)}
+      </div>
+
+      {related.length > 0 && (
+        <section class="mt-10">
+          <h2 class="text-sm font-semibold text-ink">{s.category}</h2>
+          <div class="mt-3 grid gap-3 sm:grid-cols-3">
+            {related.map((x) => (
+              <a href={`/plugin/${x.full_name}/`} class="block rounded-xl border border-line bg-surface p-4 transition hover:border-accent/60 hover:bg-surface2">
+                <span class="font-mono text-[13px] font-medium break-all">{x.full_name}</span>
+                <p class="line-clamp-2 mt-2 text-xs text-muted">{x.description || "—"}</p>
+                <p class="mt-2 text-xs text-muted">★ {Number(x.stars).toLocaleString()}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+    </main>
+
+    <footer class="mt-12 border-t border-line pt-4 text-xs text-muted">
+      <p>DSH Plugin Directory · <a class="underline" href="/" rel="noopener">{s.siteName}</a> · GitHub topic <a class="underline" href="https://github.com/topics/dsh-plugin" rel="noopener">dsh-plugin</a></p>
+    </footer>
+  </div>
+  <script is:inline>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+      const dark = document.documentElement.classList.toggle("dark");
+      document.documentElement.classList.toggle("light", !dark);
+      try { localStorage.setItem("dsh-theme", dark ? "dark" : "light"); } catch (e) {}
+    });
+  </script>
+</body>
+</html>
