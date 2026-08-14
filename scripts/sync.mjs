@@ -12,7 +12,9 @@ const TOKEN = process.env.GITHUB_TOKEN || "";
 const HEADERS = { "User-Agent": "dsh-plugin-directory", Accept: "application/vnd.github+json" };
 if (TOKEN) HEADERS.Authorization = `Bearer ${TOKEN}`;
 
-const SEARCH_URL = "https://api.github.com/search/repositories?q=topic:dsh-plugin&per_page=100&page=";
+const SEARCH_API = "https://api.github.com/search/repositories?q=";
+const TOPIC_Q = "topic:dsh-plugin";
+const DATE_LO = "2008-01-01"; // GitHub 最早仓库日期
 const README_CANDIDATES = [
   "README.md", "readme.md", "Readme.md", "README.MD",
   "README.en.md", "README.zh.md", "README_EN.md", "README_ZH.md",
@@ -23,15 +25,16 @@ const README_CANDIDATES = [
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // 搜索 API 限 10 次/分钟（未认证）：单页 403 限流则等 reset 重试；页间保持间隔。
-async function fetchSearchPage(page) {
+async function fetchSearchPage(query, page) {
+  const url = `${SEARCH_API}${encodeURIComponent(query)}&per_page=100&page=${page}`;
   for (let attempt = 0; attempt < 10; attempt++) {
-    const res = await fetch(SEARCH_URL + page, { headers: HEADERS, signal: AbortSignal.timeout(30000) });
+    const res = await fetch(url, { headers: HEADERS, signal: AbortSignal.timeout(30000) });
     if (res.status === 403) {
       const body = await res.text();
       if (/rate limit/i.test(body)) {
         const reset = Number(res.headers.get("x-ratelimit-reset") || 0) * 1000;
         const wait = reset > Date.now() ? reset - Date.now() + 2000 : 60000;
-        console.log(`[sync] rate limited on page ${page}, waiting ${Math.round(wait / 1000)}s (attempt ${attempt + 1})`);
+        console.log(`[sync] rate limited (query ${query.slice(0, 60)} page ${page}), waiting ${Math.round(wait / 1000)}s (attempt ${attempt + 1})`);
         await sleep(Math.min(wait, 120000));
         continue;
       }
@@ -40,24 +43,61 @@ async function fetchSearchPage(page) {
     if (!res.ok) throw new Error(`GitHub search failed ${res.status}: ${(await res.text()).slice(0, 300)}`);
     return await res.json();
   }
-  throw new Error("gave up after 10 rate-limit retries on search page " + page);
+  throw new Error("gave up after 10 rate-limit retries: " + query.slice(0, 60));
 }
 
-async function fetchAllRepos() {
+const MIN_INTERVAL = 6500; // 10/min 预算 -> 每页间隔 ~6.5s
+
+// 拉取某查询下全部分页（调用方保证 total_count <= 1000）
+async function fetchAllInQuery(query) {
   const all = [];
   let page = 1;
-  const MIN_INTERVAL = 6500; // 10/min 预算 -> 每页间隔 ~6.5s
   for (;;) {
     const t0 = Date.now();
-    const data = await fetchSearchPage(page);
+    const data = await fetchSearchPage(query, page);
     all.push(...data.items);
-    console.log(`[sync] page ${page}: +${data.items.length} repos (total ${all.length}/${data.total_count})`);
     if (!data.items.length || page * 100 >= data.total_count) break;
     page++;
     const elapsed = Date.now() - t0;
     if (elapsed < MIN_INTERVAL) await sleep(MIN_INTERVAL - elapsed);
   }
   return all;
+}
+
+const addDays = (iso, days) => {
+  const d = new Date(iso + "T00:00:00Z");
+  d.setUTCDate(d.getUTCDate() + days);
+  return d.toISOString().slice(0, 10);
+};
+
+// 分治：topic 超过搜索 API 1000 条上限时，按 created 日期二分窗口，每窗口 <=1000 再分页拉全。
+async function collectRange(query, lo, hi, depth = 0) {
+  const q = `${query} created:${lo}..${hi}`;
+  const probe = await fetchSearchPage(q, 1);
+  if (probe.total_count <= 1000) {
+    const items = await fetchAllInQuery(q);
+    console.log(`[sync] window ${lo}..${hi}: ${items.length} repos`);
+    return items;
+  }
+  if (lo >= hi) throw new Error(`window not shrinkable: ${lo}..${hi} has ${probe.total_count} repos`);
+  const days = Math.round((new Date(hi) - new Date(lo)) / 86400000);
+  const mid = addDays(lo, Math.max(1, Math.floor(days / 2)));
+  const left = await collectRange(query, lo, mid, depth + 1);
+  const right = await collectRange(query, addDays(mid, 1), hi, depth + 1);
+  return [...left, ...right];
+}
+
+async function fetchAllRepos() {
+  const hi = new Date().toISOString().slice(0, 10);
+  const items = await collectRange(TOPIC_Q, DATE_LO, hi);
+  // 防御性去重（窗口按日期不相交，但保底）
+  const seen = new Set();
+  const unique = [];
+  for (const it of items) {
+    if (!seen.has(it.full_name)) { seen.add(it.full_name); unique.push(it); }
+  }
+  console.log(`[sync] collected ${unique.length} unique repos (raw ${items.length})`);
+  return unique;
 }
 
 async function fetchReadme(fullName) {

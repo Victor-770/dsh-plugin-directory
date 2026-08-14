@@ -23,6 +23,11 @@ const s = STR[lang];
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{s.siteName} — {s.siteTagline}</title>
   <meta name="description" content={s.siteTagline} />
+  <meta property="og:title" content={s.siteName} />
+  <meta property="og:description" content={s.siteTagline + " · " + (browse.length || 0) + " plugins · " + s.langName} />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/favicon.svg" />
+  <meta name="twitter:card" content="summary" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <script is:inline>
     // 主题：默认深色，跟随系统，可手动切换（localStorage 持久）
