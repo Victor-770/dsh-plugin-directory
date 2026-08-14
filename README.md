@@ -33,7 +33,7 @@ node worker/smoke.mjs             # Worker 本地冒烟（需先 sync）
 > 有向导版：Windows 下执行 `pwsh scripts/deploy.ps1` 逐项检查并打印每一步。
 
 1. **GitHub repo** 推送到远端，仓库 Secrets 添加 `GH_TOKEN`（fine-grained，public repo 只读；不加也能跑，额度低）。
-2. **Pages**：连接该 repo → 构建命令 `cd site && npm install && npm run build` → 输出目录 `dist` → 得到 `xxx.pages.dev`。
+2. **Pages**：连接该 repo → 构建命令 `cd site && npm install && npm run build` → 输出目录 `site/dist`（相对仓库根） → 得到 `xxx.pages.dev`。
 3. **Worker**：`cd worker` → 把 `wrangler.toml` 的 `SITE_ORIGIN` 改成 Pages 地址 → `npx wrangler deploy`。
 4. 上线检查：首页展示"最后同步时间"；`/api/search?q=皮肤` 返回结果。
 
