@@ -13,7 +13,7 @@ const HEADERS = { "User-Agent": "dsh-plugin-directory", Accept: "application/vnd
 if (TOKEN) HEADERS.Authorization = `Bearer ${TOKEN}`;
 
 const SEARCH_API = "https://api.github.com/search/repositories?q=";
-const TOPIC_Q = "topic:dsh-plugin";
+const TOPIC_Q = "topic:dsh-plugin archived:false"; // 与 topic 页语义一致：排除已归档
 const DATE_LO = "2008-01-01"; // GitHub 最早仓库日期
 const README_CANDIDATES = [
   "README.md", "readme.md", "Readme.md", "README.MD",
