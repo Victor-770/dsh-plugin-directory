@@ -31,7 +31,7 @@ const s = STR[lang];
 const langPrefix = "/en";
 const site = (Astro.site?.origin) || "https://dsh-plugin-directory.online";
 const catName = lang === "zh" ? catKey : (s.languages[catKey] || catKey);
-const canonical = site + "/category/" + slug + "/";
+const canonical = site + langPrefix + "/category/" + slug + "/";
 const zhUrl = site + "/category/" + slug + "/";
 const enUrl = site + "/en/category/" + slug + "/";
 const pageTitle = lang === "zh" ? `${catName} 插件（${plugins.length} 个）— DSH 插件目录` : `${catName} Plugins (${plugins.length}) — DSH Plugin Directory`;
@@ -55,6 +55,7 @@ const jsonLd = {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="content-language" content="en" />
   <title>{pageTitle}</title>
   <meta name="description" content={pageDescription} />
   <link rel="canonical" href={canonical} />
