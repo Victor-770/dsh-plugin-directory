@@ -1,0 +1,68 @@
+// 一键本地全功能体验：node scripts/serve.mjs
+// 静态站 + /api/search（真实 Pages Function -> Worker -> data），无需部署任何东西。
+import http from "node:http";
+import { readFile, stat } from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import worker from "../worker/src/index.js";
+import { onRequestGet } from "../functions/api/search.js";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const distDir = path.join(__dirname, "..", "site", "dist");
+const dataDir = path.join(__dirname, "..", "site", "public", "data");
+const PORT = Number(process.env.PORT) || 4321;
+
+// 数据服务（Worker 同源拉取）
+const dataServer = http.createServer(async (req, res) => {
+  const name = req.url === "/data/plugins.json" ? "plugins.json" : req.url === "/data/index.json" ? "index.json" : null;
+  if (!name) { res.writeHead(404); res.end(); return; }
+  try {
+    const buf = await readFile(path.join(dataDir, name));
+    res.writeHead(200, { "content-type": "application/json" });
+    res.end(buf);
+  } catch { res.writeHead(404); res.end(); }
+});
+await new Promise((r) => dataServer.listen(0, "127.0.0.1", r));
+const dataOrigin = `http://127.0.0.1:${dataServer.address().port}`;
+
+// Worker 端点
+const workerServer = http.createServer((req, res) => {
+  worker.fetch(new Request(`http://127.0.0.1${req.url}`, { headers: { referer: dataOrigin } }), { SITE_ORIGIN: dataOrigin })
+    .then(async (up) => { res.writeHead(up.status, { "content-type": "application/json" }); res.end(await up.text()); })
+    .catch((e) => { res.writeHead(500); res.end(JSON.stringify({ error: String(e) })); });
+});
+await new Promise((r) => workerServer.listen(0, "127.0.0.1", r));
+const workerOrigin = `http://127.0.0.1:${workerServer.address().port}`;
+
+const MIME = { ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".svg": "image/svg+xml", ".png": "image/png", ".txt": "text/plain" };
+
+const server = http.createServer(async (req, res) => {
+  const url = new URL(req.url, "http://127.0.0.1");
+  if (url.pathname === "/api/search") {
+    try {
+      const up = await onRequestGet({ request: new Request("http://127.0.0.1:" + PORT + url.pathname + url.search, { headers: req.headers }), env: { WORKER_URL: workerOrigin } });
+      const body = await up.text();
+      res.writeHead(up.status, { "content-type": "application/json; charset=utf-8" });
+      res.end(body);
+    } catch (e) {
+      res.writeHead(500, { "content-type": "application/json" });
+      res.end(JSON.stringify({ error: String(e) }));
+    }
+    return;
+  }
+  const rel = url.pathname === "/" ? "index.html" : url.pathname.replace(/^\//, "");
+  const file = path.join(distDir, rel);
+  try {
+    const st = await stat(file);
+    if (!st.isFile()) throw new Error("not file");
+    const buf = await readFile(file);
+    res.writeHead(200, { "content-type": MIME[path.extname(file).toLowerCase()] || "application/octet-stream" });
+    res.end(buf);
+  } catch {
+    res.writeHead(404); res.end("not found");
+  }
+});
+server.listen(PORT, "127.0.0.1", () => {
+  console.log(`DSH Plugin Directory 本地全功能版: http://127.0.0.1:${PORT}`);
+  console.log(`试试搜索：http://127.0.0.1:${PORT}/?q=%E7%9A%AE%E8%82%A4（皮肤） 或 /?q=ocr&lang=en`);
+});
