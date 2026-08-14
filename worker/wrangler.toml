@@ -1,0 +1,8 @@
+name = "dsh-plugin-directory-search"
+main = "src/index.js"
+compatibility_date = "2026-08-13"
+
+[vars]
+# 静态站地址：Worker 冷启动从这里拉取 index.json / plugins.json。
+# 部署前改为实际 pages.dev 地址（见 Ticket 06）。
+SITE_ORIGIN = "https://dsh-plugin-directory.pages.dev"

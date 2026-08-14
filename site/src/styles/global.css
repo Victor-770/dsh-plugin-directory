@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-bg: #0b0e14;
+  --color-surface: #12161f;
+  --color-surface2: #1a2030;
+  --color-line: #232a3b;
+  --color-ink: #e6e9f0;
+  --color-muted: #8b93a7;
+  --color-accent: #4f8cff;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+html { color-scheme: dark; }
+html.light { color-scheme: light; }
+body { @apply bg-bg text-ink antialiased; }
+.line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }

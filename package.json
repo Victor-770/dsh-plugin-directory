@@ -1,0 +1,10 @@
+{
+  "name": "dsh-plugin-directory",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "scripts": {
+    "sync": "node scripts/sync.mjs",
+    "test": "node --test \"search-core/test/*.test.js\""
+  }
+}

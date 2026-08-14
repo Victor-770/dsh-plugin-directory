@@ -1,0 +1,43 @@
+// 中英 UI 文案（壳双语；插件内容保持原文）。
+export const STR = {
+  zh: {
+    siteName: "DSH 插件目录",
+    siteTagline: "DeepSeek Harness 插件一站式目录",
+    searchPlaceholder: "搜索插件、功能（支持中英）…",
+    sortRelevance: "相关度",
+    sortStars: "热度（star）",
+    category: "分类",
+    tags: "标签",
+    results: "个结果",
+    noResults: "没有找到匹配的插件，试试换关键词或清空筛选",
+    clearFilters: "清空筛选",
+    lastSync: "最后同步",
+    all: "全部",
+    backToTop: "回到顶部",
+    openGitHub: "在 GitHub 打开",
+    languages: { "皮肤/UI": "Skins / UI", "终端/TUI": "Terminal / TUI", "工具/开发": "Tools / Dev", "搜索": "Search", "Agent/智能体": "Agents", "内容/媒体": "Media / Content", "娱乐/广告": "Fun / Ads", "其他": "Other" },
+    langName: "EN",
+    theme: "主题",
+  },
+  en: {
+    siteName: "DSH Plugin Directory",
+    siteTagline: "One-stop catalog for DeepSeek Harness plugins",
+    searchPlaceholder: "Search plugins, features (CN/EN)…",
+    sortRelevance: "Relevance",
+    sortStars: "Stars",
+    category: "Category",
+    tags: "Tags",
+    results: "results",
+    noResults: "No plugins matched. Try other keywords or clear filters",
+    clearFilters: "Clear filters",
+    lastSync: "Last synced",
+    all: "All",
+    backToTop: "Back to top",
+    openGitHub: "Open on GitHub",
+    languages: { "皮肤/UI": "Skins / UI", "终端/TUI": "Terminal / TUI", "工具/开发": "Tools / Dev", "搜索": "Search", "Agent/智能体": "Agents", "内容/媒体": "Media / Content", "娱乐/广告": "Fun / Ads", "其他": "Other" },
+    langName: "中",
+    theme: "Theme",
+  },
+};
+export const CATEGORY_ORDER = ["皮肤/UI", "终端/TUI", "工具/开发", "搜索", "Agent/智能体", "内容/媒体", "娱乐/广告", "其他"];
+export const LANGS = ["zh", "en"];

@@ -1,0 +1,114 @@
+---
+import { STR, CATEGORY_ORDER } from "../lib/i18n.js";
+import { readFileSync } from "node:fs";
+import path from "node:path";
+import "../styles/global.css";
+// Vite 构建会重写 import.meta.url，不能用来定位源文件；构建时 cwd 恒为 site/
+const browsePath = path.join(process.cwd(), "public", "data", "browse.json");
+let browse = [];
+let generatedAt = null;
+try {
+  const raw = JSON.parse(readFileSync(browsePath, "utf8"));
+  browse = raw.plugins || [];
+  generatedAt = raw.generatedAt || null;
+} catch { /* 数据未生成时站点仍可构建（空列表） */ }
+const top50 = browse.slice().sort((a, b) => b.stars - a.stars).slice(0, 50);
+const lang = "zh";
+const s = STR[lang];
+---
+<!doctype html>
+<html lang={lang} class="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{s.siteName} — {s.siteTagline}</title>
+  <meta name="description" content={s.siteTagline} />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <script is:inline>
+    // 主题：默认深色，跟随系统，可手动切换（localStorage 持久）
+    (function () {
+      var saved = null; try { saved = localStorage.getItem("dsh-theme"); } catch (e) {}
+      var dark = saved ? saved === "dark" : window.matchMedia("(prefers-color-scheme: light)").matches ? false : true;
+      document.documentElement.classList.toggle("dark", dark);
+      document.documentElement.classList.toggle("light", !dark);
+    })();
+  </script>
+</head>
+<body class="min-h-screen">
+  <div class="mx-auto max-w-7xl px-4 pb-16">
+    <!-- 顶栏 -->
+    <header class="sticky top-0 z-20 border-b border-line bg-bg/90 backdrop-blur">
+      <div class="flex items-center gap-3 py-3">
+        <a href="/" class="flex items-center gap-2 shrink-0">
+          <span class="grid h-8 w-8 place-items-center rounded-lg bg-accent/15 text-accent font-bold">D</span>
+          <span class="font-semibold tracking-tight" data-i18n="siteName">{s.siteName}</span>
+        </a>
+        <input id="search-input" type="search" data-i18n-placeholder="searchPlaceholder" placeholder={s.searchPlaceholder}
+          class="ml-2 min-w-0 flex-1 rounded-lg border border-line bg-surface px-3 py-2 text-sm outline-none transition focus:border-accent" />
+        <button id="lang-toggle" class="shrink-0 rounded-lg border border-line bg-surface px-3 py-2 text-xs font-medium hover:border-accent" data-i18n="langName">{s.langName}</button>
+        <button id="theme-toggle" class="shrink-0 rounded-lg border border-line bg-surface px-3 py-2 text-xs" title={s.theme}>◐</button>
+      </div>
+    </header>
+
+    <div class="mt-6 flex flex-col gap-6 md:flex-row">
+      <!-- 分类侧栏（移动端抽屉） -->
+      <aside class="shrink-0 md:w-56">
+        <div class="rounded-xl border border-line bg-surface p-4">
+          <h2 class="mb-3 text-xs font-semibold uppercase tracking-wider text-muted" data-i18n="category">{s.category}</h2>
+          <button id="category-all" class="category-item mb-1 flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-sm hover:bg-surface2" data-cat="">
+            <span data-i18n="all">{s.all}</span><span class="cat-count text-xs text-muted">0</span>
+          </button>
+          {CATEGORY_ORDER.map((c) => (
+            <button class="category-item mb-1 flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-sm hover:bg-surface2" data-cat={c}>
+              <span class="category-label" data-cat-key={c}>{s.languages[c]}</span><span class="cat-count text-xs text-muted">0</span>
+            </button>
+          ))}
+          <div class="mt-4 border-t border-line pt-3">
+            <h2 class="mb-3 text-xs font-semibold uppercase tracking-wider text-muted" data-i18n="tags">{s.tags}</h2>
+            <div id="tag-cloud" class="flex flex-wrap gap-1.5"></div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- 主区 -->
+      <main class="min-w-0 flex-1">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <p class="text-sm text-muted"><span id="result-count">0</span> <span data-i18n="results">{s.results}</span></p>
+          <select id="sort-select" class="rounded-lg border border-line bg-surface px-3 py-1.5 text-sm">
+            <option value="stars" data-i18n="sortStars">{s.sortStars}</option>
+            <option value="relevance" data-i18n="sortRelevance">{s.sortRelevance}</option>
+          </select>
+        </div>
+        <div id="empty-state" class="hidden rounded-xl border border-line bg-surface p-10 text-center text-sm text-muted">
+          <p data-i18n="noResults">{s.noResults}</p>
+          <button id="clear-filters" class="mt-3 rounded-lg border border-line px-3 py-1.5 text-xs hover:border-accent" data-i18n="clearFilters">{s.clearFilters}</button>
+        </div>
+        <div id="card-grid" class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+          {top50.map((p) => (
+            <a href={p.html_url} target="_blank" rel="noopener" class="plugin-card block rounded-xl border border-line bg-surface p-4 transition hover:border-accent/60 hover:bg-surface2">
+              <div class="flex items-start justify-between gap-2">
+                <span class="font-mono text-[13px] font-medium break-all">{p.full_name}</span>
+                <span class="shrink-0 text-xs text-muted">★ {p.stars.toLocaleString()}</span>
+              </div>
+              <p class="line-clamp-2 mt-2 min-h-[2.5rem] text-sm text-muted">{p.description || "—"}</p>
+              <div class="mt-3 flex flex-wrap items-center gap-1.5 text-[11px]">
+                {p.language && <span class="flex items-center gap-1 rounded-full bg-surface2 px-2 py-0.5"><span class="inline-block h-1.5 w-1.5 rounded-full bg-accent"></span>{p.language}</span>}
+                {(p.categories || []).slice(0, 2).map((c) => <span class="rounded-full bg-accent/10 px-2 py-0.5 text-accent">{c}</span>)}
+              </div>
+            </a>
+          ))}
+        </div>
+      </main>
+    </div>
+
+    <footer class="mt-12 border-t border-line pt-4 text-xs text-muted">
+      <p>DSH Plugin Directory · {generatedAt ? s.lastSync + ": " + generatedAt.slice(0, 10) : ""} · GitHub topic <a class="underline" href="https://github.com/topics/dsh-plugin">dsh-plugin</a></p>
+    </footer>
+  </div>
+  <script>
+    import { STR, CATEGORY_ORDER } from "../lib/i18n.js";
+    import { BrowseApp } from "../scripts/browse.js";
+    BrowseApp({ STR, CATEGORY_ORDER });
+  </script>
+</body>
+</html>
