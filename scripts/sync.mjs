@@ -1,6 +1,10 @@
-// 同步管道（Ticket 01）：拉全 topic:dsh-plugin 仓库 -> README -> 分类 -> plugins.json + 契约校验。
-// 用法：GITHUB_TOKEN=xxx npm run sync（无 token 也可，未认证额度内）。
-// 同步完成后对比上次数据，把新增/更新/删除的插件 URL 通过 IndexNow 通知 Bing（§4 指南）。
+// 同步管道（Ticket 01 + 架构升级）：双游标增量 + 定期全量对账。
+// - 常规同步（默认）：pushed 增量（最近 N 天活跃）+ created 兜底（上次对账之后新增），README 有缓存。
+// - 对账同步（--reconcile）：created 全窗口二分全量重扫，兜住"很久没 push 但新打 topic"的老仓库。
+// 游标存 site/public/data/meta.json（workflow 的 file_pattern 是 site/public/data/*.json，会随数据一起提交，
+// 保证 CI 全新 checkout 后仍能读到上次对账时间与同步计数，增量逻辑在 CI 里持续生效）。
+// 用法：GITHUB_TOKEN=xxx npm run sync [-- --reconcile]
+// 说明：搜索 API 未认证 10 次/分钟，认证 30 次/分钟；脚本按认证与否自适应限速。
 import { writeFile, mkdir, readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -18,6 +22,13 @@ if (TOKEN) HEADERS.Authorization = `Bearer ${TOKEN}`;
 const SEARCH_API = "https://api.github.com/search/repositories?q=";
 const TOPIC_Q = "topic:dsh-plugin archived:false"; // 与 topic 页语义一致：排除已归档
 const DATE_LO = "2008-01-01"; // GitHub 最早仓库日期
+// 常规增量窗口：只扫最近多少天"活跃"（pushed 在窗口内）的仓库。活跃集规模稳定，不随历史总量增长。
+const INCREMENTAL_DAYS = 7;
+// 每次对账后，下一次对账前的"新增兜底窗口"：created 在此之后的新仓库（即使 push 很久前也会被 created 兜住）。
+const RECONCILE_GAP_DAYS = 40;
+// 对账周期：每 N 次常规同步做一次全量对账（每 6h cron，N=6 -> 每 36h 一次全量）。
+const RECONCILE_EVERY = 6;
+// README 候选文件名（保持与原实现一致）
 const README_CANDIDATES = [
   "README.md", "readme.md", "Readme.md", "README.MD",
   "README.en.md", "README.zh.md", "README_EN.md", "README_ZH.md",
@@ -25,10 +36,26 @@ const README_CANDIDATES = [
   "README.rst", "readme.rst", "README.txt", "readme.txt",
 ];
 
+const META_FILE = path.join(DATA_DIR, "meta.json"); // { lastReconcileAt: "YYYY-MM-DD"|null, syncCount: number }
+
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-// 搜索 API 限 10 次/分钟（未认证）：单页 403 限流则等 reset 重试；页间保持间隔。
+// 限速预算：认证 30/min，未认证 10/min。所有搜索请求按时间槽排队，天然满足每分钟配额。
+const RATE_PER_MIN = TOKEN ? 30 : 10;
+const REQUEST_INTERVAL = 60000 / RATE_PER_MIN;
+let nextRequestAt = 0;
+function throttleSearch() {
+  // 时间槽限速：每次调用预留一个槽位，并发调用会自动排开；无 Promise 链，不会累积内存。
+  const now = Date.now();
+  const wait = Math.max(0, nextRequestAt - now);
+  nextRequestAt = Math.max(now, nextRequestAt + REQUEST_INTERVAL);
+  if (wait) return sleep(wait);
+  return Promise.resolve();
+}
+
+// 搜索 API 单查询上限 1000 条（10 页 × 100）。二分窗口必须保证 total_count <= 1000。
 async function fetchSearchPage(query, page) {
+  await throttleSearch();
   const url = `${SEARCH_API}${encodeURIComponent(query)}&per_page=100&page=${page}`;
   for (let attempt = 0; attempt < 10; attempt++) {
     const res = await fetch(url, { headers: HEADERS, signal: AbortSignal.timeout(30000) });
@@ -49,20 +76,16 @@ async function fetchSearchPage(query, page) {
   throw new Error("gave up after 10 rate-limit retries: " + query.slice(0, 60));
 }
 
-const MIN_INTERVAL = 6500; // 10/min 预算 -> 每页间隔 ~6.5s
-
-// 拉取某查询下全部分页（调用方保证 total_count <= 1000）
-async function fetchAllInQuery(query) {
+// 拉取某查询下全部分页（调用方保证 total_count <= 1000；firstPage 复用二分探针的第一页，省一次请求）
+async function fetchAllInQuery(query, firstPage) {
   const all = [];
-  let page = 1;
+  if (firstPage && Array.isArray(firstPage.items)) all.push(...firstPage.items);
+  let page = 2;
   for (;;) {
-    const t0 = Date.now();
     const data = await fetchSearchPage(query, page);
     all.push(...data.items);
     if (!data.items.length || page * 100 >= data.total_count) break;
     page++;
-    const elapsed = Date.now() - t0;
-    if (elapsed < MIN_INTERVAL) await sleep(MIN_INTERVAL - elapsed);
   }
   return all;
 }
@@ -73,23 +96,60 @@ const addDays = (iso, days) => {
   return d.toISOString().slice(0, 10);
 };
 
-// 分治：topic 超过搜索 API 1000 条上限时，按 created 日期二分窗口，每窗口 <=1000 再分页拉全。
+// 时间戳解析：lo/hi 形如 "YYYY-MM-DD"（日粒度）或 "YYYY-MM-DDTHH:00:00Z"（小时粒度）。
+const isDay = (s) => s.length === 10;
+const parseTs = (s) => (isDay(s) ? new Date(s + "T00:00:00Z") : new Date(s));
+const fmtHour = (day, h) => `${day}T${String(h).padStart(2, "0")}:00:00Z`;
+
+// 二分窗口：返回 [left, right] 两个 {lo, hi}，或 null（单小时窗口，无法再分）。
+// 两个子窗口互斥且都严格小于父窗口（杜绝同参递归），跨天按天二分，同一天降级到小时粒度。
+// 小时区间按半开 [loHour, hiHourExclusive) 理解：上界为 T{h}:00:00Z 表示覆盖到 h 点前，
+// 上界为 T23:59:59Z（等价 24 点）表示覆盖整点 23。这样任何子窗口都非零宽、严格更小。
+function splitWindow(lo, hi) {
+  const loDay = lo.slice(0, 10), hiDay = hi.slice(0, 10);
+  const daySpan = Math.round((parseTs(hiDay) - parseTs(loDay)) / 86400000);
+  if (daySpan > 0) {
+    // 跨天：按天对半（[lo..mid] + [mid+1..hi]）。daySpan=1 时切成两个单日，不会复现父窗口。
+    const mid = addDays(loDay, Math.floor(daySpan / 2));
+    return [
+      { lo: loDay, hi: mid },
+      { lo: addDays(mid, 1), hi: hiDay },
+    ];
+  }
+  // 同一天：小时粒度。lo/hi 可能是日期（当日 00:00..23:59）或已是时间戳。
+  const day = loDay;
+  const loHour = isDay(lo) ? 0 : Number(lo.slice(11, 13));
+  const hiHourExclusive = isDay(hi) || hi.endsWith("T23:59:59Z") ? 24 : Number(hi.slice(11, 13));
+  const span = hiHourExclusive - loHour;
+  if (span <= 1) return null; // 单小时窗口，无法再分（极端防御）
+  const midHour = loHour + Math.floor(span / 2);
+  return [
+    { lo: fmtHour(day, loHour), hi: fmtHour(day, midHour) },
+    { lo: fmtHour(day, midHour), hi: hiHourExclusive >= 24 ? `${day}T23:59:59Z` : fmtHour(day, hiHourExclusive) },
+  ];
+}
+
+// 二分收集：窗口内 total_count >1000 则分裂（先按天，同日降小时），直到 <=1000 再分页拉全。
+// 左右子树并行（实际请求仍经串行闸门排队，限速配额不变）；depth 防御性封顶，杜绝同参死递归。
 async function collectRange(query, lo, hi, depth = 0) {
+  if (depth > 64) throw new Error(`collectRange depth exceeded at ${lo}..${hi}`);
   const q = `${query} created:${lo}..${hi}`;
   const probe = await fetchSearchPage(q, 1);
   if (probe.total_count <= 1000) {
-    const items = await fetchAllInQuery(q);
+    const items = await fetchAllInQuery(q, probe);
     console.log(`[sync] window ${lo}..${hi}: ${items.length} repos`);
     return items;
   }
-  if (lo >= hi) throw new Error(`window not shrinkable: ${lo}..${hi} has ${probe.total_count} repos`);
-  const days = Math.round((new Date(hi) - new Date(lo)) / 86400000);
-  const mid = addDays(lo, Math.max(1, Math.floor(days / 2)));
-  const left = await collectRange(query, lo, mid, depth + 1);
-  const right = await collectRange(query, addDays(mid, 1), hi, depth + 1);
+  const parts = splitWindow(lo, hi);
+  if (!parts) throw new Error(`window not shrinkable even at hour granularity: ${lo}..${hi} has ${probe.total_count} repos`);
+  const [left, right] = await Promise.all([
+    collectRange(query, parts[0].lo, parts[0].hi, depth + 1),
+    collectRange(query, parts[1].lo, parts[1].hi, depth + 1),
+  ]);
   return [...left, ...right];
 }
 
+// 全量对账：created 全窗口（2008..今天）二分，兜住所有老仓库。
 async function fetchAllRepos() {
   const hi = new Date().toISOString().slice(0, 10);
   const items = await collectRange(TOPIC_Q, DATE_LO, hi);
@@ -100,6 +160,27 @@ async function fetchAllRepos() {
     if (!seen.has(it.full_name)) { seen.add(it.full_name); unique.push(it); }
   }
   console.log(`[sync] collected ${unique.length} unique repos (raw ${items.length})`);
+  return unique;
+}
+
+// 常规增量：pushed 增量（最近 N 天活跃）+ created 兜底（上次对账之后新增）。
+// 注意：created 兜底下限 = 上次对账时间 - 缓冲，避免对账刚结束时新仓库被漏。
+async function fetchIncrementalRepos(lastReconcileAt) {
+  const hi = new Date().toISOString().slice(0, 10);
+  const loActive = addDays(hi, -INCREMENTAL_DAYS);
+  const loCreated = lastReconcileAt ? addDays(lastReconcileAt, -RECONCILE_GAP_DAYS) : DATE_LO;
+  console.log(`[sync] incremental: pushed >= ${loActive} (last ${INCREMENTAL_DAYS}d), created >= ${loCreated} (reconcile gap)`);
+  const [active, created] = await Promise.all([
+    collectRange(`${TOPIC_Q} pushed:>=${loActive}`, DATE_LO, hi),
+    collectRange(TOPIC_Q, loCreated, hi),
+  ]);
+  // 合并去重（pushed 与 created 窗口可能重叠）
+  const seen = new Set();
+  const unique = [];
+  for (const it of [...active, ...created]) {
+    if (!seen.has(it.full_name)) { seen.add(it.full_name); unique.push(it); }
+  }
+  console.log(`[sync] incremental: ${active.length} active + ${created.length} created = ${unique.length} unique`);
   return unique;
 }
 
@@ -128,8 +209,6 @@ async function mapLimit(items, limit, fn) {
   return out;
 }
 
-const REQUIRED = ["full_name", "html_url", "description", "stars", "language", "pushed_at", "topics", "categories", "tags", "readme_text"];
-
 // 校验语义（对真实 GitHub 数据）：description/language 允许空或 null，readme_text 允许空串（仓库无 README 是合法态）。
 function validate(records) {
   const errors = [];
@@ -149,12 +228,51 @@ function validate(records) {
   return errors;
 }
 
-async function main() {
-  console.log("[sync] fetching repos (topic:dsh-plugin)...");
-  const repos = await fetchAllRepos();
-  console.log(`[sync] got ${repos.length} repos`);
-  console.log("[sync] fetching READMEs...");
-  const readmes = await mapLimit(repos, 10, (r) => fetchReadme(r.full_name));
+// 游标：meta.json（随数据提交，CI 全新 checkout 后仍可读）。
+async function readMeta() {
+  try {
+    const raw = JSON.parse(await readFile(META_FILE, "utf8"));
+    return {
+      lastReconcileAt: typeof raw.lastReconcileAt === "string" ? raw.lastReconcileAt.slice(0, 10) : null,
+      syncCount: Number(raw.syncCount) || 0,
+    };
+  } catch {
+    return { lastReconcileAt: null, syncCount: 0 };
+  }
+}
+async function writeMeta(meta) {
+  await mkdir(DATA_DIR, { recursive: true });
+  await writeFile(META_FILE, JSON.stringify(meta), "utf8");
+}
+
+// 读取上次数据文件，构造 full_name -> record 的 Map（供 README 缓存与 diff）
+async function readPreviousRecords() {
+  const file = path.join(DATA_DIR, "plugins.json");
+  try {
+    const raw = JSON.parse(await readFile(file, "utf8"));
+    return Array.isArray(raw.plugins) ? raw.plugins : [];
+  } catch {
+    return [];
+  }
+}
+
+// 增量时 README 缓存：只有 pushed_at 变化（内容真更新）或新仓库才重抓；否则复用上次的 readme_text。
+// 返回 { records, readmesFetched }。readmesFetched 仅用于日志。
+async function fetchRecords({ reconcile, meta, prevMap }) {
+  const repos = reconcile ? await fetchAllRepos() : await fetchIncrementalRepos(meta.lastReconcileAt);
+  let readmeHits = 0, readmeMisses = 0;
+  const readmes = await mapLimit(repos, 10, async (r) => {
+    const prev = prevMap.get(r.full_name);
+    const pushedChanged = !prev || prev.pushed_at !== r.pushed_at;
+    if (!reconcile && prev && !pushedChanged) {
+      // 未变化：复用缓存
+      readmeHits++;
+      return prev.readme_text || "";
+    }
+    readmeMisses++;
+    return await fetchReadme(r.full_name);
+  });
+  console.log(`[sync] README cache: ${readmeHits} reused, ${readmeMisses} fetched`);
   const records = repos.map((r, i) => {
     const { categories, tags } = categorize({
       full_name: r.full_name, description: r.description || "", topics: r.topics || [], readme_text: readmes[i],
@@ -166,45 +284,18 @@ async function main() {
     };
   });
   records.sort((a, b) => b.stars - a.stars);
-  console.log("[sync] validating schema...");
-  const errors = validate(records);
-  if (errors.length) {
-    console.error(`[sync] VALIDATION FAILED (${errors.length}):`);
-    for (const e of errors.slice(0, 20)) console.error("  -", e);
-    process.exit(1);
-  }
-  // --- IndexNow 通知（Bing 指南 §4）：对比上次数据，只提交新增/更新/删除的 URL ---
-  // 注意：必须在覆盖 plugins.json 之前读取旧数据，否则 diff 恒为空。
-  try {
-    const prev = await readPreviousPlugins();
-    const changed = diffChangedUrls(prev, records);
-    const deleted = prev.filter((p) => !records.some((r) => r.full_name === p.full_name));
-    const urls = [
-      ...changed.flatMap((p) => [pluginUrl(p.full_name), pluginEnUrl(p.full_name)]),
-      ...deleted.flatMap((p) => [pluginUrl(p.full_name), pluginEnUrl(p.full_name)]),
-    ];
-    if (urls.length) {
-      await notifyIndexNow(urls);
-    } else {
-      console.log("[indexnow] no URL changes since last sync; skipping");
-    }
-  } catch (e) {
-    // 通知失败不应让数据同步失败：仅告警，不中断
-    console.warn(`[indexnow] skipped due to error: ${e.message}`);
-  }
+  return records;
+}
 
-  await mkdir(DATA_DIR, { recursive: true });
-  const payload = { generatedAt: new Date().toISOString(), count: records.length, plugins: records };
-  await writeFile(path.join(DATA_DIR, "plugins.json"), JSON.stringify(payload, null, 2));
-  const index = buildIndex(records);
-  await writeFile(path.join(DATA_DIR, "index.json"), JSON.stringify(index));
-  // 轻量浏览数据（不含 readme_text）：站点端过滤/排序用，避免 ~9MB 全量进客户端
-  const browse = records.map(({ readme_text, ...meta }) => meta);
-  await writeFile(path.join(DATA_DIR, "browse.json"), JSON.stringify({ generatedAt: payload.generatedAt, count: browse.length, plugins: browse }));
-  console.log(`[sync] OK: plugins.json + index.json + browse.json (${records.length} plugins, ${Object.keys(index.tokens).length} tokens)`);
-  const byCat = {};
-  for (const rec of records) for (const c of rec.categories) byCat[c] = (byCat[c] || 0) + 1;
-  console.log("[sync] categories:", JSON.stringify(byCat));
+// 增量合并：保留上次未变化的仓库 + 本次增量仓库，按 full_name 去重，pushed_at 新者胜。
+function mergeRecords(prev, incr) {
+  const map = new Map();
+  for (const r of prev) map.set(r.full_name, r);
+  for (const r of incr) {
+    const old = map.get(r.full_name);
+    if (!old || (old.pushed_at || "") <= (r.pushed_at || "")) map.set(r.full_name, r);
+  }
+  return [...map.values()].sort((a, b) => b.stars - a.stars);
 }
 
 // 站点 URL 构造（与 sitemap.xml.ts 保持一致：zh 在根路径，en 在 /en/ 前缀）
@@ -213,17 +304,6 @@ function pluginUrl(fullName) {
 }
 function pluginEnUrl(fullName) {
   return `${SITE_ORIGIN}/en/plugin/${fullName}/`;
-}
-
-// 读取上次同步的 plugins.json（不存在则视为首次全量）
-async function readPreviousPlugins() {
-  const file = path.join(DATA_DIR, "plugins.json");
-  try {
-    const raw = JSON.parse(await readFile(file, "utf8"));
-    return Array.isArray(raw.plugins) ? raw.plugins : [];
-  } catch {
-    return [];
-  }
 }
 
 // 对比新旧记录：pushed_at / stars / description 任一变化即视为"更新"（内容已变，值得通知）
@@ -282,6 +362,80 @@ function changedSummary(urls) {
   const hasEn = urls.some((u) => u.includes("/en/plugin/"));
   const count = urls.length / 2;
   return `~${count} plugins, ${count * 2} URLs (zh+en)`;
+}
+
+// 主流程：决定本次是对账还是增量，取数 -> 合并 -> 校验 -> IndexNow -> 写数据 -> 更新游标。
+async function main() {
+  const reconcile = process.argv.includes("--reconcile");
+  const meta = await readMeta();
+  // 对账周期：--reconcile 强制；无游标（首次）强制；否则 syncCount 每到 RECONCILE_EVERY 触发一次。
+  // 注意：对账后 syncCount 归零，必须用 syncCount>0 排除"刚对账完的下一次"，否则会每次都全量对账。
+  const doReconcile = reconcile || meta.lastReconcileAt === null || (meta.syncCount > 0 && meta.syncCount % RECONCILE_EVERY === 0);
+  if (doReconcile) console.log(`[sync] mode: RECONCILE (full created scan)`);
+  else console.log(`[sync] mode: incremental (pushed ${INCREMENTAL_DAYS}d + created gap)`);
+
+  const prev = await readPreviousRecords();
+  const prevMap = new Map(prev.map((p) => [p.full_name, p]));
+
+  const records = await fetchRecords({ reconcile: doReconcile, meta, prevMap });
+
+  // 合并：对账时用本次全量覆盖；增量时与上次合并（保留未变化仓库）。
+  let finalRecords;
+  if (doReconcile) {
+    finalRecords = records;
+  } else {
+    finalRecords = mergeRecords(prev, records);
+    console.log(`[sync] merged: ${prev.length} prev + ${records.length} incremental = ${finalRecords.length} total`);
+  }
+
+  console.log("[sync] validating schema...");
+  const errors = validate(finalRecords);
+  if (errors.length) {
+    console.error(`[sync] VALIDATION FAILED (${errors.length}):`);
+    for (const e of errors.slice(0, 20)) console.error("  -", e);
+    process.exit(1);
+  }
+
+  // --- IndexNow 通知（Bing 指南 §4）：对比上次数据，只提交新增/更新/删除的 URL ---
+  try {
+    const changed = diffChangedUrls(prev, finalRecords);
+    const deleted = prev.filter((p) => !finalRecords.some((r) => r.full_name === p.full_name));
+    const urls = [
+      ...changed.flatMap((p) => [pluginUrl(p.full_name), pluginEnUrl(p.full_name)]),
+      ...deleted.flatMap((p) => [pluginUrl(p.full_name), pluginEnUrl(p.full_name)]),
+    ];
+    if (urls.length) {
+      await notifyIndexNow(urls);
+    } else {
+      console.log("[indexnow] no URL changes since last sync; skipping");
+    }
+  } catch (e) {
+    // 通知失败不应让数据同步失败：仅告警，不中断
+    console.warn(`[indexnow] skipped due to error: ${e.message}`);
+  }
+
+  await mkdir(DATA_DIR, { recursive: true });
+  const payload = { generatedAt: new Date().toISOString(), count: finalRecords.length, plugins: finalRecords };
+  await writeFile(path.join(DATA_DIR, "plugins.json"), JSON.stringify(payload, null, 2));
+  const index = buildIndex(finalRecords);
+  await writeFile(path.join(DATA_DIR, "index.json"), JSON.stringify(index));
+  // 轻量浏览数据（不含 readme_text）：站点端过滤/排序用，避免 ~9MB 全量进客户端
+  const browse = finalRecords.map(({ readme_text, ...meta }) => meta);
+  await writeFile(path.join(DATA_DIR, "browse.json"), JSON.stringify({ generatedAt: payload.generatedAt, count: browse.length, plugins: browse }));
+
+  // 更新游标：对账后 syncCount 归零并记录对账时间；增量则累加。
+  if (doReconcile) {
+    meta.lastReconcileAt = new Date().toISOString().slice(0, 10);
+    meta.syncCount = 0;
+  } else {
+    meta.syncCount += 1;
+  }
+  await writeMeta(meta);
+
+  console.log(`[sync] OK: plugins.json + index.json + browse.json (${finalRecords.length} plugins, ${Object.keys(index.tokens).length} tokens)`);
+  const byCat = {};
+  for (const rec of finalRecords) for (const c of rec.categories) byCat[c] = (byCat[c] || 0) + 1;
+  console.log("[sync] categories:", JSON.stringify(byCat));
 }
 
 main().catch((e) => { console.error("[sync] FATAL:", e); process.exit(1); });

@@ -10,6 +10,8 @@ permissions:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    # 同步脚本 90 分钟内必须完成；防止异常（如限流死循环）占用 runner 数小时。
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
