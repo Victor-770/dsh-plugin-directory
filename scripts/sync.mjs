@@ -1,6 +1,7 @@
 // 同步管道（Ticket 01）：拉全 topic:dsh-plugin 仓库 -> README -> 分类 -> plugins.json + 契约校验。
 // 用法：GITHUB_TOKEN=xxx npm run sync（无 token 也可，未认证额度内）。
-import { writeFile, mkdir } from "node:fs/promises";
+// 同步完成后对比上次数据，把新增/更新/删除的插件 URL 通过 IndexNow 通知 Bing（§4 指南）。
+import { writeFile, mkdir, readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { categorize } from "./lib/categories.mjs";
@@ -8,6 +9,8 @@ import { buildIndex } from "../search-core/index.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.join(__dirname, "..", "site", "public", "data"); // 站点静态资源目录：Worker 同源拉取
+const PUBLIC_DIR = path.dirname(DATA_DIR); // site/public：IndexNow key 文件所在
+const SITE_ORIGIN = "https://dsh-plugin-directory.online"; // canonical 域名（与 astro.config / sitemap 一致）
 const TOKEN = process.env.GITHUB_TOKEN || "";
 const HEADERS = { "User-Agent": "dsh-plugin-directory", Accept: "application/vnd.github+json" };
 if (TOKEN) HEADERS.Authorization = `Bearer ${TOKEN}`;
@@ -170,6 +173,26 @@ async function main() {
     for (const e of errors.slice(0, 20)) console.error("  -", e);
     process.exit(1);
   }
+  // --- IndexNow 通知（Bing 指南 §4）：对比上次数据，只提交新增/更新/删除的 URL ---
+  // 注意：必须在覆盖 plugins.json 之前读取旧数据，否则 diff 恒为空。
+  try {
+    const prev = await readPreviousPlugins();
+    const changed = diffChangedUrls(prev, records);
+    const deleted = prev.filter((p) => !records.some((r) => r.full_name === p.full_name));
+    const urls = [
+      ...changed.flatMap((p) => [pluginUrl(p.full_name), pluginEnUrl(p.full_name)]),
+      ...deleted.flatMap((p) => [pluginUrl(p.full_name), pluginEnUrl(p.full_name)]),
+    ];
+    if (urls.length) {
+      await notifyIndexNow(urls);
+    } else {
+      console.log("[indexnow] no URL changes since last sync; skipping");
+    }
+  } catch (e) {
+    // 通知失败不应让数据同步失败：仅告警，不中断
+    console.warn(`[indexnow] skipped due to error: ${e.message}`);
+  }
+
   await mkdir(DATA_DIR, { recursive: true });
   const payload = { generatedAt: new Date().toISOString(), count: records.length, plugins: records };
   await writeFile(path.join(DATA_DIR, "plugins.json"), JSON.stringify(payload, null, 2));
@@ -182,6 +205,83 @@ async function main() {
   const byCat = {};
   for (const rec of records) for (const c of rec.categories) byCat[c] = (byCat[c] || 0) + 1;
   console.log("[sync] categories:", JSON.stringify(byCat));
+}
+
+// 站点 URL 构造（与 sitemap.xml.ts 保持一致：zh 在根路径，en 在 /en/ 前缀）
+function pluginUrl(fullName) {
+  return `${SITE_ORIGIN}/plugin/${fullName}/`;
+}
+function pluginEnUrl(fullName) {
+  return `${SITE_ORIGIN}/en/plugin/${fullName}/`;
+}
+
+// 读取上次同步的 plugins.json（不存在则视为首次全量）
+async function readPreviousPlugins() {
+  const file = path.join(DATA_DIR, "plugins.json");
+  try {
+    const raw = JSON.parse(await readFile(file, "utf8"));
+    return Array.isArray(raw.plugins) ? raw.plugins : [];
+  } catch {
+    return [];
+  }
+}
+
+// 对比新旧记录：pushed_at / stars / description 任一变化即视为"更新"（内容已变，值得通知）
+function diffChangedUrls(prev, next) {
+  const prevMap = new Map(prev.map((p) => [p.full_name, p]));
+  const changed = [];
+  for (const rec of next) {
+    const old = prevMap.get(rec.full_name);
+    if (!old) { changed.push(rec); continue; } // 新增
+    if (
+      old.pushed_at !== rec.pushed_at ||
+      old.stars !== rec.stars ||
+      (old.description || "") !== (rec.description || "")
+    ) changed.push(rec); // 更新
+  }
+  return changed;
+}
+
+// 向 IndexNow 端点提交 URL（POST JSON；失败重试 2 次）
+async function notifyIndexNow(urls) {
+  const key = await findIndexNowKey();
+  if (!key) throw new Error("no IndexNow key file found in site/public/");
+  const body = { host: SITE_ORIGIN.replace(/^https?:\/\//, ""), key, keyLocation: `${SITE_ORIGIN}/${key}.txt`, urlList: urls };
+  const endpoint = process.env.INDEXNOW_ENDPOINT || "https://api.indexnow.org/indexnow";
+  console.log(`[indexnow] notifying ${urls.length} URLs (${changedSummary(urls)})`);
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json; charset=utf-8", "User-Agent": "dsh-plugin-directory" },
+      body: JSON.stringify(body),
+      signal: AbortSignal.timeout(15000),
+    });
+    if (res.ok) { console.log(`[indexnow] OK (${res.status})`); return; }
+    // 200/202 之外的错误：可能限流，稍等重试
+    const text = await res.text().catch(() => "");
+    if (attempt < 2) {
+      console.warn(`[indexnow] attempt ${attempt + 1} failed (${res.status} ${text.slice(0, 120)}), retrying...`);
+      await sleep(5000 * (attempt + 1));
+    } else {
+      throw new Error(`IndexNow returned ${res.status}: ${text.slice(0, 200)}`);
+    }
+  }
+}
+
+// 在 site/public/ 下寻找 <key>.txt（与 sitemap 里 robots.txt 的 Sitemap 声明一致）
+async function findIndexNowKey() {
+  const entries = await readdir(PUBLIC_DIR, { withFileTypes: true });
+  for (const e of entries) {
+    if (e.isFile() && /^[0-9a-f]{32}\.txt$/i.test(e.name)) return e.name.replace(/\.txt$/i, "");
+  }
+  // 兼容：显式环境变量指定（无 key 文件时）
+  return process.env.INDEXNOW_KEY || "";
+}
+
+function changedSummary(urls) {
+  const hasEn = urls.some((u) => u.includes("/en/plugin/"));
+  const count = urls.length / 2;
+  return `~${count} plugins, ${count * 2} URLs (zh+en)`;
 }
 
 main().catch((e) => { console.error("[sync] FATAL:", e); process.exit(1); });

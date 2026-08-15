@@ -32,13 +32,15 @@ export function GET() {
   urls.push(`<url><loc>${base}/</loc><lastmod>${lastmod}</lastmod><changefreq>daily</changefreq><priority>1.0</priority>${alternates(base + "/", base + "/en/")}</url>`);
   urls.push(`<url><loc>${base}/en/</loc><lastmod>${lastmod}</lastmod><changefreq>daily</changefreq><priority>1.0</priority>${alternates(base + "/", base + "/en/")}</url>`);
   // 插件详情页：/plugin/... 与 /en/plugin/...
+  // lastmod 用插件自身 pushed_at（Bing 指南 §3：准确 lastmod 比同步时间更有意义），无则回退同步时间。
   for (const p of plugins) {
     const [owner, repo] = p.full_name.split("/");
     if (!owner || !repo || owner.includes("..") || repo.includes("..")) continue;
+    const pLastmod = (p.pushed_at || "").slice(0, 10) || lastmod;
     const zh = `${base}/plugin/${esc(owner)}/${esc(repo)}/`;
     const en = `${base}/en/plugin/${esc(owner)}/${esc(repo)}/`;
-    urls.push(`<url><loc>${zh}</loc><lastmod>${lastmod}</lastmod><changefreq>weekly</changefreq><priority>0.6</priority>${alternates(zh, en)}</url>`);
-    urls.push(`<url><loc>${en}</loc><lastmod>${lastmod}</lastmod><changefreq>weekly</changefreq><priority>0.6</priority>${alternates(zh, en)}</url>`);
+    urls.push(`<url><loc>${zh}</loc><lastmod>${pLastmod}</lastmod><changefreq>weekly</changefreq><priority>0.6</priority>${alternates(zh, en)}</url>`);
+    urls.push(`<url><loc>${en}</loc><lastmod>${pLastmod}</lastmod><changefreq>weekly</changefreq><priority>0.6</priority>${alternates(zh, en)}</url>`);
   }
   // 关于页
   urls.push(`<url><loc>${base}/about/</loc><lastmod>${lastmod}</lastmod><changefreq>monthly</changefreq><priority>0.3</priority>${alternates(base + "/about/", base + "/en/about/")}</url>`);

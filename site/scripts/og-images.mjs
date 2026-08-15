@@ -113,7 +113,7 @@ function render(name, metaLine) {
 const browsePath = path.join(process.cwd(), "public", "data", "browse.json");
 const raw = JSON.parse(readFileSync(browsePath, "utf8"));
 const plugins = raw.plugins || [];
-const EN_LABELS = { "皮肤/UI": "Skins / UI", "终端/TUI": "Terminal / TUI", "工具/开发": "Tools / Dev", "搜索": "Search", "Agent/智能体": "Agents", "内容/媒体": "Media / Content", "娱乐/广告": "Fun / Ads", "其他": "Other" };
+const EN_LABELS = { "皮肤/UI": "Skins / UI", "终端/TUI": "Terminal / TUI", "工具/开发": "Tools / Dev", "搜索": "Search", "Agent/智能体": "Agents", "内容/媒体": "Media / Content", "娱乐/广告": "Fun / Ads" };
 const outRoot = path.join(process.cwd(), "public", "og", "plugin");
 let count = 0, t0 = Date.now();
 for (const p of plugins) {

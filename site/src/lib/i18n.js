@@ -19,7 +19,7 @@ export const STR = {
     all: "全部",
     backToTop: "回到顶部",
     openGitHub: "在 GitHub 打开",
-    languages: { "皮肤/UI": "Skins / UI", "终端/TUI": "Terminal / TUI", "工具/开发": "Tools / Dev", "搜索": "Search", "Agent/智能体": "Agents", "内容/媒体": "Media / Content", "娱乐/广告": "Fun / Ads", "其他": "Other" },
+    languages: { "皮肤/UI": "皮肤/UI", "终端/TUI": "终端/TUI", "工具/开发": "工具/开发", "搜索": "搜索", "Agent/智能体": "Agent/智能体", "内容/媒体": "内容/媒体", "娱乐/广告": "娱乐/广告" },
     langName: "EN",
     theme: "主题",
   },
@@ -42,10 +42,10 @@ export const STR = {
     all: "All",
     backToTop: "Back to top",
     openGitHub: "Open on GitHub",
-    languages: { "皮肤/UI": "Skins / UI", "终端/TUI": "Terminal / TUI", "工具/开发": "Tools / Dev", "搜索": "Search", "Agent/智能体": "Agents", "内容/媒体": "Media / Content", "娱乐/广告": "Fun / Ads", "其他": "Other" },
+    languages: { "皮肤/UI": "Skins / UI", "终端/TUI": "Terminal / TUI", "工具/开发": "Tools / Dev", "搜索": "Search", "Agent/智能体": "Agents", "内容/媒体": "Media / Content", "娱乐/广告": "Fun / Ads" },
     langName: "中",
     theme: "Theme",
   },
 };
-export const CATEGORY_ORDER = ["皮肤/UI", "终端/TUI", "工具/开发", "搜索", "Agent/智能体", "内容/媒体", "娱乐/广告", "其他"];
+export const CATEGORY_ORDER = ["皮肤/UI", "终端/TUI", "工具/开发", "搜索", "Agent/智能体", "内容/媒体", "娱乐/广告"];
 export const LANGS = ["zh", "en"];

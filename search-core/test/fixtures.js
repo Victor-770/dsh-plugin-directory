@@ -33,7 +33,7 @@ export const FIXTURE_RECORDS = [
   {
     full_name: "misc/random-tool", description: "misc helper", stars: 5,
     language: "Go", pushed_at: "2025-01-01T00:00:00Z", topics: [],
-    categories: ["其他"], tags: [],
+    categories: ["工具/开发"], tags: [],
     readme_text: "nothing relevant here.",
   },
   {
@@ -45,7 +45,7 @@ export const FIXTURE_RECORDS = [
   {
     full_name: "readme-only/readme-only", description: "misc helper", stars: 10,
     language: "Rust", pushed_at: "2025-12-01T00:00:00Z", topics: [],
-    categories: ["其他"], tags: [],
+    categories: ["工具/开发"], tags: [],
     readme_text: "this plugin is about skin care for your desktop.",
   },
 ];

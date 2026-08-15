@@ -43,6 +43,9 @@ const ogImage = site + "/og.png";
   <meta property="og:url" content={canonical} />
   <meta property="og:site_name" content={s.siteName} />
   <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={pageTitle} />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={pageTitle} />
   <meta name="twitter:description" content={pageDescription} />
@@ -99,7 +102,7 @@ const ogImage = site + "/og.png";
           Each plugin's description, stars, language, last-update time and README excerpt come from the repository itself; content is shown in the authors' original language and is not translated by this site.
         </p>
         <p>
-          Plugins are grouped into 8 functional categories (Skins / UI, Terminal / TUI, Tools / Dev, Search, Agents, Media / Content, Fun / Ads, Other),
+          Plugins are grouped into 7 functional categories (Skins / UI, Terminal / TUI, Tools / Dev, Search, Agents, Media / Content, Fun / Ads),
           assigned by rules with manual fallback for high-star repositories. Search supports CN/EN alias matching (e.g. "皮肤" ↔ "skin").
         </p>
         <p class="text-muted text-sm">

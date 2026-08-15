@@ -8,7 +8,6 @@ export const CATEGORY_SLUGS = {
   "Agent/智能体": "agents",
   "内容/媒体": "media-content",
   "娱乐/广告": "fun-ads",
-  "其他": "other",
 };
 
 export const CATEGORY_DESC = {
@@ -20,7 +19,6 @@ export const CATEGORY_DESC = {
     "agents": "Agent 与智能体插件：子代理编排、技能包与多智能体协作，扩展 DSH 的自动化能力。",
     "media-content": "内容与媒体插件：图片、视频、音频处理与内容生成，覆盖常见创作场景。",
     "fun-ads": "娱乐与广告插件：趣味功能、游戏与广告过滤，为日常使用加点乐子。",
-    "other": "未归入上述分类的 DeepSeek Harness 插件。",
   },
   en: {
     "skins-ui": "Themes, skins, color schemes and UI customization for DeepSeek Harness — make the interface your own.",
@@ -30,7 +28,6 @@ export const CATEGORY_DESC = {
     "agents": "Agent plugins: sub-agent orchestration, skill packs and multi-agent collaboration on top of DSH.",
     "media-content": "Media and content plugins: image, video, audio processing and content generation for common creation workflows.",
     "fun-ads": "Fun and ads plugins: toys, games and ad-blocking extras to lighten up everyday use.",
-    "other": "DeepSeek Harness plugins that do not fit the categories above.",
   },
 };
 
