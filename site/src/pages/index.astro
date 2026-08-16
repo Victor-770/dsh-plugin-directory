@@ -93,7 +93,9 @@ const jsonLd = {
   <meta name="twitter:title" content={pageTitle} />
   <meta name="twitter:description" content={pageDescription} />
   <meta name="twitter:image" content={ogImage} />
+  <link rel="icon" href="/favicon.ico" sizes="32x32" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
   <script is:inline>
     // 主题：默认深色，跟随系统，可手动切换（localStorage 持久）
