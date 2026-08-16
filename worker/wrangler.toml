@@ -3,6 +3,6 @@ main = "src/index.js"
 compatibility_date = "2026-08-13"
 
 [vars]
-# 静态站地址：Worker 冷启动从这里拉取 index.json / plugins.json。
+# 静态站地址：Worker 冷启动从这里拉取 index.json.gz / plugins 分片。
 # 正常请求走 Referer（实际访问域名），此值仅在直接访问 Worker URL 时兜底。
 SITE_ORIGIN = "https://dsh-plugin-directory.online"

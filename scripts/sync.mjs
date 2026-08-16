@@ -1,11 +1,12 @@
 // 同步管道（Ticket 01 + 架构升级）：双游标增量 + 定期全量对账。
 // - 常规同步（默认）：pushed 增量（最近 N 天活跃）+ created 兜底（上次对账之后新增），README 有缓存。
 // - 对账同步（--reconcile）：created 全窗口二分全量重扫，兜住"很久没 push 但新打 topic"的老仓库。
-// 游标存 site/public/data/meta.json（workflow 的 file_pattern 是 site/public/data/*.json，会随数据一起提交，
+// 游标存 site/public/data/meta.json（workflow 的 file_pattern 是 site/public/data 整目录，会随数据一起提交，
 // 保证 CI 全新 checkout 后仍能读到上次对账时间与同步计数，增量逻辑在 CI 里持续生效）。
 // 用法：GITHUB_TOKEN=xxx npm run sync [-- --reconcile]
 // 说明：搜索 API 未认证 10 次/分钟，认证 30 次/分钟；脚本按认证与否自适应限速。
-import { writeFile, mkdir, readdir, readFile } from "node:fs/promises";
+import { writeFile, mkdir, readdir, readFile, rm } from "node:fs/promises";
+import { gzipSync } from "node:zlib";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { categorize } from "./lib/categories.mjs";
@@ -245,14 +246,25 @@ async function writeMeta(meta) {
   await writeFile(META_FILE, JSON.stringify(meta), "utf8");
 }
 
-// 读取上次数据文件，构造 full_name -> record 的 Map（供 README 缓存与 diff）
+// 读取上次数据文件，构造 full_name -> record 的 Map（供 README 缓存与 diff）。
+// 新布局：data/plugins/manifest.json + 分片；兼容迁移前遗留的 plugins.json。
 async function readPreviousRecords() {
-  const file = path.join(DATA_DIR, "plugins.json");
+  const shardDir = path.join(DATA_DIR, "plugins");
   try {
-    const raw = JSON.parse(await readFile(file, "utf8"));
-    return Array.isArray(raw.plugins) ? raw.plugins : [];
+    const manifest = JSON.parse(await readFile(path.join(shardDir, "manifest.json"), "utf8"));
+    const out = [];
+    for (const name of manifest.shards || []) {
+      const shard = JSON.parse(await readFile(path.join(shardDir, name), "utf8"));
+      if (Array.isArray(shard.plugins)) out.push(...shard.plugins);
+    }
+    return out;
   } catch {
-    return [];
+    try {
+      const raw = JSON.parse(await readFile(path.join(DATA_DIR, "plugins.json"), "utf8"));
+      return Array.isArray(raw.plugins) ? raw.plugins : [];
+    } catch {
+      return [];
+    }
   }
 }
 
@@ -416,9 +428,29 @@ async function main() {
 
   await mkdir(DATA_DIR, { recursive: true });
   const payload = { generatedAt: new Date().toISOString(), count: finalRecords.length, plugins: finalRecords };
-  await writeFile(path.join(DATA_DIR, "plugins.json"), JSON.stringify(payload, null, 2));
+
+  // plugins 分片：单文件曾达 28.8MiB，超出 Cloudflare Pages 25MiB/文件上限。
+  // 按 SHARD_SIZE 个/片写入 data/plugins/NNN.json + manifest.json；Worker 与站点构建按 manifest 拉取全部切片。
+  const shardDir = path.join(DATA_DIR, "plugins");
+  await mkdir(shardDir, { recursive: true });
+  const SHARD_SIZE = 400;
+  const shardNames = [];
+  for (let i = 0; i < finalRecords.length; i += SHARD_SIZE) {
+    const chunk = finalRecords.slice(i, i + SHARD_SIZE);
+    const name = String(i / SHARD_SIZE).padStart(3, "0") + ".json";
+    await writeFile(path.join(shardDir, name), JSON.stringify({ generatedAt: payload.generatedAt, count: chunk.length, plugins: chunk }, null, 2));
+    shardNames.push(name);
+  }
+  await writeFile(path.join(shardDir, "manifest.json"), JSON.stringify({ generatedAt: payload.generatedAt, count: finalRecords.length, shards: shardNames }));
+  // 移除旧单文件，避免遗留超限文件再次进入部署
+  await rm(path.join(DATA_DIR, "plugins.json"), { force: true });
+
+  // 搜索索引 gzip 压缩：index.json 已达 17.8MiB 且随仓库数增长，逼近 25MiB 上限。
+  // 压缩后仅 Worker 消费（DecompressionStream 解压；gzip 在 Node 与 workerd 都支持，brotli 仅 workerd）。
   const index = buildIndex(finalRecords);
-  await writeFile(path.join(DATA_DIR, "index.json"), JSON.stringify(index));
+  await writeFile(path.join(DATA_DIR, "index.json.gz"), gzipSync(JSON.stringify(index)));
+  await rm(path.join(DATA_DIR, "index.json"), { force: true });
+
   // 轻量浏览数据（不含 readme_text）：站点端过滤/排序用，避免 ~9MB 全量进客户端
   const browse = finalRecords.map(({ readme_text, ...meta }) => meta);
   await writeFile(path.join(DATA_DIR, "browse.json"), JSON.stringify({ generatedAt: payload.generatedAt, count: browse.length, plugins: browse }));
@@ -432,7 +464,7 @@ async function main() {
   }
   await writeMeta(meta);
 
-  console.log(`[sync] OK: plugins.json + index.json + browse.json (${finalRecords.length} plugins, ${Object.keys(index.tokens).length} tokens)`);
+  console.log(`[sync] OK: plugins/ ${shardNames.length} shards + index.json.gz + browse.json (${finalRecords.length} plugins, ${Object.keys(index.tokens).length} tokens)`);
   const byCat = {};
   for (const rec of finalRecords) for (const c of rec.categories) byCat[c] = (byCat[c] || 0) + 1;
   console.log("[sync] categories:", JSON.stringify(byCat));

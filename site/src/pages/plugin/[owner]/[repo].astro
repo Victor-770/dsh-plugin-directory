@@ -4,6 +4,7 @@ import { CATEGORY_SLUGS } from "../../../lib/category-meta.js";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import "../../../styles/global.css";
+import { loadPlugins } from "../../../lib/plugins-data.js";
 
 export async function getStaticPaths() {
   // 构建时 cwd 恒为 site/；数据加载必须位于本函数内（Astro 编译约束）
@@ -12,12 +13,13 @@ export async function getStaticPaths() {
   try {
     browse = JSON.parse(readFileSync(browsePath, "utf8")).plugins || [];
   } catch (e) { /* 数据未生成时站点仍可构建（忽略） */ }
-  // README 摘要：从 plugins.json 取 readme_text（内容增强，避免详情页过薄）
+    // README 摘要：从 plugins 分片取 readme_text（内容增强，避免详情页过薄）
   const readmeMap = new Map();
   try {
-    const raw = JSON.parse(readFileSync(path.join(process.cwd(), "public", "data", "plugins.json"), "utf8"));
-    for (const x of raw.plugins || []) if (x.readme_text) readmeMap.set(x.full_name, String(x.readme_text));
+    const { plugins } = loadPlugins();
+    for (const x of plugins) if (x.readme_text) readmeMap.set(x.full_name, String(x.readme_text));
   } catch (e) { /* 无数据时详情页仅展示元信息 */ }
+
   // 仅收录含 "owner/repo" 形态的条目，避免生成畸形路径
   return browse
     .filter((p) => typeof p.full_name === "string" && p.full_name.includes("/") && !p.full_name.includes(".."))

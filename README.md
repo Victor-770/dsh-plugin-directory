@@ -10,12 +10,12 @@ DeepSeek Harness 插件目录：中英双语、按功能分类、README 全文�
 ## 结构
 
 ```
-scripts/sync.mjs        # 同步管道：拉 GitHub API -> plugins.json + index.json + browse.json，完成后 IndexNow 通知 Bing
+scripts/sync.mjs        # 同步管道：拉 GitHub API -> plugins/ 分片 + index.json.gz + browse.json，完成后 IndexNow 通知 Bing
 scripts/lib/categories.mjs  # 八分类规则 + top-20 手动兜底
 search-core/            # 纯函数库（tokenize/buildIndex/expandAliases/search）+ 测试
 worker/                 # Cloudflare Worker：GET /api/search
 site/                   # Astro 静态站
-site/public/data/       # 同步产物（Pages 静态服务，Worker 同源拉取）
+site/public/data/       # 同步产物（Pages 静态服务，Worker 同源拉取；plugins 分片 + gzip 索引，规避 Pages 25MiB/文件上限）
 site/src/pages/plugin/  # 每插件详情页（构建期生成，SEO 长尾入口；/en/ 下有英文版）
 site/src/pages/en/       # 英文版页面树（真实 URL /en/，配 hreflang，zh 在根路径）
 site/src/pages/category/ # 分类落地页（/category/{slug}/，中英，空分类不生成）

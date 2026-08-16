@@ -1,5 +1,5 @@
 // DSH Plugin Directory 搜索 Worker（Ticket 03）：薄 HTTP 适配层，逻辑全在 search-core。
-// 冷启动 fetch 同源 index.json + plugins.json，模块级内存缓存；查询纯内存，P95 目标 <300ms。
+// 冷启动 fetch 同源数据（index.json.gz + plugins/ 分片），模块级内存缓存；查询纯内存，P95 目标 <300ms。
 import { search } from "../../search-core/index.js";
 
 let cache = null;
@@ -9,12 +9,26 @@ async function loadData(env, requestOrigin) {
   // 实际访问域名（Referer）优先：站点换域名也无需改 Worker 配置；SITE_ORIGIN 仅直连兜底
   const base = requestOrigin || (env && env.SITE_ORIGIN);
   if (!base) throw new Error("SITE_ORIGIN not configured and no referer origin available");
-  const [idx, pl] = await Promise.all([
-    fetch(base + "/data/index.json", { cf: { cacheTtl: 300 } }),
-    fetch(base + "/data/plugins.json", { cf: { cacheTtl: 300 } }),
+  // 数据布局（2026-08 起）：单文件 plugins.json 曾达 28.8MiB、index.json 17.8MiB，
+  // 超出 Cloudflare Pages 25MiB/文件上限 -> plugins 改为分片 + manifest，索引 gzip 压缩。
+  const [idxRes, manRes] = await Promise.all([
+    fetch(base + "/data/index.json.gz", { cf: { cacheTtl: 300 } }),
+    fetch(base + "/data/plugins/manifest.json", { cf: { cacheTtl: 300 } }),
   ]);
-  if (!idx.ok || !pl.ok) throw new Error(`data fetch failed: index=${idx.status} plugins=${pl.status}`);
-  cache = { index: await idx.json(), plugins: (await pl.json()).plugins };
+  if (!idxRes.ok || !manRes.ok) throw new Error(`data fetch failed: index=${idxRes.status} manifest=${manRes.status}`);
+  // 解压 gzip 索引（Node 与 workerd 均支持 DecompressionStream gzip）
+  const decompressed = new Response(
+    new Blob([await idxRes.arrayBuffer()]).stream().pipeThrough(new DecompressionStream("gzip"))
+  );
+  const index = await decompressed.json();
+  const manifest = await manRes.json();
+  const shardRes = await Promise.all(
+    (manifest.shards || []).map((s) => fetch(base + "/data/plugins/" + s, { cf: { cacheTtl: 300 } }))
+  );
+  const bad = shardRes.find((r) => !r.ok);
+  if (bad) throw new Error(`plugins shard fetch failed: ${bad.status}`);
+  const plugins = (await Promise.all(shardRes.map((r) => r.json()))).flatMap((d) => d.plugins || []);
+  cache = { index, plugins };
   return cache;
 }
 

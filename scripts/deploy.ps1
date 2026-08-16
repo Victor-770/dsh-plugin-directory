@@ -6,8 +6,8 @@ $root = Split-Path -Parent $PSScriptRoot
 Write-Host "`n=== DSH Plugin Directory 部署向导 ===`n" -ForegroundColor Cyan
 
 # 1) 数据与代码就绪
-$dataOk = Test-Path "$root/site/public/data/plugins.json"
-$dataCount = if ($dataOk) { (Get-Content "$root/site/public/data/plugins.json" -Raw | ConvertFrom-Json).count } else { 0 }
+$dataOk = Test-Path "$root/site/public/data/plugins/manifest.json"
+$dataCount = if ($dataOk) { (Get-Content "$root/site/public/data/plugins/manifest.json" -Raw | ConvertFrom-Json).count } else { 0 }
 Write-Host "[1/6] 数据就绪: $dataOk ($dataCount 插件)" -ForegroundColor $(if ($dataOk) { "Green" } else { "Yellow" })
 if (-not $dataOk) { Write-Host "   -> 先运行: node scripts/sync.mjs" }
 

@@ -12,10 +12,14 @@ const dataDir = path.join(__dirname, "..", "site", "public", "data");
 const N = Number(process.argv[2]) || 30;
 
 const dataServer = http.createServer(async (req, res) => {
-  const name = req.url === "/data/plugins.json" ? "plugins.json" : req.url === "/data/index.json" ? "index.json" : null;
-  if (!name) { res.writeHead(404); res.end(); return; }
-  try { const buf = await readFile(path.join(dataDir, name)); res.writeHead(200, { "content-type": "application/json" }); res.end(buf); }
-  catch { res.writeHead(404); res.end(); }
+  // 新数据布局：/data/plugins/manifest.json、/data/plugins/NNN.json、/data/index.json.gz
+  const rel = req.url.startsWith("/data/") ? req.url.slice("/data/".length) : null;
+  if (!rel || !/^plugins\/[\w-]+\.json$|^index\.json\.gz$/.test(rel)) { res.writeHead(404); res.end(); return; }
+  try {
+    const buf = await readFile(path.join(dataDir, rel));
+    res.writeHead(200, { "content-type": rel.endsWith(".br") ? "application/octet-stream" : "application/json" });
+    res.end(buf);
+  } catch { res.writeHead(404); res.end(); }
 });
 await new Promise((r) => dataServer.listen(0, "127.0.0.1", r));
 const dataOrigin = `http://127.0.0.1:${dataServer.address().port}`;

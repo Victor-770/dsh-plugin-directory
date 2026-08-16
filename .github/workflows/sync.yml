@@ -24,4 +24,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore(data): sync dsh-plugin directory"
-          file_pattern: "site/public/data/*.json"
+          file_pattern: "site/public/data"   # 含 plugins/ 分片与 index.json.br
