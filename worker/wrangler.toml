@@ -4,5 +4,10 @@ compatibility_date = "2026-08-13"
 
 [vars]
 # 静态站地址：Worker 冷启动从这里拉取 index.json.gz / plugins 分片。
-# 正常请求走 Referer（实际访问域名），此值仅在直接访问 Worker URL 时兜底。
+# 显式配置即锁定数据源（Referer 不再影响）。未配置时仅接受官方 *.pages.dev Referer。
 SITE_ORIGIN = "https://dsh-plugin-directory.online"
+
+# 限流信任密钥（不要写在这里，用 secret）：
+#   npx wrangler secret put PAGES_WORKER_SHARED_KEY   # 随机串，与 Pages 面板同名环境变量一致
+# 配置后 Pages Function 转发的 x-dsh-real-ip 才被 Worker 信任；不配置 = 只按边缘 IP 限流（安全默认）。
+# 可选限流参数（默认 120 次 / 60s）：RATE_LIMIT_MAX、RATE_LIMIT_WINDOW_SECONDS。

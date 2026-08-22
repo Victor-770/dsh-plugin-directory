@@ -55,9 +55,10 @@ node worker/smoke.mjs             # Worker 本地冒烟（需先 sync）
 
 1. **GitHub repo** 推送到远端，仓库 Secrets 添加 `GH_TOKEN`（fine-grained，public repo 只读；不加也能跑，额度低）。
 2. **Pages**：连接该 repo → 构建命令 `cd site && npm install && npm run build` → 输出目录 `site/dist`（相对仓库根） → 得到 `xxx.pages.dev`（自定义域名 `dsh-plugin-directory.online`，并在 Cloudflare 配好 pages.dev → 主域 301）。
-3. **Worker**：`cd worker` → 把 `wrangler.toml` 的 `SITE_ORIGIN` 改成 Pages 地址 → `npx wrangler deploy`。可选限流环境变量（`wrangler.toml [vars]` 或面板配置）：`RATE_LIMIT_MAX`（每 IP 每窗口最大请求数，默认 120）、`RATE_LIMIT_WINDOW_SECONDS`（窗口秒数，默认 60）。真实访客 IP 的限流在 Pages Function（`functions/api/search.js`）执行，Worker 侧按转发头兜底。
-4. 上线检查：首页展示"最后同步时间"；`/api/search?q=皮肤` 返回结果。
-5. **Bing Webmaster Tools**（可选但推荐）：验证 `dsh-plugin-directory.online`，提交 `https://dsh-plugin-directory.online/sitemap.xml`。IndexNow 通知无需在 BWT 验证（key 文件已部署）。
+3. **Worker**：`cd worker` → 把 `wrangler.toml` 的 `SITE_ORIGIN` 改成 Pages 地址 → `npx wrangler deploy`。可选限流环境变量（`wrangler.toml [vars]` 或面板配置）：`RATE_LIMIT_MAX`（每 IP 每窗口最大请求数，默认 120）、`RATE_LIMIT_WINDOW_SECONDS`（窗口秒数，默认 60）。真实访客 IP 的限流在 Pages Function（`functions/api/search.js`）执行，Worker 侧按边缘 IP 兜底。
+4. **限流信任密钥（可选，推荐）**：`cd worker && npx wrangler secret put PAGES_WORKER_SHARED_KEY`（填随机串），并在 Pages 面板为生产环境添加同名环境变量。配置后 Pages Function 转发的真实 IP 头（`x-dsh-real-ip`）才会被 Worker 信任；两侧都不配置也是安全默认（Worker 只按边缘 `CF-Connecting-IP` 限流，功能不受影响）。
+5. 上线检查：首页展示"最后同步时间"；`/api/search?q=皮肤` 返回结果。
+6. **Bing Webmaster Tools**（可选但推荐）：验证 `dsh-plugin-directory.online`，提交 `https://dsh-plugin-directory.online/sitemap.xml`。IndexNow 通知无需在 BWT 验证（key 文件已部署）。
 
 ## 已知取舍（grilling 记档）
 
