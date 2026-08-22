@@ -50,10 +50,11 @@ const site = Astro.site.origin; // astro.config 恒设 site（SITE_ORIGIN 单源
   <meta name="twitter:title" content={pageTitle} />
   <meta name="twitter:description" content={pageDescription} />
   <meta name="twitter:image" content={ogImage} />
-    <!-- favicon 声明：48x48 PNG 唯一主图标——Google Search 指南要求方形且为 48px 的倍数。
-         ?v=1 为 favicon 缓存击穿：浏览器对"无图标"的负缓存极其顽固且不吃普通刷新（站点早期
-         无图标时期访问过的浏览器一直显示默认地球）；换版本号强制全网重新拉取，图标变更时同步 bump。
-         favicon.ico 仍保留在根路径供遗留浏览器自动发现；favicon.svg 留作 JSON-LD logo。 -->
+    <!-- favicon 声明：按 Google Search 指南成对声明——ico(sizes=any) 兜底 + 48x48 PNG 主图标
+         （方形、48px 的倍数）。?v=1 为 favicon 缓存击穿：浏览器对"无图标"的负缓存极其顽固
+         且不吃普通刷新（站点早期无图标时期访问过的浏览器一直显示默认地球）；换版本号强制
+         全网重新拉取，图标变更时同步 bump。favicon.svg 留作 JSON-LD logo。 -->
+    <link rel="icon" href="/favicon.ico?v=1" sizes="any" />
     <link rel="icon" href="/favicon-48x48.png?v=1" sizes="48x48" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=1" />
     <link rel="manifest" href="/site.webmanifest" />
@@ -82,6 +83,8 @@ const site = Astro.site.origin; // astro.config 恒设 site（SITE_ORIGIN 单源
         </a>
         <div class="flex items-center gap-2">
           <slot name="header-middle" />
+          <a href={langPrefix + "/articles/"} class="shrink-0 rounded-lg px-2.5 py-1.5 text-xs font-medium text-muted hover:text-ink hover:bg-surface2 transition">{s.articles}</a>
+          <a href={langPrefix + "/about/"} class="shrink-0 rounded-lg px-2.5 py-1.5 text-xs font-medium text-muted hover:text-ink hover:bg-surface2 transition">{s.about}</a>
           <a id="lang-toggle" href={langToggleHref} class="shrink-0 rounded-lg border border-line bg-surface px-3 py-2 text-xs font-medium hover:border-accent" data-i18n="langName" hreflang={lang === "en" ? "zh" : "en"}>{s.langName}</a>
           <button id="theme-toggle" class="shrink-0 rounded-lg border border-line bg-surface px-3 py-2 text-xs" title={s.theme} aria-label={s.theme}>
             <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -95,7 +98,7 @@ const site = Astro.site.origin; // astro.config 恒设 site（SITE_ORIGIN 单源
 
     <footer class="mt-12 border-t border-line pt-4 text-xs text-muted">
       <slot name="footer">
-        <p>© {new Date().getFullYear()} DSH Plugin Directory · <a class="underline" href={langPrefix + "/"} rel="noopener">{s.siteName}</a> · GitHub topic <a class="underline" href="https://github.com/topics/dsh-plugin" rel="noopener">dsh-plugin</a> · <a class="underline" href="https://github.com/Kristin130/dsh-plugin-directory/blob/main/LICENSE" rel="noopener">AGPL-3.0</a></p>
+        <p>© {new Date().getFullYear()} DSH Plugin Directory · <a class="underline" href={langPrefix + "/"} rel="noopener">{s.siteName}</a> · <a class="underline" href={langPrefix + "/articles/"} rel="noopener">{s.articles}</a> · <a class="underline" href={langPrefix + "/about/"} rel="noopener">{s.about}</a> · GitHub topic <a class="underline" href="https://github.com/topics/dsh-plugin" rel="noopener">dsh-plugin</a> · <a class="underline" href="https://github.com/Kristin130/dsh-plugin-directory/blob/main/LICENSE" rel="noopener">AGPL-3.0</a></p>
       </slot>
     </footer>
   </div>

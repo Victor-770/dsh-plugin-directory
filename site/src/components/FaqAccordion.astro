@@ -1,0 +1,26 @@
+---
+import { STR } from "../lib/i18n.js";
+
+const { faq = [], lang = "zh" } = Astro.props;
+const s = STR[lang];
+---
+{faq.length > 0 && (
+  <section class="mt-10 pt-6 border-t border-line" aria-labelledby="faq-heading">
+    <h2 id="faq-heading" class="text-xl font-semibold text-ink">{s.faqTitle}</h2>
+    <div class="mt-4 space-y-3">
+      {faq.map((item, index) => (
+        <details class="group rounded-xl border border-line bg-surface p-4 open:bg-surface2 transition" open={index === 0}>
+          <summary class="flex items-center justify-between font-medium text-ink cursor-pointer list-none select-none">
+            <span class="text-sm md:text-base font-semibold">{item.q}</span>
+            <span class="ml-2 shrink-0 transition group-open:rotate-180 text-muted">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </span>
+          </summary>
+          <p class="mt-3 text-sm leading-relaxed text-muted pt-2 border-t border-line/50">
+            {item.a}
+          </p>
+        </details>
+      ))}
+    </div>
+  </section>
+)}

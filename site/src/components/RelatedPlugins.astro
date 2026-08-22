@@ -1,0 +1,49 @@
+---
+import { STR } from "../lib/i18n.js";
+import { readFileSync } from "node:fs";
+import path from "node:path";
+
+const { pluginSlugs = [], lang = "zh" } = Astro.props;
+const s = STR[lang];
+const langPrefix = lang === "en" ? "/en" : "";
+
+let allPlugins = [];
+try {
+  const browsePath = path.join(process.cwd(), "public", "data", "browse.json");
+  allPlugins = JSON.parse(readFileSync(browsePath, "utf8")).plugins || [];
+} catch (e) {}
+
+// 筛选匹配的插件并按 star 排序
+const matchedPlugins = allPlugins
+  .filter((p) => pluginSlugs.includes(p.full_name))
+  .sort((a, b) => (b.stars || 0) - (a.stars || 0))
+  .slice(0, 6);
+---
+{matchedPlugins.length > 0 && (
+  <section class="mt-12 pt-8 border-t border-line" aria-labelledby="related-plugins-heading">
+    <div class="flex items-center justify-between gap-3">
+      <h2 id="related-plugins-heading" class="text-xl font-semibold text-ink">{s.relatedPluginsTitle}</h2>
+      <a href={langPrefix + "/"} class="text-xs text-accent hover:underline">{s.browseAll} →</a>
+    </div>
+    <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {matchedPlugins.map((p) => {
+        const [owner, repo] = p.full_name.split("/");
+        const href = `${langPrefix}/plugin/${owner}/${repo}/`;
+        return (
+          <a href={href} class="block rounded-xl border border-line bg-surface p-4 transition hover:border-accent/60 hover:bg-surface2">
+            <div class="flex items-start justify-between gap-2">
+              <span class="font-mono text-sm font-medium text-ink break-all">{p.full_name}</span>
+              <span class="shrink-0 text-xs text-muted">★ {Number(p.stars || 0).toLocaleString()}</span>
+            </div>
+            <p class="mt-2 text-xs leading-relaxed text-muted line-clamp-2">{p.description || "—"}</p>
+            {p.language && (
+              <div class="mt-3 text-[11px] text-muted">
+                <span>{p.language}</span>
+              </div>
+            )}
+          </a>
+        );
+      })}
+    </div>
+  </section>
+)}

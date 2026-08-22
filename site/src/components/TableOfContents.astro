@@ -1,0 +1,20 @@
+---
+import { STR } from "../lib/i18n.js";
+
+const { headings = [], lang = "zh" } = Astro.props;
+const s = STR[lang];
+---
+{headings.length > 0 && (
+  <nav class="rounded-xl border border-line bg-surface p-4 text-sm" aria-label={s.tableOfContents}>
+    <h2 class="text-xs font-semibold uppercase tracking-wider text-muted mb-3">{s.tableOfContents}</h2>
+    <ul class="space-y-2 text-xs">
+      {headings.map((h) => (
+        <li class={h.level === 3 ? "pl-3 text-muted hover:text-ink" : "font-medium text-ink/90 hover:text-accent"}>
+          <a href={`#${h.id}`} class="block transition hover:underline">
+            {h.text}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}

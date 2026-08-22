@@ -1,0 +1,83 @@
+---
+import BaseLayout from "../../../components/BaseLayout.astro";
+import ArticleCard from "../../../components/ArticleCard.astro";
+import { STR } from "../../../lib/i18n.js";
+import { getArticlesByLang } from "../../../lib/articles-data.js";
+
+const lang = "en";
+const s = STR[lang];
+const site = Astro.site.origin;
+const canonical = site + "/en/articles/";
+const zhUrl = site + "/articles/";
+const enUrl = site + "/en/articles/";
+const ogImage = site + "/og.png";
+
+const articles = getArticlesByLang(lang);
+const pageTitle = `DeepSeek Harness Articles, Explanations & Guides — ${s.siteName}`;
+const pageDescription = "Explore deep architecture breakdowns, plugin ecosystem guides, coding agent comparisons, and tutorials for DeepSeek Harness (dsh).";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "name": pageTitle,
+      "description": pageDescription,
+      "url": canonical,
+      "inLanguage": lang,
+      "publisher": {
+        "@type": "Organization",
+        "name": s.siteName,
+        "url": site
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": s.siteName, "item": site + "/en/" },
+        { "@type": "ListItem", "position": 2, "name": s.articles, "item": canonical }
+      ]
+    }
+  ]
+};
+---
+<BaseLayout
+  lang={lang}
+  pageTitle={pageTitle}
+  pageDescription={pageDescription}
+  canonical={canonical}
+  zhUrl={zhUrl}
+  enUrl={enUrl}
+  ogImage={ogImage}
+  langToggleHref="/articles/"
+  jsonLd={jsonLd}
+  containerClass="max-w-4xl"
+>
+  <main id="main-content" class="mt-6">
+    <nav class="text-xs text-muted" aria-label="Breadcrumbs">
+      <ol class="flex items-center gap-1.5">
+        <li><a href="/en/" class="hover:text-accent">{s.siteName}</a></li>
+        <li aria-hidden="true">/</li>
+        <li class="text-ink" aria-current="page">{s.articles}</li>
+      </ol>
+    </nav>
+
+    <div class="mt-5">
+      <h1 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">DeepSeek Harness Articles & Guides</h1>
+      <p class="mt-2 text-sm text-muted">{s.articlesTagline}</p>
+    </div>
+
+    <div class="mt-8 grid gap-4">
+      {articles.map((article) => (
+        <ArticleCard article={article} lang={lang} />
+      ))}
+      {articles.length === 0 && (
+        <div class="rounded-xl border border-line bg-surface p-8 text-center text-muted">
+          No articles published yet.
+        </div>
+      )}
+    </div>
+  </main>
+
+  <p slot="footer">© {new Date().getFullYear()} DSH Plugin Directory · <a class="underline" href="/en/" rel="noopener">{s.siteName}</a> · <a class="underline" href="/en/articles/" rel="noopener">{s.articles}</a> · <a class="underline" href="/en/about/" rel="noopener">{s.about}</a> · <a class="underline" href="https://github.com/Kristin130/dsh-plugin-directory/blob/main/LICENSE" rel="noopener">AGPL-3.0</a></p>
+</BaseLayout>

@@ -6,6 +6,7 @@ import path from "node:path";
 import { CATEGORY_ORDER } from "./i18n.js";
 import { CATEGORY_SLUGS } from "./category-meta.js";
 import { hasEnPage } from "./publish-policy.js";
+import { getArticlesByLang } from "./articles-data.js";
 
 export const SITEMAP_URLS_PER_FILE = 5000;
 
@@ -53,9 +54,18 @@ function coreUrls(base, plugins, lastmod) {
   const urls = [
     url(`${base}/`, lastmod, "daily", "1.0", `${base}/`, `${base}/en/`),
     url(`${base}/en/`, lastmod, "daily", "1.0", `${base}/`, `${base}/en/`),
+    url(`${base}/articles/`, lastmod, "daily", "0.9", `${base}/articles/`, `${base}/en/articles/`),
+    url(`${base}/en/articles/`, lastmod, "daily", "0.9", `${base}/articles/`, `${base}/en/articles/`),
     url(`${base}/about/`, lastmod, "monthly", "0.3", `${base}/about/`, `${base}/en/about/`),
     url(`${base}/en/about/`, lastmod, "monthly", "0.3", `${base}/about/`, `${base}/en/about/`),
   ];
+  const zhArticles = getArticlesByLang("zh");
+  for (const a of zhArticles) {
+    const aLastmod = (a.updatedAt || a.publishedAt || lastmod).slice(0, 10);
+    const zh = `${base}/articles/${a.slug}/`;
+    const en = `${base}/en/articles/${a.slug}/`;
+    urls.push(url(zh, aLastmod, "weekly", "0.8", zh, en), url(en, aLastmod, "weekly", "0.8", zh, en));
+  }
   for (const key of CATEGORY_ORDER) {
     if (!catKeys.has(key) || !CATEGORY_SLUGS[key]) continue;
     const zh = `${base}/category/${CATEGORY_SLUGS[key]}/`;

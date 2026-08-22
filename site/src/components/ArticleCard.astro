@@ -1,0 +1,42 @@
+---
+import { STR } from "../lib/i18n.js";
+
+const { article, lang = "zh" } = Astro.props;
+const s = STR[lang];
+const articleHref = lang === "en" ? `/en/articles/${article.slug}/` : `/articles/${article.slug}/`;
+---
+<article class="flex flex-col justify-between rounded-xl border border-line bg-surface p-6 transition duration-150 hover:border-accent/60 hover:bg-surface2">
+  <div>
+    <div class="flex flex-wrap items-center gap-2 text-xs text-muted">
+      <span class="rounded-md bg-accent/15 px-2 py-0.5 font-medium text-accent">{article.category}</span>
+      <span aria-hidden="true">·</span>
+      <time datetime={article.publishedAt}>{article.publishedAt}</time>
+      <span aria-hidden="true">·</span>
+      <span>{article.readingTime}</span>
+    </div>
+
+    <h2 class="mt-3 text-lg font-semibold tracking-tight text-ink">
+      <a href={articleHref} class="hover:text-accent hover:underline">
+        {article.title}
+      </a>
+    </h2>
+
+    <p class="mt-2 text-sm leading-relaxed text-muted line-clamp-3">
+      {article.pageDescription || article.snippet}
+    </p>
+  </div>
+
+  <div class="mt-5 pt-4 border-t border-line/60 flex flex-wrap items-center justify-between gap-2">
+    <div class="flex flex-wrap gap-1.5 text-[11px]">
+      {(article.tags || []).slice(0, 3).map((tag) => (
+        <span class="rounded-full bg-surface2 px-2.5 py-0.5 text-muted border border-line/50">
+          #{tag}
+        </span>
+      ))}
+    </div>
+    <a href={articleHref} class="inline-flex items-center gap-1 text-xs font-medium text-accent hover:underline">
+      {s.readMore}
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </a>
+  </div>
+</article>
