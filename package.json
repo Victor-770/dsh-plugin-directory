@@ -6,6 +6,6 @@
   "license": "AGPL-3.0-or-later",
   "scripts": {
     "sync": "node scripts/sync.mjs",
-    "test": "node --test \"search-core/test/*.test.js\""
+    "test": "node --test \"search-core/test/*.test.js\" \"site/test/*.test.js\" \"site/src/lib/*.test.js\""
   }
 }
