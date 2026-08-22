@@ -88,6 +88,33 @@ function expandGroup(tokens, aliases) {
   return set;
 }
 
+// ---------- 查询热路径加速（索引文件格式不变） ----------
+// 倒排链按文档 id 升序（buildIndex 依 id 顺序 push），成员判断用二分查找：
+// 旧 Array.includes 对千级倒排链 × 万级文档是 O(N²)，随语料线性恶化。
+function postingHas(list, id) {
+  let lo = 0, hi = list.length - 1;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    const v = list[mid];
+    if (v === id) return true;
+    if (v < id) lo = mid + 1;
+    else hi = mid - 1;
+  }
+  return false;
+}
+
+// title/desc token 的 Set 视图，按 doc 对象经 WeakMap 记忆（只在本进程内派生，不改索引产物）：
+// 每查询重复构建小 Set 反而慢，记忆后命中判断 O(1)。
+const docTokenSets = new WeakMap(); // doc -> { title: Set, desc: Set }
+function docSets(doc) {
+  let s = docTokenSets.get(doc);
+  if (!s) {
+    s = { title: new Set(doc.title_tokens), desc: new Set(doc.desc_tokens) };
+    docTokenSets.set(doc, s);
+  }
+  return s;
+}
+
 /** 查询词双向别名展开（含别名值的切词结果）。 */
 export function expandAliases(query, aliases = ALIASES) {
   const terms = tokenize(query);
@@ -133,13 +160,17 @@ export function search(index, { q = "", categories = [], tags = [], sort = "rele
     if (categories.length && !categories.some((c) => doc.categories.includes(c))) continue;
     if (tags.length && !tags.some((t) => doc.tags.includes(t))) continue;
     if (groups.length) {
+      const sets = docSets(doc);
       let score = 0, allHit = true;
       for (const group of groups) {
         let hit = false;
         for (const t of group) {
-          if (doc.title_tokens.includes(t)) { score += 3; hit = true; }
-          else if (doc.desc_tokens.includes(t)) { score += 2; hit = true; }
-          else if (index.tokens[t] && index.tokens[t].includes(doc.id)) { score += 1; hit = true; }
+          if (sets.title.has(t)) { score += 3; hit = true; }
+          else if (sets.desc.has(t)) { score += 2; hit = true; }
+          else {
+            const posting = index.tokens[t];
+            if (posting && postingHas(posting, doc.id)) { score += 1; hit = true; }
+          }
         }
         if (!hit) { allHit = false; break; }
       }
