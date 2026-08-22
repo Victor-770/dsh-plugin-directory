@@ -8,23 +8,12 @@ import worker, { resolveDataOrigin } from "./src/index.js";
 import { onRequestGet } from "../functions/api/search.js"; // 真实 Pages Function 代码
 import { buildIndex } from "../search-core/index.js";
 import { gzipSync } from "node:zlib";
+import { startDataServer } from "./lib/data-server.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dataDir = path.join(__dirname, "..", "site", "public", "data");
 
-// 层1：数据静态服务（模拟 Pages 的 /data/*）
-const dataServer = http.createServer(async (req, res) => {
-  // 新数据布局：/data/plugins/manifest.json、/data/plugins/NNN.json、/data/index.json.gz
-  const rel = req.url.startsWith("/data/") ? req.url.slice("/data/".length) : null;
-  if (!rel || !/^plugins\/[\w-]+\.json$|^index\.json\.gz$/.test(rel)) { res.writeHead(404); res.end(); return; }
-  try {
-    const buf = await readFile(path.join(dataDir, rel));
-    res.writeHead(200, { "content-type": rel.endsWith(".br") ? "application/octet-stream" : "application/json" });
-    res.end(buf);
-  } catch { res.writeHead(404); res.end(); }
-});
-await new Promise((r) => dataServer.listen(0, "127.0.0.1", r));
-const dataOrigin = `http://127.0.0.1:${dataServer.address().port}`;
+// 层1：数据静态服务（模拟 Pages 的 /data/*，共享 worker/lib/data-server.mjs）
+const { server: dataServer, origin: dataOrigin } = await startDataServer();
 const workerEnv = { SITE_ORIGIN: dataOrigin };
 
 // 层2：Worker 作为 HTTP 服务（等价于已部署的 Worker 端点）

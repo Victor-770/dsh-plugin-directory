@@ -6,25 +6,14 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import worker from "../worker/src/index.js";
 import { onRequestGet } from "../functions/api/search.js";
+import { startDataServer } from "../worker/lib/data-server.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.join(__dirname, "..", "site", "dist");
-const dataDir = path.join(__dirname, "..", "site", "public", "data");
 const PORT = Number(process.env.PORT) || 4321;
 
-// 数据服务（Worker 同源拉取）
-const dataServer = http.createServer(async (req, res) => {
-  // 新数据布局：/data/plugins/manifest.json、/data/plugins/NNN.json、/data/index.json.gz
-  const rel = req.url.startsWith("/data/") ? req.url.slice("/data/".length) : null;
-  if (!rel || !/^plugins\/[\w-]+\.json$|^index\.json\.gz$/.test(rel)) { res.writeHead(404); res.end(); return; }
-  try {
-    const buf = await readFile(path.join(dataDir, rel));
-    res.writeHead(200, { "content-type": rel.endsWith(".br") ? "application/octet-stream" : "application/json" });
-    res.end(buf);
-  } catch { res.writeHead(404); res.end(); }
-});
-await new Promise((r) => dataServer.listen(0, "127.0.0.1", r));
-const dataOrigin = `http://127.0.0.1:${dataServer.address().port}`;
+// 数据服务（Worker 同源拉取，共享 worker/lib/data-server.mjs）
+const { server: dataServer, origin: dataOrigin } = await startDataServer();
 
 // Worker 端点
 const workerServer = http.createServer((req, res) => {

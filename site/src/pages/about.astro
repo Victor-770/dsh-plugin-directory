@@ -2,7 +2,7 @@
 import { STR } from "../lib/i18n.js";
 import { readFileSync } from "node:fs";
 import path from "node:path";
-import "../styles/global.css";
+import BaseLayout from "../components/BaseLayout.astro";
 
 // 站点简介（E-E-A-T：透明、数据来源、联系方式）
 const browsePath = path.join(process.cwd(), "public", "data", "browse.json");
@@ -18,121 +18,62 @@ const lang = "zh";
 const s = STR[lang];
 const site = (Astro.site?.origin) || "https://dsh-plugin-directory.online";
 const canonical = site + "/about/";
-const zhUrl = site + "/about/";
-const enUrl = site + "/en/about/";
 const pageTitle = "关于 DSH 插件目录 — DeepSeek Harness 插件目录";
 const pageDescription = "DSH 插件目录：面向 DeepSeek Harness 用户的插件索引站，每 6 小时同步 GitHub dsh-plugin 话题，支持中英文全文搜索与分类浏览。";
 const ogImage = site + "/og.png";
 ---
-<!doctype html>
-<html lang="zh" class="dark">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta http-equiv="content-language" content="zh" />
-  <title>{pageTitle}</title>
-  <meta name="description" content={pageDescription} />
-  <link rel="canonical" href={canonical} />
-  <link rel="alternate" hreflang="zh" href={zhUrl} />
-  <link rel="alternate" hreflang="en" href={enUrl} />
-  <link rel="alternate" hreflang="x-default" href={zhUrl} />
-  <meta name="theme-color" content="#0b0e14" />
-  <meta property="og:title" content={pageTitle} />
-  <meta property="og:description" content={pageDescription} />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content={canonical} />
-  <meta property="og:site_name" content={s.siteName} />
-  <meta property="og:image" content={ogImage} />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content={pageTitle} />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content={pageTitle} />
-  <meta name="twitter:description" content={pageDescription} />
-  <meta name="twitter:image" content={ogImage} />
-  <link rel="icon" href="/favicon.ico" sizes="32x32" />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  <script is:inline>
-    (function () {
-      var saved = null; try { saved = localStorage.getItem("dsh-theme"); } catch (e) {}
-      var dark = saved ? saved === "dark" : window.matchMedia("(prefers-color-scheme: light)").matches ? false : true;
-      document.documentElement.classList.toggle("dark", dark);
-      document.documentElement.classList.toggle("light", !dark);
-    })();
-  </script>
-</head>
-<body class="min-h-screen">
-  <a class="skip-link" href="#main-content" data-i18n="skipToContent">{s.skipToContent}</a>
-  <div class="mx-auto max-w-3xl px-4 pb-16">
-    <header class="sticky top-0 z-20 border-b border-line bg-bg/90 backdrop-blur">
-      <div class="flex items-center justify-between gap-3 py-3">
-        <a href="/" class="flex items-center gap-2" aria-label={s.siteName}>
-          <span class="grid h-8 w-8 place-items-center rounded-lg bg-accent/15 text-accent font-bold" aria-hidden="true">D</span>
-          <span class="font-semibold tracking-tight">{s.siteName}</span>
-        </a>
-        <div class="flex items-center gap-2">
-          <a id="lang-toggle" href="/en/about/" class="shrink-0 rounded-lg border border-line bg-surface px-3 py-2 text-xs font-medium hover:border-accent" hreflang="en">{s.langName}</a>
-          <button id="theme-toggle" class="shrink-0 rounded-lg border border-line bg-surface px-3 py-2 text-xs" title={s.theme} aria-label={s.theme}>
-          <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-          <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-        </button>
-        </div>
-      </div>
-    </header>
+<BaseLayout
+  lang={lang}
+  pageTitle={pageTitle}
+  pageDescription={pageDescription}
+  canonical={canonical}
+  zhUrl={site + "/about/"}
+  enUrl={site + "/en/about/"}
+  ogImage={ogImage}
+  langToggleHref="/en/about/"
+  containerClass="max-w-3xl"
+>
+  <main id="main-content" class="mt-8">
+    <nav class="text-xs text-muted" aria-label="面包屑">
+      <ol class="flex items-center gap-1.5">
+        <li><a href="/" class="hover:text-accent">{s.siteName}</a></li>
+        <li aria-hidden="true">/</li>
+        <li class="text-ink" aria-current="page">关于</li>
+      </ol>
+    </nav>
 
-    <main id="main-content" class="mt-8">
-      <nav class="text-xs text-muted" aria-label="面包屑">
-        <ol class="flex items-center gap-1.5">
-          <li><a href="/" class="hover:text-accent">{s.siteName}</a></li>
-          <li aria-hidden="true">/</li>
-          <li class="text-ink" aria-current="page">关于</li>
-        </ol>
-      </nav>
+    <h1 class="mt-5 text-2xl font-semibold">关于 DSH 插件目录</h1>
 
-      <h1 class="mt-5 text-2xl font-semibold">关于 DSH 插件目录</h1>
+    <section class="mt-6 space-y-4 text-[15px] leading-relaxed text-ink">
+      <p>
+        <strong>DSH 插件目录</strong> 是一个面向 <a class="underline text-accent" href="https://github.com/deepseek-ai/deepseek-harness" rel="noopener">DeepSeek Harness</a>（DSH）用户的插件索引站。
+        它把 GitHub 上 <code class="rounded bg-surface2 px-1.5 py-0.5 text-[13px]">dsh-plugin</code> 话题下的开源仓库整理成可按功能分类、可中英文全文搜索的目录，
+        帮助用户更快找到自己需要的插件（皮肤、终端工具、Agent 技能、搜索、媒体处理等）。
+      </p>
+      <p>
+        数据来自 GitHub 公开仓库，每 6 小时自动同步一次；当前收录 <strong>{pluginCount} 个仓库</strong>
+        {generatedAt ? "（最近同步于 " + generatedAt.slice(0, 10) + "）" : ""}。
+        每个插件的描述、star、语言、更新时间与 README 摘要均来自仓库本身，展示内容保持作者原文，本站不翻译插件内容。
+      </p>
+      <p>
+        分类采用 7 个功能分类（皮肤/UI、终端/TUI、工具/开发、搜索、Agent/智能体、内容/媒体、娱乐/广告），
+        由规则自动归类并对高 star 仓库辅以人工兜底；搜索支持中英别名互通（如"皮肤"↔"skin"）。
+      </p>
+      <p class="text-muted text-sm">
+        本站<b>不</b>验证插件兼容性，<b>不</b>为任何插件背书，收录不代表推荐。安装第三方插件前请自行查看其 README、许可证与代码。
+      </p>
+    </section>
 
-      <section class="mt-6 space-y-4 text-[15px] leading-relaxed text-ink">
-        <p>
-          <strong>DSH 插件目录</strong> 是一个面向 <a class="underline text-accent" href="https://github.com/deepseek-ai/deepseek-harness" rel="noopener">DeepSeek Harness</a>（DSH）用户的插件索引站。
-          它把 GitHub 上 <code class="rounded bg-surface2 px-1.5 py-0.5 text-[13px]">dsh-plugin</code> 话题下的开源仓库整理成可按功能分类、可中英文全文搜索的目录，
-          帮助用户更快找到自己需要的插件（皮肤、终端工具、Agent 技能、搜索、媒体处理等）。
-        </p>
-        <p>
-          数据来自 GitHub 公开仓库，每 6 小时自动同步一次；当前收录 <strong>{pluginCount} 个仓库</strong>
-          {generatedAt ? "（最近同步于 " + generatedAt.slice(0, 10) + "）" : ""}。
-          每个插件的描述、star、语言、更新时间与 README 摘要均来自仓库本身，展示内容保持作者原文，本站不翻译插件内容。
-        </p>
-        <p>
-          分类采用 7 个功能分类（皮肤/UI、终端/TUI、工具/开发、搜索、Agent/智能体、内容/媒体、娱乐/广告），
-          由规则自动归类并对高 star 仓库辅以人工兜底；搜索支持中英别名互通（如"皮肤"↔"skin"）。
-        </p>
-        <p class="text-muted text-sm">
-          本站<b>不</b>验证插件兼容性，<b>不</b>为任何插件背书，收录不代表推荐。安装第三方插件前请自行查看其 README、许可证与代码。
-        </p>
-      </section>
+    <section class="mt-8 rounded-xl border border-line bg-surface p-5">
+      <h2 class="text-sm font-semibold text-ink">项目与反馈</h2>
+      <ul class="mt-3 space-y-2 text-sm text-muted">
+        <li>· 本站是开源项目，源码与数据管道见 <a class="underline text-accent" href="https://github.com/Kristin130/dsh-plugin-directory" rel="noopener">github.com/Kristin130/dsh-plugin-directory</a></li>
+        <li>· 数据来源：<a class="underline text-accent" href="https://github.com/topics/dsh-plugin" rel="noopener">GitHub topic: dsh-plugin</a></li>
+        <li>· 收录/分类/搜索问题，欢迎在项目仓库提 <a class="underline text-accent" href="https://github.com/Kristin130/dsh-plugin-directory/issues" rel="noopener">Issue</a> 反馈</li>
+        <li>· 许可：GNU AGPL-3.0 开源，见 <a class="underline text-accent" href="https://github.com/Kristin130/dsh-plugin-directory/blob/main/LICENSE" rel="noopener">LICENSE</a>；允许自由使用与再分发，但以网络服务形式提供修改版时须开源你的修改</li>
+      </ul>
+    </section>
+  </main>
 
-      <section class="mt-8 rounded-xl border border-line bg-surface p-5">
-        <h2 class="text-sm font-semibold text-ink">项目与反馈</h2>
-        <ul class="mt-3 space-y-2 text-sm text-muted">
-          <li>· 本站是开源项目，源码与数据管道见 <a class="underline text-accent" href="https://github.com/Kristin130/dsh-plugin-directory" rel="noopener">github.com/Kristin130/dsh-plugin-directory</a></li>
-          <li>· 数据来源：<a class="underline text-accent" href="https://github.com/topics/dsh-plugin" rel="noopener">GitHub topic: dsh-plugin</a></li>
-          <li>· 收录/分类/搜索问题，欢迎在项目仓库提 <a class="underline text-accent" href="https://github.com/Kristin130/dsh-plugin-directory/issues" rel="noopener">Issue</a> 反馈</li>
-          <li>· 许可：GNU AGPL-3.0 开源，见 <a class="underline text-accent" href="https://github.com/Kristin130/dsh-plugin-directory/blob/main/LICENSE" rel="noopener">LICENSE</a>；允许自由使用与再分发，但以网络服务形式提供修改版时须开源你的修改</li>
-        </ul>
-      </section>
-    </main>
-
-    <footer class="mt-12 border-t border-line pt-4 text-xs text-muted">
-      <p>© {new Date().getFullYear()} DSH Plugin Directory · <a class="underline" href="/" rel="noopener">{s.siteName}</a> · <a class="underline" href="/about/" rel="noopener">关于</a> · <a class="underline" href="https://github.com/Kristin130/dsh-plugin-directory/blob/main/LICENSE" rel="noopener">AGPL-3.0</a></p>
-    </footer>
-  </div>
-  <script is:inline>
-    document.getElementById("theme-toggle").addEventListener("click", () => {
-      const dark = document.documentElement.classList.toggle("dark");
-      document.documentElement.classList.toggle("light", !dark);
-      try { localStorage.setItem("dsh-theme", dark ? "dark" : "light"); } catch (e) {}
-    });
-  </script>
-</body>
-</html>
+  <p slot="footer">© {new Date().getFullYear()} DSH Plugin Directory · <a class="underline" href="/" rel="noopener">{s.siteName}</a> · <a class="underline" href="/about/" rel="noopener">关于</a> · <a class="underline" href="https://github.com/Kristin130/dsh-plugin-directory/blob/main/LICENSE" rel="noopener">AGPL-3.0</a></p>
+</BaseLayout>

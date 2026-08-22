@@ -1,28 +1,10 @@
 // 本地冒烟：不起 wrangler，用 node http 静态服务 data/ 目录 + 直接调 worker fetch。
 // 用法：node worker/smoke.mjs
-import http from "node:http";
-import { readFile } from "node:fs/promises";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import worker from "./src/index.js";
+import { startDataServer } from "./lib/data-server.mjs";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dataDir = path.join(__dirname, "..", "site", "public", "data");
-
-const server = http.createServer(async (req, res) => {
-  // 新数据布局：/data/plugins/manifest.json、/data/plugins/NNN.json、/data/index.json.gz
-  const rel = req.url.startsWith("/data/") ? req.url.slice("/data/".length) : null;
-  if (!rel || !/^plugins\/[\w-]+\.json$|^index\.json\.gz$/.test(rel)) { res.writeHead(404); res.end(); return; }
-  try {
-    const buf = await readFile(path.join(dataDir, rel));
-    res.writeHead(200, { "content-type": rel.endsWith(".br") ? "application/octet-stream" : "application/json" });
-    res.end(buf);
-  } catch { res.writeHead(404); res.end(); }
-});
-
-await new Promise((r) => server.listen(0, "127.0.0.1", r));
-const port = server.address().port;
-const env = { SITE_ORIGIN: `http://127.0.0.1:${port}` };
+const { server, origin } = await startDataServer();
+const env = { SITE_ORIGIN: origin };
 const call = (path) => worker.fetch(new Request(`http://127.0.0.1:9${path}`, { headers: { referer: env.SITE_ORIGIN } }), env);
 
 const results = {};

@@ -3,7 +3,8 @@ import { STR, CATEGORY_ORDER } from "../../lib/i18n.js";
 import { CATEGORY_SLUGS } from "../../lib/category-meta.js";
 import { readFileSync } from "node:fs";
 import path from "node:path";
-import "../../styles/global.css";
+import BaseLayout from "../../components/BaseLayout.astro";
+import PluginCard from "../../components/PluginCard.astro";
 
 // Vite 构建会重写 import.meta.url，不能用来定位源文件；构建时 cwd 恒为 site/
 const browsePath = path.join(process.cwd(), "public", "data", "browse.json");
@@ -16,7 +17,7 @@ try {
 } catch { /* 数据未生成时站点仍可构建（空列表） */ }
 const top50 = browse.slice().sort((a, b) => b.stars - a.stars).slice(0, 50);
 
-// --- i18n：zh 走根路径 /，en 走 /en/（astro.config i18n.routing.prefixDefaultLocale=false） ---
+// --- i18n：zh 走根路径 /，en 走 /en/（两棵静态路由树；共享 BaseLayout/PluginCard/browse.js） ---
 const lang = "en";
 const s = STR[lang];
 const langPrefix = "/en";
@@ -26,12 +27,8 @@ const site = (Astro.site?.origin) || "https://dsh-plugin-directory.online";
 const pluginCount = browse.length || 0;
 const canonical = site + langPrefix + "/";
 const ogImage = site + "/og.png";
-const pageTitle = lang === "en"
-  ? `DeepSeek Harness Plugin Directory (${pluginCount} plugins) — DSH Plugin Directory`
-  : `DeepSeek Harness 插件目录（${pluginCount} 款）— DSH 插件目录`;
-const pageDescription = lang === "en"
-  ? `One-stop catalog of DeepSeek Harness (DSH) plugins: ${pluginCount} plugins from the GitHub dsh-plugin topic, with bilingual CN/EN full-text search, category & tag filters, and one-click access to GitHub repos.`
-  : `DeepSeek Harness（DSH）插件一站式目录：收录 GitHub dsh-plugin 话题下 ${pluginCount} 款插件，支持中英文全文搜索、按分类与标签筛选，一键直达 GitHub 仓库。`;
+const pageTitle = `DeepSeek Harness Plugin Directory (${pluginCount} plugins) — DSH Plugin Directory`;
+const pageDescription = `One-stop catalog of DeepSeek Harness (DSH) plugins: ${pluginCount} plugins from the GitHub dsh-plugin topic, with bilingual CN/EN full-text search, category & tag filters, and one-click access to GitHub repos.`;
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
@@ -39,10 +36,10 @@ const jsonLd = {
       "@type": "WebSite",
       "@id": canonical + "#website",
       "name": s.siteName,
-      "alternateName": lang === "en" ? "DSH 插件目录" : "DeepSeek Harness Plugin Directory",
+      "alternateName": "DSH 插件目录",
       "url": canonical,
       "description": pageDescription,
-      "inLanguage": lang === "en" ? "en" : "zh-CN",
+      "inLanguage": "en",
       "potentialAction": {
         "@type": "SearchAction",
         "target": { "@type": "EntryPoint", "urlTemplate": site + langPrefix + "/?q={search_term_string}" },
@@ -60,7 +57,7 @@ const jsonLd = {
     {
       "@type": "ItemList",
       "@id": canonical + "#top-plugins",
-      "name": lang === "en" ? "Popular DSH plugins" : "热门 DSH 插件",
+      "name": "Popular DSH plugins",
       "numberOfItems": top50.length,
       "itemListElement": top50.map((p, i) => ({
         "@type": "ListItem",
@@ -72,145 +69,83 @@ const jsonLd = {
   ]
 };
 ---
-<!doctype html>
-<html lang={lang} class="dark">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta http-equiv="content-language" content="en" />
-  <title>{pageTitle}</title>
-  <meta name="description" content={pageDescription} />
-  <link rel="canonical" href={canonical} />
-  <link rel="alternate" hreflang="zh" href={site + "/"} />
-  <link rel="alternate" hreflang="en" href={site + "/en/"} />
-  <link rel="alternate" hreflang="x-default" href={site + "/"} />
-  <meta name="theme-color" content="#0b0e14" />
-  <meta property="og:title" content={pageTitle} />
-  <meta property="og:description" content={pageDescription} />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content={canonical} />
-  <meta property="og:site_name" content={s.siteName} />
-  <meta property="og:image" content={ogImage} />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content={pageTitle} />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content={pageTitle} />
-  <meta name="twitter:description" content={pageDescription} />
-  <meta name="twitter:image" content={ogImage} />
-  <link rel="icon" href="/favicon.ico" sizes="32x32" />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
-  <script is:inline>
-    // 主题：默认深色，跟随系统，可手动切换（localStorage 持久）
-    (function () {
-      var saved = null; try { saved = localStorage.getItem("dsh-theme"); } catch (e) {}
-      var dark = saved ? saved === "dark" : window.matchMedia("(prefers-color-scheme: light)").matches ? false : true;
-      document.documentElement.classList.toggle("dark", dark);
-      document.documentElement.classList.toggle("light", !dark);
-    })();
-  </script>
-</head>
-<body class="min-h-screen">
-  <a class="skip-link" href="#main-content" data-i18n="skipToContent">{s.skipToContent}</a>
-  <div class="mx-auto max-w-7xl px-4 pb-16">
-    <!-- 顶栏 -->
-    <header class="sticky top-0 z-20 border-b border-line bg-bg/90 backdrop-blur">
-      <div class="flex items-center gap-3 py-3">
-        <a href={langPrefix + "/"} class="flex items-center gap-2 shrink-0" aria-label={s.siteName}>
-          <span class="grid h-8 w-8 place-items-center rounded-lg bg-accent/15 text-accent font-bold" aria-hidden="true">D</span>
-          <h1 class="font-semibold tracking-tight" data-i18n="siteName">{s.siteName}</h1>
-        </a>
-        <input id="search-input" type="search" data-i18n-placeholder="searchPlaceholder" placeholder={s.searchPlaceholder}
-          aria-label={s.searchPlaceholder}
-          class="ml-2 min-w-0 flex-1 rounded-lg border border-line bg-surface px-3 py-2 text-sm outline-none transition focus:border-accent" />
-        <a id="lang-toggle" href={lang === "en" ? "/" : "/en/"} class="shrink-0 rounded-lg border border-line bg-surface px-3 py-2 text-xs font-medium hover:border-accent" data-i18n="langName" hreflang={lang === "en" ? "zh" : "en"}>{s.langName}</a>
-        <button id="theme-toggle" class="shrink-0 rounded-lg border border-line bg-surface px-3 py-2 text-xs" title={s.theme} aria-label={s.theme}>
-        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-      </button>
-      </div>
-    </header>
-    <div class="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs text-muted">
-      <span data-i18n="category">{s.category}</span>
-      {CATEGORY_ORDER.map((c) => (
-        <a href={`${langPrefix}/category/${CATEGORY_SLUGS[c]}/`} class="rounded-full border border-line px-2.5 py-1 hover:border-accent hover:text-accent">{s.languages[c]}</a>
-      ))}
-    </div>
+<BaseLayout
+  lang={lang}
+  pageTitle={pageTitle}
+  pageDescription={pageDescription}
+  canonical={canonical}
+  zhUrl={site + "/"}
+  enUrl={site + "/en/"}
+  ogImage={ogImage}
+  jsonLd={jsonLd}
+  langToggleHref="/"
+  containerClass="max-w-7xl"
+  h1SiteName
+>
+  <input id="search-input" type="search" data-i18n-placeholder="searchPlaceholder" placeholder={s.searchPlaceholder}
+    aria-label={s.searchPlaceholder}
+    class="ml-2 min-w-0 flex-1 rounded-lg border border-line bg-surface px-3 py-2 text-sm outline-none transition focus:border-accent" slot="header-middle" />
 
-
-    <div class="mt-6 flex flex-col gap-6 md:flex-row">
-      <!-- 分类侧栏（移动端抽屉） -->
-      <aside class="shrink-0 md:w-56">
-        <button id="filter-toggle" class="mb-3 flex w-full items-center justify-between rounded-lg border border-line bg-surface px-3 py-2 text-sm font-medium md:hidden" aria-expanded="false" aria-controls="filter-panel">
-          <span data-i18n="filter">{s.filter}</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div id="filter-panel" class="rounded-xl border border-line bg-surface p-4">
-          <h2 class="mb-3 text-xs font-semibold uppercase tracking-wider text-muted" data-i18n="category">{s.category}</h2>
-          <button id="category-all" class="category-item mb-1 flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-sm hover:bg-surface2" data-cat="">
-            <span data-i18n="all">{s.all}</span><span class="cat-count text-xs text-muted">0</span>
-          </button>
-          {CATEGORY_ORDER.map((c) => (
-            <button class="category-item mb-1 flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-sm hover:bg-surface2" data-cat={c}>
-              <span class="category-label" data-cat-key={c}>{s.languages[c]}</span><span class="cat-count text-xs text-muted">0</span>
-            </button>
-          ))}
-          <div class="mt-4 border-t border-line pt-3">
-            <h2 class="mb-3 text-xs font-semibold uppercase tracking-wider text-muted" data-i18n="tags">{s.tags}</h2>
-            <div id="tag-cloud" class="flex flex-wrap gap-1.5"></div>
-          </div>
-        </div>
-      </aside>
-
-      <!-- 主区 -->
-      <main id="main-content" class="min-w-0 flex-1">
-        <div class="mb-4 flex items-center justify-between gap-3">
-          <p class="text-sm text-muted" role="status" aria-live="polite"><span id="result-count">0</span> <span data-i18n="results">{s.results}</span></p>
-          <select id="sort-select" class="rounded-lg border border-line bg-surface px-3 py-1.5 text-sm" aria-label={s.sortStars}>
-            <option value="stars" data-i18n="sortStars">{s.sortStars}</option>
-            <option value="relevance" data-i18n="sortRelevance">{s.sortRelevance}</option>
-          </select>
-        </div>
-        <div id="empty-state" class="hidden rounded-xl border border-line bg-surface p-10 text-center text-sm text-muted">
-          <svg class="mx-auto h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-          <p class="mt-3" data-i18n="noResults">{s.noResults}</p>
-          <p class="mt-1 text-xs" data-i18n="noResultsHint">{s.noResultsHint}</p>
-          <div class="mt-4 flex flex-wrap items-center justify-center gap-2">
-            <button id="clear-filters" class="rounded-lg border border-line px-3 py-2 text-xs hover:border-accent" data-i18n="clearFilters">{s.clearFilters}</button>
-            <a id="browse-all" href={langPrefix + "/"} class="rounded-lg bg-accent/15 px-3 py-2 text-xs font-medium text-accent hover:bg-accent/25" data-i18n="browseAll">{s.browseAll}</a>
-          </div>
-        </div>
-        <div id="card-grid" class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3" aria-busy="false">
-          {top50.map((p) => (
-            <div class="plugin-card relative block rounded-xl border border-line bg-surface p-4 transition hover:border-accent/60 hover:bg-surface2">
-              <a href={`${langPrefix}/plugin/${p.full_name}/`} class="absolute inset-0" aria-label={p.full_name} tabindex="-1" aria-hidden="true"></a>
-              <div class="flex items-start justify-between gap-2">
-                <a href={`/en/plugin/${p.full_name}/`} class="font-mono text-[13px] font-medium break-all relative z-10 rounded-sm outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent">{p.full_name}</a>
-                <span class="shrink-0 text-xs text-muted">★ {p.stars.toLocaleString()}</span>
-              </div>
-              <p class="line-clamp-2 mt-2 min-h-[2.5rem] text-sm text-muted">{p.description || "—"}</p>
-              <div class="mt-3 flex flex-wrap items-center gap-1.5 text-[11px]">
-                {p.language && <span class="flex items-center gap-1 rounded-full bg-surface2 px-2 py-0.5"><span class="inline-block h-1.5 w-1.5 rounded-full bg-accent"></span>{p.language}</span>}
-                {(p.categories || []).slice(0, 2).map((c) => CATEGORY_SLUGS[c]
-                  ? <a href={`${langPrefix}/category/${CATEGORY_SLUGS[c]}/`} class="relative z-10 rounded-full bg-accent/10 px-2 py-0.5 text-accent hover:bg-accent/20">{s.languages[c] || c}</a>
-                  : <span class="rounded-full bg-accent/10 px-2 py-0.5 text-accent">{s.languages[c] || c}</span>)}
-              </div>
-            </div>
-          ))}
-        </div>
-      </main>
-    </div>
-
-    <footer class="mt-12 border-t border-line pt-4 text-xs text-muted">
-      <p>© {new Date().getFullYear()} DSH Plugin Directory · {generatedAt ? s.lastSync + ": " + generatedAt.slice(0, 10) : ""} · GitHub topic <a class="underline" href="https://github.com/topics/dsh-plugin" rel="noopener">dsh-plugin</a> · <a class="underline" href="/en/about/" rel="noopener">About</a> · <a class="underline" href="https://github.com/Kristin130/dsh-plugin-directory" rel="noopener">Source</a> · <a class="underline" href="https://github.com/Kristin130/dsh-plugin-directory/blob/main/LICENSE" rel="noopener">AGPL-3.0</a></p>
-    </footer>
+  <div class="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs text-muted">
+    <span data-i18n="category">{s.category}</span>
+    {CATEGORY_ORDER.map((c) => (
+      <a href={`${langPrefix}/category/${CATEGORY_SLUGS[c]}/`} class="rounded-full border border-line px-2.5 py-1 hover:border-accent hover:text-accent">{s.languages[c]}</a>
+    ))}
   </div>
+
+  <div class="mt-6 flex flex-col gap-6 md:flex-row">
+    <!-- 分类侧栏（移动端抽屉） -->
+    <aside class="shrink-0 md:w-56">
+      <button id="filter-toggle" class="mb-3 flex w-full items-center justify-between rounded-lg border border-line bg-surface px-3 py-2 text-sm font-medium md:hidden" aria-expanded="false" aria-controls="filter-panel">
+        <span data-i18n="filter">{s.filter}</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div id="filter-panel" class="rounded-xl border border-line bg-surface p-4">
+        <h2 class="mb-3 text-xs font-semibold uppercase tracking-wider text-muted" data-i18n="category">{s.category}</h2>
+        <button id="category-all" class="category-item mb-1 flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-sm hover:bg-surface2" data-cat="">
+          <span data-i18n="all">{s.all}</span><span class="cat-count text-xs text-muted">0</span>
+        </button>
+        {CATEGORY_ORDER.map((c) => (
+          <button class="category-item mb-1 flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-sm hover:bg-surface2" data-cat={c}>
+            <span class="category-label" data-cat-key={c}>{s.languages[c]}</span><span class="cat-count text-xs text-muted">0</span>
+          </button>
+        ))}
+        <div class="mt-4 border-t border-line pt-3">
+          <h2 class="mb-3 text-xs font-semibold uppercase tracking-wider text-muted" data-i18n="tags">{s.tags}</h2>
+          <div id="tag-cloud" class="flex flex-wrap gap-1.5"></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- 主区 -->
+    <main id="main-content" class="min-w-0 flex-1">
+      <div class="mb-4 flex items-center justify-between gap-3">
+        <p class="text-sm text-muted" role="status" aria-live="polite"><span id="result-count">0</span> <span data-i18n="results">{s.results}</span></p>
+        <select id="sort-select" class="rounded-lg border border-line bg-surface px-3 py-1.5 text-sm" aria-label={s.sortStars}>
+          <option value="stars" data-i18n="sortStars">{s.sortStars}</option>
+          <option value="relevance" data-i18n="sortRelevance">{s.sortRelevance}</option>
+        </select>
+      </div>
+      <div id="empty-state" class="hidden rounded-xl border border-line bg-surface p-10 text-center text-sm text-muted">
+        <svg class="mx-auto h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <p class="mt-3" data-i18n="noResults">{s.noResults}</p>
+        <p class="mt-1 text-xs" data-i18n="noResultsHint">{s.noResultsHint}</p>
+        <div class="mt-4 flex flex-wrap items-center justify-center gap-2">
+          <button id="clear-filters" class="rounded-lg border border-line px-3 py-2 text-xs hover:border-accent" data-i18n="clearFilters">{s.clearFilters}</button>
+          <a id="browse-all" href="/en/" class="rounded-lg bg-accent/15 px-3 py-2 text-xs font-medium text-accent hover:bg-accent/25" data-i18n="browseAll">{s.browseAll}</a>
+        </div>
+      </div>
+      <div id="card-grid" class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3" aria-busy="false">
+        {top50.map((p) => <PluginCard p={p} lang={lang} />)}
+      </div>
+    </main>
+  </div>
+
+  <p slot="footer">© {new Date().getFullYear()} DSH Plugin Directory · {generatedAt ? s.lastSync + ": " + generatedAt.slice(0, 10) : ""} · GitHub topic <a class="underline" href="https://github.com/topics/dsh-plugin" rel="noopener">dsh-plugin</a> · <a class="underline" href="/en/about/" rel="noopener">About</a> · <a class="underline" href="https://github.com/Kristin130/dsh-plugin-directory" rel="noopener">Source</a> · <a class="underline" href="https://github.com/Kristin130/dsh-plugin-directory/blob/main/LICENSE" rel="noopener">AGPL-3.0</a></p>
+
   <script>
     import { STR, CATEGORY_ORDER } from "../../lib/i18n.js";
     import { BrowseApp } from "../../scripts/browse.js";
     BrowseApp({ STR, CATEGORY_ORDER, lang: "en" });
   </script>
-</body>
-</html>
+</BaseLayout>

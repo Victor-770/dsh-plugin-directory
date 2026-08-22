@@ -15,7 +15,7 @@ import { buildIndex } from "../search-core/index.js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.join(__dirname, "..", "site", "public", "data"); // 站点静态资源目录：Worker 同源拉取
 const PUBLIC_DIR = path.dirname(DATA_DIR); // site/public：IndexNow key 文件所在
-const SITE_ORIGIN = "https://dsh-plugin-directory.online"; // canonical 域名（与 astro.config / sitemap 一致）
+import { SITE_ORIGIN } from "../shared/site-origin.js"; // canonical 域名单一来源
 const TOKEN = process.env.GITHUB_TOKEN || "";
 const HEADERS = { "User-Agent": "dsh-plugin-directory", Accept: "application/vnd.github+json" };
 if (TOKEN) HEADERS.Authorization = `Bearer ${TOKEN}`;
@@ -576,6 +576,19 @@ async function main() {
   // 轻量浏览数据（不含 readme_text）：站点端过滤/排序用，避免 ~9MB 全量进客户端
   const browse = finalRecords.map(({ readme_text, ...meta }) => meta);
   await writeFileAtomic(path.join(DATA_DIR, "browse.json"), JSON.stringify({ generatedAt: payload.generatedAt, count: browse.length, plugins: browse }));
+
+  // 浏览端精简版：browse.json 仍供构建期页面读取（SSR 卡片/详情/sitemap），但浏览器只需
+  // 卡片渲染字段——描述截断 200 字符、去掉 html_url/pushed_at/topics 等客户端用不到的字段，
+  // 首访下载量从 ~4.8MB 降到 ~2MB 以内。
+  const lite = finalRecords.map((r) => ({
+    full_name: r.full_name,
+    description: (r.description || "").slice(0, 200),
+    stars: r.stars,
+    language: r.language ?? null,
+    categories: r.categories,
+    tags: r.tags,
+  }));
+  await writeFileAtomic(path.join(DATA_DIR, "browse-lite.json"), JSON.stringify({ generatedAt: payload.generatedAt, count: lite.length, plugins: lite }));
 
   // 更新游标：只有对账推进 lastReconcileAt；增量轮不写 meta（内容无变化，避免无意义重写）。
   if (doReconcile) {

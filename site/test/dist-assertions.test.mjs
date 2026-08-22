@@ -19,9 +19,9 @@ const DIST = path.join(__dirname, "..", "dist");
 // ---- 基线（2026-08-22 本地构建：10424 插件、20811 页） ----
 const BASELINE = {
   // dist 总文件数上界：防路由/产物意外翻倍的回归。语料自然增长时有意上调。
-  distFiles: 31472,
-  // 最大分类单页 HTML 上界：当前 tools-dev 1.93MB（5545 插件全量单页）。票 14 分页后应大幅下调。
-  maxCategoryHtmlBytes: 2_000_000,
+  distFiles: 31606,
+  // 最大分类单页 HTML 上界：分页后实测最大 61.5KB（150 条/页）。上界留余量到 100KB。
+  maxCategoryHtmlBytes: 100_000,
 };
 
 const read = (rel) => readFileSync(path.join(DIST, rel), "utf8");
@@ -47,8 +47,36 @@ test("构建产物断言", { skip: built ? false : "dist 不存在（先 cd site
     assert.match(html, /<html[^>]*lang="zh"/, "index.html 的 <html> 应带 lang=\"zh\"");
   });
 
-  t.test("404 页存在", () => {
-    assert.ok(existsSync(path.join(DIST, "404.html")), "dist/404.html 应存在");
+  t.test("404 页含样式表链接（Ticket 13）", () => {
+    const html = read("404.html");
+    assert.match(html, /<link[^>]+stylesheet[^>]*>/i, "404.html 应引入样式表（曾为裸 HTML）");
+    assert.ok(!html.includes('rel="canonical"'), "noindex 的 404 页不应有 canonical（自相矛盾的信号）");
+  });
+
+  t.test("/en/ 页面浏览端初始化语言为 en（Ticket 12，可静态断言部分）", () => {
+    // BrowseApp 的 lang 参数经打包保留在 _astro chunk 中：至少一个 chunk 以 en 初始化
+    const chunks = readdirSync(path.join(DIST, "_astro")).filter((f) => f.endsWith(".js"));
+    const hit = chunks.some((f) => readFileSync(path.join(DIST, "_astro", f), "utf8").includes('lang:"en"'));
+    assert.ok(hit, "打包产物中应有 BrowseApp({ lang: \"en\" }) 调用（/en/ 页面初始化语言）");
+  });
+
+  t.test("分类分页产物存在（Ticket 14）：最大分类有第 2 页且含分页导航", () => {
+    const p2 = path.join(DIST, "category", "tools-dev", "2", "index.html");
+    assert.ok(existsSync(p2), "tools-dev（最大分类）应有第 2 页");
+    const html = readFileSync(p2, "utf8");
+    assert.match(html, /rel="canonical" href="[^"]*\/category\/tools-dev\/2\/"/, "第 2 页 canonical 应指向自身");
+    assert.match(html, /rel="prev"/, "第 2 页应有 prev 链接");
+    assert.match(html, /aria-label="分页"/, "分页导航应存在");
+  });
+
+  t.test("浏览端精简数据已产出（Ticket 15）", () => {
+    const lite = path.join(DIST, "data", "browse-lite.json");
+    assert.ok(existsSync(lite), "dist/data/browse-lite.json 应存在");
+    const data = JSON.parse(readFileSync(lite, "utf8"));
+    const sample = data.plugins[0];
+    assert.ok(sample && "full_name" in sample && "description" in sample);
+    assert.ok(!("html_url" in sample) && !("pushed_at" in sample) && !("readme_text" in sample), "精简版不应含 html_url/pushed_at/readme_text");
+    assert.ok(Object.entries(sample).every(([k, v]) => k !== "description" || v.length <= 200), "描述应截断到 200 字符");
   });
 
   t.test(`分类单页 HTML 体积 ≤ ${BASELINE.maxCategoryHtmlBytes} 字节`, () => {

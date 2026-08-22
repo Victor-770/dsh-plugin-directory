@@ -1,0 +1,26 @@
+---
+// 插件卡片（SSR）：唯一一份卡片 markup，zh/en 页面共用。
+// 遮罩链接保留整卡鼠标点击；标题是可 Tab 聚焦、回车进入的站内详情页链接（键盘可达性）。
+import { STR } from "../lib/i18n.js";
+import { CATEGORY_SLUGS } from "../lib/category-meta.js";
+
+const { p, lang = "zh" } = Astro.props;
+const s = STR[lang];
+const langPrefix = lang === "en" ? "/en" : "";
+const pageUrl = `${langPrefix}/plugin/${p.full_name}/`;
+const FOCUS = "relative z-10 rounded-sm outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent";
+---
+<div class="plugin-card relative block rounded-xl border border-line bg-surface p-4 transition hover:border-accent/60 hover:bg-surface2">
+  <a href={pageUrl} class="absolute inset-0" aria-label={p.full_name} tabindex="-1" aria-hidden="true"></a>
+  <div class="flex items-start justify-between gap-2">
+    <a href={pageUrl} class={`font-mono text-[13px] font-medium break-all ${FOCUS}`}>{p.full_name}</a>
+    <span class="shrink-0 text-xs text-muted">★ {Number(p.stars || 0).toLocaleString()}</span>
+  </div>
+  <p class="line-clamp-2 mt-2 min-h-[2.5rem] text-sm text-muted">{p.description || "—"}</p>
+  <div class="mt-3 flex flex-wrap items-center gap-1.5 text-[11px]">
+    {p.language && <span class="flex items-center gap-1 rounded-full bg-surface2 px-2 py-0.5"><span class="inline-block h-1.5 w-1.5 rounded-full bg-accent"></span>{p.language}</span>}
+    {(p.categories || []).slice(0, 2).map((c) => CATEGORY_SLUGS[c]
+      ? <a href={`${langPrefix}/category/${CATEGORY_SLUGS[c]}/`} class="relative z-10 rounded-full bg-accent/10 px-2 py-0.5 text-accent hover:bg-accent/20">{s.languages[c] || c}</a>
+      : <span class="rounded-full bg-accent/10 px-2 py-0.5 text-accent">{s.languages[c] || c}</span>)}
+  </div>
+</div>

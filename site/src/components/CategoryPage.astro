@@ -1,0 +1,126 @@
+---
+// 分类页共享渲染（zh/en 由 lang 参数驱动；路由文件只负责 getStaticPaths 与传参）。
+// 分页：每页 150 条；第 1 页在 /category/{slug}/，第 2 页起在 /category/{slug}/{n}/。
+// 各页 canonical 唯一且指向自身；zh/en hreflang 链到对方语言的同页码。
+// 页面骨架（head/顶栏/页脚/主题初始化）唯一实现在 BaseLayout。
+import { STR, CATEGORY_ORDER } from "../lib/i18n.js";
+import { CATEGORY_SLUGS, CATEGORY_DESC } from "../lib/category-meta.js";
+import BaseLayout from "./BaseLayout.astro";
+
+export const PAGE_SIZE = 150;
+
+const { lang = "zh", slug, catKey, plugins, page = 1 } = Astro.props;
+const s = STR[lang];
+const langPrefix = lang === "en" ? "/en" : "";
+const site = (Astro.site?.origin) || "https://dsh-plugin-directory.online";
+const catName = lang === "zh" ? catKey : (s.languages[catKey] || catKey);
+const maxPage = Math.max(1, Math.ceil(plugins.length / PAGE_SIZE));
+const pagePlugins = plugins.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+// 页 N（N≥2）的 URL 以 /N 结尾；第 1 页保持无后缀（既有外链与 canonical 不变）
+const pagePath = (n) => n <= 1 ? `${langPrefix}/category/${slug}/` : `${langPrefix}/category/${slug}/${n}/`;
+const canonical = site + pagePath(page);
+const zhUrl = site + (lang === "zh" ? pagePath(page) : pagePath(page).replace(/^\/en/, ""));
+const enUrl = site + (lang === "en" ? pagePath(page) : "/en" + pagePath(page));
+const pageSuffix = page > 1 ? (lang === "zh" ? ` · 第 ${page} 页` : ` · Page ${page}`) : "";
+const pageTitle = (lang === "zh"
+  ? `${catName} 插件（${plugins.length} 个）${pageSuffix} — DSH 插件目录`
+  : `${catName} Plugins (${plugins.length})${pageSuffix} — DSH Plugin Directory`);
+const pageDescription = (CATEGORY_DESC[lang][slug] || "") + (lang === "zh"
+  ? ` 本站共收录 ${plugins.length} 个相关插件，按热度排序，点击直达 GitHub 仓库。`
+  : ` Listing ${plugins.length} plugins sorted by stars, with one-click access to their GitHub repos.`);
+const ogImage = site + "/og.png";
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": s.siteName, "item": site + langPrefix + "/" },
+        { "@type": "ListItem", "position": 2, "name": `${catName} 插件`, "item": canonical }
+      ]
+    }
+  ]
+};
+// 紧凑页码窗口：首末页恒在，中间显示当前页前后各 1 页
+function pageWindow(current, max) {
+  const out = [1];
+  for (let n = Math.max(2, current - 1); n <= Math.min(max - 1, current + 1); n++) out.push(n);
+  if (max > 1) out.push(max);
+  return [...new Set(out)];
+}
+const toggleTarget = lang === "en" ? `/category/${slug}/${page > 1 ? page + "/" : ""}` : `/en/category/${slug}/${page > 1 ? page + "/" : ""}`;
+---
+<BaseLayout
+  lang={lang}
+  pageTitle={pageTitle}
+  pageDescription={pageDescription}
+  canonical={canonical}
+  zhUrl={zhUrl}
+  enUrl={enUrl}
+  ogImage={ogImage}
+  jsonLd={jsonLd}
+  langToggleHref={toggleTarget}
+>
+  {page > 1 && <link rel="prev" href={site + pagePath(page - 1)} slot="head-extra" />}
+  {page < maxPage && <link rel="next" href={site + pagePath(page + 1)} slot="head-extra" />}
+
+  <nav class="mt-5 text-xs text-muted" aria-label={lang === "zh" ? "面包屑" : "Breadcrumb"}>
+    <ol class="flex items-center gap-1.5">
+      <li><a href={langPrefix + "/"} class="hover:text-accent">{s.siteName}</a></li>
+      <li aria-hidden="true">/</li>
+      <li><a href={langPrefix + "/"} class="hover:text-accent">{s.category}</a></li>
+      <li aria-hidden="true">/</li>
+      <li class="truncate text-ink" aria-current="page">{catName}</li>
+    </ol>
+  </nav>
+
+  <main id="main-content" class="mt-6">
+    <h1 class="text-xl font-semibold">{catName} {lang === "zh" ? "插件" : "Plugins"} <span class="text-sm font-normal text-muted">({plugins.length})</span></h1>
+    <p class="mt-3 max-w-2xl text-[15px] leading-relaxed text-muted">{pageDescription}</p>
+
+    <div class="mt-6 flex flex-wrap gap-1.5 text-[11px]">
+      {CATEGORY_ORDER.filter((k) => k !== catKey).map((k) => (
+        <a href={langPrefix + "/category/" + CATEGORY_SLUGS[k] + "/"} class="rounded-full border border-line px-2.5 py-1 text-muted hover:border-accent hover:text-accent">{s.languages[k]}</a>
+      ))}
+    </div>
+
+    <ul class="mt-6 divide-y divide-line rounded-xl border border-line bg-surface">
+      {pagePlugins.map((p) => (
+        <li>
+          <a href={`${langPrefix}/plugin/${p.full_name}/`} class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 px-4 py-3 transition hover:bg-surface2">
+            <span class="font-mono text-[13px] font-medium break-all">{p.full_name}</span>
+            <span class="shrink-0 text-xs text-muted">
+              ★ {Number(p.stars).toLocaleString()}
+              {p.language && <span class="ml-2">{p.language}</span>}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    {maxPage > 1 && (
+      <nav class="mt-6 flex flex-wrap items-center justify-center gap-1.5 text-xs" aria-label={lang === "zh" ? "分页" : "Pagination"}>
+        {page > 1 ? (
+          <a href={pagePath(page - 1)} class="rounded-lg border border-line bg-surface px-3 py-1.5 hover:border-accent" rel="prev">{lang === "zh" ? "上一页" : "Prev"}</a>
+        ) : (
+          <span class="rounded-lg border border-line bg-surface px-3 py-1.5 text-muted opacity-50">{lang === "zh" ? "上一页" : "Prev"}</span>
+        )}
+        {pageWindow(page, maxPage).map((n, i, arr) => (
+          <>
+            {i > 0 && arr[i - 1] !== n - 1 && <span class="px-1 text-muted" aria-hidden="true">…</span>}
+            {n === page ? (
+              <span class="rounded-lg border border-accent bg-accent/15 px-3 py-1.5 font-medium text-accent" aria-current="page">{n}</span>
+            ) : (
+              <a href={pagePath(n)} class="rounded-lg border border-line bg-surface px-3 py-1.5 hover:border-accent">{n}</a>
+            )}
+          </>
+        ))}
+        {page < maxPage ? (
+          <a href={pagePath(page + 1)} class="rounded-lg border border-line bg-surface px-3 py-1.5 hover:border-accent" rel="next">{lang === "zh" ? "下一页" : "Next"}</a>
+        ) : (
+          <span class="rounded-lg border border-line bg-surface px-3 py-1.5 text-muted opacity-50">{lang === "zh" ? "下一页" : "Next"}</span>
+        )}
+      </nav>
+    )}
+  </main>
+</BaseLayout>

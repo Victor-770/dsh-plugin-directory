@@ -25,6 +25,7 @@ async function makeSandbox() {
   const sandbox = await mkdtemp(path.join(os.tmpdir(), "dsh-cleanroom-"));
   await cp(path.join(REPO, "scripts"), path.join(sandbox, "scripts"), { recursive: true });
   await cp(path.join(REPO, "search-core"), path.join(sandbox, "search-core"), { recursive: true });
+  await cp(path.join(REPO, "shared"), path.join(sandbox, "shared"), { recursive: true }); // sync.mjs 依赖 shared/site-origin.js
   return sandbox;
 }
 

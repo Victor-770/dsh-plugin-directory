@@ -2,9 +2,8 @@
 import { STR } from "../../lib/i18n.js";
 import { readFileSync } from "node:fs";
 import path from "node:path";
-import "../../styles/global.css";
+import BaseLayout from "../../components/BaseLayout.astro";
 
-// Site introduction (E-E-A-T: transparency, data source, contact)
 const browsePath = path.join(process.cwd(), "public", "data", "browse.json");
 let pluginCount = 0;
 let generatedAt = null;
@@ -18,122 +17,63 @@ const lang = "en";
 const s = STR[lang];
 const site = (Astro.site?.origin) || "https://dsh-plugin-directory.online";
 const canonical = site + "/en/about/";
-const zhUrl = site + "/about/";
-const enUrl = site + "/en/about/";
-const pageTitle = "About — DSH Plugin Directory";
-const pageDescription = "DSH Plugin Directory: a plugin index for DeepSeek Harness users, synced from the GitHub dsh-plugin topic every 6 hours, with bilingual CN/EN full-text search and category browsing.";
+const pageTitle = "About DSH Plugin Directory — DeepSeek Harness Plugin Directory";
+const pageDescription = "DSH Plugin Directory: a plugin index for DeepSeek Harness users. Syncs the GitHub dsh-plugin topic every 6 hours, with bilingual CN/EN full-text search and category browsing.";
 const ogImage = site + "/og.png";
 ---
-<!doctype html>
-<html lang="en" class="dark">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta http-equiv="content-language" content="en" />
-  <title>{pageTitle}</title>
-  <meta name="description" content={pageDescription} />
-  <link rel="canonical" href={canonical} />
-  <link rel="alternate" hreflang="zh" href={zhUrl} />
-  <link rel="alternate" hreflang="en" href={enUrl} />
-  <link rel="alternate" hreflang="x-default" href={zhUrl} />
-  <meta name="theme-color" content="#0b0e14" />
-  <meta property="og:title" content={pageTitle} />
-  <meta property="og:description" content={pageDescription} />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content={canonical} />
-  <meta property="og:site_name" content={s.siteName} />
-  <meta property="og:image" content={ogImage} />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content={pageTitle} />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content={pageTitle} />
-  <meta name="twitter:description" content={pageDescription} />
-  <meta name="twitter:image" content={ogImage} />
-  <link rel="icon" href="/favicon.ico" sizes="32x32" />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  <script is:inline>
-    (function () {
-      var saved = null; try { saved = localStorage.getItem("dsh-theme"); } catch (e) {}
-      var dark = saved ? saved === "dark" : window.matchMedia("(prefers-color-scheme: light)").matches ? false : true;
-      document.documentElement.classList.toggle("dark", dark);
-      document.documentElement.classList.toggle("light", !dark);
-    })();
-  </script>
-</head>
-<body class="min-h-screen">
-  <a class="skip-link" href="#main-content" data-i18n="skipToContent">{s.skipToContent}</a>
-  <div class="mx-auto max-w-3xl px-4 pb-16">
-    <header class="sticky top-0 z-20 border-b border-line bg-bg/90 backdrop-blur">
-      <div class="flex items-center justify-between gap-3 py-3">
-        <a href="/en/" class="flex items-center gap-2" aria-label={s.siteName}>
-          <span class="grid h-8 w-8 place-items-center rounded-lg bg-accent/15 text-accent font-bold" aria-hidden="true">D</span>
-          <span class="font-semibold tracking-tight">{s.siteName}</span>
-        </a>
-        <div class="flex items-center gap-2">
-          <a id="lang-toggle" href="/about/" class="shrink-0 rounded-lg border border-line bg-surface px-3 py-2 text-xs font-medium hover:border-accent" hreflang="zh">{s.langName}</a>
-          <button id="theme-toggle" class="shrink-0 rounded-lg border border-line bg-surface px-3 py-2 text-xs" title={s.theme} aria-label={s.theme}>
-          <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-          <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-        </button>
-        </div>
-      </div>
-    </header>
+<BaseLayout
+  lang={lang}
+  pageTitle={pageTitle}
+  pageDescription={pageDescription}
+  canonical={canonical}
+  zhUrl={site + "/about/"}
+  enUrl={site + "/en/about/"}
+  ogImage={ogImage}
+  langToggleHref="/about/"
+  containerClass="max-w-3xl"
+>
+  <main id="main-content" class="mt-8">
+    <nav class="text-xs text-muted" aria-label="Breadcrumb">
+      <ol class="flex items-center gap-1.5">
+        <li><a href="/en/" class="hover:text-accent">{s.siteName}</a></li>
+        <li aria-hidden="true">/</li>
+        <li class="text-ink" aria-current="page">About</li>
+      </ol>
+    </nav>
 
-    <main id="main-content" class="mt-8">
-      <nav class="text-xs text-muted" aria-label="Breadcrumb">
-        <ol class="flex items-center gap-1.5">
-          <li><a href="/en/" class="hover:text-accent">{s.siteName}</a></li>
-          <li aria-hidden="true">/</li>
-          <li class="text-ink" aria-current="page">About</li>
-        </ol>
-      </nav>
+    <h1 class="mt-5 text-2xl font-semibold">About DSH Plugin Directory</h1>
 
-      <h1 class="mt-5 text-2xl font-semibold">About DSH Plugin Directory</h1>
+    <section class="mt-6 space-y-4 text-[15px] leading-relaxed text-ink">
+      <p>
+        <strong>DSH Plugin Directory</strong> is a plugin index for <a class="underline text-accent" href="https://github.com/deepseek-ai/deepseek-harness" rel="noopener">DeepSeek Harness</a> (DSH) users.
+        It organizes open-source repositories under the GitHub <code class="rounded bg-surface2 px-1.5 py-0.5 text-[13px]">dsh-plugin</code> topic into a
+        browsable, bilingual full-text-searchable catalog, so you can quickly find plugins for skins, terminal tools, agent skills, search, media processing and more.
+      </p>
+      <p>
+        Data comes from public GitHub repositories and is synced automatically every 6 hours — currently <strong>{pluginCount} repositories</strong>
+        {generatedAt ? " (last synced " + generatedAt.slice(0, 10) + ")" : ""}.
+        Each plugin's description, stars, language, last-update time and README excerpt come from the repository itself; content is shown in the authors' original language and is not translated by this site.
+      </p>
+      <p>
+        Plugins are grouped into 7 functional categories (Skins / UI, Terminal / TUI, Tools / Dev, Search, Agents, Media / Content, Fun / Ads),
+        assigned by rules with manual fallback for high-star repositories. Search supports CN/EN alias matching (e.g. "皮肤" ↔ "skin").
+      </p>
+      <p class="text-muted text-sm">
+        This site does <b>not</b> verify plugin compatibility and does <b>not</b> endorse any plugin; listing is not a recommendation.
+        Before installing third-party plugins, review their README, license and code yourself.
+      </p>
+    </section>
 
-      <section class="mt-6 space-y-4 text-[15px] leading-relaxed text-ink">
-        <p>
-          <strong>DSH Plugin Directory</strong> is a plugin index for <a class="underline text-accent" href="https://github.com/deepseek-ai/deepseek-harness" rel="noopener">DeepSeek Harness</a> (DSH) users.
-          It organizes open-source repositories under the GitHub <code class="rounded bg-surface2 px-1.5 py-0.5 text-[13px]">dsh-plugin</code> topic into a
-          browsable, bilingual full-text-searchable catalog, so you can quickly find plugins for skins, terminal tools, agent skills, search, media processing and more.
-        </p>
-        <p>
-          Data comes from public GitHub repositories and is synced automatically every 6 hours — currently <strong>{pluginCount} repositories</strong>
-          {generatedAt ? " (last synced " + generatedAt.slice(0, 10) + ")" : ""}.
-          Each plugin's description, stars, language, last-update time and README excerpt come from the repository itself; content is shown in the authors' original language and is not translated by this site.
-        </p>
-        <p>
-          Plugins are grouped into 7 functional categories (Skins / UI, Terminal / TUI, Tools / Dev, Search, Agents, Media / Content, Fun / Ads),
-          assigned by rules with manual fallback for high-star repositories. Search supports CN/EN alias matching (e.g. "皮肤" ↔ "skin").
-        </p>
-        <p class="text-muted text-sm">
-          This site does <b>not</b> verify plugin compatibility and does <b>not</b> endorse any plugin; listing is not a recommendation.
-          Before installing third-party plugins, review their README, license and code yourself.
-        </p>
-      </section>
+    <section class="mt-8 rounded-xl border border-line bg-surface p-5">
+      <h2 class="text-sm font-semibold text-ink">Project &amp; feedback</h2>
+      <ul class="mt-3 space-y-2 text-sm text-muted">
+        <li>· Open-source: source code and the data pipeline live at <a class="underline text-accent" href="https://github.com/Kristin130/dsh-plugin-directory" rel="noopener">github.com/Kristin130/dsh-plugin-directory</a></li>
+        <li>· Data source: <a class="underline text-accent" href="https://github.com/topics/dsh-plugin" rel="noopener">GitHub topic: dsh-plugin</a></li>
+        <li>· Issues with listings, categorization or search? Open an <a class="underline text-accent" href="https://github.com/Kristin130/dsh-plugin-directory/issues" rel="noopener">Issue</a> on the project repo</li>
+        <li>· Licensed under <a class="underline text-accent" href="https://github.com/Kristin130/dsh-plugin-directory/blob/main/LICENSE" rel="noopener">GNU AGPL-3.0</a>: free to use, modify and redistribute, but network services built on it must publish their modifications</li>
+      </ul>
+    </section>
+  </main>
 
-      <section class="mt-8 rounded-xl border border-line bg-surface p-5">
-        <h2 class="text-sm font-semibold text-ink">Project &amp; feedback</h2>
-        <ul class="mt-3 space-y-2 text-sm text-muted">
-          <li>· Open-source: source code and the data pipeline live at <a class="underline text-accent" href="https://github.com/Kristin130/dsh-plugin-directory" rel="noopener">github.com/Kristin130/dsh-plugin-directory</a></li>
-          <li>· Data source: <a class="underline text-accent" href="https://github.com/topics/dsh-plugin" rel="noopener">GitHub topic: dsh-plugin</a></li>
-          <li>· Issues with listings, categorization or search? Open an <a class="underline text-accent" href="https://github.com/Kristin130/dsh-plugin-directory/issues" rel="noopener">Issue</a> on the project repo</li>
-          <li>· Licensed under <a class="underline text-accent" href="https://github.com/Kristin130/dsh-plugin-directory/blob/main/LICENSE" rel="noopener">GNU AGPL-3.0</a>: free to use, modify and redistribute, but network services built on it must publish their modifications</li>
-        </ul>
-      </section>
-    </main>
-
-    <footer class="mt-12 border-t border-line pt-4 text-xs text-muted">
-      <p>© {new Date().getFullYear()} DSH Plugin Directory · <a class="underline" href="/en/" rel="noopener">{s.siteName}</a> · <a class="underline" href="/en/about/" rel="noopener">About</a> · <a class="underline" href="https://github.com/Kristin130/dsh-plugin-directory/blob/main/LICENSE" rel="noopener">AGPL-3.0</a></p>
-    </footer>
-  </div>
-  <script is:inline>
-    document.getElementById("theme-toggle").addEventListener("click", () => {
-      const dark = document.documentElement.classList.toggle("dark");
-      document.documentElement.classList.toggle("light", !dark);
-      try { localStorage.setItem("dsh-theme", dark ? "dark" : "light"); } catch (e) {}
-    });
-  </script>
-</body>
-</html>
+  <p slot="footer">© {new Date().getFullYear()} DSH Plugin Directory · <a class="underline" href="/en/" rel="noopener">{s.siteName}</a> · <a class="underline" href="/en/about/" rel="noopener">About</a> · <a class="underline" href="https://github.com/Kristin130/dsh-plugin-directory/blob/main/LICENSE" rel="noopener">AGPL-3.0</a></p>
+</BaseLayout>

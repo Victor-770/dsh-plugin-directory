@@ -1,5 +1,20 @@
+# 基线安全响应头（全站）
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
 /data/*
   Cache-Control: public, max-age=3600
+
+# 浏览端精简数据缓存对齐 6 小时同步节奏（更具体的规则在后，覆盖 /data/* 的 1h）
+/data/browse-lite.json
+  Cache-Control: public, max-age=21600
+
+# OG 图内容仅在插件元信息变化时重写（构建增量生成），长缓存安全
+/og/*
+  Cache-Control: public, max-age=31536000, immutable
 
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable

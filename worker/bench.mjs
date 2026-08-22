@@ -1,28 +1,13 @@
 // 搜索延迟基准：node worker/bench.mjs [queries]
 // 通过真实 Pages Function + Worker + data 链路测量，报告 p50/p95/p99/max。
 import http from "node:http";
-import { readFile } from "node:fs/promises";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import worker from "./src/index.js";
 import { onRequestGet } from "../functions/api/search.js";
+import { startDataServer } from "./lib/data-server.mjs";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dataDir = path.join(__dirname, "..", "site", "public", "data");
 const N = Number(process.argv[2]) || 30;
 
-const dataServer = http.createServer(async (req, res) => {
-  // 新数据布局：/data/plugins/manifest.json、/data/plugins/NNN.json、/data/index.json.gz
-  const rel = req.url.startsWith("/data/") ? req.url.slice("/data/".length) : null;
-  if (!rel || !/^plugins\/[\w-]+\.json$|^index\.json\.gz$/.test(rel)) { res.writeHead(404); res.end(); return; }
-  try {
-    const buf = await readFile(path.join(dataDir, rel));
-    res.writeHead(200, { "content-type": rel.endsWith(".br") ? "application/octet-stream" : "application/json" });
-    res.end(buf);
-  } catch { res.writeHead(404); res.end(); }
-});
-await new Promise((r) => dataServer.listen(0, "127.0.0.1", r));
-const dataOrigin = `http://127.0.0.1:${dataServer.address().port}`;
+const { server: dataServer, origin: dataOrigin } = await startDataServer();
 const workerServer = http.createServer((req, res) => {
   worker.fetch(new Request(`http://127.0.0.1${req.url}`, { headers: { referer: dataOrigin } }), { SITE_ORIGIN: dataOrigin })
     .then(async (up) => { res.writeHead(up.status, { "content-type": "application/json" }); res.end(await up.text()); })

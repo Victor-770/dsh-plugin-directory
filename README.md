@@ -10,7 +10,7 @@ DeepSeek Harness 插件目录：中英双语、按功能分类、README 全文�
 ## 结构
 
 ```
-scripts/sync.mjs        # 同步管道：拉 GitHub API -> plugins/ 分片 + index.json.gz + browse.json，完成后 IndexNow 通知 Bing
+scripts/sync.mjs        # 同步管道：拉 GitHub API -> plugins/ 分片 + index.json.gz + browse(-lite).json，写盘成功后 IndexNow 分批通知 Bing
 scripts/lib/categories.mjs  # 八分类规则 + top-20 手动兜底
 search-core/            # 纯函数库（tokenize/buildIndex/expandAliases/search）+ 测试
 worker/                 # Cloudflare Worker：GET /api/search
@@ -63,6 +63,6 @@ node worker/smoke.mjs             # Worker 本地冒烟（需先 sync）
 ## 已知取舍（grilling 记档）
 
 - 全量收录（含独立应用/死仓库），无兼容性验证；star 排序靠前的是非插件应用（如 OpenBiliClaw）。
-- 默认相关性排序，营销文案 README 排名偏前。
-- 中文切词为二元切词 + 尾字，别名表 ~60 条硬编码；不做语义搜索。
+- 相关性排序带 IDF 加权与同组取 max：满篇样板词（dsh/plugin）权重趋零，营销文案刷分已被抑制。
+- 中文切词为二元切词 + 首尾字，别名表 163 键硬编码（2 字键精确命中，≥3 字键切词覆盖匹配）；IDF 相关性排序；不做语义搜索。
 - 壳双语：UI 文案中英，插件内容保持原文。

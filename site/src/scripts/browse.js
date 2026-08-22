@@ -47,6 +47,43 @@ export function BrowseApp({ STR, CATEGORY_ORDER, lang = "zh" }) {
     state.tagCounts = tagCounts;
   }
 
+  // 渐进渲染：无筛选浏览全量可达 1 万+ 卡片，一次性 innerHTML 会创建数万 DOM 节点卡死主线程。
+  // 首屏渲染前 ~100 张，滚动接近底部经 IntersectionObserver 增量追加；计数显示的是结果总数。
+  const RENDER_PAGE = 100;
+  const renderState = { list: [], rendered: 0, observer: null, sentinel: null };
+  function ensureSentinel() {
+    if (renderState.sentinel) return renderState.sentinel;
+    const el = document.createElement("div");
+    el.id = "render-sentinel";
+    el.className = "h-px w-full";
+    els.grid.after(el);
+    renderState.sentinel = el;
+    renderState.observer = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) renderMore();
+    }, { rootMargin: "600px" });
+    renderState.observer.observe(el);
+    return el;
+  }
+  function renderMore() {
+    const chunk = renderState.list.slice(renderState.rendered, renderState.rendered + RENDER_PAGE);
+    if (!chunk.length) return;
+    els.grid.insertAdjacentHTML("beforeend", chunk.map(renderCard).join(""));
+    renderState.rendered += chunk.length;
+    // 渲染完毕撤掉哨兵（滚动监听不再必要）
+    if (renderState.rendered >= renderState.list.length && renderState.observer) {
+      renderState.observer.disconnect();
+      renderState.sentinel?.remove();
+      renderState.sentinel = null;
+    }
+  }
+  function setList(list) {
+    renderState.list = list;
+    renderState.rendered = 0;
+    els.grid.innerHTML = "";
+    renderMore();
+    if (list.length > renderState.rendered) ensureSentinel();
+  }
+
   function apply() {
     const s = STR[state.lang];
     const q = state.q.trim().toLowerCase();
@@ -59,7 +96,7 @@ export function BrowseApp({ STR, CATEGORY_ORDER, lang = "zh" }) {
     els.count.textContent = list.length;
     els.empty.classList.toggle("hidden", list.length > 0);
     els.grid.setAttribute("aria-busy", "false");
-    els.grid.innerHTML = list.map(renderCard).join("");
+    setList(list);
     // 计数（不变量：只读预计算结果）
     const counts = state.catCounts || {};
     document.querySelectorAll(".cat-count").forEach((el) => {
@@ -119,7 +156,7 @@ export function BrowseApp({ STR, CATEGORY_ORDER, lang = "zh" }) {
       els.count.textContent = data.total;
       els.empty.classList.toggle("hidden", data.total > 0);
       els.grid.setAttribute("aria-busy", "false");
-      els.grid.innerHTML = (data.results || []).map(renderCard).join("");
+      setList(data.results || []); // API limit=100，天然一页，无需哨兵
     } catch (e) {
       if (seq !== searchSeq) return;
       // Worker 未部署（本地开发）：降级为本地 name/description 过滤
@@ -158,7 +195,8 @@ export function BrowseApp({ STR, CATEGORY_ORDER, lang = "zh" }) {
     try { localStorage.setItem("dsh-theme", dark ? "dark" : "light"); } catch (e) {}
   });
 
-  fetch("/data/browse.json").then((r) => r.json()).then((data) => {
+  // 浏览数据用精简版 browse-lite.json（卡片渲染字段；描述已截断，无 html_url/pushed_at/topics）
+  fetch("/data/browse-lite.json").then((r) => r.json()).then((data) => {
     state.all = data.plugins || [];
     computeCounts(); // 数据到达后算一次的不变量，apply 只读
     renderStrings();

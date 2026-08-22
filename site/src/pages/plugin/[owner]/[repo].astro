@@ -3,8 +3,8 @@ import { STR } from "../../../lib/i18n.js";
 import { CATEGORY_SLUGS } from "../../../lib/category-meta.js";
 import { readFileSync } from "node:fs";
 import path from "node:path";
-import "../../../styles/global.css";
 import { loadPlugins } from "../../../lib/plugins-data.js";
+import BaseLayout from "../../../components/BaseLayout.astro";
 
 export async function getStaticPaths() {
   // 构建时 cwd 恒为 site/；数据加载必须位于本函数内（Astro 编译约束）
@@ -13,7 +13,7 @@ export async function getStaticPaths() {
   try {
     browse = JSON.parse(readFileSync(browsePath, "utf8")).plugins || [];
   } catch (e) { /* 数据未生成时站点仍可构建（忽略） */ }
-    // README 摘要：从 plugins 分片取 readme_text（内容增强，避免详情页过薄）
+  // README 摘要：从 plugins 分片取 readme_text（内容增强，避免详情页过薄）
   const readmeMap = new Map();
   try {
     const { plugins } = loadPlugins();
@@ -30,7 +30,7 @@ export async function getStaticPaths() {
 }
 
 const { plugin: p, all, readmeText } = Astro.props;
-// --- i18n：zh 走根路径 /plugin/...（en 版本在 /en/plugin/...，两棵静态路由树） ---
+// --- i18n：zh 走根路径 /plugin/...（en 版本在 /en/plugin/...，两棵静态路由树；共享 BaseLayout） ---
 const lang = "zh";
 const s = STR[lang];
 const langPrefix = "";
@@ -51,8 +51,6 @@ let pageDescription = p.description
 pageDescription = pageDescription.replace(/\s+/g, " ").slice(0, 155).trim();
 const ogImage = site + "/og/plugin/" + p.full_name + "/index.png";
 const updated = p.pushed_at ? p.pushed_at.slice(0, 10) : null;
-const siteNameZh = STR.zh.siteName;
-const siteNameEn = STR.en.siteName;
 
 const related = all
   .filter((x) => x.full_name !== p.full_name && (x.categories || []).some((c) => (p.categories || []).includes(c)))
@@ -98,141 +96,83 @@ const jsonLd = {
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": siteNameZh, "item": site + "/" },
+        { "@type": "ListItem", "position": 1, "name": s.siteName, "item": site + "/" },
         { "@type": "ListItem", "position": 2, "name": p.full_name, "item": canonical }
       ]
     }
   ]
 };
 ---
-<!doctype html>
-<html lang="zh" class="dark">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta http-equiv="content-language" content="zh" />
-  <title>{pageTitle}</title>
-  <meta name="description" content={pageDescription} />
-  <link rel="canonical" href={canonical} />
-  <link rel="alternate" hreflang="zh" href={zhUrl} />
-  <link rel="alternate" hreflang="en" href={enUrl} />
-  <link rel="alternate" hreflang="x-default" href={zhUrl} />
-  <meta name="theme-color" content="#0b0e14" />
-  <meta property="og:title" content={pageTitle} />
-  <meta property="og:description" content={pageDescription} />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content={canonical} />
-  <meta property="og:site_name" content={s.siteName} />
-  <meta property="og:image" content={ogImage} />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content={p.full_name} />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content={pageTitle} />
-  <meta name="twitter:description" content={pageDescription} />
-  <meta name="twitter:image" content={ogImage} />
-  <link rel="icon" href="/favicon.ico" sizes="32x32" />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
-  <script is:inline>
-    (function () {
-      var saved = null; try { saved = localStorage.getItem("dsh-theme"); } catch (e) {}
-      var dark = saved ? saved === "dark" : window.matchMedia("(prefers-color-scheme: light)").matches ? false : true;
-      document.documentElement.classList.toggle("dark", dark);
-      document.documentElement.classList.toggle("light", !dark);
-    })();
-  </script>
-</head>
-<body class="min-h-screen">
-  <a class="skip-link" href="#main-content" data-i18n="skipToContent">{s.skipToContent}</a>
-  <div class="mx-auto max-w-4xl px-4 pb-16">
-    <header class="sticky top-0 z-20 border-b border-line bg-bg/90 backdrop-blur">
-      <div class="flex items-center justify-between gap-3 py-3">
-        <a href="/" class="flex items-center gap-2" aria-label={s.siteName}>
-          <span class="grid h-8 w-8 place-items-center rounded-lg bg-accent/15 text-accent font-bold" aria-hidden="true">D</span>
-          <span class="font-semibold tracking-tight">{s.siteName}</span>
-        </a>
-        <div class="flex items-center gap-2">
-          <a id="lang-toggle" href={`/en/plugin/${owner}/${repo}/`} class="shrink-0 rounded-lg border border-line bg-surface px-3 py-2 text-xs font-medium hover:border-accent" hreflang="en">{s.langName}</a>
-          <button id="theme-toggle" class="shrink-0 rounded-lg border border-line bg-surface px-3 py-2 text-xs" title={s.theme} aria-label={s.theme}>
-          <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-          <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-        </button>
+<BaseLayout
+  lang={lang}
+  pageTitle={pageTitle}
+  pageDescription={pageDescription}
+  canonical={canonical}
+  zhUrl={zhUrl}
+  enUrl={enUrl}
+  ogImage={ogImage}
+  ogImageAlt={p.full_name}
+  jsonLd={jsonLd}
+  langToggleHref={`/en/plugin/${owner}/${repo}/`}
+  containerClass="max-w-4xl"
+>
+  <nav class="mt-5 text-xs text-muted" aria-label="面包屑">
+    <ol class="flex items-center gap-1.5">
+      <li><a href="/" class="hover:text-accent">{s.siteName}</a></li>
+      <li aria-hidden="true">/</li>
+      <li><a href="/" class="hover:text-accent">{s.all}</a></li>
+      <li aria-hidden="true">/</li>
+      <li class="truncate text-ink" aria-current="page">{p.full_name}</li>
+    </ol>
+  </nav>
+
+  <main id="main-content" class="mt-6">
+    <div class="flex flex-wrap items-start justify-between gap-3">
+      <div class="min-w-0">
+        <h1 class="font-mono text-xl font-semibold break-all">{p.full_name}</h1>
+        <p class="mt-1 text-sm text-muted">
+          <a href={`https://github.com/${owner}`} class="hover:text-accent" rel="noopener">{owner}</a>
+          <span aria-hidden="true"> · </span>★ {Number(p.stars).toLocaleString()}
+          {p.language && <span><span aria-hidden="true"> · </span>{p.language}</span>}
+          {updated && <span><span aria-hidden="true"> · </span>{s.lastSync}: {updated}</span>}
+        </p>
+      </div>
+      <a href={p.html_url} target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 rounded-lg bg-accent/15 px-4 py-2 text-sm font-medium text-accent hover:bg-accent/25">
+        {s.openGitHub}
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+    </div>
+
+    <p class="mt-5 text-[15px] leading-relaxed text-ink">{p.description || "—"}</p>
+
+    {excerpt && (
+      <section class="mt-8">
+        <h2 class="text-sm font-semibold text-ink">README 摘要</h2>
+        <p class="mt-3 text-sm leading-relaxed text-muted">{excerpt}</p>
+        <a href={p.html_url} target="_blank" rel="noopener" class="mt-3 inline-block text-xs text-accent hover:underline">在 GitHub 查看完整 README →</a>
+      </section>
+    )}
+
+    <div class="mt-5 flex flex-wrap gap-1.5 text-[11px]">
+      {(p.categories || []).map((c) => CATEGORY_SLUGS[c]
+        ? <a href={`/category/${CATEGORY_SLUGS[c]}/`} class="rounded-full bg-accent/10 px-2.5 py-1 text-accent hover:bg-accent/20">{s.languages[c] || c}</a>
+        : <span class="rounded-full bg-accent/10 px-2.5 py-1 text-accent">{s.languages[c] || c}</span>)}
+      {(p.tags || []).slice(0, 8).map((t) => <span class="rounded-full border border-line px-2.5 py-1 text-muted">{t}</span>)}
+    </div>
+
+    {related.length > 0 && (
+      <section class="mt-10">
+        <h2 class="text-sm font-semibold text-ink">{s.category}</h2>
+        <div class="mt-3 grid gap-3 sm:grid-cols-3">
+          {related.map((x) => (
+            <a href={`/plugin/${x.full_name}/`} class="block rounded-xl border border-line bg-surface p-4 transition hover:border-accent/60 hover:bg-surface2">
+              <span class="font-mono text-[13px] font-medium break-all">{x.full_name}</span>
+              <p class="line-clamp-2 mt-2 text-xs text-muted">{x.description || "—"}</p>
+              <p class="mt-2 text-xs text-muted">★ {Number(x.stars).toLocaleString()}</p>
+            </a>
+          ))}
         </div>
-      </div>
-    </header>
-
-    <nav class="mt-5 text-xs text-muted" aria-label="面包屑">
-      <ol class="flex items-center gap-1.5">
-        <li><a href="/" class="hover:text-accent">{s.siteName}</a></li>
-        <li aria-hidden="true">/</li>
-        <li><a href="/" class="hover:text-accent">{s.all}</a></li>
-        <li aria-hidden="true">/</li>
-        <li class="truncate text-ink" aria-current="page">{p.full_name}</li>
-      </ol>
-    </nav>
-
-    <main id="main-content" class="mt-6">
-      <div class="flex flex-wrap items-start justify-between gap-3">
-        <div class="min-w-0">
-          <h1 class="font-mono text-xl font-semibold break-all">{p.full_name}</h1>
-          <p class="mt-1 text-sm text-muted">
-            <a href={`https://github.com/${owner}`} class="hover:text-accent" rel="noopener">{owner}</a>
-            <span aria-hidden="true"> · </span>★ {Number(p.stars).toLocaleString()}
-            {p.language && <span><span aria-hidden="true"> · </span>{p.language}</span>}
-            {updated && <span><span aria-hidden="true"> · </span>{s.lastSync}: {updated}</span>}
-          </p>
-        </div>
-        <a href={p.html_url} target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 rounded-lg bg-accent/15 px-4 py-2 text-sm font-medium text-accent hover:bg-accent/25">
-          {s.openGitHub}
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        </a>
-      </div>
-
-      <p class="mt-5 text-[15px] leading-relaxed text-ink">{p.description || "—"}</p>
-
-      {excerpt && (
-        <section class="mt-8">
-          <h2 class="text-sm font-semibold text-ink">README 摘要</h2>
-          <p class="mt-3 text-sm leading-relaxed text-muted">{excerpt}</p>
-          <a href={p.html_url} target="_blank" rel="noopener" class="mt-3 inline-block text-xs text-accent hover:underline">在 GitHub 查看完整 README →</a>
-        </section>
-      )}
-
-      <div class="mt-5 flex flex-wrap gap-1.5 text-[11px]">
-        {(p.categories || []).map((c) => CATEGORY_SLUGS[c]
-          ? <a href={`/category/${CATEGORY_SLUGS[c]}/`} class="rounded-full bg-accent/10 px-2.5 py-1 text-accent hover:bg-accent/20">{s.languages[c] || c}</a>
-          : <span class="rounded-full bg-accent/10 px-2.5 py-1 text-accent">{s.languages[c] || c}</span>)}
-        {(p.tags || []).slice(0, 8).map((t) => <span class="rounded-full border border-line px-2.5 py-1 text-muted">{t}</span>)}
-      </div>
-
-      {related.length > 0 && (
-        <section class="mt-10">
-          <h2 class="text-sm font-semibold text-ink">{s.category}</h2>
-          <div class="mt-3 grid gap-3 sm:grid-cols-3">
-            {related.map((x) => (
-              <a href={`/plugin/${x.full_name}/`} class="block rounded-xl border border-line bg-surface p-4 transition hover:border-accent/60 hover:bg-surface2">
-                <span class="font-mono text-[13px] font-medium break-all">{x.full_name}</span>
-                <p class="line-clamp-2 mt-2 text-xs text-muted">{x.description || "—"}</p>
-                <p class="mt-2 text-xs text-muted">★ {Number(x.stars).toLocaleString()}</p>
-              </a>
-            ))}
-          </div>
-        </section>
-      )}
-    </main>
-
-    <footer class="mt-12 border-t border-line pt-4 text-xs text-muted">
-      <p>© {new Date().getFullYear()} DSH Plugin Directory · <a class="underline" href="/" rel="noopener">{s.siteName}</a> · GitHub topic <a class="underline" href="https://github.com/topics/dsh-plugin" rel="noopener">dsh-plugin</a> · <a class="underline" href="https://github.com/Kristin130/dsh-plugin-directory/blob/main/LICENSE" rel="noopener">AGPL-3.0</a></p>
-    </footer>
-  </div>
-  <script is:inline>
-    document.getElementById("theme-toggle").addEventListener("click", () => {
-      const dark = document.documentElement.classList.toggle("dark");
-      document.documentElement.classList.toggle("light", !dark);
-      try { localStorage.setItem("dsh-theme", dark ? "dark" : "light"); } catch (e) {}
-    });
-  </script>
-</body>
-</html>
+      </section>
+    )}
+  </main>
+</BaseLayout>

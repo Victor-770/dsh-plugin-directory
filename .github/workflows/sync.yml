@@ -33,7 +33,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@b863ae1933cb653a53c021fe36dbb774e1fb9403 # v5
         with:
           commit_message: "chore(data): sync dsh-plugin directory"
-          file_pattern: "site/public/data"   # 含 plugins/ 分片与 index.json.br
+          file_pattern: "site/public/data"   # 含 plugins/ 分片、index.json.gz、browse(-lite).json、meta/tombstones 游标
       # 失败告警：同一时间只保留一个 open 的 sync-failure issue；重复失败追加评论而非再开新 issue
       - name: Alert on failure
         if: failure()

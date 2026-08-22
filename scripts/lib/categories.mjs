@@ -41,12 +41,13 @@ export function categorize({ full_name, description, topics, readme_text }) {
   }
   const nameS = (full_name || "").toLowerCase();
   const descS = (description || "").toLowerCase();
-  const topicS = (topics || []).join(" ").toLowerCase();
+  // topics 精确等值匹配（split 后比对）：子串匹配曾把 tui 误入皮肤/UI（ui ⊂ tui）、admin 误中 ad
+  const topicSet = new Set((topics || []).map((t) => String(t).toLowerCase()));
   const readmeS = (readme_text || "").slice(0, 1500).toLowerCase();
   const scored = new Map();
   for (const { cat, topics: tks, desc: dks, readme: rks } of KEYWORD_RULES) {
     let score = 0;
-    for (const k of tks) if (topicS.includes(k)) score += 3;
+    for (const k of tks) if (topicSet.has(k)) score += 3;
     for (const k of dks) if (descS.includes(k) || nameS.includes(k)) score += 3;
     for (const k of rks) if (readmeS.includes(k)) score += 1;
     if (score > 0) scored.set(cat, score);
