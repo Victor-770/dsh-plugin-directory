@@ -1,4 +1,4 @@
-// 中英别名表（v1 硬编码，约 60 条，双向）。查询时双向展开后再匹配。
+// 中英别名表（v1 硬编码，双向；2 字键由查询 token 精确命中，≥3 字键与含空格键由切词覆盖匹配触发）。
 // Object.create(null)：避免 "constructor" 等键撞原型链。
 export const ALIASES = Object.assign(Object.create(null), {
   // 皮肤/UI
@@ -34,6 +34,7 @@ export const ALIASES = Object.assign(Object.create(null), {
   "导入": "import", "import": "导入", "备份": "backup", "backup": "备份",
   "同步": "sync", "sync": "同步", "快捷键": "shortcut", "shortcut": "快捷键",
   "通知": "notify", "notify": "通知", "提醒": "remind", "音频": "audio", "audio": "音频",
+  "测试": "test", "test": "测试",
   "语言": "language", "language": "语言", "中文": "chinese", "chinese": "中文",
   "英文": "english", "english": "英文", "文档": "docs", "docs": "文档",
   "游戏": "game", "game": "游戏", "广告": "ads", "ads": "广告",
@@ -49,5 +50,5 @@ export const ALIASES = Object.assign(Object.create(null), {
   "分析": "analysis", "analysis": "分析", "数据": "data", "data": "数据",
   "爬虫": "crawler", "crawler": "爬虫", "抓取": "scrape", "scrape": "抓取",
   "订阅": "subscribe", "subscribe": "订阅", "播客": "podcast", "podcast": "播客",
-  "聊天机器人": "chatbot", "chatbot": "聊天", "文件管理": ["file", "manager"], "管理": "manager",
+  "聊天机器人": "chatbot", "chatbot": "聊天", "文件管理": ["file", "manager"], "管理": "manager", "manager": "管理",
 });

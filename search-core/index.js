@@ -1,14 +1,21 @@
 // search-core：零依赖纯函数库，Node（同步管道）与 Cloudflare Worker 共用。唯一测试 seam。
 import { ALIASES } from "./aliases.js";
 
-const isCJK = (cp) =>
+// run 成员（连成一个 CJK 词段）：汉字三区 + 苏州码数字（0x3000 段唯一的"文字"）+ 全角字母数字。
+const isRunChar = (cp) =>
   (cp >= 0x4e00 && cp <= 0x9fff) ||   // CJK Unified
   (cp >= 0x3400 && cp <= 0x4dbf) ||   // Ext A
   (cp >= 0xf900 && cp <= 0xfaff) ||   // Compat
-  (cp >= 0x3000 && cp <= 0x303f) ||   // CJK punct
-  (cp >= 0xff00 && cp <= 0xffef);     // Fullwidth
+  (cp >= 0x3021 && cp <= 0x3029) ||
+  (cp >= 0xff10 && cp <= 0xff19) || (cp >= 0xff21 && cp <= 0xff3a) || (cp >= 0xff41 && cp <= 0xff5a);
 
-/** 切词：CJK 二元切词 + 尾字；ASCII 小写按非字母数字切分。 */
+// 词边界（切断 run、不产出任何 token）：CJK 标点（0x3000-0x303f 非文字部分）与全角标点/符号。
+// 旧实现把它们当 run 成员，产生"具。"这类"汉字+标点"垃圾 bigram 入索引。
+const isSeparator = (cp) =>
+  (cp >= 0x3000 && cp <= 0x303f && !(cp >= 0x3021 && cp <= 0x3029)) ||
+  (cp >= 0xff00 && cp <= 0xffef && !isRunChar(cp));
+
+/** 切词：CJK 二元切词 + 首字 + 尾字；ASCII 小写按非字母数字切分。 */
 export function tokenize(text) {
   if (!text) return [];
   const s = String(text);
@@ -20,19 +27,31 @@ export function tokenize(text) {
       buf = "";
     }
   };
+  const emitRun = (run) => {
+    const chars = [...run];
+    for (let k = 0; k < chars.length - 1; k++) out.push(chars[k] + chars[k + 1]);
+    // 首字+尾字单字召回：查"图"能命中含"图片"的文档（旧实现只有尾字，首字永远缺失）
+    if (chars.length > 1) {
+      out.push(chars[0]);
+      out.push(chars[chars.length - 1]);
+    } else {
+      out.push(chars[0]);
+    }
+  };
   let i = 0;
   while (i < s.length) {
     const cp = s.codePointAt(i);
-    if (isCJK(cp)) {
+    if (isSeparator(cp)) {
+      flush();
+      i++;
+    } else if (isRunChar(cp)) {
       flush();
       let run = "";
-      while (i < s.length && isCJK(s.codePointAt(i))) {
+      while (i < s.length && isRunChar(s.codePointAt(i))) {
         run += String.fromCodePoint(s.codePointAt(i));
         i++;
       }
-      const chars = [...run];
-      for (let k = 0; k < chars.length - 1; k++) out.push(chars[k] + chars[k + 1]);
-      out.push(chars[chars.length - 1]);
+      emitRun(run);
     } else {
       buf += String.fromCodePoint(cp);
       i++;
@@ -42,7 +61,7 @@ export function tokenize(text) {
   return out;
 }
 
-/** 查询按"词"分组：CJK 连续段（二元+尾字）一组，ASCII 单词一组。词级 AND、词内 OR。 */
+/** 查询按"词"分组：CJK 连续段（二元+首尾字）一组，ASCII 单词一组。词级 AND、词内 OR。 */
 export function wordGroups(query) {
   if (!query) return [];
   const s = String(query);
@@ -52,23 +71,25 @@ export function wordGroups(query) {
   let i = 0;
   while (i < s.length) {
     const cp = s.codePointAt(i);
-    if (isCJK(cp)) {
+    const ch = String.fromCodePoint(cp);
+    if (isRunChar(cp)) {
       flush();
       let run = "";
-      while (i < s.length && isCJK(s.codePointAt(i))) {
+      while (i < s.length && isRunChar(s.codePointAt(i))) {
         run += String.fromCodePoint(s.codePointAt(i));
         i++;
       }
       const chars = [...run];
       const toks = [];
       for (let k = 0; k < chars.length - 1; k++) toks.push(chars[k] + chars[k + 1]);
-      toks.push(chars[chars.length - 1]);
+      if (chars.length > 1) { toks.push(chars[0]); toks.push(chars[chars.length - 1]); }
+      else toks.push(chars[0]);
       groups.push(toks);
-    } else if (/[a-z0-9]/i.test(String.fromCodePoint(cp))) {
-      buf += String.fromCodePoint(cp).toLowerCase();
+    } else if (isSeparator(cp) || !/[a-z0-9]/i.test(ch)) {
+      flush();
       i++;
     } else {
-      flush();
+      buf += ch.toLowerCase();
       i++;
     }
   }
@@ -76,16 +97,76 @@ export function wordGroups(query) {
   return groups;
 }
 
-/** 组内别名展开（含别名值的切词结果）。 */
-function expandGroup(tokens, aliases) {
-  const set = new Set(tokens);
-  for (const t of tokens) {
-    const v = aliases[t];
-    if (v) {
-      for (const a of Array.isArray(v) ? v : [v]) for (const at of tokenize(a)) set.add(at);
+// ---------- 别名展开 ----------
+// 别名值注入查询组时过滤单字噪声：多字 CJK 值的首/尾单字会海量命中 README（词内 OR），
+// 别名承担的是"概念等价"而非单字召回，单字召回由索引侧首尾字发射负责。
+function aliasValueTokens(value) {
+  const out = [];
+  for (const v of Array.isArray(value) ? value : [value]) {
+    for (const t of tokenize(v)) {
+      if (t.length === 1 && t.charCodeAt(0) > 0xff) continue;
+      out.push(t);
     }
   }
-  return set;
+  return out;
+}
+
+// 键的触发条件 token：CJK 段滑窗 bigram（不含首尾单字）+ ASCII 段单词 + 单字符段自身。
+// 2 字键退化为单 bigram（= 键本身），与既有"token 精确等于键"路径一致；
+// ≥3 字键与含空格键因此变得可触发（旧实现里它们是永远无法命中的死键）。
+export function keyTriggerTokens(key) {
+  const triggers = [];
+  for (const seg of String(key).match(/[^\u0000-\u00ff]+|[\u0000-\u00ff]+/g) || []) {
+    if (seg[0].charCodeAt(0) <= 0xff) {
+      for (const w of seg.toLowerCase().split(/[^a-z0-9]+/)) if (w) triggers.push(w);
+    } else {
+      const chars = [...seg];
+      if (chars.length === 1) triggers.push(chars[0]);
+      else for (let k = 0; k + 1 < chars.length; k++) triggers.push(chars[k] + chars[k + 1]);
+    }
+  }
+  return triggers;
+}
+
+// 查询组展开：每组的 token 精确命中别名键（含多 token 值），再做键覆盖匹配。
+// 覆盖匹配：键的全部触发 token 都出现在查询里（跨组亦可，如 "skin center"）时，
+// 把键值注入首个触发 token 所在的组，保持"词内 OR、词间 AND"语义。
+function expandQueryGroups(q) {
+  const rawGroups = wordGroups(q);
+  if (!rawGroups.length) return [];
+  const expanded = rawGroups.map((g) => {
+    const set = new Set(g);
+    for (const t of g) {
+      const v = ALIASES[t];
+      if (v) for (const at of aliasValueTokens(v)) set.add(at);
+    }
+    return set;
+  });
+  const tokenToGroup = new Map();
+  rawGroups.forEach((g, gi) => { for (const t of g) if (!tokenToGroup.has(t)) tokenToGroup.set(t, gi); });
+  for (const key of Object.keys(ALIASES)) {
+    const triggers = keyTriggerTokens(key);
+    if (!triggers.length || (triggers.length === 1 && triggers[0] === key)) continue; // 精确路径已覆盖
+    const gi = tokenToGroup.get(triggers[0]);
+    if (gi === undefined || !triggers.every((t) => tokenToGroup.has(t))) continue;
+    for (const at of aliasValueTokens(ALIASES[key])) expanded[gi].add(at);
+  }
+  return expanded;
+}
+
+/** 查询词双向别名展开（含别名值的切词结果，过滤单字噪声）。 */
+export function expandAliases(query, aliases = ALIASES) {
+  const terms = new Set(tokenize(query));
+  for (const t of terms) {
+    const v = aliases[t];
+    if (v) for (const at of aliasValueTokens(v)) terms.add(at);
+  }
+  for (const key of Object.keys(aliases)) {
+    const triggers = keyTriggerTokens(key);
+    if (!triggers.length || (triggers.length === 1 && triggers[0] === key)) continue;
+    if (triggers.every((t) => terms.has(t))) for (const at of aliasValueTokens(aliases[key])) terms.add(at);
+  }
+  return [...terms];
 }
 
 // ---------- 查询热路径加速（索引文件格式不变） ----------
@@ -115,19 +196,6 @@ function docSets(doc) {
   return s;
 }
 
-/** 查询词双向别名展开（含别名值的切词结果）。 */
-export function expandAliases(query, aliases = ALIASES) {
-  const terms = tokenize(query);
-  const expanded = new Set(terms);
-  for (const t of terms) {
-    const v = aliases[t];
-    if (v) {
-      for (const a of Array.isArray(v) ? v : [v]) for (const at of tokenize(a)) expanded.add(at);
-    }
-  }
-  return [...expanded];
-}
-
 /** 构建倒排索引。records: PluginRecord[]。索引形状见 spec（docs 增补 stars/categories/tags 供自足过滤排序）。 */
 export function buildIndex(records) {
   // Object.create(null)：防止 token 命中原型链键（如 "constructor"）导致 ||= 不建数组
@@ -153,8 +221,8 @@ export function buildIndex(records) {
 
 /** 搜索：查询词 OR 匹配（别名展开后），分类/标签过滤 AND。返回 {total, ids, scores}。 */
 export function search(index, { q = "", categories = [], tags = [], sort = "relevance", limit = 50 } = {}) {
-  // 词级 AND + 词内 OR（含别名）：每个查询词至少命中一个 token，避免常见词 OR 全命中
-  const groups = q ? wordGroups(q).map((g) => expandGroup(g, ALIASES)) : [];
+  // 词级 AND + 词内 OR（含别名与 ≥3 字键的覆盖匹配）：每个查询词至少命中一个 token
+  const groups = q ? expandQueryGroups(q) : [];
   const scores = new Map();
   for (const doc of index.docs) {
     if (categories.length && !categories.some((c) => doc.categories.includes(c))) continue;

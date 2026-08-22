@@ -85,3 +85,37 @@ test("limit 生效", () => {
   const r = search(index, { q: "", limit: 3 });
   assert.equal(r.ids.length, 3);
 });
+// ---- Ticket 08：单字中文召回 ----
+test("单字召回：查『图』命中含『图片』的文档（修复前失败）", () => {
+  const r = search(index, { q: "图" });
+  assert.ok(names(r).includes("vision-lab/vision-ocr"), "图片识别 文档应被单字『图』命中");
+});
+
+// ---- Ticket 08：≥3 字别名键复活（覆盖匹配） ----
+test("三字键：查『命令行』触发 cli（修复前死键）", () => {
+  const records = [...FIXTURE_RECORDS, {
+    full_name: "cli/cli-helper", description: "helper", stars: 1,
+    language: "Go", pushed_at: "2026-08-01T00:00:00Z", topics: [],
+    categories: ["工具/开发"], tags: [],
+    readme_text: "a cli tool for your command line.",
+  }];
+  const idx = buildIndex(records);
+  const r = search(idx, { q: "命令行" });
+  assert.ok(r.ids.map((id) => idx.docs[id].full_name).includes("cli/cli-helper"));
+});
+test("三字键：查『浏览器』召回含 browser 的英文 README（修复前死键）", () => {
+  const records = [...FIXTURE_RECORDS, {
+    full_name: "web/browser-tool", description: "helper", stars: 1,
+    language: "Rust", pushed_at: "2026-08-01T00:00:00Z", topics: [],
+    categories: ["工具/开发"], tags: [],
+    readme_text: "open links in your favorite browser.",
+  }];
+  const idx = buildIndex(records);
+  const r = search(idx, { q: "浏览器" });
+  assert.ok(r.ids.map((id) => idx.docs[id].full_name).includes("web/browser-tool"));
+});
+test("键覆盖不过度触发：查『命令』不触发 命令行 键的 cli", () => {
+  // "命令" 只产出 bigram 命令+单字，不含 令行，键 命令行 的触发条件不满足
+  const ex = expandAliases("命令");
+  assert.ok(!ex.includes("cli"), `不应注入 cli：${ex.join(" ")}`);
+});
