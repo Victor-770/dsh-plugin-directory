@@ -6,6 +6,8 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import worker, { resolveDataOrigin } from "./src/index.js";
 import { onRequestGet } from "../functions/api/search.js"; // 真实 Pages Function 代码
+import { buildIndex } from "../search-core/index.js";
+import { gzipSync } from "node:zlib";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const dataDir = path.join(__dirname, "..", "site", "public", "data");
@@ -110,9 +112,75 @@ const official = await (await directFetch(worker, workerEnv, Q)).json();
   check("origin 解析：非法 Referer 拒绝", resolveDataOrigin({}, "http://not a url") === null && resolveDataOrigin({}, null) === null);
 }
 
-// ---------- Ticket 03：限流信任边界 ----------
+// ---------- Ticket 09：缓存生命周期 ----------
+{
+  // A. 响应不含 readme_text（加载期已剥离，输出直接取元数据）
+  const body = await (await directFetch(worker, workerEnv, "/api/search?q=%E7%9A%AE%E8%82%A4&limit=10")).text();
+  check("搜索响应不含 readme_text", !body.includes("readme_text"));
+}
+{
+  // B. 并发冷启动防惊群：N 个同时到达的冷请求只触发一次数据拉取（manifest 只被请求一次）
+  const mod = await importFresh("?dedup");
+  const dataFetches = { manifest: 0 };
+  const countedOrigin = await startCountedDataProxy(dataOrigin, dataFetches);
+  const env = { SITE_ORIGIN: countedOrigin };
+  await Promise.all(Array.from({ length: 5 }, () => directFetch(mod, env, Q)));
+  check("5 个并发冷请求只拉一次数据", dataFetches.manifest === 1, `manifest fetched ${dataFetches.manifest} times`);
+}
+{
+  // C. TTL + stale-while-revalidate：TTL 内不重复拉取；到期后台刷新后拿到新数据
+  const mod = await importFresh("?ttl");
+  let version = 1;
+  let loads = 0;
+  const stateServer = http.createServer((req, res) => {
+    const plugins = version === 1
+      ? [{ full_name: "a/v1-plugin", html_url: "https://github.com/a/v1-plugin", description: "v1 desc", stars: 10, language: null, pushed_at: "2026-08-01T00:00:00Z", topics: [], categories: ["工具/开发"], tags: [] }]
+      : [{ full_name: "b/v2-plugin", html_url: "https://github.com/b/v2-plugin", description: "v2 desc", stars: 20, language: null, pushed_at: "2026-08-02T00:00:00Z", topics: [], categories: ["工具/开发"], tags: [] }];
+    if (req.url === "/data/plugins/manifest.json") { loads++; res.writeHead(200, { "content-type": "application/json" }); res.end(JSON.stringify({ shards: ["000.json"] })); return; }
+    if (req.url === "/data/index.json.gz") {
+      res.writeHead(200, { "content-type": "application/octet-stream" });
+      res.end(gzipSync(JSON.stringify(buildIndex(plugins))));
+      return;
+    }
+    if (req.url === "/data/plugins/000.json") { res.writeHead(200, { "content-type": "application/json" }); res.end(JSON.stringify({ plugins })); return; }
+    res.writeHead(404); res.end();
+  });
+  await new Promise((r) => stateServer.listen(0, "127.0.0.1", r));
+  const origin = `http://127.0.0.1:${stateServer.address().port}`;
+  const env = { SITE_ORIGIN: origin, CACHE_TTL_MS: 120 };
+  const j = async () => (await (await directFetch(mod, env, "/api/search?q=&limit=10")).json());
+
+  let r = await j();
+  check("TTL 首次加载 v1 数据", r.results.some((p) => p.full_name === "a/v1-plugin"));
+  r = await j(); // TTL 内：不重复拉取
+  check("TTL 内不重复拉取", loads === 1, `loads=${loads}`);
+  version = 2; // 上游数据变更（模拟新一轮同步发布）
+  await new Promise((res) => setTimeout(res, 200)); // 过期
+  r = await j(); // SWR：本次仍回旧值，同时触发后台刷新
+  const servedStale = r.results.every((p) => p.full_name === "a/v1-plugin");
+  await new Promise((res) => setTimeout(res, 300)); // 等后台刷新完成
+  r = await j();
+  check("过期请求先回旧值（SWR）", servedStale);
+  check("后台刷新后拿到 v2 数据", r.results.some((p) => p.full_name === "b/v2-plugin"), JSON.stringify(r.results.map((p) => p.full_name)));
+  stateServer.close();
+}
 async function importFresh(query) {
   return import(pathToFileURL(path.join(__dirname, "src", "index.js")).href + query);
+}
+
+// 计数代理：转发到真实数据源，统计 manifest 拉取次数（防惊群断言用）
+async function startCountedDataProxy(target, counter) {
+  const server = http.createServer((req, res) => {
+    if (req.url.includes("manifest.json")) counter.manifest++;
+    fetch(target + req.url)
+      .then(async (up) => {
+        res.writeHead(up.status, { "content-type": up.headers.get("content-type") || "application/json" });
+        res.end(Buffer.from(await up.arrayBuffer()));
+      })
+      .catch(() => { res.writeHead(502); res.end(); });
+  });
+  await new Promise((r) => server.listen(0, "127.0.0.1", r));
+  return `http://127.0.0.1:${server.address().port}`;
 }
 
 {
