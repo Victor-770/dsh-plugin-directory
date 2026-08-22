@@ -219,10 +219,37 @@ export function buildIndex(records) {
   return { version: 1, builtAt: new Date().toISOString(), tokens, docs };
 }
 
+// limit 归一化：显式区间 0..200。缺省/空串/NaN -> 50；负数收敛到 0（返回空集）；超上限收敛到 200。
+function normalizeLimit(v) {
+  if (v === null || v === undefined || v === "") return 50;
+  const n = Number(v);
+  if (Number.isNaN(n)) return 50;
+  return Math.min(200, Math.max(0, Math.trunc(n)));
+}
+
+// 查询长度上限：core 层硬截断（Worker 层另有一道），超长查询不烧放大级 CPU。
+const MAX_QUERY_CHARS = 256;
+
 /** 搜索：查询词 OR 匹配（别名展开后），分类/标签过滤 AND。返回 {total, ids, scores}。 */
 export function search(index, { q = "", categories = [], tags = [], sort = "relevance", limit = 50 } = {}) {
+  q = String(q).slice(0, MAX_QUERY_CHARS);
   // 词级 AND + 词内 OR（含别名与 ≥3 字键的覆盖匹配）：每个查询词至少命中一个 token
   const groups = q ? expandQueryGroups(q) : [];
+  // IDF 查询期现成可得：df = 倒排链长度（token 出现在多少文档的任一字段），索引格式不变。
+  // 用平滑变体 log(1 + D/df)：df=D 的满篇词仍有微小正分（命中不被误判为未命中），
+  // 区分性强的词（df 小）权重高，营销文案靠堆 dsh/plugin 刷分的老问题由此消除。
+  const D = index.docs.length || 1;
+  const idfCache = new Map();
+  const idf = (t) => {
+    let v = idfCache.get(t);
+    if (v === undefined) {
+      const posting = index.tokens[t];
+      const df = Array.isArray(posting) ? posting.length : D; // 非数组（原型链键等）按满频退化
+      v = Math.log(1 + D / Math.max(1, df));
+      idfCache.set(t, v);
+    }
+    return v;
+  };
   const scores = new Map();
   for (const doc of index.docs) {
     if (categories.length && !categories.some((c) => doc.categories.includes(c))) continue;
@@ -231,16 +258,21 @@ export function search(index, { q = "", categories = [], tags = [], sort = "rele
       const sets = docSets(doc);
       let score = 0, allHit = true;
       for (const group of groups) {
-        let hit = false;
+        // 同义词组内取最高分而非求和：标题同时含 skin 与尾字『肤』的文档不应凭双重计分
+        // 超过标题真含『皮肤』的文档
+        let best = 0;
         for (const t of group) {
-          if (sets.title.has(t)) { score += 3; hit = true; }
-          else if (sets.desc.has(t)) { score += 2; hit = true; }
-          else {
+          let weight = sets.title.has(t) ? 3 : sets.desc.has(t) ? 2 : 0;
+          if (!weight) {
             const posting = index.tokens[t];
-            if (posting && postingHas(posting, doc.id)) { score += 1; hit = true; }
+            if (Array.isArray(posting) && postingHas(posting, doc.id)) weight = 1;
           }
+          if (!weight) continue;
+          const s = weight * idf(t);
+          if (s > best) best = s;
         }
-        if (!hit) { allHit = false; break; }
+        if (best === 0) { allHit = false; break; }
+        score += best;
       }
       if (!allHit) continue;
       scores.set(doc.id, score);
@@ -251,6 +283,6 @@ export function search(index, { q = "", categories = [], tags = [], sort = "rele
   let ids = [...scores.keys()];
   if (sort === "stars") ids.sort((a, b) => index.docs[b].stars - index.docs[a].stars);
   else ids.sort((a, b) => (scores.get(b) - scores.get(a)) || (index.docs[b].stars - index.docs[a].stars));
-  const sliced = ids.slice(0, Math.max(1, Number(limit) || 50));
+  const sliced = ids.slice(0, normalizeLimit(limit));
   return { total: ids.length, ids: sliced, scores: Object.fromEntries(sliced.map((id) => [id, scores.get(id)])) };
 }

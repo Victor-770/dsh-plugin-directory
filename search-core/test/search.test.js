@@ -119,3 +119,113 @@ test("键覆盖不过度触发：查『命令』不触发 命令行 键的 cli",
   const ex = expandAliases("命令");
   assert.ok(!ex.includes("cli"), `不应注入 cli：${ex.join(" ")}`);
 });
+
+// ---- Ticket 10：IDF 区分性 ----
+test("IDF：稀有区分词文档排名高于满篇样板词的营销 README（修复前失败）", () => {
+  const records = [
+    ...FIXTURE_RECORDS,
+    { full_name: "spam/marketing", description: "best dsh plugin", stars: 9999,
+      language: null, pushed_at: "2026-08-01T00:00:00Z", topics: [], categories: ["工具/开发"], tags: [],
+      readme_text: "dsh plugin skin theme dsh plugin skin theme dsh plugin skin theme dsh plugin skin theme" },
+    { full_name: "real/garbanzo-tool", description: "garbanzo bean counter", stars: 1,
+      language: null, pushed_at: "2026-08-01T00:00:00Z", topics: [], categories: ["工具/开发"], tags: [],
+      readme_text: "counts garbanzo beans for dsh" },
+  ];
+  const idx = buildIndex(records);
+  const r = search(idx, { q: "garbanzo", limit: 10 });
+  assert.ok(r.ids.length >= 1);
+  // 只有一处出现的 garbanzo 是区分词；营销文档没有它，不应排在前面
+  assert.equal(idx.docs[r.ids[0]].full_name, "real/garbanzo-tool");
+});
+test("IDF：满篇皆是的词权重趋近 0，多词查询由区分词决定", () => {
+  const records = [
+    { full_name: "a/common-only", description: "dsh plugin helper", stars: 5,
+      language: null, pushed_at: "2026-08-01T00:00:00Z", topics: [], categories: ["工具/开发"], tags: [],
+      readme_text: "dsh plugin dsh plugin dsh plugin" },
+    { full_name: "b/rare-hit", description: "dsh plugin oscilloscope", stars: 1,
+      language: null, pushed_at: "2026-08-01T00:00:00Z", topics: [], categories: ["工具/开发"], tags: [],
+      readme_text: "dsh plugin" },
+  ];
+  const idx = buildIndex(records);
+  const r = search(idx, { q: "dsh plugin oscilloscope", limit: 10 });
+  assert.equal(idx.docs[r.ids[0]].full_name, "b/rare-hit");
+});
+
+// ---- Ticket 10：同义词组内取最高分 ----
+test("同组取 max：标题真含『皮肤』的文档不被 skin+肤 双重计分反超（修复前失败）", () => {
+  // a：标题含 skin 且 readme 含『肤』（求和时代的双重计分受益者）
+  // b：标题真含『皮肤』（应得第一）
+  // c：readme 含 skin 的营销文档——把 skin 的 df 抬高，让 idf(皮肤) > idf(skin)
+  const records = [
+    { full_name: "a/skin-title", description: "helper", stars: 100,
+      language: null, pushed_at: "2026-08-01T00:00:00Z", topics: [], categories: ["皮肤/UI"], tags: [],
+      readme_text: "skin 肤色技巧" },
+    { full_name: "b/皮肤工具", description: "helper", stars: 1,
+      language: null, pushed_at: "2026-08-01T00:00:00Z", topics: [], categories: ["皮肤/UI"], tags: [],
+      readme_text: "nothing here" },
+    { full_name: "c/skin-marketing", description: "helper", stars: 5,
+      language: null, pushed_at: "2026-08-01T00:00:00Z", topics: [], categories: ["皮肤/UI"], tags: [],
+      readme_text: "skin skin skin theme skin" },
+  ];
+  const idx = buildIndex(records);
+  const r = search(idx, { q: "皮肤", limit: 10 });
+  assert.equal(idx.docs[r.ids[0]].full_name, "b/皮肤工具");
+});
+
+// ---- Ticket 10：star tiebreak 真实顺序断言（替换空转用例） ----
+test("star tiebreak：同分（同字段权重）时 star 高者在前", () => {
+  const records = [
+    { full_name: "low/star", description: "terminal helper", stars: 10,
+      language: null, pushed_at: "2026-08-01T00:00:00Z", topics: [], categories: ["终端/TUI"], tags: [],
+      readme_text: "" },
+    { full_name: "high/star", description: "terminal helper", stars: 900,
+      language: null, pushed_at: "2026-08-01T00:00:00Z", topics: [], categories: ["终端/TUI"], tags: [],
+      readme_text: "" },
+  ];
+  const idx = buildIndex(records);
+  const r = search(idx, { q: "terminal helper", limit: 10 });
+  assert.equal(idx.docs[r.ids[0]].full_name, "high/star");
+  assert.equal(idx.docs[r.ids[1]].full_name, "low/star");
+  assert.equal(r.scores[r.ids[0]], r.scores[r.ids[1]]); // 确认真的是同分场景
+});
+
+// ---- Ticket 10：limit 契约 ----
+test("limit=0 返回空集（total 保留）", () => {
+  const r = search(index, { q: "skin", limit: 0 });
+  assert.equal(r.ids.length, 0);
+  assert.ok(r.total > 0);
+});
+test("limit 负数收敛为空集", () => {
+  const r = search(index, { q: "skin", limit: -5 });
+  assert.equal(r.ids.length, 0);
+});
+test("limit 非法值回默认 50", () => {
+  const r = search(index, { q: "", limit: "abc" });
+  assert.equal(r.ids.length, 8); // fixture 全部 8 文档命中（无词查询）
+});
+test("limit 超上限收敛 200", () => {
+  const r = search(index, { q: "", limit: 99999 });
+  assert.equal(r.ids.length, 8);
+});
+
+// ---- Ticket 10：超长查询截断 ----
+test("2000 字查询被截断到 256 字符（CPU 不放大）", () => {
+  const long = "皮".repeat(2000);
+  const r = search(index, { q: long, limit: 5 });
+  assert.ok(typeof r.total === "number"); // 不崩溃、不挂起
+  const groups = expandAliases(long.slice(0, 256));
+  assert.ok(groups.length > 0);
+});
+
+// ---- Ticket 10：原型链注入 ----
+test("JSON 反序列化索引上查 constructor/__proto__ 不崩溃不误报", () => {
+  const plainIndex = JSON.parse(JSON.stringify(index)); // tokens 带 Object 原型
+  for (const q of ["constructor", "__proto__", "hasOwnProperty", "toString"]) {
+    const r = search(plainIndex, { q, limit: 5 });
+    assert.ok(Array.isArray(r.ids));
+  }
+});
+test("空索引可查询", () => {
+  const r = search({ version: 1, docs: [], tokens: Object.create(null) }, { q: "皮肤", limit: 5 });
+  assert.equal(r.total, 0);
+});

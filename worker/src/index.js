@@ -116,11 +116,15 @@ export default {
       const data = await loadData(env, base);
       maybeRevalidate(env, base, ctx); // TTL 到期：本次回旧值，后台刷新
       const params = url.searchParams;
-      const q = params.get("q") || "";
+      const q = (params.get("q") || "").slice(0, 256); // 超长查询两层截断（core 层另有一道）
       const categories = (params.get("cat") || "").split(",").map((s) => s.trim()).filter(Boolean);
       const tags = (params.get("tag") || "").split(",").map((s) => s.trim()).filter(Boolean);
       const sort = params.get("sort") === "stars" ? "stars" : "relevance";
-      const limit = Math.min(200, Math.max(1, Number(params.get("limit")) || 50));
+      // limit 语义：显式 0..200（0 返回空集；非法/缺省 50；负数收敛 0；超上限收敛 200）
+      const rawLimit = Number(params.get("limit"));
+      const limit = params.get("limit") === null || params.get("limit") === "" || Number.isNaN(rawLimit)
+        ? 50
+        : Math.min(200, Math.max(0, Math.trunc(rawLimit)));
       const result = search(data.index, { q, categories, tags, sort, limit });
       // README 已在加载期剥离（见 loadFresh），输出直接取元数据
       const results = result.ids.map((id) => data.plugins[id]);
