@@ -6,6 +6,7 @@
   "license": "AGPL-3.0-or-later",
   "scripts": {
     "sync": "node scripts/sync.mjs",
+    "deploy": "node scripts/deploy.mjs",
     "test": "node --test \"search-core/test/*.test.js\" \"site/test/*.test.js\" \"site/test/*.test.mjs\" \"site/src/lib/*.test.js\" && node worker/integration.mjs"
   }
 }

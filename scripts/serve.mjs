@@ -24,7 +24,9 @@ const workerServer = http.createServer((req, res) => {
 await new Promise((r) => workerServer.listen(0, "127.0.0.1", r));
 const workerOrigin = `http://127.0.0.1:${workerServer.address().port}`;
 
-const MIME = { ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".svg": "image/svg+xml", ".png": "image/png", ".txt": "text/plain" };
+// MIME 对齐 Pages 实际行为：曾缺 .ico/.webmanifest/.xml/.gz（本地预览 favicon 被当
+// 二进制流、manifest 解析失败，与线上表现不一致难排查）
+const MIME = { ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".svg": "image/svg+xml", ".png": "image/png", ".txt": "text/plain", ".ico": "image/x-icon", ".webmanifest": "application/manifest+json", ".xml": "application/xml; charset=utf-8", ".gz": "application/gzip" };
 
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, "http://127.0.0.1");

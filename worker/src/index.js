@@ -1,5 +1,5 @@
 // DSH Plugin Directory 搜索 Worker：薄 HTTP 适配层，逻辑全在 search-core。
-// 冷启动 fetch 同源数据（index.json.gz + plugins/ 分片），模块级内存缓存；查询纯内存，P95 目标 <300ms。
+// 冷启动 fetch 同源数据（index.json.gz + plugins-meta.json.gz），模块级内存缓存；查询纯内存，P95 目标 <300ms。
 import { search } from "../../search-core/index.js";
 import { createRateLimiter, rateLimitConfig } from "../../shared/rate-limit.js";
 
@@ -14,8 +14,9 @@ export function resolveDataOrigin(env) {
 }
 
 // ---------- 缓存生命周期 ----------
-// 剥离前移：README 全文只存在于同步产物；Worker 加载分片时即丢弃（10k 插件 × 8KB ≈ 80MB，
-// 是逼近 128MB isolate 上限的主因），常驻内存只剩元数据与索引。
+// 剥离前移：同步侧直接产出无 README 的 plugins-meta.json.gz（Worker 专用）；旧布局的
+// 含 README 分片只在回退路径拉取，加载时同样剥离（10k 插件 × 8KB ≈ 80MB，是逼近
+// 128MB isolate 上限的主因），常驻内存只剩元数据与索引。
 // 并发冷启动共享同一次加载（in-flight promise 防惊群）：N 个同时到达的冷请求只拉一份数据。
 // TTL + stale-while-revalidate：缓存记录加载时间，到期后本次请求先回旧值、后台刷新换新——
 // 搜索结果与 6 小时同步节奏对齐；02 锁定数据源后，TTL 也是缓存被污染时的自愈出路。
@@ -24,29 +25,51 @@ let cache = null; // { index, plugins, loadedAt }
 let inflight = null; // 进行中的加载 promise
 let revalidating = false; // 进行中的后台刷新
 
+// 解压 gzip JSON（Node 与 workerd 均支持 DecompressionStream gzip；brotli 仅 workerd）
+async function fetchGzipJson(url) {
+  const res = await fetch(url, { cf: { cacheTtl: 300 } });
+  if (!res.ok) throw new Error(`data fetch failed: ${url} -> ${res.status}`);
+  return gunzipJson(res);
+}
+
+// 解压 gzip 响应体（Node 与 workerd 均支持 DecompressionStream gzip；brotli 仅 workerd）
+async function gunzipJson(res) {
+  const decompressed = new Response(new Blob([await res.arrayBuffer()]).stream().pipeThrough(new DecompressionStream("gzip")));
+  return decompressed.json();
+}
+
 async function loadFresh(env, base) {
-  // 数据布局（2026-08 起）：单文件 plugins.json 曾达 28.8MiB、index.json 17.8MiB，
-  // 超出 Cloudflare Pages 25MiB/文件上限 -> plugins 改为分片 + manifest，索引 gzip 压缩。
-  const [idxRes, manRes] = await Promise.all([
-    fetch(base + "/data/index.json.gz", { cf: { cacheTtl: 300 } }),
-    fetch(base + "/data/plugins/manifest.json", { cf: { cacheTtl: 300 } }),
-  ]);
-  if (!idxRes.ok || !manRes.ok) throw new Error(`data fetch failed: index=${idxRes.status} manifest=${manRes.status}`);
-  // 解压 gzip 索引（Node 与 workerd 均支持 DecompressionStream gzip）
-  const decompressed = new Response(
-    new Blob([await idxRes.arrayBuffer()]).stream().pipeThrough(new DecompressionStream("gzip"))
-  );
-  const index = await decompressed.json();
-  const manifest = await manRes.json();
-  const shardRes = await Promise.all(
-    (manifest.shards || []).map((s) => fetch(base + "/data/plugins/" + s, { cf: { cacheTtl: 300 } }))
-  );
-  const bad = shardRes.find((r) => !r.ok);
-  if (bad) throw new Error(`plugins shard fetch failed: ${bad.status}`);
-  // 加载即剥离 README：内存与输出都不再持有全文
-  const plugins = (await Promise.all(shardRes.map((r) => r.json()))).flatMap((d) =>
-    (d.plugins || []).map(({ readme_text, ...meta }) => meta)
-  );
+  // 请求必须顺序化：workerd 限制单次调用并发连接数（6），先发起的响应体不读、
+  // 再继续发新请求会触发"防死锁取消"（stalled response canceled）——并行 index + 元数据
+  // 曾因此整链失败。每个 fetch 的响应体都在下一步发起前读完。
+  // 首选元数据分片（~2MB gz，无 README）：冷启动从"索引 14MB + 分片 61MB"降到"14MB + 2MB"，
+  // 每 TTL 的后台刷新同步变轻。404 = 数据尚未随新布局发布（部署顺序解耦）：回退分片 + manifest。
+  const metaRes = await fetch(base + "/data/plugins-meta.json.gz", { cf: { cacheTtl: 300 } });
+  let plugins;
+  if (metaRes.ok) {
+    plugins = (await gunzipJson(metaRes)).plugins || [];
+  } else if (metaRes.status === 404) {
+    const manRes = await fetch(base + "/data/plugins/manifest.json", { cf: { cacheTtl: 300 } });
+    if (!manRes.ok) throw new Error(`data fetch failed: meta=${metaRes.status} manifest=${manRes.status}`);
+    const manifest = await manRes.json();
+    // 回退路径分批拉分片：批内响应体立即消费（r.json()），任何时刻未读响应 ≤ 批大小，
+    // 不越过并发连接上限；仅过渡期使用（新数据布局发布后走上面的 meta 路径）。
+    const shards = manifest.shards || [];
+    const BATCH = 4;
+    plugins = [];
+    for (let i = 0; i < shards.length; i += BATCH) {
+      const metas = await Promise.all(shards.slice(i, i + BATCH).map(async (s) => {
+        const r = await fetch(base + "/data/plugins/" + s, { cf: { cacheTtl: 300 } });
+        if (!r.ok) throw new Error(`plugins shard fetch failed: ${r.status}`);
+        const d = await r.json(); // 加载即剥离 README：内存与输出都不再持有全文
+        return (d.plugins || []).map(({ readme_text, ...meta }) => meta);
+      }));
+      plugins.push(...metas.flat());
+    }
+  } else {
+    throw new Error(`data fetch failed: meta=${metaRes.status}`);
+  }
+  const index = await fetchGzipJson(base + "/data/index.json.gz");
   return { index, plugins, loadedAt: Date.now() };
 }
 

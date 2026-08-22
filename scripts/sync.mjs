@@ -5,12 +5,12 @@
 // 保证 CI 全新 checkout 后仍能读到上次对账时间，增量逻辑在 CI 里持续生效）。
 // 用法：GITHUB_TOKEN=xxx npm run sync [-- --reconcile]
 // 说明：搜索 API 未认证 10 次/分钟，认证 30 次/分钟；脚本按认证与否自适应限速。
-import { writeFile, mkdir, readdir, readFile, rm, rename } from "node:fs/promises";
-import { gzipSync } from "node:zlib";
+import { mkdir, readdir, rm } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { categorize } from "./lib/categories.mjs";
-import { buildIndex } from "../search-core/index.js";
+import { writeFileAtomic, readRecordsFromDataDir, writeDataArtifacts } from "./lib/artifacts.mjs";
+import { hasEnPage } from "../site/src/lib/publish-policy.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.join(__dirname, "..", "site", "public", "data"); // 站点静态资源目录：Worker 同源拉取
@@ -43,14 +43,6 @@ const README_CANDIDATES = [
 const META_FILE = path.join(DATA_DIR, "meta.json"); // { lastReconcileAt: "YYYY-MM-DD"|null }
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-
-// 原子写盘：同目录临时文件 + rename——磁盘满/中途崩溃只可能留下完整旧文件或完整新文件，
-// 不会出现半份 JSON 被下一轮 readPreviousRecords 解析失败或被 CI 提交部署。
-async function writeFileAtomic(filePath, data) {
-  const tmp = filePath + ".tmp";
-  await writeFile(tmp, data);
-  await rename(tmp, filePath);
-}
 
 // 限速预算：认证 30/min，未认证 10/min。所有搜索请求按时间槽排队，天然满足每分钟配额。
 const RATE_PER_MIN = TOKEN ? 30 : 10;
@@ -303,26 +295,9 @@ async function writeMeta(meta) {
   await writeFileAtomic(META_FILE, JSON.stringify(meta));
 }
 
-// 读取上次数据文件，构造 full_name -> record 的 Map（供 README 缓存与 diff）。
-// 新布局：data/plugins/manifest.json + 分片；兼容迁移前遗留的 plugins.json。
+// 读取上次数据文件（记录本体），派生产物清单见 scripts/lib/artifacts.mjs。
 async function readPreviousRecords() {
-  const shardDir = path.join(DATA_DIR, "plugins");
-  try {
-    const manifest = JSON.parse(await readFile(path.join(shardDir, "manifest.json"), "utf8"));
-    const out = [];
-    for (const name of manifest.shards || []) {
-      const shard = JSON.parse(await readFile(path.join(shardDir, name), "utf8"));
-      if (Array.isArray(shard.plugins)) out.push(...shard.plugins);
-    }
-    return out;
-  } catch {
-    try {
-      const raw = JSON.parse(await readFile(path.join(DATA_DIR, "plugins.json"), "utf8"));
-      return Array.isArray(raw.plugins) ? raw.plugins : [];
-    } catch {
-      return [];
-    }
-  }
+  return readRecordsFromDataDir(DATA_DIR);
 }
 
 // 增量时 README 缓存：只有 pushed_at 变化（内容真更新）或新仓库才重抓；否则复用上次的 readme_text。
@@ -448,9 +423,8 @@ async function findIndexNowKey() {
 }
 
 function changedSummary(urls) {
-  const hasEn = urls.some((u) => u.includes("/en/plugin/"));
-  const count = urls.length / 2;
-  return `~${count} plugins, ${count * 2} URLs (zh+en)`;
+  const en = urls.filter((u) => u.includes("/en/")).length;
+  return `${urls.length - en} zh + ${en} en URLs`;
 }
 
 // ---------- 墓碑（对账删除保护） ----------
@@ -542,53 +516,8 @@ async function main() {
 
   // --- IndexNow 通知移到数据写盘成功之后（见下方）：先发布后通知，写失败/中止零通知 ---
 
-  await mkdir(DATA_DIR, { recursive: true });
-  const payload = { generatedAt: new Date().toISOString(), count: finalRecords.length, plugins: finalRecords };
-
-  // plugins 分片：单文件曾达 28.8MiB，超出 Cloudflare Pages 25MiB/文件上限。
-  // 按 SHARD_SIZE 个/片写入 data/plugins/NNN.json + manifest.json；Worker 与站点构建按 manifest 拉取全部切片。
-  // 写序保证崩溃安全：先写全部分片，manifest 最后原子换入（manifest 引用的名字始终对应完整文件）。
-  const shardDir = path.join(DATA_DIR, "plugins");
-  await mkdir(shardDir, { recursive: true });
-  const SHARD_SIZE = 400;
-  const shardNames = [];
-  for (let i = 0; i < finalRecords.length; i += SHARD_SIZE) {
-    const chunk = finalRecords.slice(i, i + SHARD_SIZE);
-    const name = String(i / SHARD_SIZE).padStart(3, "0") + ".json";
-    await writeFileAtomic(path.join(shardDir, name), JSON.stringify({ generatedAt: payload.generatedAt, count: chunk.length, plugins: chunk }, null, 2));
-    shardNames.push(name);
-  }
-  // 分片数收缩时清理 manifest 未引用的旧分片（如 12 片 -> 11 片时 011.json 不残留成死重）
-  const referenced = new Set(shardNames);
-  for (const f of await readdir(shardDir)) {
-    if (/^\d+\.json$/.test(f) && !referenced.has(f)) await rm(path.join(shardDir, f));
-  }
-  await writeFileAtomic(path.join(shardDir, "manifest.json"), JSON.stringify({ generatedAt: payload.generatedAt, count: finalRecords.length, shards: shardNames }));
-  // 移除旧单文件，避免遗留超限文件再次进入部署
-  await rm(path.join(DATA_DIR, "plugins.json"), { force: true });
-
-  // 搜索索引 gzip 压缩：index.json 已达 17.8MiB 且随仓库数增长，逼近 25MiB 上限。
-  // 压缩后仅 Worker 消费（DecompressionStream 解压；gzip 在 Node 与 workerd 都支持，brotli 仅 workerd）。
-  const index = buildIndex(finalRecords);
-  await writeFileAtomic(path.join(DATA_DIR, "index.json.gz"), gzipSync(JSON.stringify(index)));
-  await rm(path.join(DATA_DIR, "index.json"), { force: true });
-
-  // 轻量浏览数据（不含 readme_text）：站点端过滤/排序用，避免 ~9MB 全量进客户端
-  const browse = finalRecords.map(({ readme_text, ...meta }) => meta);
-  await writeFileAtomic(path.join(DATA_DIR, "browse.json"), JSON.stringify({ generatedAt: payload.generatedAt, count: browse.length, plugins: browse }));
-
-  // 浏览端精简版：browse.json 仍供构建期页面读取（SSR 卡片/详情/sitemap），但浏览器只需
-  // 卡片渲染字段——描述截断 200 字符、去掉 html_url/pushed_at/topics 等客户端用不到的字段，
-  // 首访下载量从 ~4.8MB 降到 ~2MB 以内。
-  const lite = finalRecords.map((r) => ({
-    full_name: r.full_name,
-    description: (r.description || "").slice(0, 200),
-    stars: r.stars,
-    language: r.language ?? null,
-    categories: r.categories,
-    tags: r.tags,
-  }));
-  await writeFileAtomic(path.join(DATA_DIR, "browse-lite.json"), JSON.stringify({ generatedAt: payload.generatedAt, count: lite.length, plugins: lite }));
+  // 全部派生产物（分片/manifest/index.gz/plugins-meta.gz/browse(-lite/-top)）统一经 artifacts 层写盘
+  const stats = await writeDataArtifacts(DATA_DIR, finalRecords);
 
   // 更新游标：只有对账推进 lastReconcileAt；增量轮不写 meta（内容无变化，避免无意义重写）。
   if (doReconcile) {
@@ -601,16 +530,23 @@ async function main() {
   }
 
   // --- IndexNow 通知（Bing 指南 §4）：数据写盘成功之后才发出（先发布后通知）。
-  // 只提交新增/更新/真删的 URL；删除只来自墓碑决议——分页漂移的"假缺席"不通知。 ---
+  // 只提交新增/更新/真删的 URL；删除只来自墓碑决议——分页漂移的"假缺席"不通知。
+  // en URL 与 /en/ 页面生成规则同源（publish-policy）：达标才提交；
+  // 曾达标、本轮跌出阈值的插件也提交 en URL（届时已 404，作为下线信号促成索引清除）。 ---
   try {
     const changed = diffChangedUrls(prev, finalRecords);
     // 删除检测：Set 一遍扫描（旧写法 prev × finalRecords 双重 filter 是 O(n²)）
     const finalSet = new Set(finalRecords.map((r) => r.full_name));
     const deleted = prev.filter((p) => !finalSet.has(p.full_name));
-    const urls = [
-      ...changed.flatMap((p) => [pluginUrl(p.full_name), pluginEnUrl(p.full_name)]),
-      ...deleted.flatMap((p) => [pluginUrl(p.full_name), pluginEnUrl(p.full_name)]),
-    ];
+    const urls = [];
+    for (const p of changed) {
+      urls.push(pluginUrl(p.full_name));
+      const old = prevMap.get(p.full_name);
+      if (hasEnPage(p) || (old && hasEnPage(old))) urls.push(pluginEnUrl(p.full_name));
+    }
+    for (const p of deleted) {
+      urls.push(pluginUrl(p.full_name), pluginEnUrl(p.full_name));
+    }
     if (urls.length) {
       await notifyIndexNow(urls);
     } else {
@@ -621,7 +557,7 @@ async function main() {
     console.warn(`[indexnow] skipped due to error: ${e.message}`);
   }
 
-  console.log(`[sync] OK: plugins/ ${shardNames.length} shards + index.json.gz + browse.json (${finalRecords.length} plugins, ${Object.keys(index.tokens).length} tokens)`);
+  console.log(`[sync] OK: ${stats.shardCount} shards + index.json.gz + plugins-meta.json.gz + browse(-lite/-top).json (${finalRecords.length} plugins, ${stats.tokenCount} tokens)`);
   const byCat = {};
   for (const rec of finalRecords) for (const c of rec.categories) byCat[c] = (byCat[c] || 0) + 1;
   console.log("[sync] categories:", JSON.stringify(byCat));

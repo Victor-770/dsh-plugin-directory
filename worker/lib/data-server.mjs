@@ -10,9 +10,9 @@ const dataDir = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", ".
 
 export async function startDataServer() {
   const server = http.createServer(async (req, res) => {
-    // 数据布局：/data/plugins/manifest.json、/data/plugins/NNN.json、/data/index.json.gz
+    // 数据布局：/data/plugins-meta.json.gz、/data/plugins/manifest.json、/data/plugins/NNN.json、/data/index.json.gz
     const rel = req.url.startsWith("/data/") ? req.url.slice("/data/".length) : null;
-    if (!rel || !/^plugins\/[\w-]+\.json$|^index\.json\.gz$/.test(rel)) { res.writeHead(404); res.end(); return; }
+    if (!rel || !/^plugins\/[\w-]+\.json$|^index\.json\.gz$|^plugins-meta\.json\.gz$/.test(rel)) { res.writeHead(404); res.end(); return; }
     try {
       const buf = await readFile(path.join(dataDir, rel));
       res.writeHead(200, { "content-type": rel.endsWith(".gz") ? "application/octet-stream" : "application/json" });

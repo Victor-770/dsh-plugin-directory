@@ -34,7 +34,6 @@ export const ALIASES = Object.assign(Object.create(null), {
   "导入": "import", "import": "导入", "备份": "backup", "backup": "备份",
   "同步": "sync", "sync": "同步", "快捷键": "shortcut", "shortcut": "快捷键",
   "通知": "notify", "notify": "通知", "提醒": "remind", "音频": "audio", "audio": "音频",
-  "测试": "test", "test": "测试",
   "语言": "language", "language": "语言", "中文": "chinese", "chinese": "中文",
   "英文": "english", "english": "英文", "文档": "docs", "docs": "文档",
   "游戏": "game", "game": "游戏", "广告": "ads", "ads": "广告",

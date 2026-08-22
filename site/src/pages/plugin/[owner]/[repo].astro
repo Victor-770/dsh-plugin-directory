@@ -1,6 +1,7 @@
 ---
 import { STR } from "../../../lib/i18n.js";
 import { CATEGORY_SLUGS } from "../../../lib/category-meta.js";
+import { hasEnPage, ogTopSet, pluginOgUrl } from "../../../lib/publish-policy.js";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { loadPlugins } from "../../../lib/plugins-data.js";
@@ -19,17 +20,19 @@ export async function getStaticPaths() {
     const { plugins } = loadPlugins();
     for (const x of plugins) if (x.readme_text) readmeMap.set(x.full_name, String(x.readme_text));
   } catch (e) { /* 无数据时详情页仅展示元信息 */ }
+  // OG top-N 集合只算一次，经 props 传入每页（10k 页 × 每页重排 10k 的排序不可接受）
+  const ogSet = ogTopSet(browse);
 
   // 仅收录含 "owner/repo" 形态的条目，避免生成畸形路径
   return browse
     .filter((p) => typeof p.full_name === "string" && p.full_name.includes("/") && !p.full_name.includes(".."))
     .map((p) => {
       const [owner, repo] = p.full_name.split("/");
-      return { params: { owner, repo }, props: { plugin: p, all: browse, readmeText: readmeMap.get(p.full_name) || "" } };
+      return { params: { owner, repo }, props: { plugin: p, all: browse, readmeText: readmeMap.get(p.full_name) || "", ogSet } };
     });
 }
 
-const { plugin: p, all, readmeText } = Astro.props;
+const { plugin: p, all, readmeText, ogSet } = Astro.props;
 // --- i18n：zh 走根路径 /plugin/...（en 版本在 /en/plugin/...，两棵静态路由树；共享 BaseLayout） ---
 const lang = "zh";
 const s = STR[lang];
@@ -38,7 +41,10 @@ const site = Astro.site.origin; // astro.config 恒设 site（SITE_ORIGIN 单源
 const [owner, repo] = p.full_name.split("/");
 const canonical = site + "/plugin/" + p.full_name + "/";
 const zhUrl = site + "/plugin/" + p.full_name + "/";
-const enUrl = site + "/en/plugin/" + p.full_name + "/";
+// 英文页按 star 门槛生成（publish-policy）：不足阈值时无 en 版本——hreflang 不指向 404，
+// 语言切换降级到 /en/ 首页（英文用户仍可浏览英文目录）。
+const enPage = hasEnPage(p);
+const enUrl = enPage ? site + "/en/plugin/" + p.full_name + "/" : null;
 const catLabel = (p.categories && p.categories.length)
   ? (s.languages[p.categories[0]] || p.categories[0])
   : null;
@@ -49,7 +55,7 @@ let pageDescription = p.description
   ? p.description
   : `DeepSeek Harness（DSH）插件 ${p.full_name}：${catLabel ? catLabel + " 分类，" : ""}GitHub ★ ${p.stars}，主要语言 ${p.language || "未知"}。`;
 pageDescription = pageDescription.replace(/\s+/g, " ").slice(0, 155).trim();
-const ogImage = site + "/og/plugin/" + p.full_name + "/index.png";
+const ogImage = pluginOgUrl(site, p, ogSet); // top-N 之外回退站点级 /og.png
 const updated = p.pushed_at ? p.pushed_at.slice(0, 10) : null;
 
 const related = all
@@ -113,7 +119,7 @@ const jsonLd = {
   ogImage={ogImage}
   ogImageAlt={p.full_name}
   jsonLd={jsonLd}
-  langToggleHref={`/en/plugin/${owner}/${repo}/`}
+  langToggleHref={enPage ? `/en/plugin/${owner}/${repo}/` : "/en/"}
   containerClass="max-w-4xl"
 >
   <nav class="mt-5 text-xs text-muted" aria-label="面包屑">

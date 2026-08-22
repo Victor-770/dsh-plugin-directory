@@ -3,11 +3,15 @@
 // 遮罩链接保留整卡鼠标点击；标题是可 Tab 聚焦、回车进入的站内详情页链接（键盘可达性）。
 import { STR } from "../lib/i18n.js";
 import { CATEGORY_SLUGS } from "../lib/category-meta.js";
+import { hasEnPage } from "../lib/publish-policy.js";
 
 const { p, lang = "zh" } = Astro.props;
 const s = STR[lang];
 const langPrefix = lang === "en" ? "/en" : "";
-const pageUrl = `${langPrefix}/plugin/${p.full_name}/`;
+// en 树内不足门槛的插件没有 /en/ 详情页：链接回退 zh 页（存在、内容原味），杜绝 404
+const pageUrl = lang === "en" && !hasEnPage(p)
+  ? `/plugin/${p.full_name}/`
+  : `${langPrefix}/plugin/${p.full_name}/`;
 const FOCUS = "relative z-10 rounded-sm outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent";
 ---
 <div class="plugin-card relative block rounded-xl border border-line bg-surface p-4 transition hover:border-accent/60 hover:bg-surface2">

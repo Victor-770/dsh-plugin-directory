@@ -5,6 +5,7 @@
 // 页面骨架（head/顶栏/页脚/主题初始化）唯一实现在 BaseLayout。
 import { STR, CATEGORY_ORDER } from "../lib/i18n.js";
 import { CATEGORY_SLUGS, CATEGORY_DESC } from "../lib/category-meta.js";
+import { hasEnPage } from "../lib/publish-policy.js";
 import BaseLayout from "./BaseLayout.astro";
 
 export const PAGE_SIZE = 150;
@@ -49,6 +50,11 @@ function pageWindow(current, max) {
   return [...new Set(out)];
 }
 const toggleTarget = lang === "en" ? `/category/${slug}/${page > 1 ? page + "/" : ""}` : `/en/category/${slug}/${page > 1 ? page + "/" : ""}`;
+// en 树列表保持全量语料（分页与 zh 完全对齐，hreflang 同页码互链不落空）；
+// 不足英文页门槛的条目链接回退 zh 详情页（存在、内容原味），杜绝 en 树内 404。
+const detailHref = (p) => lang === "en" && !hasEnPage(p)
+  ? `/plugin/${p.full_name}/`
+  : `${langPrefix}/plugin/${p.full_name}/`;
 ---
 <BaseLayout
   lang={lang}
@@ -87,7 +93,7 @@ const toggleTarget = lang === "en" ? `/category/${slug}/${page > 1 ? page + "/" 
     <ul class="mt-6 divide-y divide-line rounded-xl border border-line bg-surface">
       {pagePlugins.map((p) => (
         <li>
-          <a href={`${langPrefix}/plugin/${p.full_name}/`} class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 px-4 py-3 transition hover:bg-surface2">
+          <a href={detailHref(p)} class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 px-4 py-3 transition hover:bg-surface2">
             <span class="font-mono text-[13px] font-medium break-all">{p.full_name}</span>
             <span class="shrink-0 text-xs text-muted">
               ★ {Number(p.stars).toLocaleString()}

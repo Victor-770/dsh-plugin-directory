@@ -4,21 +4,27 @@
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: SAMEORIGIN
   Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
 
 /data/*
   Cache-Control: public, max-age=3600
 
-# 浏览端精简数据缓存对齐 6 小时同步节奏（更具体的规则在后，覆盖 /data/* 的 1h）
+# 浏览端数据缓存对齐 6 小时同步节奏（更具体的规则在后，覆盖 /data/* 的 1h）
 /data/browse-lite.json
   Cache-Control: public, max-age=21600
+/data/browse-top.json
+  Cache-Control: public, max-age=21600
 
-# OG 图内容仅在插件元信息变化时重写（构建增量生成），长缓存安全
+# OG 图：URL 不含内容指纹（元信息变化时原地覆盖），immutable 长缓存会让老访客长期看到旧图；
+# 对齐同步节奏的 6h 缓存兼顾新鲜度与回源量
 /og/*
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=21600
 
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
 
-
 /sitemap.xml
+  Content-Type: application/xml; charset=utf-8
+
+/sitemaps/*
   Content-Type: application/xml; charset=utf-8

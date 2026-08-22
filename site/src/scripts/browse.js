@@ -1,9 +1,13 @@
-// 浏览端应用：拉 browse.json，客户端分类/标签过滤 + 排序 + 中英切换 + 移动端抽屉。
+// 浏览端应用：分阶段数据加载（browse-top.json 首屏 -> browse-lite.json 全量懒加载），
+// 客户端分类/标签过滤 + 排序 + 中英切换 + 移动端抽屉。
 // 初始语言由页面传入（zh 页传 zh、en 页传 en）——不再硬编码默认值，/en/ 页面在数据
 // 加载完成后保持英文（含 html lang）。?lang= 深链语义保留。
 import { CATEGORY_SLUGS } from "../lib/category-meta.js";
+import { hasEnPage } from "../lib/publish-policy.js";
 export function BrowseApp({ STR, CATEGORY_ORDER, lang = "zh" }) {
-  const state = { lang, q: "", cat: "", tags: new Set(), sort: "stars", all: [], filtered: [] };
+  // staged = 首屏数据（top 子集 + 全语料计数）已就位、全量未到位：
+  // 此阶段筛选/搜索一律走 /api/search（全语料正确结果），全量到达后恢复本地过滤。
+  const state = { lang, q: "", cat: "", tags: new Set(), sort: "stars", all: [], filtered: [], total: 0, catCounts: null, tagCounts: null, staged: true };
   const $ = (id) => document.getElementById(id);
   const els = { grid: $("card-grid"), count: $("result-count"), empty: $("empty-state"), input: $("search-input"), sort: $("sort-select"), lang: $("lang-toggle"), clear: $("clear-filters"), cloud: $("tag-cloud"), filterToggle: $("filter-toggle"), filterPanel: $("filter-panel") };
 
@@ -17,7 +21,9 @@ export function BrowseApp({ STR, CATEGORY_ORDER, lang = "zh" }) {
   function renderCard(p) {
     const s = STR[state.lang];
     // SEO: 卡片指向站内插件详情页（详情页再提供 GitHub 外链），形成站内链接结构
-    const pageUrl = `/plugin/${esc(p.full_name)}/`;
+    // en 树内不足门槛的插件没有 /en/ 页：链接回退 zh 页，杜绝 404
+    const prefix = state.lang === "en" && !hasEnPage(p) ? "" : (state.lang === "en" ? "/en" : "");
+    const pageUrl = `${prefix}/plugin/${esc(p.full_name)}/`;
     return `<div class="plugin-card relative block rounded-xl border border-line bg-surface p-4 transition hover:border-accent/60 hover:bg-surface2">
       <a href="${pageUrl}" class="absolute inset-0" aria-label="${esc(p.full_name)}" tabindex="-1" aria-hidden="true"></a>
       <div class="flex items-start justify-between gap-2">
@@ -59,7 +65,7 @@ export function BrowseApp({ STR, CATEGORY_ORDER, lang = "zh" }) {
     els.grid.after(el);
     renderState.sentinel = el;
     renderState.observer = new IntersectionObserver((entries) => {
-      if (entries.some((e) => e.isIntersecting)) renderMore();
+      if (entries.some((e) => e.isIntersecting)) { renderMore(); ensureFullLoad(); } // 深滚动 = 明确浏览意图，预取全量
     }, { rootMargin: "600px" });
     renderState.observer.observe(el);
     return el;
@@ -93,7 +99,8 @@ export function BrowseApp({ STR, CATEGORY_ORDER, lang = "zh" }) {
     if (q) list = list.filter((p) => (p.full_name + " " + (p.description || "")).toLowerCase().includes(q));
     if (state.sort === "stars") list = [...list].sort((a, b) => b.stars - a.stars);
     state.filtered = list;
-    els.count.textContent = list.length;
+    // 首屏阶段无筛选时本地列表只是 top 子集：计数展示全语料总数（与分类计数口径一致）
+    els.count.textContent = state.staged && !state.cat && !state.tags.size && !q ? state.total : list.length;
     els.empty.classList.toggle("hidden", list.length > 0);
     els.grid.setAttribute("aria-busy", "false");
     setList(list);
@@ -125,12 +132,19 @@ export function BrowseApp({ STR, CATEGORY_ORDER, lang = "zh" }) {
   }
 
   // Ticket 05：搜索走 /api/search（生产经 Pages Function 代理到 Worker），失败/未部署时降级本地过滤。
+  // 分阶段加载下刷新统一入口：有查询词、或首屏阶段带筛选 -> API（全语料正确）；否则本地 apply()。
+  function refresh() {
+    if (state.q.trim() || (state.staged && (state.cat || state.tags.size))) { runSearch(); return; }
+    apply();
+  }
   let debounceTimer = null;
   els.input.addEventListener("input", (e) => {
     state.q = e.target.value;
+    ensureFullLoad(); // 交互即预取全量：后续本地过滤零等待
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => runSearch(), 300);
   });
+  els.input.addEventListener("focus", ensureFullLoad, { once: true });
   // 移动端筛选抽屉
   if (els.filterToggle && els.filterPanel) {
     els.filterToggle.addEventListener("click", () => {
@@ -143,7 +157,10 @@ export function BrowseApp({ STR, CATEGORY_ORDER, lang = "zh" }) {
   async function runSearch() {
     const seq = ++searchSeq;
     const q = state.q.trim();
-    if (!q) { apply(); return; }
+    // 空查询且本地数据完整：本地过滤（旧路径，含 API 不可用降级语义）
+    if (!q && !state.staged) { apply(); return; }
+    // 空查询、首屏阶段、无筛选：top 子集本地渲染即可（计数显示全语料总数）
+    if (!q && !state.cat && !state.tags.size) { apply(); return; }
     setBusy(true);
     const params = new URLSearchParams({ q, sort: state.sort, limit: "100" });
     if (state.cat) params.set("cat", state.cat);
@@ -159,7 +176,7 @@ export function BrowseApp({ STR, CATEGORY_ORDER, lang = "zh" }) {
       setList(data.results || []); // API limit=100，天然一页，无需哨兵
     } catch (e) {
       if (seq !== searchSeq) return;
-      // Worker 未部署（本地开发）：降级为本地 name/description 过滤
+      // Worker 未部署（本地开发）或不可用：降级为本地过滤（首屏阶段为 top 子集，全量到达后自愈）
       apply();
     } finally {
       els.grid.setAttribute("aria-busy", "false");
@@ -169,7 +186,7 @@ export function BrowseApp({ STR, CATEGORY_ORDER, lang = "zh" }) {
   function setBusy(on) { if (els.grid) els.grid.setAttribute("aria-busy", on ? "true" : "false"); }
   // 移动端抽屉：筛选后收起
   function closeFilterPanel() { if (els.filterPanel && window.innerWidth < 768) { els.filterPanel.classList.remove("open"); if (els.filterToggle) els.filterToggle.setAttribute("aria-expanded", "false"); } }
-  els.sort.addEventListener("change", (e) => { state.sort = e.target.value; apply(); });
+  els.sort.addEventListener("change", (e) => { state.sort = e.target.value; ensureFullLoad(); refresh(); });
   els.lang.addEventListener("click", () => {
     // 语言切换 = 对方语言的同等页面（首页 <-> 首页），保留当前搜索词
     const q = new URLSearchParams(location.search).get("q");
@@ -178,12 +195,12 @@ export function BrowseApp({ STR, CATEGORY_ORDER, lang = "zh" }) {
       : (location.pathname === "/" ? "/en/" : "/en" + location.pathname);
     location.href = q ? target + (target.includes("?") ? "&" : "?") + "q=" + encodeURIComponent(q) : target;
   });
-  els.clear.addEventListener("click", () => { state.q = ""; state.cat = ""; state.tags.clear(); els.input.value = ""; els.input.focus(); apply(); });
+  els.clear.addEventListener("click", () => { state.q = ""; state.cat = ""; state.tags.clear(); els.input.value = ""; els.input.focus(); refresh(); });
   document.addEventListener("click", (e) => {
     const catBtn = e.target.closest(".category-item");
-    if (catBtn) { state.cat = catBtn.dataset.cat; document.querySelectorAll(".category-item").forEach((b) => b.classList.toggle("bg-surface2", b === catBtn)); apply(); return; }
+    if (catBtn) { state.cat = catBtn.dataset.cat; ensureFullLoad(); document.querySelectorAll(".category-item").forEach((b) => b.classList.toggle("bg-surface2", b === catBtn)); refresh(); return; }
     const chip = e.target.closest(".tag-chip");
-    if (chip) { const t = chip.dataset.tag; state.tags.has(t) ? state.tags.delete(t) : state.tags.add(t); apply(); closeFilterPanel(); }
+    if (chip) { const t = chip.dataset.tag; state.tags.has(t) ? state.tags.delete(t) : state.tags.add(t); ensureFullLoad(); refresh(); closeFilterPanel(); }
   });
   // 分类/标签交互后收起移动端抽屉（在 apply 之后关闭，避免点击目标被折叠隐藏）
   document.addEventListener("click", (e) => {
@@ -195,15 +212,41 @@ export function BrowseApp({ STR, CATEGORY_ORDER, lang = "zh" }) {
     try { localStorage.setItem("dsh-theme", dark ? "dark" : "light"); } catch (e) {}
   });
 
-  // 浏览数据用精简版 browse-lite.json（卡片渲染字段；描述已截断，无 html_url/pushed_at/topics）
-  fetch("/data/browse-lite.json").then((r) => r.json()).then((data) => {
-    state.all = data.plugins || [];
-    computeCounts(); // 数据到达后算一次的不变量，apply 只读
+  // ---------- 分阶段数据加载 ----------
+  // 第一级 browse-top.json（~100KB）：top 300 卡片 + 全语料分类/标签计数 -> 首屏可交互；
+  // 第二级 browse-lite.json（全量，~3MB/10k 插件）：按需懒加载（首个交互/滚动触底/空闲 4s）——
+  // 浅浏览即走的访客不再为一张首屏卡片列表下载并解析全量数据。
+  // 首屏阶段的筛选/搜索一律走 /api/search（全语料正确），全量到达后恢复本地过滤（见 refresh）。
+  let fullLoadStarted = false;
+  function ensureFullLoad() {
+    if (fullLoadStarted) return;
+    fullLoadStarted = true;
+    fetch("/data/browse-lite.json").then((r) => r.json()).then((data) => {
+      state.all = data.plugins || [];
+      state.total = state.all.length;
+      state.staged = false;
+      computeCounts(); // 全量到达：计数不变量回到本地单一来源（覆盖首屏阶段的同步计数快照）
+      renderStrings();
+      if (state.q) runSearch(); else refresh();
+    }).catch(() => {
+      // 全量加载失败（如网络中断）：维持首屏子集，筛选继续走 API（refresh 的 staged 分支）
+      renderStrings();
+      els.grid.setAttribute("aria-busy", "false");
+    });
+  }
+
+  fetch("/data/browse-top.json").then((r) => r.json()).then((top) => {
+    state.all = top.plugins || [];
+    state.total = top.count || state.all.length;
+    state.catCounts = top.catCounts || null;
+    state.tagCounts = top.tagCounts || null;
     renderStrings();
     if (state.q) { els.input.value = state.q; runSearch(); } else { apply(); }
+    // 空闲预取全量：停留的访客在交互前就备好全量数据（浅浏览 <4s 即走的访客零全量下载）
+    const idle = window.requestIdleCallback || ((cb) => setTimeout(cb, 4000));
+    idle(() => ensureFullLoad(), { timeout: 4000 });
   }).catch(() => {
-    // 数据加载失败（如 robots 屏蔽、本地未 sync）：保留 SSR 预渲染的卡片，不清空网格。
-    renderStrings();
-    els.grid.setAttribute("aria-busy", "false");
+    // 首屏数据缺失（如旧数据布局、robots 屏蔽、本地未 sync）：直接尝试全量（旧路径）
+    ensureFullLoad();
   });
 }

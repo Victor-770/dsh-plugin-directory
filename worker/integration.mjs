@@ -106,13 +106,15 @@ const official = await (await directFetch(worker, workerEnv, Q)).json();
   check("搜索响应不含 readme_text", !body.includes("readme_text"));
 }
 {
-  // B. 并发冷启动防惊群：N 个同时到达的冷请求只触发一次数据拉取（manifest 只被请求一次）
+  // B. 并发冷启动防惊群：N 个同时到达的冷请求只拉一次数据（数据清单文件只被请求一次；
+  //    新布局 = plugins-meta.json.gz，回退布局 = manifest.json）
   const mod = await importFresh("?dedup");
-  const dataFetches = { manifest: 0 };
+  const dataFetches = { meta: 0, manifest: 0 };
   const countedOrigin = await startCountedDataProxy(dataOrigin, dataFetches);
   const env = { SITE_ORIGIN: countedOrigin };
   await Promise.all(Array.from({ length: 5 }, () => directFetch(mod, env, Q)));
-  check("5 个并发冷请求只拉一次数据", dataFetches.manifest === 1, `manifest fetched ${dataFetches.manifest} times`);
+  const loads = dataFetches.meta + dataFetches.manifest;
+  check("5 个并发冷请求只拉一次数据", loads === 1, `meta fetched ${dataFetches.meta}, manifest fetched ${dataFetches.manifest}`);
 }
 {
   // C. TTL + stale-while-revalidate：TTL 内不重复拉取；到期后台刷新后拿到新数据
@@ -155,9 +157,10 @@ async function importFresh(query) {
   return import(pathToFileURL(path.join(__dirname, "src", "index.js")).href + query);
 }
 
-// 计数代理：转发到真实数据源，统计 manifest 拉取次数（防惊群断言用）
+// 计数代理：转发到真实数据源，统计数据清单文件拉取次数（防惊群断言用；meta/manifest 二选一）
 async function startCountedDataProxy(target, counter) {
   const server = http.createServer((req, res) => {
+    if (req.url.includes("plugins-meta.json.gz")) counter.meta++;
     if (req.url.includes("manifest.json")) counter.manifest++;
     fetch(target + req.url)
       .then(async (up) => {

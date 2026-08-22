@@ -2,7 +2,7 @@
 
 DeepSeek Harness 插件目录：中英双语、按功能分类、README 全文搜索、按热度排序。
 
-- 数据源：`https://github.com/topics/dsh-plugin`（GitHub Actions 每 6 小时同步，当前 ~990 个仓库）
+- 数据源：`https://github.com/topics/dsh-plugin`（GitHub Actions 每 6 小时同步，当前 1 万+ 仓库）
 - 前端：Cloudflare Pages（Astro 静态站，深色开发工具美学）
 - 搜索：Cloudflare Worker（search-core 纯函数库，中英别名互搜）
 - 测试：`npm test`（node:test 32 例，唯一 seam = search-core）
@@ -10,17 +10,20 @@ DeepSeek Harness 插件目录：中英双语、按功能分类、README 全文�
 ## 结构
 
 ```
-scripts/sync.mjs        # 同步管道：拉 GitHub API -> plugins/ 分片 + index.json.gz + browse(-lite).json，写盘成功后 IndexNow 分批通知 Bing
+scripts/sync.mjs        # 同步管道：拉 GitHub API -> 数据产物（经 scripts/lib/artifacts.mjs 写盘）成功后 IndexNow 分批通知 Bing
+scripts/lib/artifacts.mjs   # 产物层唯一实现：plugins/ 分片 + index.json.gz + plugins-meta.json.gz + browse(-lite/-top).json
+scripts/rebuild-data-artifacts.mjs  # 离线重放：从现有分片补产/重写派生产物（不访问网络）
 scripts/lib/categories.mjs  # 八分类规则 + top-20 手动兜底
 search-core/            # 纯函数库（tokenize/buildIndex/expandAliases/search）+ 测试
-worker/                 # Cloudflare Worker：GET /api/search
+worker/                 # Cloudflare Worker：GET /api/search（冷启动拉 index.json.gz + plugins-meta.json.gz，~16MB）
 site/                   # Astro 静态站
+site/src/lib/publish-policy.js  # 发布策略单一来源：OG 图 top-N(500)、en 详情页 star>=2 —— Pages 免费版 20k 文件/部署上限
 site/public/data/       # 同步产物（Pages 静态服务，Worker 同源拉取；plugins 分片 + gzip 索引，规避 Pages 25MiB/文件上限）
-site/src/pages/plugin/  # 每插件详情页（构建期生成，SEO 长尾入口；/en/ 下有英文版）
+site/src/pages/plugin/  # 每插件详情页（构建期生成，SEO 长尾入口；/en/ 下为 star 达标插件的英文版）
 site/src/pages/en/       # 英文版页面树（真实 URL /en/，配 hreflang，zh 在根路径）
 site/src/pages/category/ # 分类落地页（/category/{slug}/，中英，空分类不生成）
-site/src/pages/sitemap.xml.ts  # 构建期生成 sitemap.xml（中英 URL + hreflang alternate，详情页 lastmod 取 pushed_at）
-site/scripts/og-images.mjs  # 构建期生成每插件 OG 图（纯 Node PNG，1200x630）
+site/src/pages/sitemap.xml.ts + sitemaps/  # sitemapindex + 分片（每片 ≤5000 URL；详情页 lastmod 取 pushed_at）
+site/scripts/og-images.mjs  # 构建期生成 OG 图（纯 Node PNG，1200x630；只为 star top-500 生成，其余用站点级 og.png）
 functions/              # Pages Functions：/api/search 代理到 Worker（必须位于仓库根，Pages 自动检测）
 ```
 
@@ -52,6 +55,8 @@ node worker/smoke.mjs             # Worker 本地冒烟（需先 sync）
 ## 部署（Ticket 06）
 
 > 有向导版：Windows 下执行 `pwsh scripts/deploy.ps1` 逐项检查并打印每一步。
+> 一键 Worker 部署：`npm run deploy`（站点构建门禁 -> 全量测试 -> wrangler 部署 Worker；
+> `npm run deploy -- --worker-only` 跳过构建。静态站由 push 触发 Pages 云端构建，不在脚本范围）。
 
 1. **GitHub repo** 推送到远端，仓库 Secrets 添加 `GH_TOKEN`（fine-grained，public repo 只读；不加也能跑，额度低）。
 2. **Pages**：连接该 repo → 构建命令 `cd site && npm install && npm run build` → 输出目录 `site/dist`（相对仓库根） → 得到 `xxx.pages.dev`（自定义域名 `dsh-plugin-directory.online`，并在 Cloudflare 配好 pages.dev → 主域 301）。
@@ -63,6 +68,13 @@ node worker/smoke.mjs             # Worker 本地冒烟（需先 sync）
 ## 已知取舍（grilling 记档）
 
 - 全量收录（含独立应用/死仓库），无兼容性验证；star 排序靠前的是非插件应用（如 OpenBiliClaw）。
+- 发布策略受 Cloudflare Pages 免费版 20,000 文件/部署上限约束（`site/src/lib/publish-policy.js` 单一来源）：
+  OG 图只为 star top-500 生成（其余用站点级 og.png）；英文详情页只生成 star ≥ 2 的插件
+  （0-1 星长尾英文壳页无搜索流量；en 树内的分类列表/相关卡片对未达标插件回退链到中文页，不产生 404）。
+- 浏览端分阶段加载：首屏 browse-top.json（~100KB，top 300 + 全语料计数）即可交互；
+  全量 browse-lite.json（~3MB）按需懒加载（首个交互/深滚动/空闲 4s），筛选在首屏阶段走 /api/search。
 - 相关性排序带 IDF 加权与同组取 max：满篇样板词（dsh/plugin）权重趋零，营销文案刷分已被抑制。
 - 中文切词为二元切词 + 首尾字，别名表 163 键硬编码（2 字键精确命中，≥3 字键切词覆盖匹配）；IDF 相关性排序；不做语义搜索。
 - 壳双语：UI 文案中英，插件内容保持原文。
+- Worker 冷启动拉 index.json.gz（~14MB）+ plugins-meta.json.gz（~1MB，无 README）；每 10 分钟 TTL 后台刷新同源拉取。
+  数据端先于 Worker 发布旧布局时自动回退分片 + manifest（部署顺序解耦）。

@@ -34,7 +34,7 @@ const site = Astro.site.origin; // astro.config 恒设 site（SITE_ORIGIN 单源
   <meta name="description" content={pageDescription} />
   <link rel="canonical" href={canonical} />
   <link rel="alternate" hreflang="zh" href={zhUrl} />
-  <link rel="alternate" hreflang="en" href={enUrl} />
+  {enUrl && <link rel="alternate" hreflang="en" href={enUrl} />}
   <link rel="alternate" hreflang="x-default" href={zhUrl} />
   <meta name="theme-color" content="#0b0e14" />
   <meta property="og:title" content={pageTitle} />
@@ -50,11 +50,13 @@ const site = Astro.site.origin; // astro.config 恒设 site（SITE_ORIGIN 单源
   <meta name="twitter:title" content={pageTitle} />
   <meta name="twitter:description" content={pageDescription} />
   <meta name="twitter:image" content={ogImage} />
-  <link rel="icon" href="/favicon.ico" sizes="32x32" />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="icon" href="/favicon-48x48.png" sizes="48x48" type="image/png" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  <link rel="manifest" href="/site.webmanifest" />
+    <!-- favicon 声明：48x48 PNG 唯一主图标——Google Search 指南要求方形且为 48px 的倍数。
+         ?v=1 为 favicon 缓存击穿：浏览器对"无图标"的负缓存极其顽固且不吃普通刷新（站点早期
+         无图标时期访问过的浏览器一直显示默认地球）；换版本号强制全网重新拉取，图标变更时同步 bump。
+         favicon.ico 仍保留在根路径供遗留浏览器自动发现；favicon.svg 留作 JSON-LD logo。 -->
+    <link rel="icon" href="/favicon-48x48.png?v=1" sizes="48x48" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=1" />
+    <link rel="manifest" href="/site.webmanifest" />
   <slot name="head-extra" />
   {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>}
   <script is:inline>

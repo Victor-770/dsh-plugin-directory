@@ -1,6 +1,7 @@
 ---
 import { STR } from "../../../../lib/i18n.js";
 import { CATEGORY_SLUGS } from "../../../../lib/category-meta.js";
+import { hasEnPage, ogTopSet, pluginOgUrl } from "../../../../lib/publish-policy.js";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { loadPlugins } from "../../../../lib/plugins-data.js";
@@ -18,16 +19,20 @@ export async function getStaticPaths() {
     const { plugins } = loadPlugins();
     for (const x of plugins) if (x.readme_text) readmeMap.set(x.full_name, String(x.readme_text));
   } catch (e) { /* 无数据时详情页仅展示元信息 */ }
+  const ogSet = ogTopSet(browse);
 
+  // 英文详情页只生成 star 达标插件（publish-policy 单一来源）：0-1 星长尾的英文壳页
+  // （内容仍是原文）几乎没有搜索流量，砍掉一半以上的页面文件是回到 Pages 20k 上限内的主力。
   return browse
-    .filter((p) => typeof p.full_name === "string" && p.full_name.includes("/") && !p.full_name.includes(".."))
+    .filter((p) => typeof p.full_name === "string" && p.full_name.includes("/") && !p.full_name.includes("..")
+      && hasEnPage(p))
     .map((p) => {
       const [owner, repo] = p.full_name.split("/");
-      return { params: { owner, repo }, props: { plugin: p, all: browse, readmeText: readmeMap.get(p.full_name) || "" } };
+      return { params: { owner, repo }, props: { plugin: p, all: browse, readmeText: readmeMap.get(p.full_name) || "", ogSet } };
     });
 }
 
-const { plugin: p, all, readmeText } = Astro.props;
+const { plugin: p, all, readmeText, ogSet } = Astro.props;
 // --- i18n：en 走 /en/plugin/...（zh 版本在 /plugin/...；共享 BaseLayout） ---
 const lang = "en";
 const s = STR[lang];
@@ -47,13 +52,15 @@ let pageDescription = p.description
   ? p.description
   : `DeepSeek Harness (DSH) plugin ${p.full_name}: ${catLabel ? catLabel + " category, " : ""}GitHub ★ ${p.stars}, primary language ${p.language || "unknown"}.`;
 pageDescription = pageDescription.replace(/\s+/g, " ").slice(0, 155).trim();
-const ogImage = site + "/og/plugin/" + p.full_name + "/index.png";
+const ogImage = pluginOgUrl(site, p, ogSet); // top-N 之外回退站点级 /og.png
 const updated = p.pushed_at ? p.pushed_at.slice(0, 10) : null;
 
 const related = all
   .filter((x) => x.full_name !== p.full_name && (x.categories || []).some((c) => (p.categories || []).includes(c)))
   .sort((a, b) => b.stars - a.stars)
   .slice(0, 3);
+// 相关插件不足英文页门槛时链到其中文页（页面存在，内容原味），杜绝 en 树内 404 链接
+const relatedHref = (x) => (hasEnPage(x) ? `/en/plugin/${x.full_name}/` : `/plugin/${x.full_name}/`);
 
 // README 摘要：去掉代码块/markdown 符号，压缩空白，截断 1200 字符
 function readmeExcerpt(md) {
@@ -163,7 +170,7 @@ const jsonLd = {
         <h2 class="text-sm font-semibold text-ink">{s.category}</h2>
         <div class="mt-3 grid gap-3 sm:grid-cols-3">
           {related.map((x) => (
-            <a href={`/en/plugin/${x.full_name}/`} class="block rounded-xl border border-line bg-surface p-4 transition hover:border-accent/60 hover:bg-surface2">
+            <a href={relatedHref(x)} class="block rounded-xl border border-line bg-surface p-4 transition hover:border-accent/60 hover:bg-surface2">
               <span class="font-mono text-[13px] font-medium break-all">{x.full_name}</span>
               <p class="line-clamp-2 mt-2 text-xs text-muted">{x.description || "—"}</p>
               <p class="mt-2 text-xs text-muted">★ {Number(x.stars).toLocaleString()}</p>
