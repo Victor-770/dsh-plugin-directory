@@ -1,5 +1,6 @@
 ---
 import { STR } from "../lib/i18n.js";
+import "../styles/global.css"; // 与其余页面一致的全局样式（曾有线上裸 HTML 404）
 const s = STR.zh;
 ---
 <!doctype html>
@@ -10,7 +11,6 @@ const s = STR.zh;
   <title>404 — {s.siteName}</title>
   <meta name="description" content="页面不存在。返回 DSH 插件目录继续浏览。" />
   <meta name="robots" content="noindex" />
-  <link rel="canonical" href="https://dsh-plugin-directory.online/" />
   <link rel="icon" href="/favicon.ico" sizes="32x32" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

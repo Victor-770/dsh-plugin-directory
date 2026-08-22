@@ -326,6 +326,8 @@ async function readPreviousRecords() {
 }
 
 // 增量时 README 缓存：只有 pushed_at 变化（内容真更新）或新仓库才重抓；否则复用上次的 readme_text。
+// 对账同样复用：对账只是"全量扫一遍 created 窗口"，pushed_at 未变的仓库 README 不该重抓
+// （旧实现对账必全量重抓 4461+ 仓库 × 最多 17 个候选文件名）。
 // 返回 { records, readmeStats }。传输失败率超阈值时抛错中止（见 fetchReadmeChecked 注释）。
 const README_FAILURE_FATAL_RATIO = 0.05;
 async function fetchRecords({ reconcile, meta, prevMap }) {
@@ -334,8 +336,8 @@ async function fetchRecords({ reconcile, meta, prevMap }) {
   const readmes = await mapLimit(repos, 10, async (r) => {
     const prev = prevMap.get(r.full_name);
     const pushedChanged = !prev || prev.pushed_at !== r.pushed_at;
-    if (!reconcile && prev && !pushedChanged) {
-      // 未变化：复用缓存
+    if (prev && !pushedChanged) {
+      // 未变化：复用缓存（增量与对账同权）
       readmeHits++;
       return prev.readme_text || "";
     }
@@ -404,28 +406,33 @@ function diffChangedUrls(prev, next) {
   return changed;
 }
 
-// 向 IndexNow 端点提交 URL（POST JSON；失败重试 2 次）
+// 向 IndexNow 端点提交 URL（POST JSON；失败重试 2 次）。
+// 按 ≤8000 条/批分批（API 单次上限 10000，留余量；INDEXNOW_BATCH 可覆盖，测试用）。
+const INDEXNOW_BATCH = Number(process.env.INDEXNOW_BATCH) || 8000;
 async function notifyIndexNow(urls) {
   const key = await findIndexNowKey();
   if (!key) throw new Error("no IndexNow key file found in site/public/");
-  const body = { host: SITE_ORIGIN.replace(/^https?:\/\//, ""), key, keyLocation: `${SITE_ORIGIN}/${key}.txt`, urlList: urls };
   const endpoint = process.env.INDEXNOW_ENDPOINT || "https://api.indexnow.org/indexnow";
-  console.log(`[indexnow] notifying ${urls.length} URLs (${changedSummary(urls)})`);
-  for (let attempt = 0; attempt < 3; attempt++) {
-    const res = await fetch(endpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json; charset=utf-8", "User-Agent": "dsh-plugin-directory" },
-      body: JSON.stringify(body),
-      signal: AbortSignal.timeout(15000),
-    });
-    if (res.ok) { console.log(`[indexnow] OK (${res.status})`); return; }
-    // 200/202 之外的错误：可能限流，稍等重试
-    const text = await res.text().catch(() => "");
-    if (attempt < 2) {
-      console.warn(`[indexnow] attempt ${attempt + 1} failed (${res.status} ${text.slice(0, 120)}), retrying...`);
-      await sleep(5000 * (attempt + 1));
-    } else {
-      throw new Error(`IndexNow returned ${res.status}: ${text.slice(0, 200)}`);
+  for (let i = 0; i < urls.length; i += INDEXNOW_BATCH) {
+    const batch = urls.slice(i, i + INDEXNOW_BATCH);
+    const body = { host: SITE_ORIGIN.replace(/^https?:\/\//, ""), key, keyLocation: `${SITE_ORIGIN}/${key}.txt`, urlList: batch };
+    console.log(`[indexnow] notifying ${batch.length} URLs (${changedSummary(batch)})`);
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json; charset=utf-8", "User-Agent": "dsh-plugin-directory" },
+        body: JSON.stringify(body),
+        signal: AbortSignal.timeout(15000),
+      });
+      if (res.ok) { console.log(`[indexnow] OK (${res.status})`); break; }
+      // 200/202 之外的错误：可能限流，稍等重试
+      const text = await res.text().catch(() => "");
+      if (attempt < 2) {
+        console.warn(`[indexnow] attempt ${attempt + 1} failed (${res.status} ${text.slice(0, 120)}), retrying...`);
+        await sleep(5000 * (attempt + 1));
+      } else {
+        throw new Error(`IndexNow returned ${res.status}: ${text.slice(0, 200)}`);
+      }
     }
   }
 }
@@ -446,7 +453,25 @@ function changedSummary(urls) {
   return `~${count} plugins, ${count * 2} URLs (zh+en)`;
 }
 
-// 主流程：决定本次是对账还是增量，取数 -> 合并 -> 校验 -> IndexNow -> 写数据 -> 更新游标。
+// ---------- 墓碑（对账删除保护） ----------
+// GitHub Search 分页会漂移（窗口结果不完整）。对账扫描缺席的仓库不立即删除，而是计数；
+// 连续 N 次对账缺席才真删并通知 IndexNow——缺席期间数据原样保留，漂移不再变成误删。
+const TOMBSTONE_FILE = path.join(DATA_DIR, "tombstones.json"); // { full_name: 连续缺席次数 }
+const TOMBSTONE_THRESHOLD = Number(process.env.DSH_TOMBSTONE_THRESHOLD) || 3;
+async function readTombstones() {
+  try {
+    const raw = JSON.parse(await readFile(TOMBSTONE_FILE, "utf8"));
+    return raw && typeof raw === "object" ? new Map(Object.entries(raw).map(([k, v]) => [k, Number(v) || 0])) : new Map();
+  } catch {
+    return new Map();
+  }
+}
+async function writeTombstones(map) {
+  if (!map.size) { await rm(TOMBSTONE_FILE, { force: true }); return; } // 清空即删文件，不留空壳
+  await writeFileAtomic(TOMBSTONE_FILE, JSON.stringify(Object.fromEntries(map)));
+}
+
+// 主流程：决定本次是对账还是增量，取数 -> 合并 -> 校验 -> 写数据 -> IndexNow 通知 -> 更新游标。
 async function main() {
   const reconcile = process.argv.includes("--reconcile");
   const meta = await readMeta();
@@ -460,10 +485,35 @@ async function main() {
 
   const records = await fetchRecords({ reconcile: doReconcile, meta, prevMap });
 
-  // 合并：对账时用本次全量覆盖；增量时与上次合并（保留未变化仓库）。
+  // 合并：
+  // - 对账：扫描结果与旧数据 merge（非整体替换）；缺席仓库走墓碑——连续 N 次缺席才真删。
+  // - 增量：与上次合并（保留未变化仓库）。
   let finalRecords;
+  let tombstones = null;
+  let tombstonesChanged = false;
   if (doReconcile) {
-    finalRecords = records;
+    tombstones = await readTombstones();
+    const nextSet = new Set(records.map((r) => r.full_name));
+    const retained = [];
+    let reallyDeleted = 0;
+    for (const p of prev) {
+      if (nextSet.has(p.full_name)) {
+        if (tombstones.delete(p.full_name)) tombstonesChanged = true; // 回归即清零
+        continue;
+      }
+      const count = (tombstones.get(p.full_name) || 0) + 1;
+      if (count >= TOMBSTONE_THRESHOLD) {
+        reallyDeleted++;
+        tombstones.delete(p.full_name);
+        tombstonesChanged = true;
+      } else {
+        tombstones.set(p.full_name, count);
+        tombstonesChanged = true;
+        retained.push(p); // 缺席未达阈值：数据保留
+      }
+    }
+    finalRecords = mergeRecords(retained, records);
+    console.log(`[sync] reconcile merge: ${records.length} scanned + ${retained.length} retained-absent = ${finalRecords.length} total (${reallyDeleted} really deleted, ${tombstones.size} pending tombstones)`);
   } else {
     finalRecords = mergeRecords(prev, records);
     console.log(`[sync] merged: ${prev.length} prev + ${records.length} incremental = ${finalRecords.length} total`);
@@ -478,35 +528,19 @@ async function main() {
   }
 
   // 数据无实质变化：跳过全部数据写盘（含 generatedAt 刷新）——不产生 commit、不触发 Pages 重建。
-  // 无差异 URL，IndexNow 无可通知；对账轮仍推进 lastReconcileAt 游标（否则下一轮会重复全量对账）。
+  // 墓碑推进是唯一例外状态：只写 tombstones.json 与游标（否则缺席计数无法跨轮累积），
+  // 数据文件仍不动。无差异 URL 且无真删，IndexNow 无可通知。
   if (JSON.stringify(prev) === JSON.stringify(finalRecords)) {
-    console.log("[sync] no substantive data change; skipping data write");
+    console.log(`[sync] no substantive data change${tombstonesChanged ? " (tombstones advanced)" : ""}; skipping data write`);
     if (doReconcile) {
       meta.lastReconcileAt = new Date().toISOString().slice(0, 10);
       await writeMeta(meta);
     }
+    if (tombstones && tombstonesChanged) await writeTombstones(tombstones);
     return;
   }
 
-  // --- IndexNow 通知（Bing 指南 §4）：对比上次数据，只提交新增/更新/删除的 URL ---
-  try {
-    const changed = diffChangedUrls(prev, finalRecords);
-    // 删除检测：Set 一遍扫描（旧写法 prev × finalRecords 双重 filter 是 O(n²)，4461 条时每轮白烧几十毫秒）
-    const nextSet = new Set(finalRecords.map((r) => r.full_name));
-    const deleted = prev.filter((p) => !nextSet.has(p.full_name));
-    const urls = [
-      ...changed.flatMap((p) => [pluginUrl(p.full_name), pluginEnUrl(p.full_name)]),
-      ...deleted.flatMap((p) => [pluginUrl(p.full_name), pluginEnUrl(p.full_name)]),
-    ];
-    if (urls.length) {
-      await notifyIndexNow(urls);
-    } else {
-      console.log("[indexnow] no URL changes since last sync; skipping");
-    }
-  } catch (e) {
-    // 通知失败不应让数据同步失败：仅告警，不中断
-    console.warn(`[indexnow] skipped due to error: ${e.message}`);
-  }
+  // --- IndexNow 通知移到数据写盘成功之后（见下方）：先发布后通知，写失败/中止零通知 ---
 
   await mkdir(DATA_DIR, { recursive: true });
   const payload = { generatedAt: new Date().toISOString(), count: finalRecords.length, plugins: finalRecords };
@@ -547,6 +581,31 @@ async function main() {
   if (doReconcile) {
     meta.lastReconcileAt = new Date().toISOString().slice(0, 10);
     await writeMeta(meta);
+  }
+  // 墓碑落盘（对账轮）：数据不变也要持久化缺席计数，否则计数无法跨轮累积
+  if (doReconcile && tombstones && tombstonesChanged) {
+    await writeTombstones(tombstones);
+  }
+
+  // --- IndexNow 通知（Bing 指南 §4）：数据写盘成功之后才发出（先发布后通知）。
+  // 只提交新增/更新/真删的 URL；删除只来自墓碑决议——分页漂移的"假缺席"不通知。 ---
+  try {
+    const changed = diffChangedUrls(prev, finalRecords);
+    // 删除检测：Set 一遍扫描（旧写法 prev × finalRecords 双重 filter 是 O(n²)）
+    const finalSet = new Set(finalRecords.map((r) => r.full_name));
+    const deleted = prev.filter((p) => !finalSet.has(p.full_name));
+    const urls = [
+      ...changed.flatMap((p) => [pluginUrl(p.full_name), pluginEnUrl(p.full_name)]),
+      ...deleted.flatMap((p) => [pluginUrl(p.full_name), pluginEnUrl(p.full_name)]),
+    ];
+    if (urls.length) {
+      await notifyIndexNow(urls);
+    } else {
+      console.log("[indexnow] no URL changes since last sync; skipping");
+    }
+  } catch (e) {
+    // 通知失败不应让数据同步失败：仅告警，不中断
+    console.warn(`[indexnow] skipped due to error: ${e.message}`);
   }
 
   console.log(`[sync] OK: plugins/ ${shardNames.length} shards + index.json.gz + browse.json (${finalRecords.length} plugins, ${Object.keys(index.tokens).length} tokens)`);

@@ -3,7 +3,7 @@
 // 注入脚本化故障并断言结果。不接入 npm test（按 spec 的测试决策走人工/CI 外演练）。
 // 用法：node scripts/cleanroom/run.mjs
 import { cp, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promises";
-import { existsSync, rmSync } from "node:fs";
+import { existsSync, rmSync, statSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import os from "node:os";
 import path from "node:path";
@@ -28,11 +28,13 @@ async function makeSandbox() {
   return sandbox;
 }
 
-// 播种上次数据：plugins/ 分片 + meta（昨天对账 -> 距今 <36h，本轮走增量模式）
+// 播种上次数据：plugins/ 分片 + meta（昨天对账 -> 距今 <36h，本轮走增量模式）。
+// 同时清掉上一场景可能遗留的墓碑，保证场景隔离。
 async function seedPrevState(sandbox) {
   const dataDir = path.join(sandbox, "site", "public", "data");
   const shardDir = path.join(dataDir, "plugins");
   await mkdir(shardDir, { recursive: true });
+  await rm(path.join(dataDir, "tombstones.json"), { force: true });
   const prev = seedPrevRecords();
   await writeFile(path.join(shardDir, "000.json"), JSON.stringify({ generatedAt: "2026-01-01T00:00:00Z", count: prev.length, plugins: prev }, null, 2));
   await writeFile(path.join(shardDir, "manifest.json"), JSON.stringify({ generatedAt: "2026-01-01T00:00:00Z", count: prev.length, shards: ["000.json"] }));
@@ -40,12 +42,13 @@ async function seedPrevState(sandbox) {
   await writeFile(path.join(dataDir, "meta.json"), JSON.stringify({ lastReconcileAt: yesterday }));
 }
 
-function runSync(sandbox, scenario) {
+function runSync(sandbox, scenario, extraEnv = {}, args = []) {
   const reqLog = path.join(sandbox, "reqlog.jsonl");
   rmSync(reqLog, { force: true }); // 每个场景独立日志，避免跨场景间距假数据
   const res = spawnSync(process.execPath, [
     "--import", pathToFileURL(path.join(sandbox, "scripts", "cleanroom", "fetch-shim.mjs")).href,
     path.join(sandbox, "scripts", "sync.mjs"),
+    ...args,
   ], {
     cwd: sandbox,
     encoding: "utf8",
@@ -56,6 +59,7 @@ function runSync(sandbox, scenario) {
       INDEXNOW_KEY: "0123456789abcdef0123456789abcdef",
       CLEANROOM_SCENARIO: JSON.stringify(scenario),
       CLEANROOM_REQLOG: reqLog,
+      ...extraEnv,
     },
   });
   const log = existsSync(reqLog) ? readFile(reqLog, "utf8").then((t) => t.trim().split("\n").filter(Boolean).map((l) => JSON.parse(l))) : [];
@@ -93,6 +97,79 @@ const scenarios = [
       check("exit 0", code === 0, stderr.slice(-300));
       check("旧分片已清理", !existsSync(stale));
       check("manifest 只引用 000.json", JSON.parse(await readFile(path.join(sandbox, "site", "public", "data", "plugins", "manifest.json"), "utf8")).shards.join(",") === "000.json");
+    },
+  },
+  {
+    name: "reconcile-readme-cache（对账复用 README 缓存）",
+    scenario: {},
+    async setup(sandbox) {
+      // 3 天前对账 -> 超过 36h，本轮强制全量对账
+      const old = new Date(Date.now() - 3 * 86400000).toISOString().slice(0, 10);
+      await writeFile(path.join(sandbox, "site", "public", "data", "meta.json"), JSON.stringify({ lastReconcileAt: old }));
+    },
+    async verify(sandbox, { code, stdout, stderr }, log) {
+      check("exit 0", code === 0, stderr.slice(-300));
+      check("走对账模式", /mode: RECONCILE/.test(stdout));
+      check("对账复用 README 缓存（3 复用 4 重抓）", /README cache: 3 reused, 4 fetched, 0 transport failures/.test(stdout), stdout.match(/README cache:.*/)?.[0]);
+      // 未变化仓库（a/b/c）零 raw 请求
+      const rawForUnchanged = log.filter((l) => l.host === "raw.githubusercontent.com" && /\/(a|b|c)\//.test(l.path));
+      check("未变化仓库零 README 重抓请求", rawForUnchanged.length === 0, `${rawForUnchanged.length} requests`);
+      check("对账 merge 保留全部 7 条", await readManifestCount(sandbox) === 7);
+    },
+  },
+  {
+    name: "pagination-drift（对账窗口不完整不误删）",
+    scenario: { searchOmit: ["a/unchanged-cli", "d/changed-search"] },
+    async setup(sandbox) {
+      // 先跑一轮无故障同步，让 prev 与夹具完全同步（否则 e/f/g 的正常变化会掩盖"数据零变化"路径）
+      await runSync(sandbox, {});
+      const old = new Date(Date.now() - 3 * 86400000).toISOString().slice(0, 10);
+      await writeFile(path.join(sandbox, "site", "public", "data", "meta.json"), JSON.stringify({ lastReconcileAt: old }));
+    },
+    async verify(sandbox, { code, stdout, stderr }, log) {
+      check("exit 0", code === 0, stderr.slice(-300));
+      check("数据保留（仍是 7 条，缺席仓库未删）", await readManifestCount(sandbox) === 7);
+      check("墓碑已记录（2 个缺席仓库各计 1 次）", (await tombstoneCount(sandbox)).size === 2, JSON.stringify(await readFile(path.join(sandbox, "site", "public", "data", "tombstones.json"), "utf8").catch(() => "none")));
+      const notified = indexNowUrls(log).flat();
+      check("无错误删除通知（缺席仓库 URL 不在通知里）", !notified.some((u) => u.includes("a/unchanged-cli") || u.includes("d/changed-search")), notified.filter((u) => u.includes("unchanged") || u.includes("changed-search")).join(" "));
+      check("数据文件未重写（零 generatedAt 空转）", /no substantive data change \(tombstones advanced\)/.test(stdout));
+    },
+  },
+  {
+    name: "tombstone-exhaustion（连续缺席达阈值才真删）",
+    scenario: { searchOmit: ["a/unchanged-cli"] },
+    async setup(sandbox) {
+      // 先跑一轮无故障同步让 a 进入数据；此后连续缺席对账观察墓碑决议
+      await runSync(sandbox, {});
+      const old = new Date(Date.now() - 3 * 86400000).toISOString().slice(0, 10);
+      await writeFile(path.join(sandbox, "site", "public", "data", "meta.json"), JSON.stringify({ lastReconcileAt: old }));
+    },
+    env: { DSH_TOMBSTONE_THRESHOLD: "2" },
+    async verify(sandbox, first, log) {
+      // 本轮（loop 触发）= 第一次缺席对账：记墓碑、数据保留
+      check("第一轮 exit 0", first.code === 0, first.stderr.slice(-300));
+      check("第一轮缺席仅记墓碑（数据保留 7 条）", (await readManifestCount(sandbox)) === 7 && /retained-absent/.test(first.stdout));
+      check("墓碑计数 = 1", (await tombstoneCount(sandbox)).get("a/unchanged-cli") === 1);
+      // 第二次缺席对账（阈值 2，强制 --reconcile：上一轮已把游标推到今天）：真删 + 删除通知
+      const second = runSync(sandbox, this.scenario, this.env, ["--reconcile"]);
+      const log2 = await second.logPromise;
+      check("第二轮 exit 0", second.code === 0, second.stderr.slice(-300));
+      check("连续缺席达阈值后真删（6 条）", (await readManifestCount(sandbox)) === 6);
+      const notified = indexNowUrls(log2).flat();
+      check("删除通知包含 a 的 URL", notified.some((u) => u.includes("a/unchanged-cli")), notified.join(" "));
+    },
+  },
+  {
+    name: "indexnow-batch（超上限分批 + 写盘后通知）",
+    scenario: {},
+    env: { INDEXNOW_BATCH: "4" },
+    async verify(sandbox, { code, stdout, stderr }, log) {
+      const posts = log.filter((l) => l.host === "api.indexnow.org");
+      const mtimeMs = statSync(path.join(sandbox, "site", "public", "data", "plugins", "manifest.json")).mtimeMs;
+      check("exit 0", code === 0, stderr.slice(-300));
+      // 4 个变化插件 × zh+en = 8 条 URL，按 4/批分 2 次提交
+      check("8 条 URL 按 4/批分成 2 次提交", posts.length === 2, `${posts.length} posts: ${posts.map((p) => p.urls.length).join(",")}`);
+      check("所有提交在数据写盘之后（先发布后通知）", posts.every((p) => p.t >= mtimeMs - 50), `manifest mtime ${mtimeMs}, posts ${posts.map((p) => p.t).join(",")}`);
     },
   },
   {
@@ -202,6 +279,16 @@ async function validMetaDate(sandbox) {
     return typeof meta.lastReconcileAt === "string" && /^\d{4}-\d{2}-\d{2}$/.test(meta.lastReconcileAt);
   } catch { return false; }
 }
+// 墓碑表：full_name -> 连续缺席次数
+async function tombstoneCount(sandbox) {
+  try {
+    return new Map(Object.entries(JSON.parse(await readFile(path.join(sandbox, "site", "public", "data", "tombstones.json"), "utf8"))));
+  } catch { return new Map(); }
+}
+// IndexNow 各次提交的 URL 列表
+function indexNowUrls(log) {
+  return log.filter((l) => l.host === "api.indexnow.org" && Array.isArray(l.urls)).map((l) => l.urls);
+}
 // 最后一条该状态记录与整个运行中最后一条搜索请求的时间差（重试是否被推迟的最晚证据）
 function spanAfterLastStatus(log, status) {
   const entries = log.filter((l) => l.host === "api.github.com").slice().sort((a, b) => a.t - b.t);
@@ -216,7 +303,7 @@ try {
     console.log(`\n=== ${s.name} ===`);
     await seedPrevState(sandbox);
     if (s.setup) await s.setup(sandbox);
-    const result = runSync(sandbox, s.scenario);
+    const result = runSync(sandbox, s.scenario, s.env);
     const log = await result.logPromise;
     await s.verify(sandbox, result, log);
   }

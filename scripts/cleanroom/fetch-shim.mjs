@@ -43,7 +43,7 @@ globalThis.fetch = async function cleanroomFetch(input, init) {
   const url = new URL(typeof input === "string" ? input : input.url);
   const host = url.hostname;
 
-  // ---- GitHub 搜索 API：忽略查询语义，恒返回全量夹具 ----
+  // ---- GitHub 搜索 API：忽略查询语义，恒返回全量夹具（searchOmit 模拟分页漂移丢结果） ----
   if (host === "api.github.com") {
     const fault = consumeFault(searchFaults, url.pathname + url.search);
     if (fault) {
@@ -67,7 +67,8 @@ globalThis.fetch = async function cleanroomFetch(input, init) {
       }
     }
     logRequest(host, url.pathname, 200);
-    return jsonRes(200, { total_count: REPOS.length, items: REPOS.map(({ _readme, ...r }) => r) });
+    const items = REPOS.filter((r) => !(scenario.searchOmit || []).includes(r.full_name));
+    return jsonRes(200, { total_count: items.length, items: items.map(({ _readme, ...r }) => r) });
   }
 
   // ---- raw README：路径 /{owner}/{repo}/HEAD/{name} ----
@@ -88,9 +89,13 @@ globalThis.fetch = async function cleanroomFetch(input, init) {
     return new Response("404: Not Found", { status: 404 });
   }
 
-  // ---- IndexNow：恒接受 ----
+  // ---- IndexNow：恒接受；记录提交的 URL 列表供断言 ----
   if (host === "api.indexnow.org") {
-    logRequest(host, url.pathname, 202);
+    let urls = [];
+    try { urls = JSON.parse(init?.body || "{}").urlList || []; } catch { /* ignore */ }
+    try {
+      appendFileSync(reqLog, JSON.stringify({ t: Date.now(), host, path: url.pathname, status: 202, urls }) + "\n");
+    } catch { /* 日志失败不影响被测进程 */ }
     return new Response("", { status: 202 });
   }
 

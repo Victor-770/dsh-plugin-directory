@@ -187,7 +187,7 @@ const jsonLd = {
             <div class="plugin-card relative block rounded-xl border border-line bg-surface p-4 transition hover:border-accent/60 hover:bg-surface2">
               <a href={`${langPrefix}/plugin/${p.full_name}/`} class="absolute inset-0" aria-label={p.full_name} tabindex="-1" aria-hidden="true"></a>
               <div class="flex items-start justify-between gap-2">
-                <span class="font-mono text-[13px] font-medium break-all">{p.full_name}</span>
+                <a href={`/en/plugin/${p.full_name}/`} class="font-mono text-[13px] font-medium break-all relative z-10 rounded-sm outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent">{p.full_name}</a>
                 <span class="shrink-0 text-xs text-muted">★ {p.stars.toLocaleString()}</span>
               </div>
               <p class="line-clamp-2 mt-2 min-h-[2.5rem] text-sm text-muted">{p.description || "—"}</p>
@@ -210,7 +210,7 @@ const jsonLd = {
   <script>
     import { STR, CATEGORY_ORDER } from "../../lib/i18n.js";
     import { BrowseApp } from "../../scripts/browse.js";
-    BrowseApp({ STR, CATEGORY_ORDER });
+    BrowseApp({ STR, CATEGORY_ORDER, lang: "en" });
   </script>
 </body>
 </html>
