@@ -24,6 +24,12 @@ site/scripts/og-images.mjs  # 构建期生成每插件 OG 图（纯 Node PNG，1
 functions/              # Pages Functions：/api/search 代理到 Worker（必须位于仓库根，Pages 自动检测）
 ```
 
+## 开源许可（AGPL-3.0）
+
+本站代码以 [GNU AGPL-3.0](./LICENSE) 开源：允许自由使用、修改与再分发；但以**网络服务**形式对外提供修改版时（§13），必须向用户公开你的修改源码。收录数据整理自 GitHub 公开 API，版权归各仓库原作者。
+
+开源即护城河：代码可以被复制，复制不走的是域名、收录历史与每 6 小时的数据新鲜度。若你基于本项目搭建同类站点，请保留版权声明并遵守 AGPL-3.0。
+
 ## SEO / IndexNow
 
 同步完成后自动向 Bing 通知新增/更新/删除的插件 URL（Bing 站长指南 §4）：
@@ -49,7 +55,7 @@ node worker/smoke.mjs             # Worker 本地冒烟（需先 sync）
 
 1. **GitHub repo** 推送到远端，仓库 Secrets 添加 `GH_TOKEN`（fine-grained，public repo 只读；不加也能跑，额度低）。
 2. **Pages**：连接该 repo → 构建命令 `cd site && npm install && npm run build` → 输出目录 `site/dist`（相对仓库根） → 得到 `xxx.pages.dev`（自定义域名 `dsh-plugin-directory.online`，并在 Cloudflare 配好 pages.dev → 主域 301）。
-3. **Worker**：`cd worker` → 把 `wrangler.toml` 的 `SITE_ORIGIN` 改成 Pages 地址 → `npx wrangler deploy`。
+3. **Worker**：`cd worker` → 把 `wrangler.toml` 的 `SITE_ORIGIN` 改成 Pages 地址 → `npx wrangler deploy`。可选限流环境变量（`wrangler.toml [vars]` 或面板配置）：`RATE_LIMIT_MAX`（每 IP 每窗口最大请求数，默认 120）、`RATE_LIMIT_WINDOW_SECONDS`（窗口秒数，默认 60）。真实访客 IP 的限流在 Pages Function（`functions/api/search.js`）执行，Worker 侧按转发头兜底。
 4. 上线检查：首页展示"最后同步时间"；`/api/search?q=皮肤` 返回结果。
 5. **Bing Webmaster Tools**（可选但推荐）：验证 `dsh-plugin-directory.online`，提交 `https://dsh-plugin-directory.online/sitemap.xml`。IndexNow 通知无需在 BWT 验证（key 文件已部署）。
 

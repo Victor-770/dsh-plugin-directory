@@ -1,5 +1,5 @@
 // DSH Plugin Directory 搜索 Worker（Ticket 03）：薄 HTTP 适配层，逻辑全在 search-core。
-// 冷启动 fetch 同源数据（index.json.gz + plugins/ 分片），模块级内存缓存；查询纯内存，P95 目标 <300ms。
+// 冷启动 fetch 同源数据（index.json.br + plugins/ 分片），模块级内存缓存；查询纯内存，P95 目标 <300ms。
 import { search } from "../../search-core/index.js";
 
 let cache = null;
@@ -34,6 +34,30 @@ async function loadData(env, requestOrigin) {
 
 const CORS = { "access-control-allow-origin": "*", "content-type": "application/json; charset=utf-8", "cache-control": "no-store" };
 
+// ---------- 限流（进程内滑动窗口） ----------
+// 主要限流在 Pages Function（真实访客 IP，见 functions/api/search.js），那里会把真实 IP 以
+// x-dsh-real-ip 头转发过来。此处是兜底：Pages 代理流量按转发头限流，直连 workers.dev 的
+// 滥用请求按边缘 CF-Connecting-IP 限流。免费版按隔离实例生效，挡脚本抓取足够，DDoS 交给面板。
+// 环境变量：RATE_LIMIT_MAX（默认 120）、RATE_LIMIT_WINDOW_SECONDS（默认 60）。
+const buckets = new Map(); // ip -> { start, count }
+let lastSweep = 0;
+function checkRateLimit(ip, env) {
+  const windowMs = (Number(env?.RATE_LIMIT_WINDOW_SECONDS) || 60) * 1000;
+  const max = Number(env?.RATE_LIMIT_MAX) || 120;
+  const now = Date.now();
+  if (buckets.size >= 10000 && now - lastSweep >= windowMs) {
+    lastSweep = now;
+    for (const [k, b] of buckets) if (now - b.start >= windowMs) buckets.delete(k);
+  }
+  const b = buckets.get(ip);
+  if (!b || now - b.start >= windowMs) {
+    buckets.set(ip, { start: now, count: 1 });
+    return 0;
+  }
+  b.count++;
+  return b.count > max ? Math.ceil((b.start + windowMs - now) / 1000) : 0;
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -42,6 +66,15 @@ export default {
     }
     if (request.method !== "GET") {
       return new Response(JSON.stringify({ error: "method not allowed" }), { status: 405, headers: CORS });
+    }
+    // 兜底限流：Pages 代理转发真实 IP，直连时用边缘 IP
+    const ip = request.headers.get("x-dsh-real-ip") || request.headers.get("cf-connecting-ip") || "unknown";
+    const retryAfter = checkRateLimit(ip, env);
+    if (retryAfter > 0) {
+      return new Response(JSON.stringify({ error: "rate limited, slow down" }), {
+        status: 429,
+        headers: { ...CORS, "retry-after": String(retryAfter) },
+      });
     }
     try {
       const referer = request.headers.get("referer");

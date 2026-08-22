@@ -4,3 +4,12 @@ site/.astro/
 *.log
 .DS_Store
 site/public/og/
+
+# 本地环境变量（GITHUB_TOKEN / INDEXNOW_KEY / WORKER_URL 等，切勿提交）
+.env
+.env.*
+!.env.example
+
+# wrangler 本地状态
+.wrangler/
+worker/.wrangler/
