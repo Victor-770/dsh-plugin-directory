@@ -3,15 +3,34 @@ import { STR } from "../lib/i18n.js";
 
 const { headings = [], lang = "zh" } = Astro.props;
 const s = STR[lang];
+
+let h2Counter = 0;
+const enrichedHeadings = headings.map((h) => {
+  if (h.level === 2) {
+    h2Counter++;
+    return { ...h, num: String(h2Counter).padStart(2, "0") };
+  }
+  return h;
+});
 ---
-{headings.length > 0 && (
-  <nav class="rounded-xl border border-line bg-surface p-4 text-sm" aria-label={s.tableOfContents}>
-    <h2 class="text-xs font-semibold uppercase tracking-wider text-muted mb-3">{s.tableOfContents}</h2>
+{enrichedHeadings.length > 0 && (
+  <nav class="rounded-xl border border-line bg-surface/80 p-4 text-sm backdrop-blur shadow-sm" aria-label={s.tableOfContents}>
+    <div class="flex items-center gap-2 mb-3 pb-2.5 border-b border-line/60">
+      <span class="w-2 h-2 rounded-full bg-accent animate-pulse" aria-hidden="true"></span>
+      <h2 class="text-xs font-bold uppercase tracking-wider text-muted">{s.tableOfContents}</h2>
+    </div>
     <ul class="space-y-2 text-xs">
-      {headings.map((h) => (
-        <li class={h.level === 3 ? "pl-3 text-muted hover:text-ink" : "font-medium text-ink/90 hover:text-accent"}>
-          <a href={`#${h.id}`} class="block transition hover:underline">
-            {h.text}
+      {enrichedHeadings.map((h) => (
+        <li class={h.level === 3 ? "pl-5 text-muted hover:text-ink transition" : "font-medium text-ink/90 hover:text-accent transition"}>
+          <a href={`#${h.id}`} class="flex items-start gap-1.5 group py-0.5">
+            {h.num && (
+              <span class="font-mono text-[10px] text-muted/70 group-hover:text-accent shrink-0 pt-0.5">
+                {h.num}
+              </span>
+            )}
+            <span class="leading-relaxed group-hover:underline underline-offset-2">
+              {h.text}
+            </span>
           </a>
         </li>
       ))}

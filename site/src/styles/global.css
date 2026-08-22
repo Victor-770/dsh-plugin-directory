@@ -66,81 +66,123 @@ html.light #theme-toggle .icon-moon { display: none; }
   }
 }
 
-/* 技术文章富排版样式（Prose Typography） */
+/* 技术文章富排版样式（Prose Typography - 借鉴 gzh-design 编辑风与层级设计） */
 .prose {
   color: var(--color-ink);
   font-size: 1rem;
-  line-height: 1.8;
+  line-height: 1.85;
+  letter-spacing: 0.01em;
 }
+
+/* 章节标题：左侧主色竖条点缀，建立清晰层级 */
 .prose h2 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-top: 2.25rem;
-  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  font-size: 1.45rem;
+  font-weight: 700;
+  margin-top: 2.75rem;
+  margin-bottom: 1.15rem;
   color: var(--color-ink);
   scroll-margin-top: 5.5rem;
   letter-spacing: -0.015em;
 }
+.prose h2::before {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 1.15em;
+  background: var(--color-accent);
+  border-radius: 2px;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
 .prose h3 {
-  font-size: 1.2rem;
+  font-size: 1.18rem;
   font-weight: 600;
-  margin-top: 1.75rem;
-  margin-bottom: 0.75rem;
+  margin-top: 2rem;
+  margin-bottom: 0.85rem;
   color: var(--color-ink);
   scroll-margin-top: 5.5rem;
 }
+
 .prose p {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-top: 1.1rem;
+  margin-bottom: 1.1rem;
 }
+
 .prose ul {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-top: 1.1rem;
+  margin-bottom: 1.1rem;
   padding-left: 1.5rem;
   list-style-type: disc;
 }
 .prose ol {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-top: 1.1rem;
+  margin-bottom: 1.1rem;
   padding-left: 1.5rem;
   list-style-type: decimal;
 }
 .prose li {
-  margin-top: 0.35rem;
-  margin-bottom: 0.35rem;
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
 }
+
 .prose a {
   color: var(--color-accent);
   text-decoration: underline;
   text-underline-offset: 3px;
   font-weight: 500;
+  transition: opacity 150ms ease;
 }
 .prose a:hover {
-  opacity: 0.85;
+  opacity: 0.8;
 }
+
+/* 关键词标记层：加粗时带极细主色下划线（高频视觉锚点） */
 .prose strong {
   font-weight: 600;
   color: var(--color-ink);
+  border-bottom: 2px solid color-mix(in srgb, var(--color-accent) 40%, transparent);
+  padding-bottom: 1px;
 }
+
+/* 行内代码胶囊 */
 .prose code:not(pre code) {
   font-family: var(--font-mono);
   font-size: 0.875em;
   background-color: var(--color-surface2);
-  padding: 0.15em 0.4em;
+  color: var(--color-accent);
+  padding: 0.15em 0.45em;
   border-radius: 4px;
   border: 1px solid var(--color-line);
 }
+
+/* 代码块：Mac 终端三色圆点 + 顶部留白 + 紧凑等宽排版 */
 .prose pre {
-  margin-top: 1.25rem;
-  margin-bottom: 1.25rem;
+  position: relative;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
   background-color: var(--color-surface);
   border: 1px solid var(--color-line);
-  border-radius: 8px;
-  padding: 1rem 1.25rem;
+  border-radius: 10px;
+  padding: 2.85rem 1.25rem 1.25rem;
   overflow-x: auto;
   font-family: var(--font-mono);
   font-size: 0.875rem;
-  line-height: 1.6;
+  line-height: 1.65;
+  box-shadow: 0 4px 16px -8px rgba(0, 0, 0, 0.25);
+}
+.prose pre::before {
+  content: "";
+  position: absolute;
+  top: 13px;
+  left: 14px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ff5f56;
+  box-shadow: 16px 0 0 #ffbd2e, 32px 0 0 #27c93f;
 }
 .prose pre code {
   background: transparent;
@@ -149,29 +191,48 @@ html.light #theme-toggle .icon-moon { display: none; }
   font-size: inherit;
   color: var(--color-ink);
 }
+
+/* 引用块：左侧加厚主色条 + 浅底圆角 */
 .prose blockquote {
-  margin-top: 1.25rem;
-  margin-bottom: 1.25rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
   border-left: 4px solid var(--color-accent);
   background-color: var(--color-surface);
   border-radius: 0 8px 8px 0;
-  padding: 1rem 1.25rem;
+  padding: 1.15rem 1.4rem;
   font-style: normal;
   color: var(--color-ink);
+  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.05);
 }
+
+/* 对比表格：圆角边框 + 斑马纹 + 标题栏加深 */
 .prose table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   font-size: 0.875rem;
   border: 1px solid var(--color-line);
-  border-radius: 8px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.05);
 }
 .prose th, .prose td {
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--color-line);
+  padding: 0.85rem 1.1rem;
+  border-bottom: 1px solid var(--color-line);
+  border-right: 1px solid var(--color-line);
+}
+.prose th:last-child, .prose td:last-child {
+  border-right: none;
+}
+.prose tr:last-child td {
+  border-bottom: none;
 }
 .prose th {
   background-color: var(--color-surface2);
   font-weight: 600;
   color: var(--color-ink);
 }
+.prose tbody tr:hover {
+  background-color: color-mix(in srgb, var(--color-surface2) 40%, transparent);
+}
+
