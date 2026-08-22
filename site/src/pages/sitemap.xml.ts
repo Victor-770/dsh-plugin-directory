@@ -5,9 +5,9 @@ import path from "node:path";
 
 // 构建期生成 sitemap.xml（静态输出下自动预渲染）：
 // 首页 + 全部插件详情页（中英两个版本），每条 URL 带完整 hreflang 互链（含自引用与 x-default）。
-// canonical 域名 = dsh-plugin-directory.online。
-export function GET() {
-  const base = "https://dsh-plugin-directory.online";
+// canonical 域名经 astro.config（SITE_ORIGIN 单源）注入 endpoint 的 site 上下文。
+export function GET({ site }) {
+  const base = site.origin;
   const browsePath = path.join(process.cwd(), "public", "data", "browse.json");
   let plugins = [];
   let lastmod = new Date().toISOString().slice(0, 10);

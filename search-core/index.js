@@ -15,6 +15,17 @@ const isSeparator = (cp) =>
   (cp >= 0x3000 && cp <= 0x303f && !(cp >= 0x3021 && cp <= 0x3029)) ||
   (cp >= 0xff00 && cp <= 0xffef && !isRunChar(cp));
 
+// CJK 词段的召回 token：二元切词 + 首尾单字（首尾字服务单字召回：查"图"命中含"图片"的文档）；
+// 单字词段即自身。tokenize（索引侧）与 wordGroups（查询侧）共用——两侧的词段展开必须一致。
+function runTokens(run) {
+  const chars = [...run];
+  const toks = [];
+  for (let k = 0; k < chars.length - 1; k++) toks.push(chars[k] + chars[k + 1]);
+  if (chars.length > 1) { toks.push(chars[0]); toks.push(chars[chars.length - 1]); }
+  else toks.push(chars[0]);
+  return toks;
+}
+
 /** 切词：CJK 二元切词 + 首字 + 尾字；ASCII 小写按非字母数字切分。 */
 export function tokenize(text) {
   if (!text) return [];
@@ -27,17 +38,7 @@ export function tokenize(text) {
       buf = "";
     }
   };
-  const emitRun = (run) => {
-    const chars = [...run];
-    for (let k = 0; k < chars.length - 1; k++) out.push(chars[k] + chars[k + 1]);
-    // 首字+尾字单字召回：查"图"能命中含"图片"的文档（旧实现只有尾字，首字永远缺失）
-    if (chars.length > 1) {
-      out.push(chars[0]);
-      out.push(chars[chars.length - 1]);
-    } else {
-      out.push(chars[0]);
-    }
-  };
+  const emitRun = (run) => { for (const t of runTokens(run)) out.push(t); };
   let i = 0;
   while (i < s.length) {
     const cp = s.codePointAt(i);
@@ -79,12 +80,7 @@ export function wordGroups(query) {
         run += String.fromCodePoint(s.codePointAt(i));
         i++;
       }
-      const chars = [...run];
-      const toks = [];
-      for (let k = 0; k < chars.length - 1; k++) toks.push(chars[k] + chars[k + 1]);
-      if (chars.length > 1) { toks.push(chars[0]); toks.push(chars[chars.length - 1]); }
-      else toks.push(chars[0]);
-      groups.push(toks);
+      groups.push(runTokens(run));
     } else if (isSeparator(cp) || !/[a-z0-9]/i.test(ch)) {
       flush();
       i++;
@@ -128,9 +124,19 @@ export function keyTriggerTokens(key) {
   return triggers;
 }
 
+// 键覆盖匹配的共用循环：键的全部触发 token 都出现在查询里（has 判定，跨组亦可，如 "skin center"）
+// 时，把键值 token 经 inject 注入查询。expandQueryGroups 与 expandAliases 的差异只在成员判定与注入位置。
+function applyKeyCoverage(aliases, has, inject) {
+  for (const key of Object.keys(aliases)) {
+    const triggers = keyTriggerTokens(key);
+    if (!triggers.length || (triggers.length === 1 && triggers[0] === key)) continue; // 精确路径已覆盖
+    if (!triggers.every(has)) continue;
+    inject(triggers[0], aliasValueTokens(aliases[key]));
+  }
+}
+
 // 查询组展开：每组的 token 精确命中别名键（含多 token 值），再做键覆盖匹配。
-// 覆盖匹配：键的全部触发 token 都出现在查询里（跨组亦可，如 "skin center"）时，
-// 把键值注入首个触发 token 所在的组，保持"词内 OR、词间 AND"语义。
+// 覆盖注入进首个触发 token 所在的组，保持"词内 OR、词间 AND"语义。
 function expandQueryGroups(q) {
   const rawGroups = wordGroups(q);
   if (!rawGroups.length) return [];
@@ -144,13 +150,11 @@ function expandQueryGroups(q) {
   });
   const tokenToGroup = new Map();
   rawGroups.forEach((g, gi) => { for (const t of g) if (!tokenToGroup.has(t)) tokenToGroup.set(t, gi); });
-  for (const key of Object.keys(ALIASES)) {
-    const triggers = keyTriggerTokens(key);
-    if (!triggers.length || (triggers.length === 1 && triggers[0] === key)) continue; // 精确路径已覆盖
-    const gi = tokenToGroup.get(triggers[0]);
-    if (gi === undefined || !triggers.every((t) => tokenToGroup.has(t))) continue;
-    for (const at of aliasValueTokens(ALIASES[key])) expanded[gi].add(at);
-  }
+  applyKeyCoverage(
+    ALIASES,
+    (t) => tokenToGroup.has(t),
+    (first, values) => { for (const at of values) expanded[tokenToGroup.get(first)].add(at); }
+  );
   return expanded;
 }
 
@@ -161,11 +165,11 @@ export function expandAliases(query, aliases = ALIASES) {
     const v = aliases[t];
     if (v) for (const at of aliasValueTokens(v)) terms.add(at);
   }
-  for (const key of Object.keys(aliases)) {
-    const triggers = keyTriggerTokens(key);
-    if (!triggers.length || (triggers.length === 1 && triggers[0] === key)) continue;
-    if (triggers.every((t) => terms.has(t))) for (const at of aliasValueTokens(aliases[key])) terms.add(at);
-  }
+  applyKeyCoverage(
+    aliases,
+    (t) => terms.has(t),
+    (_first, values) => { for (const at of values) terms.add(at); }
+  );
   return [...terms];
 }
 

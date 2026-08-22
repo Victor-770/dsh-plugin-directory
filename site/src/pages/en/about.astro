@@ -15,7 +15,7 @@ try {
 
 const lang = "en";
 const s = STR[lang];
-const site = (Astro.site?.origin) || "https://dsh-plugin-directory.online";
+const site = Astro.site.origin; // astro.config 恒设 site（SITE_ORIGIN 单源）
 const canonical = site + "/en/about/";
 const pageTitle = "About DSH Plugin Directory — DeepSeek Harness Plugin Directory";
 const pageDescription = "DSH Plugin Directory: a plugin index for DeepSeek Harness users. Syncs the GitHub dsh-plugin topic every 6 hours, with bilingual CN/EN full-text search and category browsing.";

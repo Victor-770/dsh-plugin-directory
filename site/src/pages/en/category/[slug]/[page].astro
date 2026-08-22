@@ -1,25 +1,14 @@
 ---
 // 分类第 2 页起（/en/category/{slug}/{n}/）：每页 150 条；canonical 指向自身，zh/en hreflang 链到同页码。
 import CategoryPage, { PAGE_SIZE } from "../../../../components/CategoryPage.astro";
-import { CATEGORY_ORDER } from "../../../../lib/i18n.js";
-import { CATEGORY_SLUGS } from "../../../../lib/category-meta.js";
-import { readFileSync } from "node:fs";
-import path from "node:path";
+import { loadCategories } from "../../../../lib/category-paths.js";
 
 export async function getStaticPaths() {
-  const browsePath = path.join(process.cwd(), "public", "data", "browse.json");
-  let browse = [];
-  try {
-    browse = JSON.parse(readFileSync(browsePath, "utf8")).plugins || [];
-  } catch (e) { /* 数据未生成时站点仍可构建（忽略） */ }
   const paths = [];
-  for (const key of CATEGORY_ORDER) {
-    const plugins = browse
-      .filter((p) => (p.categories || []).includes(key))
-      .sort((a, b) => b.stars - a.stars);
+  for (const { key, slug, plugins } of loadCategories()) {
     const maxPage = Math.ceil(plugins.length / PAGE_SIZE);
     for (let page = 2; page <= maxPage; page++) {
-      paths.push({ params: { slug: CATEGORY_SLUGS[key], page: String(page) }, props: { slug: CATEGORY_SLUGS[key], catKey: key, plugins, page } });
+      paths.push({ params: { slug, page: String(page) }, props: { slug, catKey: key, plugins, page } });
     }
   }
   return paths;

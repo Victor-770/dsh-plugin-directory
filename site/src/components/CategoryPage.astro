@@ -12,7 +12,7 @@ export const PAGE_SIZE = 150;
 const { lang = "zh", slug, catKey, plugins, page = 1 } = Astro.props;
 const s = STR[lang];
 const langPrefix = lang === "en" ? "/en" : "";
-const site = (Astro.site?.origin) || "https://dsh-plugin-directory.online";
+const site = Astro.site.origin; // astro.config 恒设 site（SITE_ORIGIN 单源）
 const catName = lang === "zh" ? catKey : (s.languages[catKey] || catKey);
 const maxPage = Math.max(1, Math.ceil(plugins.length / PAGE_SIZE));
 const pagePlugins = plugins.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);

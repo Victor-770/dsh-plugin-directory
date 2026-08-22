@@ -86,19 +86,17 @@ const official = await (await directFetch(worker, workerEnv, Q)).json();
   check("伪造请求后缓存未被污染", JSON.stringify(after.results) === JSON.stringify(official.results));
 }
 {
-  // C. 未配置 SITE_ORIGIN：非白名单 Referer -> 500 固定文案（不含 origin/路径/状态码等内部细节）
+  // C. 未配置 SITE_ORIGIN：一律 fail closed -> 500 固定文案（不含 origin/路径/状态码等内部细节）
   const mod = await importFresh("?nocfg");
   const res = await directFetch(mod, {}, Q, { referer: "https://evil.example.com" });
   const body = await res.text();
   const leaks = /evil|worker\.example|fetch failed|origin|status/i.test(body) && !/internal error/.test(body);
-  check("非白名单 Referer 返回 500 固定文案", res.status === 500 && body.includes("internal error") && !leaks, body.slice(0, 120));
+  check("未配置数据源返回 500 固定文案", res.status === 500 && body.includes("internal error") && !leaks, body.slice(0, 120));
 }
 {
-  // D. resolveDataOrigin 解析规则（纯函数，白名单语义）
-  check("origin 解析：SITE_ORIGIN 恒优先", resolveDataOrigin({ SITE_ORIGIN: "https://official.example" }, "https://evil.example.com") === "https://official.example");
-  check("origin 解析：*.pages.dev Referer 白名单放行", resolveDataOrigin({}, "https://my-site.a1b2c3.pages.dev") === "https://my-site.a1b2c3.pages.dev");
-  check("origin 解析：仿冒后缀拒绝", resolveDataOrigin({}, "https://evil-pages.dev") === null && resolveDataOrigin({}, "https://pages.dev.evil.com") === null);
-  check("origin 解析：非法 Referer 拒绝", resolveDataOrigin({}, "http://not a url") === null && resolveDataOrigin({}, null) === null);
+  // D. resolveDataOrigin 解析规则（纯函数，锁定数据源语义）
+  check("origin 解析：SITE_ORIGIN 恒优先", resolveDataOrigin({ SITE_ORIGIN: "https://official.example" }) === "https://official.example");
+  check("origin 解析：未配置 fail closed（*.pages.dev Referer 也不放行）", resolveDataOrigin({}) === null);
 }
 
 // ---------- Ticket 09：缓存生命周期 ----------

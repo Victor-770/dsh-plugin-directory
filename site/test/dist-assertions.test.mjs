@@ -18,11 +18,11 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DIST = path.join(__dirname, "..", "dist");
 
-// ---- 基线（2026-08-22 本地构建：10424 插件、20811 页） ----
+// ---- 基线（2026-08-22 本地构建：10396 插件、20943 页；+1 文件为有意新增 site.webmanifest） ----
 const BASELINE = {
   // dist 总文件数上界：防路由/产物意外翻倍的回归。语料自然增长时有意上调。
-  distFiles: 31606,
-  // 最大分类单页 HTML 上界：分页后实测最大 61.5KB（150 条/页）。上界留余量到 100KB。
+  distFiles: 31607,
+  // 最大分类单页 HTML 上界：分页后实测最大 ~62KB（150 条/页）。上界留余量到 100KB。
   maxCategoryHtmlBytes: 100_000,
 };
 

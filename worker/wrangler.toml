@@ -4,7 +4,7 @@ compatibility_date = "2026-08-13"
 
 [vars]
 # 静态站地址：Worker 冷启动从这里拉取 index.json.gz / plugins 分片。
-# 显式配置即锁定数据源（Referer 不再影响）。未配置时仅接受官方 *.pages.dev Referer。
+# 显式配置即锁定数据源（Referer 不参与解析）。未配置 = fail closed（预览环境也须显式配置）。
 SITE_ORIGIN = "https://dsh-plugin-directory.online"
 
 # 限流信任密钥（不要写在这里，用 secret）：

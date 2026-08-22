@@ -16,7 +16,7 @@ try {
 
 const lang = "zh";
 const s = STR[lang];
-const site = (Astro.site?.origin) || "https://dsh-plugin-directory.online";
+const site = Astro.site.origin; // astro.config 恒设 site（SITE_ORIGIN 单源）
 const canonical = site + "/about/";
 const pageTitle = "关于 DSH 插件目录 — DeepSeek Harness 插件目录";
 const pageDescription = "DSH 插件目录：面向 DeepSeek Harness 用户的插件索引站，每 6 小时同步 GitHub dsh-plugin 话题，支持中英文全文搜索与分类浏览。";

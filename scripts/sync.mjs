@@ -15,7 +15,7 @@ import { buildIndex } from "../search-core/index.js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.join(__dirname, "..", "site", "public", "data"); // 站点静态资源目录：Worker 同源拉取
 const PUBLIC_DIR = path.dirname(DATA_DIR); // site/public：IndexNow key 文件所在
-import { SITE_ORIGIN } from "../shared/site-origin.js"; // canonical 域名单一来源
+import { SITE_ORIGIN, SITE_HOST } from "../shared/site-origin.js"; // canonical 域名单一来源（含裸主机名派生）
 const TOKEN = process.env.GITHUB_TOKEN || "";
 const HEADERS = { "User-Agent": "dsh-plugin-directory", Accept: "application/vnd.github+json" };
 if (TOKEN) HEADERS.Authorization = `Bearer ${TOKEN}`;
@@ -415,7 +415,7 @@ async function notifyIndexNow(urls) {
   const endpoint = process.env.INDEXNOW_ENDPOINT || "https://api.indexnow.org/indexnow";
   for (let i = 0; i < urls.length; i += INDEXNOW_BATCH) {
     const batch = urls.slice(i, i + INDEXNOW_BATCH);
-    const body = { host: SITE_ORIGIN.replace(/^https?:\/\//, ""), key, keyLocation: `${SITE_ORIGIN}/${key}.txt`, urlList: batch };
+    const body = { host: SITE_HOST, key, keyLocation: `${SITE_ORIGIN}/${key}.txt`, urlList: batch };
     console.log(`[indexnow] notifying ${batch.length} URLs (${changedSummary(batch)})`);
     for (let attempt = 0; attempt < 3; attempt++) {
       const res = await fetch(endpoint, {

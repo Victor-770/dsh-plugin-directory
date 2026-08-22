@@ -23,7 +23,7 @@ const s = STR[lang];
 const langPrefix = "/en";
 
 // --- SEO: 站点 URL 与元信息（构建期确定，保证绝对地址；canonical 域名 = .online） ---
-const site = (Astro.site?.origin) || "https://dsh-plugin-directory.online";
+const site = Astro.site.origin; // astro.config 恒设 site（SITE_ORIGIN 单源）
 const pluginCount = browse.length || 0;
 const canonical = site + langPrefix + "/";
 const ogImage = site + "/og.png";

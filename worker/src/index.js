@@ -5,18 +5,12 @@ import { createRateLimiter, rateLimitConfig } from "../../shared/rate-limit.js";
 
 // 数据源 origin 解析（安全边界）：
 // 1) 显式配置的 SITE_ORIGIN 恒优先——Referer 完全不影响数据来源；
-// 2) 未配置时只接受白名单 Referer origin：官方 *.pages.dev 子域（保留换环境免配置的便利）；
-// 3) 其余一律拒绝——伪造 Referer 直连 Worker 不能改数据源、也不能污染全局缓存。
+// 2) 未配置时一律拒绝（fail closed）。曾有 *.pages.dev Referer 放行的免配置便利，但缓存是
+//    模块级全局单例、不按 origin 隔离：任意第三方 pages.dev 部署可伪造 Referer 把数据源
+//    解析到自己的服务器并污染全局缓存（spec：绝不接受任意 Referer）。预览环境须显式配 SITE_ORIGIN。
 // 导出供集成测试直接验证解析规则。
-export function resolveDataOrigin(env, referer) {
-  if (env && env.SITE_ORIGIN) return env.SITE_ORIGIN;
-  if (referer) {
-    try {
-      const { origin, hostname } = new URL(referer);
-      if (hostname.endsWith(".pages.dev")) return origin;
-    } catch { /* 非法 Referer 忽略 */ }
-  }
-  return null;
+export function resolveDataOrigin(env) {
+  return (env && env.SITE_ORIGIN) || null;
 }
 
 // ---------- 缓存生命周期 ----------
@@ -112,7 +106,7 @@ export default {
       });
     }
     try {
-      const base = resolveDataOrigin(env, request.headers.get("referer"));
+      const base = resolveDataOrigin(env);
       const data = await loadData(env, base);
       maybeRevalidate(env, base, ctx); // TTL 到期：本次回旧值，后台刷新
       const params = url.searchParams;
@@ -120,12 +114,8 @@ export default {
       const categories = (params.get("cat") || "").split(",").map((s) => s.trim()).filter(Boolean);
       const tags = (params.get("tag") || "").split(",").map((s) => s.trim()).filter(Boolean);
       const sort = params.get("sort") === "stars" ? "stars" : "relevance";
-      // limit 语义：显式 0..200（0 返回空集；非法/缺省 50；负数收敛 0；超上限收敛 200）
-      const rawLimit = Number(params.get("limit"));
-      const limit = params.get("limit") === null || params.get("limit") === "" || Number.isNaN(rawLimit)
-        ? 50
-        : Math.min(200, Math.max(0, Math.trunc(rawLimit)));
-      const result = search(data.index, { q, categories, tags, sort, limit });
+      // limit 归一化（显式 0..200；0 空集；缺省/非法 50）在 search() 内统一执行——唯一一份实现
+      const result = search(data.index, { q, categories, tags, sort, limit: params.get("limit") });
       // README 已在加载期剥离（见 loadFresh），输出直接取元数据
       const results = result.ids.map((id) => data.plugins[id]);
       return new Response(JSON.stringify({ total: result.total, results, scores: result.scores }), {

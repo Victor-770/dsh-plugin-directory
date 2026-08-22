@@ -22,7 +22,7 @@ const {
 } = Astro.props;
 const s = STR[lang];
 const langPrefix = lang === "en" ? "/en" : "";
-const site = (Astro.site?.origin) || "https://dsh-plugin-directory.online";
+const site = Astro.site.origin; // astro.config 恒设 site（SITE_ORIGIN 单源）
 ---
 <!doctype html>
 <html lang={lang} class="dark">
@@ -52,7 +52,9 @@ const site = (Astro.site?.origin) || "https://dsh-plugin-directory.online";
   <meta name="twitter:image" content={ogImage} />
   <link rel="icon" href="/favicon.ico" sizes="32x32" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon-48x48.png" sizes="48x48" type="image/png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
   <slot name="head-extra" />
   {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>}
   <script is:inline>

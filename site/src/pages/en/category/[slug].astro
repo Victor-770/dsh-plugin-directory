@@ -1,24 +1,14 @@
 ---
 // 分类第 1 页（/en/category/{slug}/）：getStaticPaths 取数，渲染交给共享 CategoryPage。
 import CategoryPage from "../../../components/CategoryPage.astro";
-import { CATEGORY_ORDER } from "../../../lib/i18n.js";
-import { CATEGORY_SLUGS } from "../../../lib/category-meta.js";
-import { readFileSync } from "node:fs";
-import path from "node:path";
+import { loadCategories } from "../../../lib/category-paths.js";
 
 export async function getStaticPaths() {
-  const browsePath = path.join(process.cwd(), "public", "data", "browse.json");
-  let browse = [];
-  try {
-    browse = JSON.parse(readFileSync(browsePath, "utf8")).plugins || [];
-  } catch (e) { /* 数据未生成时站点仍可构建（忽略） */ }
   const paths = [];
-  for (const key of CATEGORY_ORDER) {
-    const plugins = browse
-      .filter((p) => (p.categories || []).includes(key))
-      .sort((a, b) => b.stars - a.stars);
+  for (const { key, slug, plugins } of loadCategories()) {
+    // 空分类不生成页面，避免 thin content
     if (!plugins.length) continue;
-    paths.push({ params: { slug: CATEGORY_SLUGS[key] }, props: { slug: CATEGORY_SLUGS[key], catKey: key, plugins } });
+    paths.push({ params: { slug }, props: { slug, catKey: key, plugins } });
   }
   return paths;
 }
