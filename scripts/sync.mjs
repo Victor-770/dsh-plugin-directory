@@ -2,10 +2,10 @@
 // - 常规同步（默认）：pushed 增量（最近 N 天活跃）+ created 兜底（上次对账之后新增），README 有缓存。
 // - 对账同步（--reconcile）：created 全窗口二分全量重扫，兜住"很久没 push 但新打 topic"的老仓库。
 // 游标存 site/public/data/meta.json（workflow 的 file_pattern 是 site/public/data 整目录，会随数据一起提交，
-// 保证 CI 全新 checkout 后仍能读到上次对账时间与同步计数，增量逻辑在 CI 里持续生效）。
+// 保证 CI 全新 checkout 后仍能读到上次对账时间，增量逻辑在 CI 里持续生效）。
 // 用法：GITHUB_TOKEN=xxx npm run sync [-- --reconcile]
 // 说明：搜索 API 未认证 10 次/分钟，认证 30 次/分钟；脚本按认证与否自适应限速。
-import { writeFile, mkdir, readdir, readFile, rm } from "node:fs/promises";
+import { writeFile, mkdir, readdir, readFile, rm, rename } from "node:fs/promises";
 import { gzipSync } from "node:zlib";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -27,8 +27,11 @@ const DATE_LO = "2008-01-01"; // GitHub 最早仓库日期
 const INCREMENTAL_DAYS = 7;
 // 每次对账后，下一次对账前的"新增兜底窗口"：created 在此之后的新仓库（即使 push 很久前也会被 created 兜住）。
 const RECONCILE_GAP_DAYS = 40;
-// 对账周期：每 N 次常规同步做一次全量对账（每 6h cron，N=6 -> 每 36h 一次全量）。
-const RECONCILE_EVERY = 6;
+// 对账周期：距上次对账超过该小时数即全量对账（每 6h cron，36h -> 约每 6 轮一次）。
+// 用 lastReconcileAt 时间差而非运行计数：计数器每轮 +1 会让 meta.json 每次同步都产生
+// 心跳 commit，触发 Pages 全量重建；时间差只在对账成功那天变化。
+const RECONCILE_EVERY_HOURS = 36;
+const hoursSince = (day) => (Date.now() - Date.parse(day + "T00:00:00Z")) / 3600000;
 // README 候选文件名（保持与原实现一致）
 const README_CANDIDATES = [
   "README.md", "readme.md", "Readme.md", "README.MD",
@@ -37,44 +40,88 @@ const README_CANDIDATES = [
   "README.rst", "readme.rst", "README.txt", "readme.txt",
 ];
 
-const META_FILE = path.join(DATA_DIR, "meta.json"); // { lastReconcileAt: "YYYY-MM-DD"|null, syncCount: number }
+const META_FILE = path.join(DATA_DIR, "meta.json"); // { lastReconcileAt: "YYYY-MM-DD"|null }
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// 原子写盘：同目录临时文件 + rename——磁盘满/中途崩溃只可能留下完整旧文件或完整新文件，
+// 不会出现半份 JSON 被下一轮 readPreviousRecords 解析失败或被 CI 提交部署。
+async function writeFileAtomic(filePath, data) {
+  const tmp = filePath + ".tmp";
+  await writeFile(tmp, data);
+  await rename(tmp, filePath);
+}
 
 // 限速预算：认证 30/min，未认证 10/min。所有搜索请求按时间槽排队，天然满足每分钟配额。
 const RATE_PER_MIN = TOKEN ? 30 : 10;
 const REQUEST_INTERVAL = 60000 / RATE_PER_MIN;
 let nextRequestAt = 0;
 function throttleSearch() {
-  // 时间槽限速：每次调用预留一个槽位，并发调用会自动排开；无 Promise 链，不会累积内存。
+  // 时间槽限速：本请求占据 slot = max(now, nextRequestAt)，并把后续槽位推到 slot+间隔。
+  // 等待目标是"自己的槽起点"而非旧 nextRequestAt，否则会与已占用该槽的请求同毫秒并发。
   const now = Date.now();
-  const wait = Math.max(0, nextRequestAt - now);
-  nextRequestAt = Math.max(now, nextRequestAt + REQUEST_INTERVAL);
+  const slot = Math.max(now, nextRequestAt);
+  nextRequestAt = slot + REQUEST_INTERVAL;
+  const wait = slot - now;
   if (wait) return sleep(wait);
   return Promise.resolve();
 }
 
+// ---------- 瞬时故障重试矩阵 ----------
+// 可重试：网络异常（DNS/连接重置/超时中断，fetch 抛 TypeError）、429、403 限流与滥用检测文案、5xx（网关超时等）。
+// 退避：指数（1s/2s/4s/...，封顶 30s）；429 与滥用检测优先尊重 retry-after 头；403 限流等到配额重置。
+// 每次尝试（含重试）都重新经过 throttleSearch 限速闸门，重试不产生突发请求。
+// 不可重试：其余 4xx（查询本身有问题，重试无意义）。
+const TRANSIENT_MAX = 5;
+const QUOTA_MAX = 10; // 配额类等待次数单独计：等重置窗口是确定性恢复，多等几轮也值得
+const backoffMs = (attempt) => Math.min(1000 * 2 ** (attempt - 1), 30000);
+function retryAfterMs(res) {
+  const v = res.headers.get("retry-after");
+  if (!v) return null;
+  if (/^\d+$/.test(v.trim())) return Number(v) * 1000;
+  const date = Date.parse(v);
+  return Number.isNaN(date) ? null : Math.max(0, date - Date.now());
+}
+
 // 搜索 API 单查询上限 1000 条（10 页 × 100）。二分窗口必须保证 total_count <= 1000。
 async function fetchSearchPage(query, page) {
-  await throttleSearch();
   const url = `${SEARCH_API}${encodeURIComponent(query)}&per_page=100&page=${page}`;
-  for (let attempt = 0; attempt < 10; attempt++) {
-    const res = await fetch(url, { headers: HEADERS, signal: AbortSignal.timeout(30000) });
-    if (res.status === 403) {
-      const body = await res.text();
-      if (/rate limit/i.test(body)) {
-        const reset = Number(res.headers.get("x-ratelimit-reset") || 0) * 1000;
-        const wait = reset > Date.now() ? reset - Date.now() + 2000 : 60000;
-        console.log(`[sync] rate limited (query ${query.slice(0, 60)} page ${page}), waiting ${Math.round(wait / 1000)}s (attempt ${attempt + 1})`);
-        await sleep(Math.min(wait, 120000));
-        continue;
-      }
-      throw new Error(`GitHub search failed ${res.status}: ${body.slice(0, 300)}`);
+  const tag = `query ${query.slice(0, 60)} page ${page}`;
+  let transientRetries = 0, quotaRetries = 0;
+  for (;;) {
+    await throttleSearch();
+    let res;
+    try {
+      res = await fetch(url, { headers: HEADERS, signal: AbortSignal.timeout(30000) });
+    } catch (e) {
+      if (++transientRetries > TRANSIENT_MAX) throw new Error(`GitHub search network error after ${TRANSIENT_MAX} retries (${tag}): ${e.message}`);
+      const wait = backoffMs(transientRetries);
+      console.log(`[sync] network error (${e.message}), retry ${transientRetries}/${TRANSIENT_MAX} in ${wait}ms (${tag})`);
+      await sleep(wait);
+      continue;
     }
-    if (!res.ok) throw new Error(`GitHub search failed ${res.status}: ${(await res.text()).slice(0, 300)}`);
-    return await res.json();
+    if (res.ok) return await res.json();
+    const body = await res.text().catch(() => "");
+    if (res.status === 403 && /rate limit/i.test(body)) {
+      if (++quotaRetries > QUOTA_MAX) throw new Error(`GitHub search still rate limited after ${QUOTA_MAX} waits (${tag})`);
+      const reset = Number(res.headers.get("x-ratelimit-reset") || 0) * 1000;
+      const wait = Math.min(reset > Date.now() ? reset - Date.now() + 2000 : 60000, 120000);
+      console.log(`[sync] rate limited, waiting ${Math.round(wait / 1000)}s (retry ${quotaRetries}/${QUOTA_MAX}) (${tag})`);
+      await sleep(wait);
+      continue;
+    }
+    const transient = res.status === 429 || res.status >= 500 || (res.status === 403 && /abuse/i.test(body));
+    if (transient) {
+      if (++transientRetries > TRANSIENT_MAX) throw new Error(`GitHub search failed ${res.status} after ${TRANSIENT_MAX} retries (${tag}): ${body.slice(0, 200)}`);
+      const wait = res.status === 429 || /abuse/i.test(body)
+        ? (retryAfterMs(res) ?? backoffMs(transientRetries) * 3)
+        : backoffMs(transientRetries);
+      console.log(`[sync] transient ${res.status}, retry ${transientRetries}/${TRANSIENT_MAX} in ${Math.round(wait / 1000)}s (${tag})`);
+      await sleep(wait);
+      continue;
+    }
+    throw new Error(`GitHub search failed ${res.status}: ${body.slice(0, 300)}`);
   }
-  throw new Error("gave up after 10 rate-limit retries: " + query.slice(0, 60));
 }
 
 // 拉取某查询下全部分页（调用方保证 total_count <= 1000；firstPage 复用二分探针的第一页，省一次请求）
@@ -185,15 +232,21 @@ async function fetchIncrementalRepos(lastReconcileAt) {
   return unique;
 }
 
-async function fetchReadme(fullName) {
+// README 拉取：区分"确认无 README"（候选全部 404，合法空串）与"传输失败"（网络异常/5xx）。
+// 返回 { text, failed }；failed 由调用方计数，批量失败（如 raw.githubusercontent 全网故障）
+// 超过阈值时中止同步，避免全量空 README 被当成"更新"写进数据。
+async function fetchReadmeChecked(fullName) {
   const base = `https://raw.githubusercontent.com/${fullName}/HEAD/`;
+  let transportErrors = 0;
   for (const name of README_CANDIDATES) {
     try {
       const res = await fetch(base + name, { signal: AbortSignal.timeout(15000) });
-      if (res.ok) return (await res.text()).slice(0, 8192);
-    } catch { /* 单个候选失败继续下一个 */ }
+      if (res.ok) return { text: (await res.text()).slice(0, 8192), failed: false };
+      if (res.status >= 500) transportErrors++;
+      // 404 等继续下一个候选名
+    } catch { transportErrors++; /* 单个候选传输失败继续下一个 */ }
   }
-  return "";
+  return { text: "", failed: transportErrors > 0 };
 }
 
 async function mapLimit(items, limit, fn) {
@@ -229,21 +282,25 @@ function validate(records) {
   return errors;
 }
 
-// 游标：meta.json（随数据提交，CI 全新 checkout 后仍可读）。
+// 游标：meta.json（随数据提交，CI 全新 checkout 后仍可读）。日期字段非法（非 YYYY-MM-DD 或不可解析）
+// 一律视为空：坏值会拼出非法 created:>= 查询串让同步 422 硬失败。
+const ISO_DAY = /^\d{4}-\d{2}-\d{2}$/;
+function validDayOrNone(v) {
+  if (typeof v !== "string") return null;
+  const day = v.slice(0, 10);
+  return ISO_DAY.test(day) && !Number.isNaN(Date.parse(day + "T00:00:00Z")) ? day : null;
+}
 async function readMeta() {
   try {
     const raw = JSON.parse(await readFile(META_FILE, "utf8"));
-    return {
-      lastReconcileAt: typeof raw.lastReconcileAt === "string" ? raw.lastReconcileAt.slice(0, 10) : null,
-      syncCount: Number(raw.syncCount) || 0,
-    };
+    return { lastReconcileAt: validDayOrNone(raw.lastReconcileAt) };
   } catch {
-    return { lastReconcileAt: null, syncCount: 0 };
+    return { lastReconcileAt: null };
   }
 }
 async function writeMeta(meta) {
   await mkdir(DATA_DIR, { recursive: true });
-  await writeFile(META_FILE, JSON.stringify(meta), "utf8");
+  await writeFileAtomic(META_FILE, JSON.stringify(meta));
 }
 
 // 读取上次数据文件，构造 full_name -> record 的 Map（供 README 缓存与 diff）。
@@ -269,10 +326,11 @@ async function readPreviousRecords() {
 }
 
 // 增量时 README 缓存：只有 pushed_at 变化（内容真更新）或新仓库才重抓；否则复用上次的 readme_text。
-// 返回 { records, readmesFetched }。readmesFetched 仅用于日志。
+// 返回 { records, readmeStats }。传输失败率超阈值时抛错中止（见 fetchReadmeChecked 注释）。
+const README_FAILURE_FATAL_RATIO = 0.05;
 async function fetchRecords({ reconcile, meta, prevMap }) {
   const repos = reconcile ? await fetchAllRepos() : await fetchIncrementalRepos(meta.lastReconcileAt);
-  let readmeHits = 0, readmeMisses = 0;
+  let readmeHits = 0, readmeMisses = 0, readmeFailures = 0;
   const readmes = await mapLimit(repos, 10, async (r) => {
     const prev = prevMap.get(r.full_name);
     const pushedChanged = !prev || prev.pushed_at !== r.pushed_at;
@@ -282,9 +340,21 @@ async function fetchRecords({ reconcile, meta, prevMap }) {
       return prev.readme_text || "";
     }
     readmeMisses++;
-    return await fetchReadme(r.full_name);
+    const { text, failed } = await fetchReadmeChecked(r.full_name);
+    if (failed) readmeFailures++;
+    return text;
   });
-  console.log(`[sync] README cache: ${readmeHits} reused, ${readmeMisses} fetched`);
+  const failPct = readmeMisses ? (readmeFailures / readmeMisses) * 100 : 0;
+  console.log(`[sync] README cache: ${readmeHits} reused, ${readmeMisses} fetched, ${readmeFailures} transport failures (${failPct.toFixed(1)}%)`);
+  if (readmeFailures >= 3 && readmeFailures / readmeMisses > README_FAILURE_FATAL_RATIO) {
+    // 醒目告警并中止：继续写盘会把网络故障变成"全量 README 清空"提交。
+    // 绝对下限 3 次：1-2 个仓库的偶发失败只告警不中止（重试兜底在下一轮同步）。
+    console.error(`[sync] !!! README transport failure rate ${failPct.toFixed(1)}% exceeds ${README_FAILURE_FATAL_RATIO * 100}% threshold (${readmeFailures}/${readmeMisses})`);
+    console.error(`[sync] !!! Suspected raw.githubusercontent.com outage; aborting to avoid committing empty READMEs.`);
+    throw new Error(`README transport failures above threshold: ${readmeFailures}/${readmeMisses}`);
+  } else if (readmeFailures > 0) {
+    console.warn(`[sync] WARNING: ${readmeFailures}/${readmeMisses} README fetches hit transport errors; affected repos keep stale/empty text this round`);
+  }
   const records = repos.map((r, i) => {
     const { categories, tags } = categorize({
       full_name: r.full_name, description: r.description || "", topics: r.topics || [], readme_text: readmes[i],
@@ -380,9 +450,8 @@ function changedSummary(urls) {
 async function main() {
   const reconcile = process.argv.includes("--reconcile");
   const meta = await readMeta();
-  // 对账周期：--reconcile 强制；无游标（首次）强制；否则 syncCount 每到 RECONCILE_EVERY 触发一次。
-  // 注意：对账后 syncCount 归零，必须用 syncCount>0 排除"刚对账完的下一次"，否则会每次都全量对账。
-  const doReconcile = reconcile || meta.lastReconcileAt === null || (meta.syncCount > 0 && meta.syncCount % RECONCILE_EVERY === 0);
+  // 对账时机：--reconcile 强制；无游标（首次）强制；距上次对账超过 RECONCILE_EVERY_HOURS 则到期。
+  const doReconcile = reconcile || meta.lastReconcileAt === null || hoursSince(meta.lastReconcileAt) >= RECONCILE_EVERY_HOURS;
   if (doReconcile) console.log(`[sync] mode: RECONCILE (full created scan)`);
   else console.log(`[sync] mode: incremental (pushed ${INCREMENTAL_DAYS}d + created gap)`);
 
@@ -408,10 +477,23 @@ async function main() {
     process.exit(1);
   }
 
+  // 数据无实质变化：跳过全部数据写盘（含 generatedAt 刷新）——不产生 commit、不触发 Pages 重建。
+  // 无差异 URL，IndexNow 无可通知；对账轮仍推进 lastReconcileAt 游标（否则下一轮会重复全量对账）。
+  if (JSON.stringify(prev) === JSON.stringify(finalRecords)) {
+    console.log("[sync] no substantive data change; skipping data write");
+    if (doReconcile) {
+      meta.lastReconcileAt = new Date().toISOString().slice(0, 10);
+      await writeMeta(meta);
+    }
+    return;
+  }
+
   // --- IndexNow 通知（Bing 指南 §4）：对比上次数据，只提交新增/更新/删除的 URL ---
   try {
     const changed = diffChangedUrls(prev, finalRecords);
-    const deleted = prev.filter((p) => !finalRecords.some((r) => r.full_name === p.full_name));
+    // 删除检测：Set 一遍扫描（旧写法 prev × finalRecords 双重 filter 是 O(n²)，4461 条时每轮白烧几十毫秒）
+    const nextSet = new Set(finalRecords.map((r) => r.full_name));
+    const deleted = prev.filter((p) => !nextSet.has(p.full_name));
     const urls = [
       ...changed.flatMap((p) => [pluginUrl(p.full_name), pluginEnUrl(p.full_name)]),
       ...deleted.flatMap((p) => [pluginUrl(p.full_name), pluginEnUrl(p.full_name)]),
@@ -431,6 +513,7 @@ async function main() {
 
   // plugins 分片：单文件曾达 28.8MiB，超出 Cloudflare Pages 25MiB/文件上限。
   // 按 SHARD_SIZE 个/片写入 data/plugins/NNN.json + manifest.json；Worker 与站点构建按 manifest 拉取全部切片。
+  // 写序保证崩溃安全：先写全部分片，manifest 最后原子换入（manifest 引用的名字始终对应完整文件）。
   const shardDir = path.join(DATA_DIR, "plugins");
   await mkdir(shardDir, { recursive: true });
   const SHARD_SIZE = 400;
@@ -438,31 +521,33 @@ async function main() {
   for (let i = 0; i < finalRecords.length; i += SHARD_SIZE) {
     const chunk = finalRecords.slice(i, i + SHARD_SIZE);
     const name = String(i / SHARD_SIZE).padStart(3, "0") + ".json";
-    await writeFile(path.join(shardDir, name), JSON.stringify({ generatedAt: payload.generatedAt, count: chunk.length, plugins: chunk }, null, 2));
+    await writeFileAtomic(path.join(shardDir, name), JSON.stringify({ generatedAt: payload.generatedAt, count: chunk.length, plugins: chunk }, null, 2));
     shardNames.push(name);
   }
-  await writeFile(path.join(shardDir, "manifest.json"), JSON.stringify({ generatedAt: payload.generatedAt, count: finalRecords.length, shards: shardNames }));
+  // 分片数收缩时清理 manifest 未引用的旧分片（如 12 片 -> 11 片时 011.json 不残留成死重）
+  const referenced = new Set(shardNames);
+  for (const f of await readdir(shardDir)) {
+    if (/^\d+\.json$/.test(f) && !referenced.has(f)) await rm(path.join(shardDir, f));
+  }
+  await writeFileAtomic(path.join(shardDir, "manifest.json"), JSON.stringify({ generatedAt: payload.generatedAt, count: finalRecords.length, shards: shardNames }));
   // 移除旧单文件，避免遗留超限文件再次进入部署
   await rm(path.join(DATA_DIR, "plugins.json"), { force: true });
 
   // 搜索索引 gzip 压缩：index.json 已达 17.8MiB 且随仓库数增长，逼近 25MiB 上限。
   // 压缩后仅 Worker 消费（DecompressionStream 解压；gzip 在 Node 与 workerd 都支持，brotli 仅 workerd）。
   const index = buildIndex(finalRecords);
-  await writeFile(path.join(DATA_DIR, "index.json.gz"), gzipSync(JSON.stringify(index)));
+  await writeFileAtomic(path.join(DATA_DIR, "index.json.gz"), gzipSync(JSON.stringify(index)));
   await rm(path.join(DATA_DIR, "index.json"), { force: true });
 
   // 轻量浏览数据（不含 readme_text）：站点端过滤/排序用，避免 ~9MB 全量进客户端
   const browse = finalRecords.map(({ readme_text, ...meta }) => meta);
-  await writeFile(path.join(DATA_DIR, "browse.json"), JSON.stringify({ generatedAt: payload.generatedAt, count: browse.length, plugins: browse }));
+  await writeFileAtomic(path.join(DATA_DIR, "browse.json"), JSON.stringify({ generatedAt: payload.generatedAt, count: browse.length, plugins: browse }));
 
-  // 更新游标：对账后 syncCount 归零并记录对账时间；增量则累加。
+  // 更新游标：只有对账推进 lastReconcileAt；增量轮不写 meta（内容无变化，避免无意义重写）。
   if (doReconcile) {
     meta.lastReconcileAt = new Date().toISOString().slice(0, 10);
-    meta.syncCount = 0;
-  } else {
-    meta.syncCount += 1;
+    await writeMeta(meta);
   }
-  await writeMeta(meta);
 
   console.log(`[sync] OK: plugins/ ${shardNames.length} shards + index.json.gz + browse.json (${finalRecords.length} plugins, ${Object.keys(index.tokens).length} tokens)`);
   const byCat = {};

@@ -1,27 +1,50 @@
 # 每 6 小时同步 GitHub topic:dsh-plugin -> site/public/data/*.json
-# 数据 commit 后 Cloudflare Pages 自动重建静态站。
+# 数据 commit 后 Cloudflare Pages 自动重建静态站；数据无实质变化时脚本跳过写盘，不产生空 commit。
 name: sync
 on:
   schedule:
     - cron: "0 */6 * * *"
   workflow_dispatch: {}
+# 并发互斥：同一时刻最多一轮同步在跑，后来的排队（不取消进行中的），避免两轮交错写数据、冲突提交。
+concurrency:
+  group: sync
+  cancel-in-progress: false
 permissions:
   contents: write
+  issues: write # 失败时自动开 issue 告警
 jobs:
   sync:
     runs-on: ubuntu-latest
     # 同步脚本 90 分钟内必须完成；防止异常（如限流死循环）占用 runner 数小时。
     timeout-minutes: 90
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      # 第三方 action 固定到 commit SHA（tag 可被移动，SHA 不可），括号内为解析时的版本 tag
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "22"
+      # 先测试后同步：测试红则不到同步、不到提交环节
+      - name: Run test suite
+        run: npm test
       # 无需配置 secret：Actions 自动注入的内置 GITHUB_TOKEN 已满足搜索 API 额度（30 次/分钟）
       - name: Run sync pipeline
         run: node scripts/sync.mjs
       - name: Commit updated data
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@b863ae1933cb653a53c021fe36dbb774e1fb9403 # v5
         with:
           commit_message: "chore(data): sync dsh-plugin directory"
           file_pattern: "site/public/data"   # 含 plugins/ 分片与 index.json.br
+      # 失败告警：同一时间只保留一个 open 的 sync-failure issue；重复失败追加评论而非再开新 issue
+      - name: Alert on failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh label create "sync-failure" --color d73a4a 2>/dev/null || true
+          open_issue=$(gh issue list --label sync-failure --state open --json number --jq '.[0].number')
+          if [ -z "$open_issue" ]; then
+            gh issue create --title "Sync pipeline failure" --body "Sync pipeline failed. Run: ${RUN_URL}" --label sync-failure
+          else
+            gh issue comment "$open_issue" --body "Failed again. Run: ${RUN_URL}"
+          fi
