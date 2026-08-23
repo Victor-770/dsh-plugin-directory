@@ -54,8 +54,8 @@ const site = Astro.site.origin; // astro.config 恒设 site（SITE_ORIGIN 单源
          （方形、48px 的倍数）。?v=1 为 favicon 缓存击穿：浏览器对"无图标"的负缓存极其顽固
          且不吃普通刷新（站点早期无图标时期访问过的浏览器一直显示默认地球）；换版本号强制
          全网重新拉取，图标变更时同步 bump。favicon.svg 留作 JSON-LD logo。 -->
-    <link rel="icon" href="/favicon.ico?v=1" sizes="any" />
     <link rel="icon" href="/favicon-48x48.png?v=1" sizes="48x48" type="image/png" />
+    <link rel="icon" href="/favicon.ico?v=1" sizes="any" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=1" />
     <link rel="manifest" href="/site.webmanifest" />
   <slot name="head-extra" />
