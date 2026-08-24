@@ -28,3 +28,7 @@
 
 /sitemaps/*
   Content-Type: application/xml; charset=utf-8
+
+/ads.txt
+  Content-Type: text/plain; charset=utf-8
+

@@ -58,6 +58,13 @@ const site = Astro.site.origin; // astro.config 恒设 site（SITE_ORIGIN 单源
     <link rel="icon" href="/favicon.ico?v=1" sizes="any" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=1" />
     <link rel="manifest" href="/site.webmanifest" />
+  <!-- Google AdSense -->
+  <meta name="google-adsense-account" content="ca-pub-9495232165603546" />
+  <script
+    async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9495232165603546"
+    crossorigin="anonymous"
+  ></script>
   <slot name="head-extra" />
   {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>}
   <script is:inline>
