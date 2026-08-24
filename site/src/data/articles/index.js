@@ -1,9 +1,13 @@
 import { articleEn as whatIsDshEn } from "./what-is-deepseek-harness-en.js";
 import { articleZh as whatIsDshZh } from "./what-is-deepseek-harness-zh.js";
+import { articleEn as vsClaudeEn } from "./deepseek-harness-vs-claude-code-en.js";
+import { articleZh as vsClaudeZh } from "./deepseek-harness-vs-claude-code-zh.js";
 
 export const ALL_ARTICLES = [
   whatIsDshZh,
   whatIsDshEn,
+  vsClaudeZh,
+  vsClaudeEn,
 ];
 
 export function getArticlesByLang(lang = "zh") {

@@ -25,6 +25,16 @@ test("文章查询：能够通过 slug 和 lang 精准检索文章", () => {
   assert.ok(Array.isArray(article.faq) && article.faq.length > 0, "应包含 FAQ 数组");
   assert.ok(Array.isArray(article.sources) && article.sources.length > 0, "应包含 Sources 数组");
   assert.ok(Array.isArray(article.relatedPluginSlugs) && article.relatedPluginSlugs.length > 0, "应包含相关插件 Slugs");
+
+  const vsArticleZh = getArticle("deepseek-harness-vs-claude-code-vs-codex", "zh");
+  assert.ok(vsArticleZh, "应找到 PLAN-02 中文对比文章");
+  assert.equal(vsArticleZh.lang, "zh");
+  assert.ok(vsArticleZh.title.includes("Claude Code"));
+
+  const vsArticleEn = getArticle("deepseek-harness-vs-claude-code-vs-codex", "en");
+  assert.ok(vsArticleEn, "应找到 PLAN-02 英文对比文章");
+  assert.equal(vsArticleEn.lang, "en");
+  assert.ok(vsArticleEn.title.includes("Claude Code"));
 });
 
 test("TOC 提取：能够准确从 HTML 提取 H2 与 H3 目录结构", () => {
