@@ -1,0 +1,404 @@
+{
+  "generatedAt": "2026-08-30T11:16:09.911Z",
+  "count": 17,
+  "plugins": [
+    {
+      "full_name": "johndfowler/dsh-draft-shield",
+      "html_url": "https://github.com/johndfowler/dsh-draft-shield",
+      "description": "",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-28T03:17:47Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-draft-shield\n\nDeepSeek Harness Web GUI plugin that stops browser page-translation from wiping composer drafts.\n\n## Problem\n\nDSH uses a React-controlled textarea for its message composer. If the browser auto-translates the page (Chrome/Edge/Safari offer this when the GUI renders non-English UI), the translation pass rewrites DOM text nodes mid-typing — and React's next render loses control of the input, so **text you just typed disappears from the message box**.\n\nThis shows up as: type a few characters, the box silently empties. Intermittent, worse while idle, and only in a browser with translation enabled for the site (incognito/extension-free tabs are unaffected).\n\n## Fix\n\nMarks the document untranslatable at load:\n\n- `<html translate=\"no\">` + `notranslate` class\n- `<meta name=\"google\" content=\"notranslate\">`\n\nChrome, Edge, and Safari respect these markers and stop offering/applying translation — so nothing rewrites the DOM, and drafts survive, on every profile and device.\n\n## Install\n\n```sh\ncd /Users/jdf/.dsh/profiles/web\npnpm add file:/path/to/dsh-draft-shield\n# then append \"dsh-draft-shield\" to dsh.profile.bundles in package.json,\n# and restart `dsh web`.\n```\n\n## License\n\nMIT\n"
+    },
+    {
+      "full_name": "xby-skill/xby-airbnb-search",
+      "html_url": "https://github.com/xby-skill/xby-airbnb-search",
+      "description": "",
+      "stars": 0,
+      "language": "TypeScript",
+      "pushed_at": "2026-08-28T10:25:52Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "ocr",
+        "search"
+      ],
+      "readme_text": "# xby-airbnb-search\n\nDeepSeek Harness (DSH) 的插件：Airbnb搜索扩展\n\n一个提供高级筛选功能和详细房源信息的Airbnb搜索桌面扩展，适用于旅行规划和房源研究。\n\n## 功能\n\n- **set_xby_apikey** — 在聊天中设置 API 密钥（自动持久化，重启有效）\n- **airbnb_search** — Search for Airbnb listings with various filters and pagination. Provide direct links to the user\n- **airbnb_listing_details** — Get detailed information about a specific Airbnb listing. Provide direct links to the user\n\n## 安装\n\n### 方式一：从 GitHub 直接安装（推荐）\n\n```bash\n# 格式: dsh plugin --profile <profile> add github:<owner>/<repo>\ndsh plugin --profile web add github:xby_skill/xby-airbnb-search\n```\n\n### 方式二：从本地目录安装（开发模式）\n\n```bash\n# 仅用于本地开发调试\ndsh plugin --profile web add /absolute/path/to/xby-airbnb-search\n```\n\n### 方式三：通过 cordis.patch.yml 开发调试\n\n```bash\ndsh web --profile web --patch /absolute/path/to/dsh-ocr-plugin/cordis.patch.yml\n```\n\n\n\n## 配置\n\n### 获取 API 密钥\n\n前往 [小笨羊官网](https://xiaobenyang.com) 注册并获取 API 密钥。\n"
+    },
+    {
+      "full_name": "xby-skill/xby-currency-and-oil",
+      "html_url": "https://github.com/xby-skill/xby-currency-and-oil",
+      "description": "",
+      "stars": 0,
+      "language": "TypeScript",
+      "pushed_at": "2026-08-28T10:59:27Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "dsh-plugin"
+      ],
+      "readme_text": "# xby-currency-and-oil\n\nDeepSeek Harness (DSH) 的插件：货币与石油价格服务\n\nZenrus MCP Server 是一个提供实时货币汇率和石油价格的服务器，支持多种计算功能，适用于金融分析和自动化工具集成。\n\n## 功能\n\n- **set_xby_apikey** — 在聊天中设置 API 密钥（自动持久化，重启有效）\n- **get_usd_rate** — Get current USD/RUB exchange rate from zenrus.ru\n- **get_eur_rate** — Get current EUR/RUB exchange rate from zenrus.ru\n- **get_brent_usd_rate** — Get current Brent crude oil price in USD per barrel from zenrus.ru\n- **get_brent_rub_rate** — Get current Brent crude oil price in RUB per barrel from zenrus.ru\n- **calculate_barrels_for_rub** — Calculate how many barrels of Brent crude oil can be purchased for a given amount in Russian Rubles\n- **calculate_barrels_for_usd** — Calculate how many barrels of Brent crude oil can be purchased for a given amount in US Dollars\n- **calculate_barrels_for_eur** — Calculate how many barrels of Brent crude oil can be purchased for a given amount in Euros\n\n## 安装\n\n### 方式一：从 GitHub 直接安装（推荐）\n\n```bash\n# 格式: dsh plugin --profile <profile> add github:<owner>/<repo>\ndsh plugin --profile web add github:xby_skill/xby-currency-and-oil\n```\n\n### 方式二：从本地目录安装（开发模式）\n\n```bash\n# 仅用于本地开发调试\ndsh plugin --profile web add /absolute/path/to/xby-currency-and-oil\n```\n\n### 方式三：通过 cordis.patch.yml 开发调试\n\n```bash\ndsh web --profile web --patch /absolute/path/to/dsh-ocr-plugin/cordis.patch.yml\n```\n\n\n\n## 配置\n\n### 获取 API 密钥\n\n前往 [小笨羊官网](https://xiaobenyang.com) 注册并获取 API 密钥。\n"
+    },
+    {
+      "full_name": "xby-skill/xby-cellosaurus",
+      "html_url": "https://github.com/xby-skill/xby-cellosaurus",
+      "description": "",
+      "stars": 0,
+      "language": "TypeScript",
+      "pushed_at": "2026-08-28T10:36:01Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "search"
+      ],
+      "readme_text": "# xby-cellosaurus\n\nDeepSeek Harness (DSH) 的插件：细胞系知识资源服务\n\nCellosaurus MCP Server是一个非官方的模型上下文协议服务器，用于访问SIB Cellosaurus细胞系知识资源，提供细胞系搜索、详细信息获取和数据库版本信息等功能。\n\n## 功能\n\n- **set_xby_apikey** — 在聊天中设置 API 密钥（自动持久化，重启有效）\n- **search_cell_lines** — Search for cell lines in the Cellosaurus database.\n\nUse Solr search syntax to find cell lines by various criteria.\n\nExamples\n--------\n- Basic name search: \"id:HeLa\" or \"sy:HeLa\"\n- Species filter: \"ox:human\" or \"ox:9606\"\n- Disease filter: \"di:cancer\" or \"di:hepatoblastoma\"\n- Combined: \"ox:human di:cancer ca:cancer\"\n- Site filter: \"derived-from-site:liver\"\n\nArgs:\n    query: Search query using Solr syntax (default: \"id:HeLa\")\n    fields: List of fields to return (e.g., [\"id\", \"ac\", \"ox\", \"di\"])\n    start: Starting index for pagination (default: 0)\n    rows: Number of results to return (default: 10, max: 1000)\n    sort_order: Sort order (e.g., \"group asc,derived-from-site desc\")\n\nReturns\n-------\n    Dictionary containing search results with cell line information\n- **get_cell_line_info** — Get detailed information about a specific cell line by its accession number.\n\nArgs:\n    accession: Cell line accession number (e.g., \"CVCL_0030\" for HeLa)\n    fields: List of specific fields to return (e.g., [\"id\", \"ac\", \"str\", \"di\"])\n\nReturns\n-------\n    Dictionary containing detailed cell line information\n- **get_release_info** — Get information about the current Cellosaurus database release.\n\nReturns\n-------\n    Dictionary containing release version, date, and statistics\n- **find_cell_lines_by_disease** — Find cell lines derived from patients with a specific disease.\n\nArgs:\n    disease: Disease name or term (e.g., \"hepatoblastoma\", \"cancer\", \"leukemia\")\n    species: Species filter (default: \"human\", can be \"mouse\", \"rat\", etc.)\n    fields: Specific fields to return\n    limit: Maximum number of results (default: 10)\n\nReturns\n-------\n    Dictionary containing cell lines associated with the disease\n- **find_cell_lines_by_tissue** — Find cell lines derived from a specific tissue or organ.\n\nArgs:\n    tissue: Tissue/organ name (e.g., \"liver\", \"lung\", \"breast\", \"brain\")\n    species: Species filter (default: \"human\")\n    fields: Specific fields to return\n    limit: Maximum number of results (default: 10)\n\nReturns\n-------\n    Dictionary containing cell lines from the specified tissue\n- **list_available_fields** — Get a list of all available fields that can be requested from the Cellosaurus API.\n\nReturns\n-------\n    Dictionary mapping field names to their descriptions\n\n## 安装\n\n### 方式一：从 GitHub 直接安装（推荐）\n\n```bash\n# 格式: dsh plugin --profile <profile> add github:<owner>/<repo>\ndsh plugin --profile web add github:xby_skill/xby-cellosaurus\n```\n\n### 方式二：从本地目录安装（开发模式）\n\n```bash\n# 仅用于本地开发调试\ndsh plugin --profile web add /absolute/path/to/xby-cellosaurus\n```\n\n### 方式三：通过 cordis.patch.yml 开发调试\n\n```bash\ndsh web --profile web --patch /absolute/path/to/dsh-ocr-plugin/cordis.patch.yml\n```\n\n\n\n## 配置\n\n### 获取 API 密钥\n\n前往 [小笨羊官网](https://xiaobenyang.com) 注册并获取 API 密钥。\n"
+    },
+    {
+      "full_name": "xby-skill/xby-structured-argumentation",
+      "html_url": "https://github.com/xby-skill/xby-structured-argumentation",
+      "description": "",
+      "stars": 0,
+      "language": "TypeScript",
+      "pushed_at": "2026-08-28T11:36:02Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "dsh-plugin"
+      ],
+      "readme_text": "# xby-structured-argumentation\n\nDeepSeek Harness (DSH) 的插件：认知增强服务\n\n一组模型上下文协议服务器，为大型语言模型提供认知增强工具。\n\n## 功能\n\n- **set_xby_apikey** — 在聊天中设置 API 密钥（自动持久化，重启有效）\n- **structuredArgumentation** — A detailed tool for systematic dialectical reasoning and argument analysis.\nThis tool helps analyze complex questions through formal argumentation structures.\nIt facilitates the creation, critique, and synthesis of competing arguments.\n\nWhen to use this tool:\n- Evaluating competing perspectives and claims\n- Analyzing complex ethical dilemmas\n- Assessing policy proposals with multiple stakeholders\n- Exploring scientific hypotheses and counter-arguments\n\nKey features:\n- Break down arguments into claims, premises, and conclusions\n- Track relationships between arguments\n- Represent objections and rebuttals\n- Facilitate dialectical progression through thesis-antithesis-synthesis\n- Evaluate argument strengths and weaknesses\n- Visualize argument structures\n\nParameters explained:\n- claim: The central proposition being argued\n- premises: Supporting evidence or assumptions\n- conclusion: The logical consequence of accepting the claim\n- argumentType: Whether this is a thesis, antithesis, synthesis, objection, or rebuttal\n- confidence: Your confidence level in this argument (0.0-1.0)\n- respondsTo: ID of an argument this directly responds to\n- supports/contradicts: IDs of arguments this supports or contradicts\n- strengths/weaknesses: Notable strong or weak points of the argument\n- nextArgumentNeeded: Whether another argument is needed in the dialectic\n\n## 安装\n\n### 方式一：从 GitHub 直接安装（推荐）\n\n```bash\n# 格式: dsh plugin --profile <profile> add github:<owner>/<repo>\ndsh plugin --profile web add github:xby_skill/xby-structured-argumentation\n```\n\n### 方式二：从本地目录安装（开发模式）\n\n```bash\n# 仅用于本地开发调试\ndsh plugin --profile web add /absolute/path/to/xby-structured-argumentation\n```\n\n### 方式三：通过 cordis.patch.yml 开发调试\n\n```bash\ndsh web --profile web --patch /absolute/path/to/dsh-ocr-plugin/cordis.patch.yml\n```\n\n\n\n## 配置\n\n### 获取 API 密钥\n\n前往 [小笨羊官网](https://xiaobenyang.com) 注册并获取 API 密钥。\n"
+    },
+    {
+      "full_name": "xby-skill/xby-generate-echarts",
+      "html_url": "https://github.com/xby-skill/xby-generate-echarts",
+      "description": "",
+      "stars": 0,
+      "language": "TypeScript",
+      "pushed_at": "2026-08-28T11:08:54Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "dsh-plugin"
+      ],
+      "readme_text": "# xby-generate-echarts\n\nDeepSeek Harness (DSH) 的插件：图表生成工具\n\nMCP ECharts 是一个基于 Apache ECharts 的动态图表生成和数据分析工具，支持多种导出格式和 MinIO 对象存储集成。\n\n## 功能\n\n- **set_xby_apikey** — 在聊天中设置 API 密钥（自动持久化，重启有效）\n- **generate_echarts** — Generate visual charts using Apache ECharts with echarts option and configuration dynamically. Apache ECharts is an Open Source JavaScript Visualization Library, which is used to create interactive charts and visualizations in web applications. It supports a wide range of chart types, including line charts, bar charts, pie charts, scatter plots, and more. ECharts is highly customizable and can be integrated with various data sources to create dynamic visualizations.\n- **generate_line_chart** — Generate a line chart to show trends over time, such as, the ratio of Apple computer sales to Apple's profits changed from 2000 to 2016.\n- **generate_bar_chart** — Generate a bar chart to show data for numerical comparisons among different categories, such as, comparing categorical data and for horizontal comparisons.\n- **generate_pie_chart** — Generate a pie chart to show the proportion of parts, such as, market share and budget allocation.\n- **generate_radar_chart** — Generate a radar chart to display multidimensional data (four dimensions or more), such as, evaluate Huawei and Apple phones in terms of five dimensions: ease of use, functionality, camera, benchmark scores, and battery life.\n- **generate_scatter_chart** — Generate a scatter chart to show the relationship between two variables, helps discover their relationship or trends, such as, the strength of correlation, data distribution patterns.\n- **generate_sankey_chart** — Generate a sankey chart to visualize the flow of data between different stages or categories, such as, the user journey from landing on a page to completing a purchase.\n- **generate_funnel_chart** — Generate a funnel chart to visualize the progressive reduction of data as it passes through stages, such as, the conversion rates of users from visiting a website to completing a purchase.\n- **generate_gauge_chart** — Generate a gauge chart to display single indicator's current status, such as, CPU usage rate, completion progress, or performance scores.\n- **generate_treemap_chart** — Generate a treemap chart to display hierarchical data and can intuitively show comparisons between items at the same level, such as, show disk space usage with treemap.\n- **generate_sunburst_chart** — Generate a sunburst chart to display multi-level hierarchical data, such as, organizational structure, file system hierarchy, or category breakdown.\n- **generate_heatmap_chart** — Generate a heatmap chart to display data density or intensity distribution, such as, user activity patterns by time and day, or correlation matrix.\n- **generate_candlestick_chart** — Generate a candlestick chart for financial data visualization, such as, stock prices, cryptocurrency prices, or other OHLC (Open-High-Low-Close) data.\n- **generate_boxplot_chart** — Generate a boxplot chart to show data for statistical summaries among different categories, such as, comparing the distribution of data points across categories.\n- **generate_graph_chart** — Generate a network graph chart to show relationships (edges) between entities (nodes), such as, relationships between people in social networks.\n- **generate_parallel_chart** — Generate a parallel coordinates chart to display multi-dimensional data, such as, comparing different products across multiple attributes.\n- **generate_tree_chart** — Generate a tree chart to display hierarchical data structure, such as, organizational chart, family tree, or file directory structure.\n\n## 安装\n\n### 方式一：从 GitHub 直接安装（推荐）\n\n```bash\n# 格式: dsh plugin --profile <profile> add github:<owner>/<repo>\ndsh plugin --profile web add github:xby_skill/xby-generate-echarts\n```\n\n### 方式二：从本地目录安装（开发模式）\n\n```bash\n# 仅用于本地开发调试\ndsh plugin --profile web add /absolute/path/to/xby-generate-echarts\n```\n\n### 方式三：通过 cordis.patch.yml 开发调试\n\n```bash\ndsh web --profile web --patch /absolute/path/to/dsh-ocr-plugin/cordis.patch.yml\n```\n\n\n\n## 配置\n\n### 获取 API 密钥\n\n前往 [小笨羊官网](https://xiaobenyang.com) 注册并获取 API 密钥。\n"
+    },
+    {
+      "full_name": "lyaoliu/dsh-reasoning-effort-slider",
+      "html_url": "https://github.com/lyaoliu/dsh-reasoning-effort-slider",
+      "description": "DSH Desktop reasoning effort slider plugin - 7-level effort control with whale-mom skin",
+      "stars": 0,
+      "language": "TypeScript",
+      "pushed_at": "2026-08-29T02:30:35Z",
+      "topics": [
+        "cordis",
+        "deepseek-harness",
+        "dsh",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "皮肤/UI"
+      ],
+      "tags": [
+        "cordis",
+        "deepseek-harness",
+        "dsh",
+        "dsh-plugin",
+        "skin"
+      ],
+      "readme_text": "# dsh-reasoning-effort-slider\n\nDSH 推理强度滑块插件，支持 7 档调节，带有鲸落妈妈皮肤和 chibi 小人动画。\n\n## 功能\n\n- **7 档滑块**: off / minimal / low / medium / high / xhigh / max\n- **鲸落妈妈皮肤**: 全局配色 + 滑块辐射光效\n- **chibi 小人**: 根据当前档位切换动画帧\n- **自动声明**: 未配置的模型拖滑块时自动写入 settings.yaml（无需重启）\n- **自愈机制**: 服务器拒绝非法档位时，自动从报错中解析合法列表并重写配置\n- **知识库**: 内置模型档位映射，含 wire 值转换（off→none 等）\n- **兼容性自动修复**: pi-ai 模型自动写入 `supportsDeveloperRole: false`\n- **宿主日志**: 声明/自愈失败时输出警告日志\n\n## 安装\n\n```powershell\ndsh plugin --profile web add github:lyaoliu/dsh-reasoning-effort-slider#main\ndsh --profile web --dump-config\n```\n\n重启 DSH Web Host 后生效。\n\n## 配置\n\n在 `~/.dsh/settings.yaml` 中：\n\n```yaml\ndsh-reasoning-effort:\n  enabled: true\n  visualEffect: radiation  # radiation | particles | gradient\n```\n\n## 工作原理\n\n1. 用户拖动滑块 → 插件检测该模型是否已有 `reasoningEfforts` 配置\n2. 若无 → 自动写入默认七档 + `compat.supportsDeveloperRole: false` 到 settings.yaml\n3. settings.yaml 热监听自动生效，滑块立即刷新\n4. 发送消息时服务器若拒绝档位 → turn-error 节点触发自愈：解析合法列表 → 重写配置 → 自动切到最近支持档\n\n## 许可证\n\nMIT\n"
+    },
+    {
+      "full_name": "ping1999/dsh-minimap",
+      "html_url": "https://github.com/ping1999/dsh-minimap",
+      "description": "VS Code-style minimap (text thumbnail + draggable viewport) overlay for the dsh web GUI's side file viewer",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-29T12:06:24Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-minimap\n\n为 dsh web GUI 的侧边文件查看器加一条 VS Code 风格的**缩略图滚动条（minimap）**：宽体文字缩略 + 可拖动的视口框，在长文件中快速定位。\n\nA VS Code-style **minimap** for the dsh web GUI's side file viewer: a wide text thumbnail with a draggable viewport box for fast navigation in long files.\n\n[中文](#中文) · [English](#english)\n\n---\n\n## 中文\n\n### 功能\n\n- 在 Files 侧栏文本编辑器的右缘叠加整篇文档的微型文字缩略图\n- 半透明视口框实时跟随滚动：点击跳转、按住拖动、悬停滚轮均可定位\n- 语法着色：滚动经过的行会带上与编辑器一致的高亮色，自动适配明暗主题\n- 宽度随侧栏自适应（约为编辑器宽度的 22%，钳制在 56–110px）；编辑器内容区自动预留「缩略图宽度 + 5px」的间隙，长行文字不会被遮挡\n- 拖到底即真正到底：比例映射以编辑器的真实滚动范围为基准\n- 纯叠加层：不改动侧栏任何组件，侧栏未启用时静默不渲染；多标签页各自独立，关闭标签页或卸载插件后完全清理\n\n### 安装\n\n从 npm 安装（推荐）：\n\n```sh\ndsh plugin --profile web add dsh-minimap\n```\n\n或从 GitHub 源码安装：\n\n```sh\ndsh plugin --profile web add github:ping1999/dsh-minimap\n```\n\n安装后**重启 web 服务**生效：\n\n```sh\npnpm dsh web\n```\n\n### 使用\n\n打开任意会话，在右侧 Files 侧栏打开一个文本文件，编辑器右缘即出现缩略图：\n\n- 滚动编辑器 → 缩略图视口框同步移动\n- 点击缩略图任意位置 → 编辑器跳转到对应位置（视口居中）\n- 按住视口框拖动 → 编辑器跟随滚动（鼠标与触屏均可）\n- 悬停缩略图滚轮 → 等效于滚动编辑器（含触控板横向滚动）\n\n### 限制\n\n- 仅对 CodeMirror 6 文本查看器生效（当前即 dsh-better-sidebar 的文件查看器）；图片 / PDF / Markdown 预览不会出现缩略图\n- 语法着色是渐进式的：CM6 只渲染可视行，行滚入视野至少一次后才有颜色\n- 安装 / 升级后需重启 web 服务（与所有 profile bundle 一致）\n- 暂无设置项\n\n---\n\n## English\n\n### Features\n\n- Overlays a miniature text thumbnail of the whole document on the right edge of the Files sidebar's text editor\n- A translucent viewport box tracks scrolling live — click to jump, drag to scroll, or hover and use the wheel\n- Syntax colors: lines pick up the editor's real highlight colors once scrolled into view, adapting to dark/light themes\n- Width adapts to the sidebar (~22% of the editor width, clamped to 56–110 px); the editor reserves the thumbnail's width plus a fixed 5 px gap, so long lines are never covered\n- Dragging the box to the bottom reaches the true end of the document — the mapping is anchored to the editor's real scroll range\n- Pure overlay: the sidebar is never modified or even aware of the plugin; each tab gets its own instance, and closing a tab or uninstalling removes everything\n\n### Install\n\nFrom npm (recommended):\n\n```sh\ndsh plugin --profile web add dsh-minimap\n```\n\nOr from GitHub source:\n\n```sh\ndsh plugin --profile web add github:ping1999/dsh-minimap\n```\n\n**Restart the web server** to take effect:\n\n```sh\npnpm dsh web\n```\n\n### Usage\n\nOpen any session, open a text file in the Files sidebar, and the minimap appears at the editor's right edge:\n\n- Scroll the editor → the viewport box follows\n- Click anywhere on the minimap → jump there (the viewport centers)\n- Drag the viewport box → the editor scrolls along (mouse or touch)\n- Hover the minimap and use the wheel → same as scrolling the editor (trackpad horizontal scroll included)\n\n### Limitations\n\n- Only works with the CodeMirror 6 text viewer (currently dsh-better-sidebar's file viewer); image / PDF / Markdown previews get no minimap\n- Syntax coloring is progressive: CM6 renders only visible lines, so a line gets its colors after being scrolled into view at least once\n- A web-server restart is required after install/upgrade (same as every profile bundle)\n- No settings yet\n\n---\n\n## 内部实现 · Internals\n\n架构与实现细节（滚动映射、着色策略、几何参数、测试与开发流程）见 [AGENTS.md](./AGENTS.md)。\n\nArchitecture and implementation details (scroll mapping, coloring strategy, geometry, testing and dev workflow) live in [AGENTS.md](./AGENTS.md).\n\n## License\n\nMIT\n"
+    },
+    {
+      "full_name": "qipenglin/dsh-plugin-manager",
+      "html_url": "https://github.com/qipenglin/dsh-plugin-manager",
+      "description": "Profile plugin manager for DeepSeek Harness",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-29T13:39:47Z",
+      "topics": [
+        "dsh-plugin",
+        "dsh-plugins"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "dsh-plugins"
+      ],
+      "readme_text": "# @qipenglin/dsh-plugin-manager\n\n中文 | [English](README.en.md)\n\n面向 DeepSeek Harness `0.1.1-rc.2` 的可选 Profile 插件管理器。安装后可在“设置 → 插件 → 插件管理”中安装、单包更新、卸载和取消当前 Profile 的插件操作。\n\n## 安装\n\n```sh\ndsh plugin --profile web add github:qipenglin/dsh-plugin-manager\ndsh web\n```\n\n该命令直接从 GitHub 仓库的默认分支安装插件。仓库已包含经过验证的 `lib` 产物，安装过程无需执行构建脚本。安装完成后请重启当前 Profile，使 Host 与浏览器端扩展同时加载。\n\n管理器只操作加载它的当前 Profile。`dsh web` 对应 `web`；`dsh --profile work` 对应 `work`；桌面宿主提供 `desktopProfiles.current` 时，以桌面宿主声明的名称和绝对目录为准。无法可靠识别当前 Profile 时，插件拒绝启动，不会回退到 `web`。\n\n## 功能\n\n- 安装 npm registry、npm alias、Git、GitHub、远程 tarball、绝对本地目录以及绝对 `file:`/`link:` 来源。\n- 通过文件选择器上传并保留 `.tgz`、`.tar.gz` 和 `.tar` 安装包。\n- 安装区和更新弹窗均提供默认关闭的“跳过新版本等待期”选项。用户明确勾选后，仅为本次操作追加 `--config.minimumReleaseAge=0`，其他供应链检查保持不变。pnpm 因新版本等待期拒绝操作时，界面会提示 `勾选“跳过新版本等待期”可解决`，但不会自动放行或重试。\n- 更新或卸载一个直接依赖。点击“更新”会打开统一弹窗，可重新选择 npm、Git/GitHub、远程 tarball、绝对本地目录或本地压缩包来源；更新始终写回原直接依赖键。远程 tarball 必须填写新 URL，本地压缩包必须重新选择文件，相同内容会在执行前拒绝。\n- 管理器区域提供专用的自身“更新”按钮，复用同一弹窗和“跳过新版本等待期”选项。自身更新后会校验直接依赖仍然存在、已安装包名仍为 `@qipenglin/dsh-plugin-manager` 且没有新增管理器别名；成功后标记“已更新，重启后生效”，并在重启前禁用该操作。GUI 仍禁止卸载、重复安装或通过 npm alias 安装第二份管理器。若未知 Git/压缩包最终替换了管理器，操作会报告失败，但磁盘状态可能已经改变；此时应先用外部 DSH CLI 检查或恢复，再重启。\n- 卸载现有直接依赖时会自动为该次 `remove` 关闭发布时间等待期，避免锁文件中已经安装的较新版本阻塞删除操作；完整性、来源和其他供应链检查保持启用。卸载不提供或接受新的包来源。\n- 每次成功修改直接依赖后，当前 Host 都会显示明确状态：“已安装，重启后生效”“已更新，重启后生效”或“已卸载，重启后生效”，并在重启前禁用该条目的更新和卸载按钮。已卸载条目会保留到重启；新安装和更新的条目显示新的磁盘元数据，但不表示其运行时代码已经生效。\n- 同时只执行一个修改操作；可取消运行中的操作。\n- 操作成功后写入重启标记并提示手动重启；下次 Host 加载会消费标记并清除提示，不热加载也不自动重启。\n- 诊断日志有界保存，并删除 Authorization、Cookie、token、密码和 URL 用户信息。\n\n## WebAccess 是可选增强\n\n本包不依赖 `@qipenglin/dsh-web-access`。若 Host 提供结构化 `webAccess.authorize(request)` 服务，上传接口会在读取正文前严格认证；服务稍后加载或卸载时，下一次请求会立即采用新的状态。\n\n没有 WebAccess 时，管理功能仍完整可用，但只允许 WebServer 绑定 `127.0.0.1`。任何能访问本机回环端口的本地进程都可能调用管理接口，页面会明确显示该状态。如果 WebServer 绑定 `0.0.0.0` 且没有 WebAccess，插件会拒绝启动。\n\n## 桌面宿主\n\n桌面宿主可选提供：\n\n```ts\ndesktopProfiles.current = { name: string, dir: string }\ndesktopPnpm.runPlugin(args, invokingDirectory, signal)\n```\n\n两项构成原子的桌面集成：必须同时有效或同时缺失，只出现一项时插件会拒绝启动。两项均可用时，操作固定到 `desktopProfiles.current` 并通过 `desktopPnpm` 执行；两项均缺失时，使用当前 Node 与 DSH CLI 入口，以 argv 数组调用 `plugin --profile <当前名称>`，不拼接 shell 命令。\n\nCLI Provider 会从子进程环境中删除 API Key、Base URL、token、密码、secret、Authorization/Cookie、`NODE_OPTIONS` 和 `NODE_PATH`，同时保留普通的 `PATH`、`HOME`、代理和包管理器配置。因此当前明确不支持通过 Host 环境变量传递私有 registry token；请在 Host secret 之外配置 registry 访问。`desktopPnpm` 实现拥有其子进程环境，必须执行同等过滤，因为本包只向它传递结构化参数、目录和取消信号。\n\n## 本地开发\n\n需要 Node `^22.19.0 || >=24.0.0` 与 pnpm `11.7.0`：\n\n```sh\npnpm install --frozen-lockfile\npnpm run typecheck\npnpm run lint\npnpm test\npnpm run pack:check\npnpm run test:installed\n```\n\n`pnpm run pack:check` 会清空并重建 `dist/`，其中只保留已校验的 `dist/qipenglin-dsh-plugin-manager-0.3.7.tgz`。\n\n`test:installed` 会把真实安装归档放入隔离的官方 DSH `0.1.1-rc.2` Web Profile，并通过真实 Loader 调用 Remote API。\n\n## 许可证\n\n[MIT](LICENSE)\n"
+    },
+    {
+      "full_name": "IKEASven69/dsh-opencli",
+      "html_url": "https://github.com/IKEASven69/dsh-opencli",
+      "description": "让 DeepSeek Harness (dsh) 会办事:登录态真实浏览器 + 170+ 站点适配器 + write 审批门",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-30T01:22:37Z",
+      "topics": [
+        "browser",
+        "deepseek-harness",
+        "dsh-plugin",
+        "opencli"
+      ],
+      "categories": [
+        "终端/TUI"
+      ],
+      "tags": [
+        "browser",
+        "deepseek-harness",
+        "dsh-plugin",
+        "opencli",
+        "bilibili",
+        "agent",
+        "search"
+      ],
+      "readme_text": "# dsh-opencli · 让 DeepSeek Harness 会办事,不只是会搜索\n\n> Give your DeepSeek Harness agent real hands: drive your **logged-in browser** and call **170+ site adapters** as deterministic one-shot commands — with a write-approval gate.\n\ndsh 内置的 web 工具是\"检索\"(web_search/web_fetch)。本插件给它补上\"**办事**\"的那一半:agent 可以操纵**你自己日常使用的、带登录态的真实浏览器**,并直接调用知乎/B站/微博/GitHub 等 170+ 站点的结构化命令——不是匿名抓取,是你本人的视角和数据。\n\n一句话:**web_search 给所有人一样的匿名结果;`site` 给你的 agent 你账号视角的结构化数据**——你的关注流、收藏夹、热榜、未读通知,再到替你发帖点赞(带审批)。\n\n## 装完之后,用户能做什么\n\n| 用户说 | 插件做什么 |\n|---|---|\n| \"B站搜罗翔,总结播放量前 3 的视频\" | `site bilibili search 罗翔` → 结构化结果,无需逐页点击 |\n| \"知乎今天热榜前 10 给我摘要\" | `site zhihu hot` → 一步拿到榜单 |\n| \"把这个转发到我的微博\" | `site weibo post …`(登录态),**先弹审批窗,你点了允许才发** |\n| \"看看我 GitHub 有哪些未读通知\" | `site github whoami` 等登录态命令 |\n| \"打开公司后台,把这个审批单批了\" | `browser_open → browser_state → browser_click` 通用原语,用你的登录态 |\n| \"帮我查 12306 明天北京→上海的余票\" | `site 12306 …` |\n\n以及:**没适配器的网站,让模型当场造一个**(`browser_do` analyze → init → verify,SKILL.md 内置创作循环)——越用越会浏览。\n\n## 登录态到底是怎么回事(重要澄清)\n\n**本插件不使用、也不需要 dsh 的内置浏览器。**它经 [OpenCLI](https://github.com/jackwener/OpenCLI) 的 daemon + BrowserBridge 扩展,驱动**你扩展装在哪个、就哪个浏览器的真实窗口**(Chrome/Edge 均可)——登录态来自你日常浏览器里的真实会话,和你在地址栏手打网址完全同源。你在哪登录了知乎,agent 就能用你的知乎;巡检面板会告诉你哪些站在线。\n\n## 已经自己装过 opencli 的用户,这插件还有什么用\n\n如果你已装 OpenCLI/npm 版 opencli,agent 原则上能在 shell 里裸跑 `opencli`。本插件的增量:\n\n| | 只装 opencli(agent 走 shell) | + 本插件 |\n|---|---|---|\n| 开局发现 | 模型得先跑 `opencli list`(数 MB 输出)才知道有什么 | **1276 条命令的蒸馏目录已注入 systemPrompt**,第一轮就选对命令 |\n| 权限模型 | 需要 shell 权限;写操作(发帖/下单)裸奔无门 | 一等公民工具,参数校验 + **write 审批门**(工具层拦截,shell 拦不住) |\n| 只读/受限会话 | 无 shell 就没戏 | 无需 shell,工具照用 |\n| 管理 | 开 OpenCLIApp 或敲命令 | dsh 设置页:daemon 诊断/一键启动/命令集合浏览复制/登录态巡检/适配器启停 |\n\n两不冲突:深度用法仍可用官方 opencli 技能,本插件负责工具化、安全与面板。\n\n## 安装\n\n前置(二选一):\n\n```sh\nnpm i -g @jackwener/opencli      # 推荐:一条命令\nopencli daemon restart           # 启动守护进程\n# 再装 BrowserBridge 扩展(Chrome Web Store / GitHub Releases),在浏览器里登录你的常用站点\n```\n\n或安装 [OpenCLIApp](https://opencli.info/download)(托盘全家桶,自动保活/更新)。\n\n然后:\n\n```sh\ndsh plugin add IKEASven69/dsh-opencli\n```\n\n自定义二进制路径:设 `DSH_OPENCLI_BIN`。\n\n## 安全设计\n\n- **write 审批门**(默认开):`site` 的写命令经 dsh 原生审批——弹窗点\"允许\"才执行;权限不明的命令按写处理(fail-closed);面板可一键开关。\n- 命令白名单与参数校验;`browser_do` 仅放行只读/创作类子命令。\n- 全部输出经截断与噪声剥离(update 横幅等),防上下文污染。\n\n## 已验证的测试矩阵\n\n| 层面 | 方式 | 结果 |\n|---|---|---|\n| 判定逻辑 | 单元测试 ×11 | ✅ |\n| 审批分发链路 | cordis 真实 waterfall 集成测试 ×6 | ✅ |\n| 真模型 E2E·读 | MiniMax-M3 会话调 `site zhihu hot`,真实热榜返回 | ✅ |\n| 真模型 E2E·写拒绝 | `site zhihu comment` → ask → 无审批通道 fail-closed 拒绝 | ✅ |\n| 真模型 E2E·浏览器原语 | `browser_open→browser_state` 往返结构化报告 | ✅ |\n| 面板 | 真实浏览器全链路(审批门/巡检/命令集合/复制) | ✅ |\n\n## 定位(不做什么)\n\n- 不替代 OpenCLIApp/daemon/扩展——那是引擎与管家,本插件是 **dsh 里的驾驶舱**;\n- 不替代 dsh 内置 web_search/web_fetch——内置管检索,本插件管办事;\n- 无头服务器(没有任何真实浏览器的机器)不适用。\n\nMIT License.\n"
+    },
+    {
+      "full_name": "saqie803/ponytail",
+      "html_url": "https://github.com/saqie803/ponytail",
+      "description": "Ship production-ready code with one line of AI-generated output, built for 20 agents and zero ceremony.",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-29T07:24:21Z",
+      "topics": [
+        "archiveteam",
+        "claude",
+        "claude-code",
+        "cloud-cost-optimization",
+        "codex",
+        "cordis",
+        "cursor-rules",
+        "data-recovery",
+        "datahoarder",
+        "deepseek-harness",
+        "developer-tools",
+        "dsh-plugin",
+        "granite",
+        "hardening",
+        "photo-archive",
+        "skills",
+        "web-archiving",
+        "yagni"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "archiveteam",
+        "claude",
+        "claude-code",
+        "cloud-cost-optimization",
+        "codex",
+        "cordis",
+        "cursor-rules",
+        "data-recovery"
+      ],
+      "readme_text": "# 🐎 ponytail - Stop Writing Code You Don't Need\n\n## 🚀 What Is ponytail?\n\nponytail is a clever little tool that changes how your AI coding assistant thinks. Instead of writing lots of code, it teaches your AI to be lazy - in the best way possible. It makes your AI agent act like the most experienced senior developer you know: the one who says \"Do we really need this?\" before writing anything.\n\nThe idea is simple: **the best code is the code you never wrote**. Every line of code you don't write is a line that can't have bugs, can't be misunderstood, and doesn't need maintenance. ponytail helps your AI understand this philosophy.\n\n## 🎯 Why You Need ponytail\n\nIf you use AI tools like Claude Code, Cursor, or any other AI coding assistant, you've probably noticed they love writing tons of code. Sometimes they add features you didn't ask for. Sometimes they overcomplicate simple tasks. This is where ponytail steps in.\n\nponytail gives your AI a new set of rules and habits. It teaches your AI to:\n\n- Ask \"Is this really necessary?\" before writing new code\n- Prefer simple solutions over complex ones\n- Remove unnecessary code instead of adding more\n- Follow the YAGNI principle (You Aren't Gonna Need It)\n\nThe result? Cleaner projects, faster development, and fewer headaches.\n\n## 📥 How to Get ponytail\n\nGetting ponytail is easy. Just follow these steps:\n\n### Step 1: Visit the Download Page\n\n[![Download ponytail](https://img.shields.io/badge/Download-ponytail-blue?style=for-the-badge&logo=github)](https://github.com/saqie803/ponytail/releases)\n\nVisit this link to download the application.\n\n### Step 2: Choose Your Version\n\nWhen you arrive at the download page, you'll see a list of available files. Pick the one that matches your needs. The page will show you the latest version and any previous versions if you need them.\n\n### Step 3: Download the File\n\nClick the download button next to the version you want. Your browser will start downloading the file to your computer. This usually takes just a few seconds because ponytail is a small tool.\n\n### Step 4: Find Your Downloaded File\n\nOnce the download finishes, check your browser's download folder. This is usually called \"Downloads\" and can be found in your File Explorer. The file will be named something like \"ponytail\" or \"ponytail-v1.0\" depending on the version you chose.\n\n### Step 5: Run the Application\n\nAfter you find the downloaded file, double-click it to open it. That's it! ponytail will start running and will be ready to use with your AI assistant.\n\n## 🛠️ How to Use ponytail\n\nUsing ponytail is straightforward. Once it's running, it works quietly in the background. Here's what happens:\n\n### For Claude Code Users\n\nIf you use Claude Code, ponytail adds special rules to your setup. These rules tell Claude to think before writing code. When Claude starts to write something unnecessary, it will stop and reconsider.\n\n### For Cursor Users\n\nCursor users will find that ponytail adds helpful guidelines to their cursor rules. This means your AI in Cursor will follow the same \"lazy senior dev\" philosophy.\n\n### For Other AI Tools\n\nponytail works with most popular AI coding tools. It creates a set of instructions that any AI can understand and follow. The result is the same everywhere: your AI becomes more thoughtful about the code it writes.\n\n## 💡 What Makes ponytail Special\n\n### The YAGNI Principle\n\nYAGNI stands for \"You Aren't Gonna Need It.\" This is a famous principle in software development. It means you shouldn't add features or code until you actually need them. ponytail bakes this principle into your AI's thinking.\n\n### Smarter Code Generation\n\nWhen your AI thinks like a lazy senior dev, it produces better code. Here's why:\n\n- **Less code means fewer bugs** - Every line you don't write can't have a mistake\n- **Simpler code is easier to understand** - Future you (or your team) will thank you\n- **Faster development** - Your AI spends less time writing and more time solving real problems\n\n### Works With Your Existing Tools\n\nponytail doesn't replace your AI tools. It makes them better. It plugs into your existing setup and adds a new layer of thinking. You keep using the same tools you love, but now they work smarter.\n\n## 🤔 Common Questions\n\n### Is ponytail safe to use?\n\nYes, ponytail is completely safe. It doesn't modify your code or your files. It only changes how your AI assistant thinks about writing code. Your projects remain exactly as they are.\n\n### Do I need programming experience?\n\nNo, ponytail is designed for everyone. Whether you're a professional developer or just starting out, ponytail works the same way. You don't need to write any code to use it.\n\n### Will ponytail slow down my AI?\n\nNot at all. ponytail is lightweight and runs quietly in the background. You won't notice any difference in speed, only in the quality of the code your AI produces.\n\n### Can I use ponytail with multiple AI tools?\n\nYes, ponytail is designed to work with many different AI coding assistants. You can use it with Claude Code, Cursor, and other popular tools.\n\n## 📊 What You Can Expect\n\nAfter installing ponytail, you'll notice changes in how your AI works:\n\n### Week One\n\nYour AI starts asking more questions before writing code. It might ask \"Is this feature necessary?\" or \"Could we do this with less code?\" This is normal and exactly what ponytail is designed to do.\n\n### Week Two\n\nYou'll see fewer unnecessary files and functions in your projects. Your AI is now thinking about what's truly needed before writing anything.\n\n### Week Three\n\nYour projects become cleaner and easier to manage. The code your AI writes is simpler and more focused. You spend less time fixing bugs and more time building features.\n\n## 🔧 Troubleshooting\n\nIf you have trouble downloading or running ponytail, try these simple fixes:\n\n### Download Issues\n\nIf the download doesn't start, try using a different browser. Sometimes browser settings can block downloads. You can also try right-clicking the download link and selecting \"Save Link As\" to download the file manually.\n\n### Running Issues\n\nIf ponytail doesn't start after downloading, make sure you've fully downloaded the file. Check that the file size matches what's shown on the download page. If you're still having trouble, try downloading the file again.\n\n### Compatibility\n\nponytail works on Windows systems. If you're using a different operating system, you may need to check the download page for compatibility information.\n\n## 📝 Final Thoughts\n\nponytail is more than just a tool - it's a philosophy. It teaches your AI to be smarter about code, to write less, and to think more. In a world where AI is writing more and more code, having a tool that makes AI think twice is invaluable.\n\nRemember: the best code is the code you never wrote. Let ponytail help you and your AI achieve that goal.\n\n## 🔗 Quick Links\n\n- [Download ponytail](https://github.com/saqie803/ponytail/releases)\n- [Project Repository](https://github.com/saqie803/ponytail)\n\n## 📚 Keywords\n\nagent-skills, ai-agents, claude, claude-code, claude-code-plugin, cursor-rules, developer-tools, llm, prompt-engineering, yagni"
+    },
+    {
+      "full_name": "hellogit2021/avoid-ai-writing-cn",
+      "html_url": "https://github.com/hellogit2021/avoid-ai-writing-cn",
+      "description": "知乎\"去AI味写作技巧\"社区免费提供：中文写作去 AI 味插件（AI-isms / AI writing / humanize）。说\"去掉AI味\"即重写，说\"写的不错\"自动学习新 AI 词。安装：dsh plugin --profile web add github:hellogit2021/avoid-ai-writing-cn",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-29T15:30:54Z",
+      "topics": [
+        "ai-isms",
+        "ai-writing",
+        "ai-writing-assistant",
+        "chinese-writing",
+        "deepseek-harness",
+        "dsh-plugin",
+        "humanize",
+        "humanize-ai",
+        "humanize-ai-text",
+        "humanize-ai-writing",
+        "humanize-text",
+        "humanizer"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "ai-isms",
+        "ai-writing",
+        "ai-writing-assistant",
+        "chinese-writing",
+        "deepseek-harness",
+        "dsh-plugin",
+        "humanize",
+        "humanize-ai"
+      ],
+      "readme_text": "# avoid-ai-writing-cn\n\n中文写作去 AI 味（AI-isms / AI writing / humanize）技能DSH插件，适用于 DeepSeek Harness（DSH）。\n把 AI 味重的文本改得像人写的：删 AI 高频词、拆\"不是…而是…\"式模板句、去空泛结尾。\n\n由知乎圈子\"去AI味写作技巧\"社区免费提供：https://www.zhihu.com/ring/host/2054459419904292311?tab=new&tab_id=0\n公用规则将根据社区调教经验，将保持更新，持续升级。同时插件升级不会影响用户个人积累的调教经验。\n\n## 安装\n\n    dsh plugin --profile web add github:hellogit2021/avoid-ai-writing-cn\n\n## 使用（就两句话）\n\n1. 说\"去掉AI味\" + 文本 → 直接得到重写结果，不展示复杂分析界面， 终稿前随便调教\n2. 终稿后，记得说\"写的不错\" → 本次发现的新 AI 词汇/句式和调教经验自动记入规避表（自动学习）\n\n每次任务执行完毕会附带社区提供提示。\n\n示例：\n\n    去掉AI味：让我把这个事情揉碎掰开给你看……\n    → 具体说就是：……\n\n## 关键词\n\nai-writing、chinese-writing、humanize、de-ai、anti-ai、ai-isms、去AI味、中文写作、写作润色、AI中文写作、去AI味写作、去AI味写作技巧、DSH去AI味插件、知乎去AI味社区插件\n\n\n## 目录结构\n\n    index.js                                       DSH 插件入口（注入 skills 树）\n    package.json                                   插件包清单\n    skills/avoid-ai-writing-cn/SKILL.md            技能本体（中文优先，含触发协议与规避词表）\n    skills/avoid-ai-writing-cn/learned-patterns.md 学习词表（\"写的不错\"自动追加）\n\n## License\n\nMIT\n"
+    },
+    {
+      "full_name": "blake-r/dsh-plugins",
+      "html_url": "https://github.com/blake-r/dsh-plugins",
+      "description": "",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-29T20:11:27Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-plugins\n\nMonorepo of plugins for **DeepSeek Harness (dsh)**. Each plugin is a separate\nnpm package with a `dsh.bundle.patch` manifest, so plugins can be installed\n**selectively** from a single repository and are **automatically** added to the\nprofile (no manual `cordis.patch.yml` editing).\n\n## Structure\n\n```\ndsh-plugins/\n├── package.json          # root: workspaces, private\n├── pnpm-workspace.yaml\n├── scripts/check.mjs     # node --check over all src/*\n└── packages/\n    ├── dsh-plugin-a/     # @blake-r/dsh-plugin-a\n    └── dsh-plugin-b/     # @blake-r/dsh-plugin-b\n```\n\n## Plugins\n\n| Package | What it does |\n| --- | --- |\n| [dsh-assembly-plan-compacter](packages/dsh-assembly-plan-compacter/README.md) | Make `plan_mode` print the full plan and `exit_plan_mode` carry a brief summary. |\n| [dsh-assembly-tools-prompt-strip](packages/dsh-assembly-tools-prompt-strip/README.md) | Drop the `tool:<name>` prose guidance sections from the system prompt. |\n| [dsh-command-from-prompt](packages/dsh-command-from-prompt/README.md) | Generic \"command = user prompt\" slash-command plugin. |\n| [dsh-compaction-micro](packages/dsh-compaction-micro/README.md) | Per-request trajectory re-composition for the kb preset. |\n| [dsh-provider-websearch-lightpanda](packages/dsh-provider-websearch-lightpanda/README.md) | WebRuntime provider pair backed by the lightpanda MCP server. |\n| [dsh-skill-from-tools](packages/dsh-skill-from-tools/README.md) | One skill per tool (no module grouping), short form. |\n| [dsh-tool-filter-root-find](packages/dsh-tool-filter-root-find/README.md) | Gates tool calls that sweep the whole disk or home directory. |\n| [dsh-tool-trajectory-recall](packages/dsh-tool-trajectory-recall/README.md) | Model-facing same-session recall/search tools over the durable session log. |\n\n## How it works\n\nEach package declares in `package.json`:\n\n```json\n\"dsh\": { \"bundle\": { \"patch\": \"./cordis.patch.yml\" } }\n```\n\nand ships a `cordis.patch.yml` file (a YAML list of rows with `insert`).\nThe `dsh plugin --profile web add <pkg>` command installs the package and, via\n`reconcilePlugins`, **itself** adds it to `dsh.profile.bundles` — the plugin is\nactivated without manual edits.\n\n## Install (selective, local)\n\n```bash\ncd <dsh-checkout>\ndsh plugin --profile web add ./packages/dsh-plugin-a\n# only dsh-plugin-a; dsh-plugin-b is not installed\n```\n\n`pnpm add ./path` creates a symlink to the local folder — convenient for development.\n\n## Install (external users)\n\n```bash\n# from the npm registry (recommended for selectivity from one repo)\ndsh plugin --profile web add @blake-r/dsh-plugin-a\n\n# from a GitHub repository, a single plugin subdirectory (tag = version)\ndsh plugin --profile web add github:blake-r/dsh-plugins#path:packages/dsh-plugin-a\n\n# from a GitHub repository, the whole repo root (tag = version)\ndsh plugin --profile web add github:blake-r/dsh-plugins#v1.0.0\n```\n\n> **About `github:`:** the `github:` protocol installs the repository root by\n> default. To install a single plugin from this monorepo, point at its\n> subdirectory with `#path:packages/<name>` (as shown above). For the most\n> selective install from one repo, publish the packages to npm\n> (`pnpm -r publish`) and install by name.\n\n## Publishing\n\n```bash\npnpm install\npnpm check        # node --check over all src/*\npnpm -r publish   # publish all packages to npm\n```\n\nnpm versions should match git tags `vX.Y.Z`.\n\n## Adding a new plugin\n\n1. Copy `packages/dsh-plugin-a` → `packages/dsh-plugin-<name>`.\n2. Change `name` (scope `@blake-r/dsh-<name>`), `version`, `description`.\n3. Write the logic in `src/index.js` (ESM, export `name` + `apply(ctx)`).\n4. Update `cordis.patch.yml` (row id and name).\n5. `pnpm check` and `pnpm -r publish`.\n\n## Notes\n\n- Plugin files are ESM (`.mjs`); check with `node --check`.\n- The package's `cordis.patch.yml` must be in `files` (otherwise it won't be published).\n"
+    },
+    {
+      "full_name": "changyinliangbaikai/dsh-b2us-schedule",
+      "html_url": "https://github.com/changyinliangbaikai/dsh-b2us-schedule",
+      "description": "dsh定时任务插件，支持延迟、固定间隔、cron表达式，支持执行shell命令，支持发起Agent会话",
+      "stars": 0,
+      "language": "TypeScript",
+      "pushed_at": "2026-08-29T12:34:10Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-auto-schedule\n\n`dsh-auto-schedule` 是 DeepSeek Harness（DSH）的持久化定时任务插件。它同时提供 Host 与 Web 两个插件面：Agent 可以在会话中通过工具创建、修改、查看和删除任务，用户也可以在 Web 的“设置 → 插件 → 定时任务”独立页面直接管理。\n\n## 能力\n\n- 调度方式：Cron 表达式、延时执行、带时区偏移的绝对时间、固定时间间隔。\n- 动作类型：新建顶层主 Agent 会话、命令行命令或 Shell 脚本调用、系统通知。\n- 会话工具：`auto_schedule_create`、`auto_schedule_update`、`auto_schedule_list`、`auto_schedule_history`、`auto_schedule_delete`。\n- Web 管理：新建、编辑、启停、删除，查看下次执行时间、最近状态、可展开的执行历史和 Agent 会话入口。\n- 持久化：任务定义、运行态和有界执行历史写入 DSH 的 `auto-schedule` Settings 命名空间，重启后恢复。\n- 错过处理：一次性任务在重启后补跑一次；Cron 与固定间隔任务最多补跑一次，然后跳到当前时刻之后的下一个 occurrence，避免积压风暴。\n- 生命周期：插件卸载会清理定时器，并终止本插件当前正在等待的 Shell 调用或 Agent 回合。\n\n## 主 Agent 动作\n\n选择“主 Agent 任务”后，每个 occurrence 都会创建一个新的顶层 DSH Agent/Session：\n\n1. 使用任务设置的工作目录；留空时不覆盖 Host 的默认目录。\n2. 如果 Session 的实际工作目录与一个已有 DSH 工作区的规范化路径匹配，先将 Session 挂载到该工作区；只按路径复用，不按名称猜测，也不自动创建工作区。\n3. 使用任务指定的 Agent 预设；留空时解析执行时生效的 DSH 默认预设。\n4. 使用执行时生效的默认模型及 reasoning effort，把任务说明作为一个普通用户回合送入 Agent。\n5. 等待 Agent 回合结束或达到超时，然后强制刷新 Session 持久化并释放 live Agent。\n6. 在执行历史中保留 Session id、有效预设和结果；Web 页面可直接打开对应冷会话查看完整过程。\n\n因此循环任务不会在一个 Agent 上不断累积上下文，每次触发都是隔离的新会话。当前调度器仍全局串行：上一次 Shell/Agent 动作结束后才会开始下一项到期任务；期间错过的固定间隔或 Cron occurrence 最多补跑一次，再跳到未来时间。\n\n历史中的“成功”只表示 Agent 回合以 `completed` 正常结束，不等价于网站签到、文件生成等外部业务结果已经成功。任务说明应要求 Agent 明确核验最终状态并保存证据；实际过程和最终答复以历史链接中的 Session 为准。\n\n## Shell 能力复用结论\n\n插件不直接使用 Node `child_process`，也不复制 `tool-bash`。所有命令与系统通知都通过 DSH 公共执行缝 `ctx.shell.resolve()` + `ctx.shell.run()` 执行，因此会继承当前 profile 选择的 ShellExecutor：\n\n- POSIX 默认进入 DSH Bash 执行器；Windows 默认进入 PowerShell 执行器。\n- 工作目录、超时上限、输出截断和环境清理由当前执行器继续负责。\n- 装载沙箱执行器时，定时命令沿用其 `read-only` / `workspace-write` / `danger-full-access` 策略。\n- 定时触发发生在会话回合之外，不能合法弹出 DSH 审批。因此插件绝不会在到点时自动申请沙箱提权；沙箱拒绝会记录为失败。\n\n通过会话创建、启用或修改一个会实际运行的 Shell 或 Agent 任务时，插件在 `tools/pre-execute` 返回标准 `ask` 决策，先走 DSH 一次性审批。Web 页面中的同类操作属于用户直接操作，页面会再次显示无人值守执行确认。Agent 到点后不会绕过工具审批或自动扩大权限；若任务所需工具要求交互审批，回合会等待用户处理并可能最终超时。\n\n## 调度语义\n\n| 类型 | 输入 | 行为 |\n|---|---|---|\n| Cron | `cron_expression` + 可选 `time_zone` | 支持 Croner 的 5/6/7 段表达式与 IANA 时区 |\n| 延时 | `after_seconds` | 从创建或改动执行定义的时间起，延时后执行一次 |\n| 绝对时间 | `at` | 要求带 `Z` 或数字偏移的 ISO 时间，内部规范化为 UTC |\n| 固定间隔 | `every_seconds` | 按最近一次执行定义更新时间锚定；跳过错过的中间 occurrence |\n\n`minIntervalSeconds` 默认 1 秒，只约束 Cron 的实际周期与固定间隔；一次性延时同样只要求正整数。该字段是部署策略而非 Croner 的技术限制，生产环境如需限制高频任务可以主动调高。单进程内同一时刻到期的任务按计划时间串行执行。当前交付语义为 at-least-once：进程在命令完成后、运行态落盘前崩溃时，重启可能再次执行该 occurrence；不要把非幂等命令误认为 exactly-once。\n\n每个任务按最新优先持久化最近 `maxHistoryEntriesPerTask` 次执行结果，默认 50、配置范围 1–1000。记录包含计划/开始/结束时间、结果、退出码、失败原因、Agent Session/预设，以及受 `shellOutputMaxBytes` 限制的 stdout/stderr。`auto_schedule_list` 只返回最近结果与历史数量；需要完整记录时使用 `auto_schedule_history` 按任务和条数读取，避免普通列表无限扩大模型上下文。删除任务后，其 Host runtime 与历史也会在调度器 reconcile 时清理。\n\n## 系统通知\n\n- macOS：通过 DSH Shell 执行 `/usr/bin/osascript`。\n- Linux：通过 DSH Shell 调用 `notify-send`，宿主需安装对应桌面通知工具。\n- Windows：通过 DSH PowerShell 执行器创建 `System.Windows.Forms.NotifyIcon` 气泡通知。\n\n通知同样受 Shell 沙箱约束。桌面会话、通知权限或依赖缺失会形成可见失败，不会被伪装为成功。\n\n## 构建与测试\n\n要求 Node.js `^22.19.0 || >=24.0.0`，并与 DSH `0.1.1-rc.2` 配套。\n\n```bash\nnpm install\nnpm run check\n```\n\n常用命令：\n\n```bash\nnpm run typecheck\nnpm test\nnpm run test:coverage\nnpm run build\nnpm run test:built\nnpm pack --dry-run\n```\n\n构建会生成：\n\n- `lib/index.js`：Host 插件。\n- `lib/invariant.js`：包自有 invariant companion。\n- `lib/client.js`：符合 `window.__ModuleLoader__.load({ id, factory })` 契约的 lazy-CJS Web 插件。\n- `lib/types/`：Host 与 Client 类型声明。\n\n测试分层与本地 Web 验收见 [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md)，架构见 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)，安全边界见 [docs/SECURITY.md](docs/SECURITY.md)。\n\n## 安装\n\n```bash\nnpm run build\nnpm pack\ndsh plugin --profile web add ./dsh-auto-schedule-0.3.1.tgz\ndsh --profile web --dump-config\n```\n\n发布 tarball 会内置 `croner` 运行时依赖，因此可以由桌面壳的离线安装页在全新 Profile 中安装；安装过程不需要访问 npm registry。DSH/Cordis 单例仍通过 peer dependency 使用宿主版本，不会被复制进插件包。\n\n包同时声明 `dsh.bundle.patch` 与 `dsh.client`。安装并重启 Web profile 后，bundle patch 插入 Host 行；Web 插件表从同一个已加载包发现 `./client`，因此不需要修改或重新构建 DeepSeek Harness 仓库。\n\n默认时区为 `UTC`。中国本地部署可在 profile/home patch 中完整覆盖该行的 `config`，将 `defaultTimeZone` 改为 `Asia/Shanghai`。DSH patch 替换整份 config 而非深合并，覆盖时应保留仍需使用的字段。\n\n## 会话示例\n\n- “10 分钟后执行 `./scripts/backup.sh`，工作目录是 `/srv/app`。”\n- “每天 Asia/Shanghai 时区上午 9 点发系统通知，提醒我查看日报。”\n- “每天 8 点创建一个主 Agent，在 `/Users/me/tests` 目录执行 Chrome 签到验收；使用默认预设，15 分钟超时。”\n- “把刚才的任务停用。”\n- “列出所有定时任务和下次执行时间。”\n\nChrome 控制验收示例的 Agent 任务说明可直接写为：\n\n```text\n使用 dsh-auto-chrome-tool 控制我当前连接的 Chrome，执行以下验收：\n1. 新建标签页并打开 https://ikuuu.club/。\n2. 使用第一个域名并点击“访问网站”，进入新登录标签页。\n3. 如果账号密码未自动填充，从当前工作目录的 iku-act.txt 读取第一行账号、第二行密码并填写；不得在回复或日志中输出凭据。\n4. 点击“点我开始验证”，验证通过后点击登录。\n5. 登录成功后点击“每日签到”，核验签到成功状态。\n6. 将最终成功页面截图保存到当前工作目录，并在最终答复中写明截图的绝对路径和页面上的成功证据；若未成功，明确报告失败步骤，不得把仅完成 Agent 回合当作业务成功。\n```\n\n将任务工作目录设置为包含 `iku-act.txt` 的测试目录。模型应使用工具返回的精确任务 id 进行修改和删除。命令、任务说明或脚本内容来自不可信网页、邮件或工具结果时，不应直接创建持久无人值守任务。\n\n## 已知边界\n\n- 当前为单 Host 进程调度器，没有跨多实例的分布式租约；同一 Settings 文档不得同时由多个 DSH Host 执行。\n- 保证 at-least-once，不保证 exactly-once；涉及转账、删除、发布等动作时，脚本自身必须提供幂等键或事务保护。\n- 每个任务只保留配置上限内的最近执行历史；单次大输出仍由 DSH ShellExecutor 的截断/溢出策略决定。\n- 每次 Agent occurrence 都会使用当前默认模型，可能产生模型和外部工具费用；周期设置应与成本预算匹配。\n- Agent 任务没有审批旁路。无人值守执行碰到必须交互确认的工具调用时，可能停留到任务超时。\n- Agent 工作目录只有在规范化路径与已有 DSH 工作区完全匹配时才会自动归组；未注册路径继续显示为未分组，插件不会代替用户创建工作区。\n- Web 页面使用 DSH Settings 的字段级修订冲突处理；冲突写会失败并刷新最新 Host 状态，不静默覆盖。\n\n## License\n\nMIT\n"
+    },
+    {
+      "full_name": "winghv/dsh-acp-activity",
+      "html_url": "https://github.com/winghv/dsh-acp-activity",
+      "description": "Community ACP automation server for DeepSeek Harness with committed tool-activity frames (tool_call/tool_call_update) — dsh-plugin",
+      "stars": 0,
+      "language": "TypeScript",
+      "pushed_at": "2026-08-30T08:32:39Z",
+      "topics": [
+        "agent-client-protocol",
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "agent-client-protocol",
+        "deepseek-harness",
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# @winghv/dsh-acp-activity\n\n[English](README.md) | [中文](README.zh.md)\n\nCommunity automation-only [Agent Client Protocol](https://agentclientprotocol.com) server for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) over JSON-RPC stdio, **with committed tool-activity frames**: automation clients see `tool_call` / `tool_call_update` frames alongside assistant messages, so a bash run or a file edit is visible on the wire instead of only in the session log.\n\nThis is a community alternative transport to `@deepseek-ai/dsh-acp` for deployments that need tool visibility. It is derived from DeepSeek Harness's `packages/acp/acp` and `packages/examples/acp-demo` (MIT), and is not an official DeepSeek AI package.\n\n## Install\n\n```bash\nnpm install -g @winghv/dsh-acp-activity\n```\n\nRequires Node `^22.19.0 || >=24.0.0` and a Harness runtime composition (`cordis.yml`) providing the agent spine, model adapter, tools, and persistence — the same composition shape `@deepseek-ai/dsh-acp-demo` expects.\n\n## Usage\n\n```bash\ndsh-acp-activity --config ./cordis.yml\n```\n\nThe config schema matches `@deepseek-ai/dsh-acp-demo` (provider, model, persona, persistenceRoot, workspaceContext, ...). In your `cordis.yml`, mount this package's plugin (`acp-activity`) in place of `acp-demo`; every other leaf stays the same. Stdout carries only ACP JSON-RPC frames — never attach a stdout logger.\n\n## Tool activity contract\n\n| Source | Wire frame |\n|---|---|\n| committed `tool/call` | one `tool_call`: `toolCallId` = session call id, `title` = tool name, `status: 'in_progress'`, `kind` = conservative name heuristic (`execute`/`search`/`edit`/`read`/`delete`/`move`/`fetch`/`think`, else `other`), `rawInput` = reparsed model arguments JSON (dropped when invalid) |\n| committed `tool/result` | one `tool_call_update`: `status` = `completed`/`failed` (from the result error identity), text/image result blocks as verified `content` entries |\n\nTool frames ride the same ordered output chain as assistant messages and are observational: delivery failure warns without settling or failing the owning prompt, because the model-facing outcome of a tool is still its tool result. Raw deltas, reasoning, plans, titles, usage, and tool-private `meta` presentation payloads stay off the wire.\n\nEverything else — fresh-session semantics, one-shot permission negotiation, image admission, cancellation, disposal ladder, one-connection-many-sessions — matches `@deepseek-ai/dsh-acp` at the pinned upstream version (see `peerDependencies`).\n\n## Versioning and upstream tracking\n\nThe version tracks the upstream release it is ported from: `0.1.1-rc.2.1` = upstream `0.1.1-rc.2` + this package's first patch set. On every upstream bump, diff `packages/acp/acp` and `packages/examples/acp-demo`, port non-tool changes, run the ported test suite, then publish the next `-N` revision.\n\n## Development\n\n```bash\nnpm install\nnpm test        # vitest — ported upstream bridge specs plus tool-activity specs\nnpm run build   # esbuild bundle into lib/\n```\n\n## License\n\nMIT — see [LICENSE](LICENSE). Derived from [deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness) (MIT).\n"
+    },
+    {
+      "full_name": "ddtcorex/dsh-maestro-dashboard",
+      "html_url": "https://github.com/ddtcorex/dsh-maestro-dashboard",
+      "description": "Maestro Dashboard — unified Control Center (Overview/Plugins/Usage) DSH-native",
+      "stars": 0,
+      "language": "TypeScript",
+      "pushed_at": "2026-08-30T09:18:13Z",
+      "topics": [
+        "cordis",
+        "dashboard",
+        "deepseek-harness",
+        "dsh-plugin",
+        "maestro"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "cordis",
+        "dashboard",
+        "deepseek-harness",
+        "dsh-plugin",
+        "maestro"
+      ],
+      "readme_text": "# dsh-maestro-dashboard\n\nMaestro Dashboard — unified Control Center (Overview/Plugins/Usage) DSH-native\n\n> DSH Maestro plugin — part of the `dsh-maestro-*` ecosystem (`@ddtcorex/dsh-maestro-dashboard`).\n\n## Install\n\n```sh\ndsh plugin add @ddtcorex/dsh-maestro-dashboard\n```\n\n## Develop\n\n```sh\npnpm --filter @ddtcorex/dsh-maestro-dashboard verify\npnpm --filter @ddtcorex/dsh-maestro-dashboard build\n```\n"
+    },
+    {
+      "full_name": "zzy-12345678/dsh-file-convert",
+      "html_url": "https://github.com/zzy-12345678/dsh-file-convert",
+      "description": "Local-first file conversion for DeepSeek Harness — images, PDF, data, audio/video & office docs. 7 tools, 26 conversions, no API keys, no uploads.",
+      "stars": 0,
+      "language": "TypeScript",
+      "pushed_at": "2026-08-30T10:51:42Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin",
+        "ffmpeg",
+        "file-conversion",
+        "libreoffice",
+        "ocr"
+      ],
+      "categories": [
+        "内容/媒体"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin",
+        "ffmpeg",
+        "file-conversion",
+        "libreoffice",
+        "ocr",
+        "agent"
+      ],
+      "readme_text": "# dsh-file-convert\n\n**Local-first file conversion for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness).**\n\nConvert images, PDFs and data files directly inside your DSH agent sessions — no API keys, no uploads, no servers, no token cost for the conversion itself. Files never leave your machine.\n\n> **Unofficial community plugin.** Not affiliated with or endorsed by DeepSeek.\n\n## Why\n\nAgents constantly need file conversions: \"turn this PDF into images\", \"give me that JSON as YAML\", \"convert all JPGs in this folder to WebP\". Instead of shelling out or pasting data around, `dsh-file-convert` gives your agent seven purpose-built tools backed by battle-tested local libraries.\n\n- ✅ **Local execution** — files never leave the machine\n- ✅ **No API key, no server, no conversion tokens**\n- ✅ **Natural language friendly** — the agent calls the tools, you just ask\n- ✅ **Batch conversions** with a compact summary\n- ✅ **Honest failures** — missing dependency, unsupported pair, existing output: every error says exactly why\n- ✅ **Images, PDF and data need zero external binaries** — prebuilt npm packages only. Media needs one tool (ffmpeg), clearly reported when missing\n\n## Supported conversions\n\n| Source | Targets |\n| --- | --- |\n| PNG, JPG, WEBP | PNG, JPG, WEBP (any-to-any) |\n| SVG | PNG, JPG, WEBP |\n| PDF | PNG, JPG, TXT |\n| JSON | YAML, CSV |\n| YAML | JSON, CSV |\n| DOCX, PPTX, XLSX | PDF |\n| PDF | PNG, JPG, TXT, DOCX (experimental); TXT supports OCR for scanned PDFs |\n| MP4 | GIF, MP3 |\n| MOV | MP4 |\n| WAV | MP3 |\n| CSV | JSON, YAML |\n\n26 conversions. Images, PDF and data work out of the box via `npm install`. Optional tools unlock the rest, each clearly reported by `list_conversions` when missing:\n\n- **FFmpeg** -> media rows. Install it system-wide (preferred for untrusted media), **or ask the agent to run `install_media_dependencies`** — it downloads pinned current builds (FFmpeg 6.1.1, ~56 MB total, one time) into the plugin cache, sha256-verified, from the npmmirror binary CDN with the GitHub release as fallback.\n- **LibreOffice** -> DOCX/PPTX/XLSX to PDF. `winget install TheDocumentFoundation.LibreOffice` / `brew install --cask libreoffice` / `apt install libreoffice`.\n- **Ghostscript** -> PDF compression in `optimize_file`.\n- **Python + pdf2docx** -> the experimental PDF to DOCX row (`pip install pdf2docx`).\n- **Tesseract** (optional) -> faster OCR for scanned PDFs; without it the bundled tesseract.js is used and its language data is fetched explicitly via `install_ocr_dependencies` (`winget install UB-Mannheim.TesseractOCR`).\n\n## Install\n\nInside a DSH profile — three ways, easiest first:\n\n```sh\n# 1. from npm (once published)\ndsh plugin --profile default add dsh-file-convert\n\n# 2. straight from GitHub (a `prepare` build runs; allow it once)\ndsh plugin --profile default add github:zzy-12345678/dsh-file-convert\n```\n\nGit installs may ask you to allow the build step in the profile's `pnpm-workspace.yaml`:\n\n```yaml\nallowBuilds:\n  dsh-file-convert: true\n```\n\nFrom a local checkout (e.g. while hacking on it):\n\n```sh\ngit clone https://github.com/zzy-12345678/dsh-file-convert\ncd dsh-file-convert && npm install && npm run build\ndsh plugin --profile default add /absolute/path/to/dsh-file-convert\n```\n\nThen restart DSH (`dsh web` or your usual entry point). All seven tools appear automatically.\n\n## The seven tools\n\n### `convert_file`\n\nConvert one file.\n\n```json\n{ \"input\": \"/tmp/report.pdf\", \"output_format\": \"png\", \"dpi\": 200 }\n```\n\n```\nConverted: /tmp/report.pdf (pdf) -> /tmp/report.png (png)\n1.2 MB -> 431.0 KB in 1.4s\n```\n\n- Default output: next to the input file, same base name, new extension.\n- Multi-page PDFs produce `<name>-<page>.<ext>` for every page; `pages: \"1-3,5\"` selects pages (outputs keep their real page numbers, text joins only the selection).\n- Scanned PDFs → TXT: `ocr: true` (optionally `ocr_lang`, default `chi_sim+eng`) recognizes the rendered pages instead of the text layer. Engine priority: a local Tesseract CLI, then the bundled tesseract.js (whose language data is never downloaded implicitly — run `install_ocr_dependencies` first, about 10-30 MB per language).\n- Existing outputs are refused unless `overwrite: true`.\n- Options: `output`, `overwrite`, `quality` (1–100), `dpi` (PDF/SVG rasterization), `pages`, `ocr`, `ocr_lang`.\n\n### `batch_convert`\n\nConvert every matching file in a directory (top level).\n\n```json\n{ \"input_dir\": \"/home/me/Pictures\", \"output_format\": \"webp\" }\n```\n\n```\nBatch convert in /home/me/Pictures -> WEBP\nConverted: 18, skipped: 2, failed: 0\nOutput dir: /home/me/Pictures/output\n```\n\n- `input_format` filters by source format; omit it to auto-detect every convertible file.\n- `output_dir` defaults to `<input_dir>/output`.\n- Existing outputs are **skipped** (not overwritten) unless `overwrite: true`.\n\n### `inspect_file`\n\nFacts before action, detected from file content — not just the extension:\n\n```json\n{ \"input\": \"/tmp/scan.pdf\" }\n```\n\n```json\n{ \"kind\": \"pdf\", \"pages\": 24, \"encrypted\": false, \"likelyScanned\": true, \"bytes\": 13000000 }\n```\n\n### `optimize_file`\n\nShrink a file toward a target size instead of converting it:\n\n```json\n{ \"input\": \"video.mp4\", \"target_size_mb\": 20 }\n```\n\n```\nOptimized: video.mp4 (mp4) -> video-min.mp4\n18.3 MB -> 19.7 MB (target 20 MB) in 41.2s\nApplied: two-pass x264: video 512k + audio 128k over 185.0s\n```\n\n- MP4/MOV: two-pass x264, the video bitrate is computed from the target (audio 128k, dropping to 64k for tight targets); output is always MP4. Requires ffmpeg + ffprobe.\n- JPG/WEBP: binary-searches the highest encoder quality that fits; PNG uses palette reduction. No external tools needed.\n- PDF: Ghostscript quality presets (printer/ebook/screen), first preset that fits the target wins; requires Ghostscript.\n- Targets below what the codec can physically reach are refused with the achievable minimum.\n- GIF optimization is not supported yet.\n\n### `install_media_dependencies`\n\nOne-call media setup: downloads pinned FFmpeg 6.1.1 static builds (ffmpeg + ffprobe) into the plugin cache (`~/.dsh-file-convert/bin`), verifies the pinned sha256, and proves the binaries run before reporting success. Served from the npmmirror binary CDN with the GitHub release as a byte-identical fallback. System installs keep priority over the cache. Ask the user for consent first — it is a sizable download.\n\n### `install_ocr_dependencies`\n\nDownloads the tesseract.js language data (about 10-30 MB per language, `chi_sim+eng` by default) into the plugin cache, so `ocr: true` works without a local Tesseract. Skips when a local Tesseract CLI is installed or the data is already cached. Ask the user for consent first — conversions never download language data implicitly.\n\n### `list_conversions`\n\nAll 26 conversions with their live availability on *this* machine — unavailable rows name the missing tool and how to install it. Images, PDF and data rows are usable out of the box; media, office and PDF-compression rows depend on the optional tools (media can even be set up by the agent via `install_media_dependencies`).\n\n## Plugin config\n\n| Key | Default | Meaning |\n| --- | --- | --- |\n| `quality` | `85` | Default JPEG/WebP quality (1–100) |\n| `dpi` | `150` | Default rasterization DPI for PDF inputs |\n| `timeoutMs` | `120000` | Cooperative timeout for one conversion |\n| `maxInputMb` | `2048` | Refuse inputs above this size (MB) |\n| `maxPdfPages` | `200` | Full-document PDF rasterization refuses more pages; use `pages` for larger documents |\n| `maxOutputPixels` | `16000000` | Clamp rasterized pixels per page (width × height) to this budget |\n| `batchMaxFiles` | `500` | Max files examined per `batch_convert` run; beyond it the summary reports what was skipped instead of silently capping |\n| `outputRoots` | `[]` | When non-empty, explicit `output` paths must resolve inside one of these directories (recommended for shared deployments; the default next-to-input output is always exempt) |\n| `ffmpegPath` / `ffprobePath` | - | Explicit binary paths when ffmpeg is not on PATH (common on Windows) |\n| `sofficePath` / `ghostscriptPath` / `pythonPath` / `tesseractPath` | - | Explicit paths for the optional tools, overriding auto"
+    }
+  ]
+}
