@@ -1,0 +1,63 @@
+{
+  "generatedAt": "2026-09-11T20:37:58.282Z",
+  "count": 2,
+  "plugins": [
+    {
+      "full_name": "Mauit06/dsh-jinhsi-skin",
+      "html_url": "https://github.com/Mauit06/dsh-jinhsi-skin",
+      "description": "DeepSeek Harness webGUI的今汐主题，Jinhsi (Wuthering Waves) theme for the DeepSeek Harness web GUI",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-09-11T19:26:18Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin",
+        "jinhsi",
+        "skin",
+        "theme",
+        "wuthering-waves"
+      ],
+      "categories": [
+        "皮肤/UI"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin",
+        "jinhsi",
+        "skin",
+        "theme",
+        "wuthering-waves",
+        "sidebar"
+      ],
+      "readme_text": "# Jinhsi · Tidal Resurgence\n\n**English** | [简体中文](README.zh-CN.md)\n\nA **Jinhsi (今汐)** theme for the **DeepSeek Harness** web GUI — silver-white, ink black,\ngold filigree and mint teal, with tidal meanders and dragon scales along the frame, a\nJinhsi avatar in the sidebar, and a conversation styled after the game's Feixun (飞讯)\nmessenger.\n\nPure declarative skin: no executable client code, no telemetry, no runtime network calls.\n\n<p align=\"center\">\n  <img src=\"skin/preview/light.jpg\" width=\"49%\" alt=\"Light theme\">\n  <img src=\"skin/preview/dark.jpg\" width=\"49%\" alt=\"Dark theme\">\n</p>\n\n## Install\n\n```powershell\ndsh plugin --profile web add github:Mauit06/dsh-jinhsi-skin\n```\n\nRestart DSH once (adding a plugin package needs it), then open\n**Settings → Skin Center → 「今汐·洄天溯海」 → Try on / Apply**.\n\nTo remove:\n\n```powershell\ndsh plugin --profile web remove dsh-jinhsi-skin\n```\n\nThe package's only job is to place the skin into the Skin Center's user skin directory\n(`$DSH_HOME/skins/jinhsi-spectro/`), because the Skin Center discovers skins from there.\nRequires DSH ≥ `0.1.5-rc.1`, the Skin Center, and Node.js 22+.\n\n<details>\n<summary>Manual install (no plugin)</summary>\n\nCopy `skin/` to `$DSH_HOME/skins/jinhsi-spectro/`, then run\n`node tools/fetch-assets.mjs` from a clone to fetch the artwork. Refresh the page.\n\n</details>\n\n## ⚠️ Official artwork is not included\n\nThe character art is © **Kuro Games**. This repository ships none of it:\n`skin/assets/*.webp` is git-ignored, and the plugin downloads it on your machine at\ninstall time. The previews above are placeholders using this project's own seal SVG.\nFull rights breakdown: [NOTICE](NOTICE).\n\n## What you get\n\n- Light and dark themes; palette sampled from the artwork rather than guessed\n- Six fixed decoration layers filled with **CSS only** — no client JavaScript\n- Sidebar brand and every assistant message carry a Jinhsi avatar; the new-session\n  headline becomes 「桃夭灼灼牵丝动 漂泊者」\n- Feixun-style conversation: assistant \"letter\" cards, jade user bubbles with a tail\n- Wallpaper Engine aware — the skin yields the backdrop to your wallpaper and keeps text\n  readable; one knob (the background occlusion slider) tunes it\n- Optional Jinhsi **agent persona** in `persona/` — see its README for how to install it\n  as a preset that swaps only the `persona` row of `standard`\n- `corpus/` — all Jinhsi text: 5 stories, 75 voice lines, 17 skills, 6 chains, 2 outfits\n\n## Notes\n\n- Built on the Skin Center's **v2 skin contract**; anchored on official `data-slot` outlets,\n  never on CSS-Modules hash class names.\n- `node tools/validate-skin.mjs` checks schema, CSS whitelist, selector scoping, token\n  names and contrast. Contract compliance and the one disclosed deviation are in\n  [docs/IMPLEMENTATION.zh-CN.md](docs/IMPLEMENTATION.zh-CN.md) *(Chinese)*.\n\n## Attribution\n\nKuro Games (*Wuthering Waves*, Jinhsi) ·\n[dsh-client-ui-skin-center](https://github.com/zhu1090093659/dsh-web) (the v2 contract this\nis built on) · DeepSeek Harness · wuther.in (corpus source) · dsh-deep-whale / maid-atelier\n(layout and packaging reference) · [Mornye Observation Skin](https://github.com/is-limo/Mornye-Observation-Skin)\n(design idea only — that repository is UNLICENSED, no code or assets were copied).\n\nUnofficial fan project; not affiliated with or endorsed by any of the above.\n\n[MIT](LICENSE) for the code, stylesheets, scripts, documentation and original vector\nornaments.\n"
+    },
+    {
+      "full_name": "greyoak111/siyuan-codex-bridge",
+      "html_url": "https://github.com/greyoak111/siyuan-codex-bridge",
+      "description": "Local Codex and SiYuan official MCP bridge with the Siyuan Notes plugin tooling.",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-09-11T19:39:49Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh",
+        "dsh-plugin",
+        "mcp",
+        "notes",
+        "siyuan"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh",
+        "dsh-plugin",
+        "mcp",
+        "notes",
+        "siyuan"
+      ],
+      "readme_text": "# SiYuan MCP 桥接：Codex 与 DeepSeek Harness\n\n完整的当前操作说明（覆盖官方 29 个能力组）见[《思源官方 MCP 使用说明》](/Users/sunxifeng/siyuan-codex-bridge/docs/思源官方MCP使用说明.md)。\n\n本项目采用 [MIT License](/Users/sunxifeng/siyuan-codex-bridge/LICENSE)。\n\n这个本地桥接把 Codex Desktop、Codex CLI 和 IDE 连接到思源笔记内置的官方 MCP。STDIO 代理只把 MCP 请求转发到 `http://127.0.0.1:6806/mcp`，并在请求头中补充 API Token；它不解析或改写 `.sy` 文件，也不直接操作 `siyuan.db`。\n\n同一个仓库还是一个 **DSH（DeepSeek Harness）插件**：`package.json` 里的 `dsh.bundle` 指向 [`cordis.patch.yml`](./cordis.patch.yml)，把同样的官方工具注册成 `mcp__siyuan__*`，并附带一个 `siyuan` 使用技能。两侧互不影响——Codex 走 `bin/`（Python 代理），DSH 走 `bridge/`（Node 代理），各自的 token、策略与审计彼此独立。\n\n## 在 DSH 里使用\n\n安装（二选一）：\n\n- DSH 桌面端 → 插件市场搜索 `dsh-siyuan`；\n- 命令行：`dsh plugin --profile web add github:greyoak111/siyuan-codex-bridge`\n\n**桥接不会启动思源**：它只通过网络跟 `127.0.0.1:6806` 说话，宿主启动不会连带打开你的笔记应用。\n思源没开时，桥接仍会本地应答 MCP 握手、并提供上一次见到的工具目录，所以工具不会在会话里凭空消失；\n此时调用会明确返回\"SiYuan is not reachable\"，你打开思源后下一次调用即恢复（会话失效会自动重新握手）。\n工具目录的优先级是：**实时目录 → 本机缓存 → 包内快照**。也就是说，即便思源从未连上过（全新安装、还没打开过思源），插件也自带一份目录快照，工具不会显示成空；思源一旦应答即换成实时目录。快照可用 `node bridge/mcp-stdio.mjs --dump-catalog > bridge/tools-snapshot.json` 重新生成。\n\n**装完即用，不需要手填 token。** 桥接按 环境变量 `SIYUAN_API_TOKEN` → `~/.config/dsh-siyuan/config.json` → 思源自己的工作区配置（`~/.config/siyuan/workspace.json` 列出工作区，读其 `<工作区>/conf/conf.json` 的 `api.token`）的顺序解析；多数情况下最后一条就能找到，因为 token 本来就在思源自己的设置里。思源没启动时先打开思源桌面端。\n\n操作级别（桥接在**每次 `tools/call`** 上重新校验，改完下一次调用即生效）：\n\n| 级别 | 允许的动作 |\n|---|---|\n| `readonly` | 搜索与读取：文档、块、大纲、反链、属性、笔记本列表、系统和工作区信息 |\n| `authoring`（默认） | 以上 + 建文档、块 insert/append/prepend/update、属性 set、日记 create/append/prepend |\n| `full` | 官方全部 action：删除、移动、重命名、复制、笔记本管理、文件、SQL、导入导出、历史回滚、仓库、同步、HTTP、网页抓取 |\n\n思源处于限流状态时（HTTP 429），桥接会把 `Retry-After` 一并写进错误文案，便于判断等多久。\n\n改级别：编辑 `~/.config/dsh-siyuan/config.json`（例如 `{\"profile\": \"readonly\"}`），或设环境变量 `SIYUAN_MCP_PROFILE`（**环境变量优先**，避免用户配置里一个多余的键推翻部署时的显式声明）。桥接在**每次 `tools/call`** 上重新读取该级别，所以下一次调用即生效，不需要重启桥接或 harness。诊断（不打印 token）：\n\n```sh\nnode node_modules/.bin/dsh-siyuan-bridge --doctor\n```\n\n状态目录 `~/.config/dsh-siyuan/`：可选的 `config.json`，以及 `audit.jsonl` 审计（只记时间/级别/工具/action/决策，权限 600，不含参数与笔记正文）。插件目录本身不被写入任何东西。\n\n### DSH plugin (English)\n\nThe same repository is a DeepSeek Harness plugin: `dsh.bundle` in `package.json`\npoints at `cordis.patch.yml`, which connects the harness to the local SiYuan\ndesktop app's own MCP endpoint, registers its official note tools as\n`mcp__siyuan__<tool>`, and adds a `siyuan` skill describing the read-first,\nwrite-on-request etiquette. The bridge is `bridge/mcp-stdio.mjs` (Node, no\ndependencies); it resolves the SiYuan API token from the environment, from\n`~/.config/dsh-siyuan/config.json`, or from SiYuan's own workspace settings, so\na normal install needs no configuration. One of three operation profiles —\n`readonly`, `authoring` (default) or `full` — is enforced on every `tools/call`,\nand `node node_modules/.bin/dsh-siyuan-bridge --doctor` reports the endpoint,\nthe token's origin and the active profile without printing the token.\n\n\n## 唯一需要手工填写的值\n\n编辑 [`.env`](/Users/sunxifeng/siyuan-codex-bridge/.env)，只填写 `SIYUAN_API_TOKEN` 的值。`SIYUAN_API_URL` 和 `SIYUAN_MCP_URL` 保持默认值。`.env` 必须是权限 600；Token 不应出现在 git、README、对话、审计日志、截图、命令行参数或普通配置中。\n\n## 能力和操作级别\n\n思源官方 MCP 的完整工具目录会透传给 Codex。具体版本和工具数量以每次本机端点探测为准；官方端点通常返回按 `action` 选择读取、写入、管理、导入导出、同步或网络动作的聚合工具。\n\n本地代理按每一次 `tools/call` 读取 [操作策略文件](/Users/sunxifeng/siyuan-codex-bridge/config/siyuan-policy.json)，支持三个级别：\n\n- `readonly`：搜索、读取文档和块、文档树、大纲、反链、属性、笔记本列表、系统和工作区信息。\n- `authoring`：在 `readonly` 基础上允许创建文档、插入/追加/前置/更新块、设置属性和创建或追加日记；删除、移动、重命名、复制、文件、数据库管理、SQL、网络、导入导出、同步和仓库操作仍拒绝。\n- `full`：官方 MCP 当前公布的全部工具和 action 都可以转发。Codex 配置仍使用 `default_tools_approval_mode = \"writes\"`；代理会保留这个批准设置，并在每次调用前执行策略检查。SiYuan 3.8.3 把多个 action 聚合在同一个 MCP 工具里且没有 action 级 annotations，因此不能把“每个 action 必然弹出单独提示”当作安全边界，代理策略才是硬边界。\n\n当前策略文件默认是 `full`，因为用户已经选择开放完整官方能力。策略文件只包含级别，不包含 Token，权限为 600。即使处于 `full`，普通创作请求也只应调用读取动作；需要修改或外部操作时先说明目标，再让 Codex 执行批准流程。\n\n## 在插件页管理级别\n\n个人插件源目录是 [`~/plugins/siyuan-notes`](/Users/sunxifeng/plugins/siyuan-notes)。插件页会显示这些技能和一个轻量控制工具：\n\n- `$siyuan`：创作前检索思源并引用相关文档或块。\n- `$siyuan-readonly`：切换并保持只读级别。\n- `$siyuan-authoring`：切换到受控创作级别，允许内容写入。\n- `$siyuan-full`：切换到完整官方工具级别。\n- `$siyuan-policy`：查看当前级别和可用级别。\n\n`siyuan-control.show_siyuan_controls` 会请求显示可折叠的范围面板；它会在宿主支持时请求 PiP（通常由宿主放在右下），不支持时回退为对话内卡片或文本范围选项。部分 Codex Desktop 构建目前不会挂载 MCP Apps HTML 资源，此时直接在对话中说“切换思源为只读/创作/全功能”即可完成同一操作。面板只负责选择本地权限范围，不写入思源工作日志。\n\n也可以直接在对话中说“查看思源操作级别”“切换思源为只读”“切换思源为创作”“切换思源为全功能”。这些技能调用插件自带的 `siyuan-control` 控制 MCP；代理本身仍会在每个 MCP 请求上重新检查策略，所以技能提示不是唯一安全边界。\n\n插件规范的设置页能力取决于宿主，因此权限选择由技能和控制 MCP 共同完成；面板不可用时仍可用对话命令完成同一流程，不改变官方 MCP 或笔记数据格式。打开并选定范围后，相关项目对话会按当前范围先检索思源文档/块；如果任务本身涉及维护或同步相关笔记，代理会主动提出窄范围调整，再按写入审批执行。纯无关问题不会强制查询。\n\n## 启动、重启和关闭\n\n插件提供 `ensure_siyuan`、`start_siyuan`、`status_siyuan`。创作或检索开始前会检查 `127.0.0.1:6806`，思源未运行时通过 macOS 后台方式启动 `/Applications/SiYuan.app`。不需要每次手工开终端。\n\n手工检查：\n\n```sh\ncd ~/siyuan-codex-bridge\n./scripts/check-siyuan.sh\n./scripts/test-mcp.sh\ncodex mcp list\n```\n\n`check-siyuan.sh` 每次都会请求 `/api/system/version`，动态显示思源实际返回的版本，并校验响应中存在可用的非空版本值；它不锁定某个最低或目标版本，因此升级思源不会因为版本号变化而被误报为失败。升级后仍应重新运行 `tools/list` 和 `test-mcp.sh`，确认官方工具目录与桥接行为没有变化。\n\n切换操作级别后策略会在下一次官方 MCP 调用生效。若 Codex 客户端缓存了旧的工具目录，重启当前 Codex/IDE 会话或新建会话即可；无需重启思源，也不需要把 Token 再填一遍。\n\n如果 macOS 暂时拦截当前 ChatGPT.app 内置的 `codex` 可执行文件，退出并重新打开 ChatGPT，让官方 Sparkle 更新完成后再运行上面的命令；这与思源桥接或 Token 无关。\n\n在 Codex 中关闭连接：把 `siyuan` MCP 服务器设为 disabled，或在 [`~/.codex/config.toml`](/Users/sunxifeng/.codex/config.toml) 中将对应的 `enabled` 改为 `false`。这只关闭 Codex 连接，不会退出思源。\n\n如果确实要退出思源，可以在终端运行：\n\n```sh\n/usr/bin/osascript -e 'tell application \"SiYuan\" to quit'\n```\n\n插件默认只负责启动和检查，不会在任务结束时强制关闭思源。\n\n## 配置备份和恢复\n\n每次修改全局 Codex 配置前先创建带时间戳的备份，例如 `~/.codex/config.toml.bak.siyuan-YYYYmmdd-HHMMSS`。恢复时先退出 Codex，再选择实际存在的备份文件：\n\n本次配置前的原始备份是 [`~/.codex/config.toml.bak.siyuan-20260906-235232`](/Users/sunxifeng/.codex/config.toml.bak.siyuan-20260906-235232)。\n\n```sh\ncp ~/.codex/config.toml.bak.siyuan-20260906-235232 ~/.codex/config.toml\nchmod 600 ~/.codex/config.toml\n```\n\n恢复后重新启动 Codex Desktop、CLI 或 IDE 会话。\n\n## 审计和高风险能力\n\n代理把允许或拒绝的操作写入 [`audit/operations.jsonl`](/Users/sunxifeng/siyuan-codex-bridge/audit/operations.jsonl)。这是最小的本地安全审计，不是写入思源的工作日志；每行只记录时间、级别、工具、action 和决策，不记录参数、笔记正文、响应、请求头或 Token；日志权限为 600。\n\n官方 MCP 中的文件读写、导入导出、历史回滚、仓库检出、同步、任意 HTTP、网页访问、解压和 SQL 都属于高影响能力。`full` 会让它们可用；执行前仍应明确目标并让客户端按 `writes` 配置处理，同时由本地代理执行 action 级策略检查。不要把官方 HTTP 端点直接添加到另一个会自动放行写操作的客户端，否则会绕过本地策略代理。\n\n按当前选择，`full` 下没有工具组被禁用；切换到 `readonly` 或 `authoring` 后，上述高影响动作以及删除、重命名、复制、批量移动和系统管理动作会由代理拒绝。这个边界按每次 `tools/call` 检查，而不是只依赖插件提示词。\n\n思源端口保持绑定在 `127.0.0.1`，不会暴露到局域网或公网。升级 SiYuan 后请重新运行 `tools/list` 和测试，因为官方工具目录可能随版本变化。\n"
+    }
+  ]
+}
