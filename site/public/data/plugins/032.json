@@ -1,7 +1,247 @@
 {
-  "generatedAt": "2026-09-21T11:54:45.488Z",
+  "generatedAt": "2026-09-21T17:53:38.889Z",
   "count": 400,
   "plugins": [
+    {
+      "full_name": "uckkk/dsh-nvc",
+      "html_url": "https://github.com/uckkk/dsh-nvc",
+      "description": "非暴力沟通",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T17:38:46Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-nvc · 非暴力沟通\n\n## 工具\n\n- `nvc`：非暴力沟通：按场景返回结构化方法。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-nvc\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-nvc\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-upcycle",
+      "html_url": "https://github.com/uckkk/dsh-upcycle",
+      "description": "旧物改造",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T19:40:49Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-upcycle · 旧物改造\n\n## 工具\n\n- `upcycle`：旧物改造：按参数返回手工DIY方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-upcycle\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-upcycle\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-bulb-buy",
+      "html_url": "https://github.com/uckkk/dsh-bulb-buy",
+      "description": "灯泡选购",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T19:51:34Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-bulb-buy · 灯泡选购\n\n## 工具\n\n- `bulb_buy`：灯泡选购：按参数返回家居灯光设计方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-bulb-buy\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-bulb-buy\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-lab-check",
+      "html_url": "https://github.com/uckkk/dsh-lab-check",
+      "description": "体检指标",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T20:23:32Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-lab-check · 体检指标\n\n## 工具\n\n- `lab_check`：体检指标：按参数返回家庭健康自检结果。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-lab-check\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-lab-check\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-scent-pick",
+      "html_url": "https://github.com/uckkk/dsh-scent-pick",
+      "description": "香调场景选择",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T18:35:21Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-scent-pick · 香调场景选择\n\n## 工具\n\n- `scent_pick`：香调场景选择：按参数返回香氛精油方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-scent-pick\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-scent-pick\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-fx-live",
+      "html_url": "https://github.com/uckkk/dsh-fx-live",
+      "description": "实时汇率换算",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T14:43:38Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-fx-live · 实时汇率换算\n\n## 工具\n\n- `fx_live`：实时汇率换算：联网实时拉取最新数据。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-fx-live\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-fx-live\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-astronomy-terms",
+      "html_url": "https://github.com/uckkk/dsh-astronomy-terms",
+      "description": "天文学术语",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T16:20:08Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-astronomy-terms · 天文学术语\n\n## 工具\n\n- `list_astronomy`：列出 天文学术语 知识条目。\n- `get_astronomy`：按 id 或名称查询 天文学术语 条目详情。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-astronomy-terms\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-astronomy-terms\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-cable-power",
+      "html_url": "https://github.com/uckkk/dsh-cable-power",
+      "description": "充电功率计算",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T15:39:48Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-cable-power · 充电功率计算\n\n## 工具\n\n- `cable_power`：充电功率计算：按参数精确计算，返回详细结果。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-cable-power\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-cable-power\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-down-payment",
+      "html_url": "https://github.com/uckkk/dsh-down-payment",
+      "description": "首付计算",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T15:46:46Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-down-payment · 首付计算\n\n## 工具\n\n- `down_payment`：首付计算：按参数精确计算，返回详细结果。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-down-payment\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-down-payment\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-detergent-dose",
+      "html_url": "https://github.com/uckkk/dsh-detergent-dose",
+      "description": "洗衣液用量",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T15:01:12Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-detergent-dose · 洗衣液用量\n\n## 工具\n\n- `detergent_dose`：洗衣液用量：按参数返回明确建议。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-detergent-dose\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-detergent-dose\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-flour-swap",
+      "html_url": "https://github.com/uckkk/dsh-flour-swap",
+      "description": "面粉替代",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T14:54:30Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-flour-swap · 面粉替代\n\n## 工具\n\n- `flour_swap`：面粉替代：按参数精确计算，返回详细结果。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-flour-swap\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-flour-swap\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-sd-capacity",
+      "html_url": "https://github.com/uckkk/dsh-sd-capacity",
+      "description": "录像存储容量",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T15:03:09Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-sd-capacity · 录像存储容量\n\n## 工具\n\n- `sd_capacity`：录像存储容量：按参数精确计算，返回详细结果。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-sd-capacity\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-sd-capacity\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
     {
       "full_name": "helibeiqi/dsh-memory-projection",
       "html_url": "https://github.com/helibeiqi/dsh-memory-projection",
@@ -124,126 +364,6 @@
         "dsh-plugin"
       ],
       "readme_text": "# dsh-fire-escape · 火灾逃生\n\n## 工具\n\n- `fire_escape`：火灾逃生：按场景返回关键处置步骤（急救内容请以专业培训为准）。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-fire-escape\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-fire-escape\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
-    },
-    {
-      "full_name": "uckkk/dsh-luggage-size",
-      "html_url": "https://github.com/uckkk/dsh-luggage-size",
-      "description": "行李箱尺寸",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-20T15:41:46Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-luggage-size · 行李箱尺寸\n\n## 工具\n\n- `luggage_size`：行李箱尺寸：按参数返回明确建议。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-luggage-size\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-luggage-size\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
-    },
-    {
-      "full_name": "uckkk/dsh-toy-age",
-      "html_url": "https://github.com/uckkk/dsh-toy-age",
-      "description": "玩具适龄推荐",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-20T15:47:55Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-toy-age · 玩具适龄推荐\n\n## 工具\n\n- `toy_age`：玩具适龄推荐：按参数精确计算，返回明确建议。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-toy-age\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-toy-age\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
-    },
-    {
-      "full_name": "uckkk/dsh-concurrency",
-      "html_url": "https://github.com/uckkk/dsh-concurrency",
-      "description": "并发需求估算",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-20T15:50:24Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-concurrency · 并发需求估算\n\n## 工具\n\n- `concurrency`：并发需求估算：按参数精确计算，返回详细结果。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-concurrency\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-concurrency\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
-    },
-    {
-      "full_name": "uckkk/dsh-battery-check",
-      "html_url": "https://github.com/uckkk/dsh-battery-check",
-      "description": "电瓶寿命",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-20T14:47:46Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-battery-check · 电瓶寿命\n\n## 工具\n\n- `battery_check`：电瓶寿命：按参数精确计算，返回明确建议。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-battery-check\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-battery-check\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
-    },
-    {
-      "full_name": "uckkk/dsh-repotting",
-      "html_url": "https://github.com/uckkk/dsh-repotting",
-      "description": "换盆建议",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-20T14:50:26Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-repotting · 换盆建议\n\n## 工具\n\n- `repotting`：换盆建议：按参数返回明确建议。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-repotting\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-repotting\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
-    },
-    {
-      "full_name": "uckkk/dsh-nvc",
-      "html_url": "https://github.com/uckkk/dsh-nvc",
-      "description": "非暴力沟通",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-20T17:38:46Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-nvc · 非暴力沟通\n\n## 工具\n\n- `nvc`：非暴力沟通：按场景返回结构化方法。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-nvc\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-nvc\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     },
     {
       "full_name": "uckkk/dsh-insurance-config",
@@ -590,32 +710,30 @@
       "readme_text": "# dsh-amb-light · 氛围照明\n\n## 工具\n\n- `amb_light`：氛围照明：按参数返回家居灯光设计方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-amb-light\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-amb-light\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     },
     {
-      "full_name": "uckkk/dsh-nail-steps",
-      "html_url": "https://github.com/uckkk/dsh-nail-steps",
-      "description": "美甲流程",
+      "full_name": "gxinxing/dsh-plugin-mcp-connector",
+      "html_url": "https://github.com/gxinxing/dsh-plugin-mcp-connector",
+      "description": "",
       "stars": 0,
       "language": "JavaScript",
-      "pushed_at": "2026-08-20T18:59:44Z",
+      "pushed_at": "2026-08-20T13:25:31Z",
       "topics": [
-        "deepseek-harness",
         "dsh-plugin"
       ],
       "categories": [
         "工具/开发"
       ],
       "tags": [
-        "deepseek-harness",
         "dsh-plugin"
       ],
-      "readme_text": "# dsh-nail-steps · 美甲流程\n\n## 工具\n\n- `nail_steps`：美甲流程：按参数返回美甲护理方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-nail-steps\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-nail-steps\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+      "readme_text": "# MCP 一站式连接器\n\n基于 DeepSeek Harness 的 MCP 协议可视化管理插件。\n\n## 功能特性\n\n- 可视化面板：在 DSH Web GUI 中通过 `/mcp` 路径访问管理页面\n- 动态管理：添加 / 删除 / 启用 / 禁用 / 重启 MCP 服务\n- 自动注册工具：启动的服务会自动把 MCP tools 注册到 DSH\n- 调用日志：捕获 MCP 工具的调用参数与返回结果\n- 配置持久化：服务列表保存在 `~/.dsh/mcp-servers.json`\n\n## 快速开始\n\n```bash\n# 1. 安装依赖\npnpm install\n\n# 2. 构建\npnpm build\n\n# 3. 安装到 DSH Profile\ndsh plugin --profile web add .\n\n# 4. 重启 DSH 并打开面板\ndsh --profile web\n# 浏览器访问 http://127.0.0.1:3080/mcp\n```\n\n## 传输模式\n\n支持以下 MCP 传输模式：\n- `stdio`：本地子进程通信\n- `sse`：Server-Sent Events\n- `streamable-http`：Streamable HTTP\n\n## 工具命名规则\n\n每个 MCP 工具在 DSH 中的公开名称为：\n\n```\nmcp__<serverName>__<rawToolName>\n```\n\n## License\n\nMIT\n"
     },
     {
-      "full_name": "uckkk/dsh-pickle-intro",
-      "html_url": "https://github.com/uckkk/dsh-pickle-intro",
-      "description": "腌菜入门",
+      "full_name": "uckkk/dsh-pest-plan",
+      "html_url": "https://github.com/uckkk/dsh-pest-plan",
+      "description": "病虫害诊断",
       "stars": 0,
       "language": "JavaScript",
-      "pushed_at": "2026-08-20T18:55:56Z",
+      "pushed_at": "2026-08-20T18:22:26Z",
       "topics": [
         "deepseek-harness",
         "dsh-plugin"
@@ -627,15 +745,15 @@
         "deepseek-harness",
         "dsh-plugin"
       ],
-      "readme_text": "# dsh-pickle-intro · 腌菜入门\n\n## 工具\n\n- `pickle_intro`：腌菜入门：按参数返回腌制泡菜方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-pickle-intro\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-pickle-intro\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+      "readme_text": "# dsh-pest-plan · 病虫害诊断\n\n## 工具\n\n- `pest_plan`：病虫害诊断：按参数返回植物养护方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-pest-plan\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-pest-plan\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     },
     {
-      "full_name": "uckkk/dsh-task-estimate",
-      "html_url": "https://github.com/uckkk/dsh-task-estimate",
-      "description": "任务时间估算",
+      "full_name": "uckkk/dsh-stretch-plan",
+      "html_url": "https://github.com/uckkk/dsh-stretch-plan",
+      "description": "运动拉伸计划",
       "stars": 0,
       "language": "JavaScript",
-      "pushed_at": "2026-08-20T17:38:24Z",
+      "pushed_at": "2026-08-20T18:31:38Z",
       "topics": [
         "deepseek-harness",
         "dsh-plugin"
@@ -647,15 +765,15 @@
         "deepseek-harness",
         "dsh-plugin"
       ],
-      "readme_text": "# dsh-task-estimate · 任务时间估算\n\n## 工具\n\n- `task_estimate`：任务时间估算：按参数精确计算，返回详细结果。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-task-estimate\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-task-estimate\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+      "readme_text": "# dsh-stretch-plan · 运动拉伸计划\n\n## 工具\n\n- `stretch_plan`：运动拉伸计划：按参数返回瑜伽拉伸方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-stretch-plan\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-stretch-plan\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     },
     {
-      "full_name": "uckkk/dsh-eo-dilute",
-      "html_url": "https://github.com/uckkk/dsh-eo-dilute",
-      "description": "精油稀释计算",
+      "full_name": "uckkk/dsh-hanfu-style",
+      "html_url": "https://github.com/uckkk/dsh-hanfu-style",
+      "description": "汉服形制选择",
       "stars": 0,
       "language": "JavaScript",
-      "pushed_at": "2026-08-20T18:26:30Z",
+      "pushed_at": "2026-08-20T18:35:14Z",
       "topics": [
         "deepseek-harness",
         "dsh-plugin"
@@ -667,15 +785,15 @@
         "deepseek-harness",
         "dsh-plugin"
       ],
-      "readme_text": "# dsh-eo-dilute · 精油稀释计算\n\n## 工具\n\n- `eo_dilute`：精油稀释计算：按参数返回香氛精油方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-eo-dilute\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-eo-dilute\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+      "readme_text": "# dsh-hanfu-style · 汉服形制选择\n\n## 工具\n\n- `hanfu_style`：汉服形制选择：按参数返回汉服穿搭方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-hanfu-style\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-hanfu-style\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     },
     {
-      "full_name": "uckkk/dsh-pose-pick",
-      "html_url": "https://github.com/uckkk/dsh-pose-pick",
-      "description": "瑜伽体式选择",
+      "full_name": "uckkk/dsh-screen-time",
+      "html_url": "https://github.com/uckkk/dsh-screen-time",
+      "description": "屏幕时间",
       "stars": 0,
       "language": "JavaScript",
-      "pushed_at": "2026-08-20T18:28:03Z",
+      "pushed_at": "2026-08-20T17:53:40Z",
       "topics": [
         "deepseek-harness",
         "dsh-plugin"
@@ -687,15 +805,15 @@
         "deepseek-harness",
         "dsh-plugin"
       ],
-      "readme_text": "# dsh-pose-pick · 瑜伽体式选择\n\n## 工具\n\n- `pose_pick`：瑜伽体式选择：按参数返回瑜伽拉伸方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-pose-pick\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-pose-pick\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+      "readme_text": "# dsh-screen-time · 屏幕时间\n\n## 工具\n\n- `screen_time`：屏幕时间：按参数精确计算，返回明确建议。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-screen-time\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-screen-time\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     },
     {
-      "full_name": "uckkk/dsh-repot-check",
-      "html_url": "https://github.com/uckkk/dsh-repot-check",
-      "description": "换盆判断",
+      "full_name": "uckkk/dsh-winter-car",
+      "html_url": "https://github.com/uckkk/dsh-winter-car",
+      "description": "冬季用车",
       "stars": 0,
       "language": "JavaScript",
-      "pushed_at": "2026-08-20T18:36:15Z",
+      "pushed_at": "2026-08-20T17:58:16Z",
       "topics": [
         "deepseek-harness",
         "dsh-plugin"
@@ -707,15 +825,15 @@
         "deepseek-harness",
         "dsh-plugin"
       ],
-      "readme_text": "# dsh-repot-check · 换盆判断\n\n## 工具\n\n- `repot_check`：换盆判断：按参数返回植物养护方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-repot-check\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-repot-check\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+      "readme_text": "# dsh-winter-car · 冬季用车\n\n## 工具\n\n- `winter_car`：冬季用车：按参数精确计算，返回明确建议。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-winter-car\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-winter-car\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     },
     {
-      "full_name": "uckkk/dsh-pickle-recipe",
-      "html_url": "https://github.com/uckkk/dsh-pickle-recipe",
-      "description": "泡菜配方",
+      "full_name": "uckkk/dsh-biotech-terms",
+      "html_url": "https://github.com/uckkk/dsh-biotech-terms",
+      "description": "生物技术术语",
       "stars": 0,
       "language": "JavaScript",
-      "pushed_at": "2026-08-20T18:58:06Z",
+      "pushed_at": "2026-08-20T17:52:46Z",
       "topics": [
         "deepseek-harness",
         "dsh-plugin"
@@ -727,15 +845,15 @@
         "deepseek-harness",
         "dsh-plugin"
       ],
-      "readme_text": "# dsh-pickle-recipe · 泡菜配方\n\n## 工具\n\n- `pickle_recipe`：泡菜配方：按参数返回腌制泡菜方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-pickle-recipe\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-pickle-recipe\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+      "readme_text": "# dsh-biotech-terms · 生物技术术语\n\n## 工具\n\n- `list_biotech`：列出 生物技术术语 知识条目（名称+英文）。\n- `get_biotech`：按 id 或名称查询 生物技术术语 条目详情。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-biotech-terms\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-biotech-terms\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     },
     {
-      "full_name": "uckkk/dsh-ear-clean",
-      "html_url": "https://github.com/uckkk/dsh-ear-clean",
-      "description": "耳朵清洁",
+      "full_name": "uckkk/dsh-inst-plan",
+      "html_url": "https://github.com/uckkk/dsh-inst-plan",
+      "description": "学琴规划",
       "stars": 0,
       "language": "JavaScript",
-      "pushed_at": "2026-08-20T19:43:29Z",
+      "pushed_at": "2026-08-20T18:50:54Z",
       "topics": [
         "deepseek-harness",
         "dsh-plugin"
@@ -747,15 +865,15 @@
         "deepseek-harness",
         "dsh-plugin"
       ],
-      "readme_text": "# dsh-ear-clean · 耳朵清洁\n\n## 工具\n\n- `ear_clean`：耳朵清洁：按参数返回宠物美容护理方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-ear-clean\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-ear-clean\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+      "readme_text": "# dsh-inst-plan · 学琴规划\n\n## 工具\n\n- `inst_plan`：学琴规划：按参数返回民族乐器学习方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-inst-plan\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-inst-plan\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     },
     {
-      "full_name": "uckkk/dsh-caffeine",
-      "html_url": "https://github.com/uckkk/dsh-caffeine",
-      "description": "咖啡因半衰期",
+      "full_name": "uckkk/dsh-mini-store",
+      "html_url": "https://github.com/uckkk/dsh-mini-store",
+      "description": "极简收纳规则",
       "stars": 0,
       "language": "JavaScript",
-      "pushed_at": "2026-08-20T14:56:13Z",
+      "pushed_at": "2026-08-20T18:43:32Z",
       "topics": [
         "deepseek-harness",
         "dsh-plugin"
@@ -767,15 +885,15 @@
         "deepseek-harness",
         "dsh-plugin"
       ],
-      "readme_text": "# dsh-caffeine · 咖啡因半衰期\n\n## 工具\n\n- `caffeine`：咖啡因半衰期：按参数精确计算，返回明确建议（医疗内容请遵医嘱）。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-caffeine\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-caffeine\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+      "readme_text": "# dsh-mini-store · 极简收纳规则\n\n## 工具\n\n- `mini_store`：极简收纳规则：按参数返回断舍离极简方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-mini-store\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-mini-store\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     },
     {
-      "full_name": "uckkk/dsh-takeout-cost",
-      "html_url": "https://github.com/uckkk/dsh-takeout-cost",
-      "description": "外卖店日流水",
+      "full_name": "uckkk/dsh-platform-fee",
+      "html_url": "https://github.com/uckkk/dsh-platform-fee",
+      "description": "外卖平台抽成",
       "stars": 0,
       "language": "JavaScript",
-      "pushed_at": "2026-08-20T15:53:05Z",
+      "pushed_at": "2026-08-20T15:46:11Z",
       "topics": [
         "deepseek-harness",
         "dsh-plugin"
@@ -787,15 +905,15 @@
         "deepseek-harness",
         "dsh-plugin"
       ],
-      "readme_text": "# dsh-takeout-cost · 外卖店日流水\n\n## 工具\n\n- `takeout_cost`：外卖店日流水：按参数精确计算，返回详细结果。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-takeout-cost\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-takeout-cost\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+      "readme_text": "# dsh-platform-fee · 外卖平台抽成\n\n## 工具\n\n- `platform_fee`：外卖平台抽成：按参数精确计算，返回详细结果。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-platform-fee\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-platform-fee\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     },
     {
-      "full_name": "uckkk/dsh-pet-travel",
-      "html_url": "https://github.com/uckkk/dsh-pet-travel",
-      "description": "带宠出行",
+      "full_name": "uckkk/dsh-current-calc",
+      "html_url": "https://github.com/uckkk/dsh-current-calc",
+      "description": "电流计算",
       "stars": 0,
       "language": "JavaScript",
-      "pushed_at": "2026-08-20T15:44:26Z",
+      "pushed_at": "2026-08-20T14:34:00Z",
       "topics": [
         "deepseek-harness",
         "dsh-plugin"
@@ -807,15 +925,15 @@
         "deepseek-harness",
         "dsh-plugin"
       ],
-      "readme_text": "# dsh-pet-travel · 带宠出行\n\n## 工具\n\n- `pet_travel`：带宠出行：按参数返回明确建议。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-pet-travel\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-pet-travel\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+      "readme_text": "# dsh-current-calc · 电流计算\n\n## 工具\n\n- `current_calc`：电流计算：按参数精确计算，返回详细结果。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-current-calc\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-current-calc\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     },
     {
-      "full_name": "uckkk/dsh-packing-list",
-      "html_url": "https://github.com/uckkk/dsh-packing-list",
-      "description": "打包清单",
+      "full_name": "uckkk/dsh-wedding-timeline",
+      "html_url": "https://github.com/uckkk/dsh-wedding-timeline",
+      "description": "婚礼时间线",
       "stars": 0,
       "language": "JavaScript",
-      "pushed_at": "2026-08-20T14:59:30Z",
+      "pushed_at": "2026-08-20T15:56:38Z",
       "topics": [
         "deepseek-harness",
         "dsh-plugin"
@@ -827,15 +945,15 @@
         "deepseek-harness",
         "dsh-plugin"
       ],
-      "readme_text": "# dsh-packing-list · 打包清单\n\n## 工具\n\n- `packing_list`：打包清单：按参数返回明确建议。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-packing-list\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-packing-list\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+      "readme_text": "# dsh-wedding-timeline · 婚礼时间线\n\n## 工具\n\n- `wedding_timeline`：婚礼时间线：按参数精确计算，返回详细结果。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-wedding-timeline\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-wedding-timeline\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     },
     {
-      "full_name": "uckkk/dsh-post-frequency",
-      "html_url": "https://github.com/uckkk/dsh-post-frequency",
-      "description": "更新频率建议",
+      "full_name": "uckkk/dsh-argon",
+      "html_url": "https://github.com/uckkk/dsh-argon",
+      "description": "氩元素",
       "stars": 0,
       "language": "JavaScript",
-      "pushed_at": "2026-08-20T15:03:29Z",
+      "pushed_at": "2026-08-20T16:02:42Z",
       "topics": [
         "deepseek-harness",
         "dsh-plugin"
@@ -847,15 +965,15 @@
         "deepseek-harness",
         "dsh-plugin"
       ],
-      "readme_text": "# dsh-post-frequency · 更新频率建议\n\n## 工具\n\n- `post_frequency`：更新频率建议：按参数精确计算，返回详细结果。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-post-frequency\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-post-frequency\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+      "readme_text": "# dsh-argon · 氩元素\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-argon\n```\n"
     },
     {
-      "full_name": "uckkk/dsh-baseboard",
-      "html_url": "https://github.com/uckkk/dsh-baseboard",
-      "description": "踢脚线用量",
+      "full_name": "uckkk/dsh-insurance-estimate",
+      "html_url": "https://github.com/uckkk/dsh-insurance-estimate",
+      "description": "车险费用估算",
       "stars": 0,
       "language": "JavaScript",
-      "pushed_at": "2026-08-20T14:40:37Z",
+      "pushed_at": "2026-08-20T14:53:48Z",
       "topics": [
         "deepseek-harness",
         "dsh-plugin"
@@ -867,15 +985,15 @@
         "deepseek-harness",
         "dsh-plugin"
       ],
-      "readme_text": "# dsh-baseboard · 踢脚线用量\n\n## 工具\n\n- `baseboard`：踢脚线用量：按参数精确计算，返回详细结果。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-baseboard\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-baseboard\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+      "readme_text": "# dsh-insurance-estimate · 车险费用估算\n\n## 工具\n\n- `insurance_estimate`：车险费用估算：按参数精确计算，返回明确建议。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-insurance-estimate\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-insurance-estimate\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     },
     {
-      "full_name": "uckkk/dsh-watering-schedule",
-      "html_url": "https://github.com/uckkk/dsh-watering-schedule",
-      "description": "浇水频率建议",
+      "full_name": "uckkk/dsh-shower-size",
+      "html_url": "https://github.com/uckkk/dsh-shower-size",
+      "description": "淋浴房尺寸",
       "stars": 0,
       "language": "JavaScript",
-      "pushed_at": "2026-08-20T14:37:21Z",
+      "pushed_at": "2026-08-20T14:55:50Z",
       "topics": [
         "deepseek-harness",
         "dsh-plugin"
@@ -887,15 +1005,15 @@
         "deepseek-harness",
         "dsh-plugin"
       ],
-      "readme_text": "# dsh-watering-schedule · 浇水频率建议\n\n## 工具\n\n- `watering_schedule`：浇水频率建议：按参数返回明确建议。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-watering-schedule\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-watering-schedule\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+      "readme_text": "# dsh-shower-size · 淋浴房尺寸\n\n## 工具\n\n- `shower_size`：淋浴房尺寸：按参数精确计算，返回详细结果。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-shower-size\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-shower-size\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     },
     {
-      "full_name": "uckkk/dsh-stress-meter",
-      "html_url": "https://github.com/uckkk/dsh-stress-meter",
-      "description": "压力管理",
+      "full_name": "uckkk/dsh-battery-life",
+      "html_url": "https://github.com/uckkk/dsh-battery-life",
+      "description": "电池续航估算",
       "stars": 0,
       "language": "JavaScript",
-      "pushed_at": "2026-08-20T17:46:39Z",
+      "pushed_at": "2026-08-20T14:52:58Z",
       "topics": [
         "deepseek-harness",
         "dsh-plugin"
@@ -907,15 +1025,15 @@
         "deepseek-harness",
         "dsh-plugin"
       ],
-      "readme_text": "# dsh-stress-meter · 压力管理\n\n## 工具\n\n- `stress_meter`：压力管理：按参数返回明确建议（心理健康内容仅供参考）。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-stress-meter\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-stress-meter\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+      "readme_text": "# dsh-battery-life · 电池续航估算\n\n## 工具\n\n- `battery_life`：电池续航估算：按参数精确计算，返回详细结果。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-battery-life\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-battery-life\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     },
     {
-      "full_name": "uckkk/dsh-uric-acid",
-      "html_url": "https://github.com/uckkk/dsh-uric-acid",
-      "description": "尿酸解读",
+      "full_name": "uckkk/dsh-nail-shape",
+      "html_url": "https://github.com/uckkk/dsh-nail-shape",
+      "description": "甲型选择",
       "stars": 0,
       "language": "JavaScript",
-      "pushed_at": "2026-08-20T17:40:32Z",
+      "pushed_at": "2026-08-20T18:57:34Z",
       "topics": [
         "deepseek-harness",
         "dsh-plugin"
@@ -927,15 +1045,15 @@
         "deepseek-harness",
         "dsh-plugin"
       ],
-      "readme_text": "# dsh-uric-acid · 尿酸解读\n\n## 工具\n\n- `uric_acid`：尿酸解读：按参数解读结果（仅供参考，请遵医嘱）。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-uric-acid\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-uric-acid\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+      "readme_text": "# dsh-nail-shape · 甲型选择\n\n## 工具\n\n- `nail_shape`：甲型选择：按参数返回美甲护理方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-nail-shape\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-nail-shape\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     },
     {
-      "full_name": "uckkk/dsh-candle-make",
-      "html_url": "https://github.com/uckkk/dsh-candle-make",
-      "description": "香薰蜡烛配方",
+      "full_name": "uckkk/dsh-phone-et",
+      "html_url": "https://github.com/uckkk/dsh-phone-et",
+      "description": "电话礼仪",
       "stars": 0,
       "language": "JavaScript",
-      "pushed_at": "2026-08-20T18:31:11Z",
+      "pushed_at": "2026-08-20T19:36:05Z",
       "topics": [
         "deepseek-harness",
         "dsh-plugin"
@@ -947,15 +1065,15 @@
         "deepseek-harness",
         "dsh-plugin"
       ],
-      "readme_text": "# dsh-candle-make · 香薰蜡烛配方\n\n## 工具\n\n- `candle_make`：香薰蜡烛配方：按参数返回香氛精油方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-candle-make\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-candle-make\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+      "readme_text": "# dsh-phone-et · 电话礼仪\n\n## 工具\n\n- `phone_et`：电话礼仪：按参数返回沟通礼仪方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-phone-et\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-phone-et\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     },
     {
-      "full_name": "uckkk/dsh-cafe-start",
-      "html_url": "https://github.com/uckkk/dsh-cafe-start",
-      "description": "咖啡店启动测算",
+      "full_name": "uckkk/dsh-seasoning",
+      "html_url": "https://github.com/uckkk/dsh-seasoning",
+      "description": "调味技巧",
       "stars": 0,
       "language": "JavaScript",
-      "pushed_at": "2026-08-20T18:35:07Z",
+      "pushed_at": "2026-08-20T19:34:55Z",
       "topics": [
         "deepseek-harness",
         "dsh-plugin"
@@ -967,15 +1085,15 @@
         "deepseek-harness",
         "dsh-plugin"
       ],
-      "readme_text": "# dsh-cafe-start · 咖啡店启动测算\n\n## 工具\n\n- `cafe_start`：咖啡店启动测算：按参数返回小店经营测算结果。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-cafe-start\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-cafe-start\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+      "readme_text": "# dsh-seasoning · 调味技巧\n\n## 工具\n\n- `seasoning`：调味技巧：按参数返回家常菜烹饪方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-seasoning\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-seasoning\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     },
     {
-      "full_name": "uckkk/dsh-tune-guide",
-      "html_url": "https://github.com/uckkk/dsh-tune-guide",
-      "description": "乐器调音",
+      "full_name": "uckkk/dsh-washer-buy",
+      "html_url": "https://github.com/uckkk/dsh-washer-buy",
+      "description": "洗衣机选购",
       "stars": 0,
       "language": "JavaScript",
-      "pushed_at": "2026-08-20T18:40:17Z",
+      "pushed_at": "2026-08-20T19:45:16Z",
       "topics": [
         "deepseek-harness",
         "dsh-plugin"
@@ -987,15 +1105,15 @@
         "deepseek-harness",
         "dsh-plugin"
       ],
-      "readme_text": "# dsh-tune-guide · 乐器调音\n\n## 工具\n\n- `tune_guide`：乐器调音：按参数返回乐器练习方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-tune-guide\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-tune-guide\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+      "readme_text": "# dsh-washer-buy · 洗衣机选购\n\n## 工具\n\n- `washer_buy`：洗衣机选购：按参数返回厨房家电选购方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-washer-buy\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-washer-buy\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     },
     {
-      "full_name": "uckkk/dsh-blow-dry",
-      "html_url": "https://github.com/uckkk/dsh-blow-dry",
-      "description": "吹风造型",
+      "full_name": "uckkk/dsh-habit-build",
+      "html_url": "https://github.com/uckkk/dsh-habit-build",
+      "description": "习惯培养",
       "stars": 0,
       "language": "JavaScript",
-      "pushed_at": "2026-08-20T19:33:24Z",
+      "pushed_at": "2026-08-20T19:40:34Z",
       "topics": [
         "deepseek-harness",
         "dsh-plugin"
@@ -1007,15 +1125,15 @@
         "deepseek-harness",
         "dsh-plugin"
       ],
-      "readme_text": "# dsh-blow-dry · 吹风造型\n\n## 工具\n\n- `blow_dry`：吹风造型：按参数返回发型打理方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-blow-dry\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-blow-dry\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+      "readme_text": "# dsh-habit-build · 习惯培养\n\n## 工具\n\n- `habit_build`：习惯培养：按参数返回亲子教育方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-habit-build\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-habit-build\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     },
     {
-      "full_name": "uckkk/dsh-emotion-guide",
-      "html_url": "https://github.com/uckkk/dsh-emotion-guide",
-      "description": "情绪引导",
+      "full_name": "uckkk/dsh-route-plan",
+      "html_url": "https://github.com/uckkk/dsh-route-plan",
+      "description": "路线规划",
       "stars": 0,
       "language": "JavaScript",
-      "pushed_at": "2026-08-20T19:38:23Z",
+      "pushed_at": "2026-08-20T19:42:47Z",
       "topics": [
         "deepseek-harness",
         "dsh-plugin"
@@ -1027,15 +1145,15 @@
         "deepseek-harness",
         "dsh-plugin"
       ],
-      "readme_text": "# dsh-emotion-guide · 情绪引导\n\n## 工具\n\n- `emotion_guide`：情绪引导：按参数返回亲子教育方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-emotion-guide\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-emotion-guide\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+      "readme_text": "# dsh-route-plan · 路线规划\n\n## 工具\n\n- `route_plan`：路线规划：按参数返回徒步登山方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-route-plan\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-route-plan\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     },
     {
-      "full_name": "uckkk/dsh-space-plan2",
-      "html_url": "https://github.com/uckkk/dsh-space-plan2",
-      "description": "空间规划",
+      "full_name": "uckkk/dsh-choke-aid",
+      "html_url": "https://github.com/uckkk/dsh-choke-aid",
+      "description": "气道梗阻",
       "stars": 0,
       "language": "JavaScript",
-      "pushed_at": "2026-08-20T19:44:54Z",
+      "pushed_at": "2026-08-20T19:42:21Z",
       "topics": [
         "deepseek-harness",
         "dsh-plugin"
@@ -1047,15 +1165,15 @@
         "deepseek-harness",
         "dsh-plugin"
       ],
-      "readme_text": "# dsh-space-plan2 · 空间规划\n\n## 工具\n\n- `space_plan2`：空间规划：按参数返回小户型空间利用方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-space-plan2\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-space-plan2\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+      "readme_text": "# dsh-choke-aid · 气道梗阻\n\n## 工具\n\n- `choke_aid`：气道梗阻：按参数返回家庭急救方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-choke-aid\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-choke-aid\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     },
     {
-      "full_name": "uckkk/dsh-red-packet",
-      "html_url": "https://github.com/uckkk/dsh-red-packet",
-      "description": "红包礼仪",
+      "full_name": "uckkk/dsh-homework",
+      "html_url": "https://github.com/uckkk/dsh-homework",
+      "description": "作业辅导",
       "stars": 0,
       "language": "JavaScript",
-      "pushed_at": "2026-08-20T19:48:40Z",
+      "pushed_at": "2026-08-20T19:42:44Z",
       "topics": [
         "deepseek-harness",
         "dsh-plugin"
@@ -1067,15 +1185,15 @@
         "deepseek-harness",
         "dsh-plugin"
       ],
-      "readme_text": "# dsh-red-packet · 红包礼仪\n\n## 工具\n\n- `red_packet`：红包礼仪：按参数返回家庭节庆筹备方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-red-packet\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-red-packet\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+      "readme_text": "# dsh-homework · 作业辅导\n\n## 工具\n\n- `homework`：作业辅导：按参数返回亲子教育方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-homework\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-homework\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     },
     {
-      "full_name": "uckkk/dsh-feed-rule",
-      "html_url": "https://github.com/uckkk/dsh-feed-rule",
-      "description": "喂食规则",
+      "full_name": "uckkk/dsh-pet-teeth",
+      "html_url": "https://github.com/uckkk/dsh-pet-teeth",
+      "description": "口腔健康",
       "stars": 0,
       "language": "JavaScript",
-      "pushed_at": "2026-08-20T18:59:57Z",
+      "pushed_at": "2026-08-20T20:25:50Z",
       "topics": [
         "deepseek-harness",
         "dsh-plugin"
@@ -1087,15 +1205,15 @@
         "deepseek-harness",
         "dsh-plugin"
       ],
-      "readme_text": "# dsh-feed-rule · 喂食规则\n\n## 工具\n\n- `feed_rule`：喂食规则：按参数返回水族养护方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-feed-rule\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-feed-rule\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+      "readme_text": "# dsh-pet-teeth · 口腔健康\n\n## 工具\n\n- `pet_teeth`：口腔健康：按参数返回宠物健康营养方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-pet-teeth\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-pet-teeth\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     },
     {
-      "full_name": "uckkk/dsh-dip-sauce",
-      "html_url": "https://github.com/uckkk/dsh-dip-sauce",
-      "description": "蘸料搭配",
+      "full_name": "uckkk/dsh-fatigue",
+      "html_url": "https://github.com/uckkk/dsh-fatigue",
+      "description": "疲劳自测",
       "stars": 0,
       "language": "JavaScript",
-      "pushed_at": "2026-08-20T18:39:09Z",
+      "pushed_at": "2026-08-20T19:51:16Z",
       "topics": [
         "deepseek-harness",
         "dsh-plugin"
@@ -1107,15 +1225,15 @@
         "deepseek-harness",
         "dsh-plugin"
       ],
-      "readme_text": "# dsh-dip-sauce · 蘸料搭配\n\n## 工具\n\n- `dip_sauce`：蘸料搭配：按参数返回火锅聚餐方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-dip-sauce\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-dip-sauce\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+      "readme_text": "# dsh-fatigue · 疲劳自测\n\n## 工具\n\n- `fatigue`：疲劳自测：按参数返回家庭健康自检结果。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-fatigue\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-fatigue\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     },
     {
-      "full_name": "uckkk/dsh-big-clean",
-      "html_url": "https://github.com/uckkk/dsh-big-clean",
-      "description": "年前大扫除",
+      "full_name": "uckkk/dsh-juice-mix",
+      "html_url": "https://github.com/uckkk/dsh-juice-mix",
+      "description": "果汁搭配",
       "stars": 0,
       "language": "JavaScript",
-      "pushed_at": "2026-08-20T19:46:28Z",
+      "pushed_at": "2026-08-20T18:59:32Z",
       "topics": [
         "deepseek-harness",
         "dsh-plugin"
@@ -1127,7 +1245,67 @@
         "deepseek-harness",
         "dsh-plugin"
       ],
-      "readme_text": "# dsh-big-clean · 年前大扫除\n\n## 工具\n\n- `big_clean`：年前大扫除：按参数返回家庭节庆筹备方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-big-clean\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-big-clean\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+      "readme_text": "# dsh-juice-mix · 果汁搭配\n\n## 工具\n\n- `juice_mix`：果汁搭配：按参数返回饮品制作方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-juice-mix\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-juice-mix\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-culture-boardgames",
+      "html_url": "https://github.com/uckkk/dsh-culture-boardgames",
+      "description": "桌游",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T23:13:22Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-culture-boardgames · 桌游\n\n## 工具\n\n- `list_boardgame`：列出 桌游 条目。\n- `get_boardgame`：按 id 或名称查询 桌游 条目详情。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-culture-boardgames\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-culture-boardgames\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-bahamas",
+      "html_url": "https://github.com/uckkk/dsh-bahamas",
+      "description": "巴哈马国家",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T16:36:47Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-bahamas · 巴哈马国家\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-bahamas\n```\n"
+    },
+    {
+      "full_name": "uckkk/dsh-bangladesh",
+      "html_url": "https://github.com/uckkk/dsh-bangladesh",
+      "description": "孟加拉国国家",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T16:43:40Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-bangladesh · 孟加拉国国家\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-bangladesh\n```\n"
     },
     {
       "full_name": "uckkk/dsh-live-stream",
@@ -1735,6 +1913,227 @@
         "dsh-plugin"
       ],
       "readme_text": "# dsh-budget-split · 预算分配\n\n## 工具\n\n- `budget_split`：预算分配：按参数返回家庭财务规划方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-budget-split\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-budget-split\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-pass-strength",
+      "html_url": "https://github.com/uckkk/dsh-pass-strength",
+      "description": "密码强度",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T17:38:34Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-pass-strength · 密码强度\n\n## 工具\n\n- `pass_strength`：密码强度：按参数精确计算，返回明确建议。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-pass-strength\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-pass-strength\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-electrical-safety",
+      "html_url": "https://github.com/uckkk/dsh-electrical-safety",
+      "description": "用电安全",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T17:36:23Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-electrical-safety · 用电安全\n\n## 工具\n\n- `electrical_safety`：用电安全：按场景返回关键处置步骤（急救内容请以专业培训为准）。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-electrical-safety\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-electrical-safety\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-camp-food",
+      "html_url": "https://github.com/uckkk/dsh-camp-food",
+      "description": "露营食物准备",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T15:58:04Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-camp-food · 露营食物准备\n\n## 工具\n\n- `camp_food`：露营食物准备：按参数精确计算，返回明确建议。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-camp-food\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-camp-food\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-screen-break",
+      "html_url": "https://github.com/uckkk/dsh-screen-break",
+      "description": "用眼休息提醒",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T15:38:02Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-screen-break · 用眼休息提醒\n\n## 工具\n\n- `screen_break`：用眼休息提醒：按参数精确计算，返回明确建议（医疗内容请遵医嘱）。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-screen-break\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-screen-break\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-question-asking",
+      "html_url": "https://github.com/uckkk/dsh-question-asking",
+      "description": "职场提问",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T16:44:34Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "皮肤/UI"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin",
+        "skin"
+      ],
+      "readme_text": "# dsh-question-asking · 职场提问\n\n## 工具\n\n- `question_asking`：职场提问：按场景返回结构化方法与建议。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-question-asking\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-question-asking\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-audio-bitrate",
+      "html_url": "https://github.com/uckkk/dsh-audio-bitrate",
+      "description": "音频比特率",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T16:21:31Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-audio-bitrate · 音频比特率\n\n## 工具\n\n- `audio_bitrate`：音频比特率：按参数精确计算，返回详细结果。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-audio-bitrate\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-audio-bitrate\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-cake-recipe",
+      "html_url": "https://github.com/uckkk/dsh-cake-recipe",
+      "description": "蛋糕配方",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T18:57:24Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-cake-recipe · 蛋糕配方\n\n## 工具\n\n- `cake_recipe`：蛋糕配方：按参数返回烘焙实操方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-cake-recipe\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-cake-recipe\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-interval",
+      "html_url": "https://github.com/uckkk/dsh-interval",
+      "description": "间歇训练",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T18:57:50Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-interval · 间歇训练\n\n## 工具\n\n- `interval`：间歇训练：按参数返回跑步训练方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-interval\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-interval\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-cook-time",
+      "html_url": "https://github.com/uckkk/dsh-cook-time",
+      "description": "涮烫时间表",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T18:36:57Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-cook-time · 涮烫时间表\n\n## 工具\n\n- `cook_time`：涮烫时间表：按参数返回火锅聚餐方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-cook-time\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-cook-time\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-cake-pan",
+      "html_url": "https://github.com/uckkk/dsh-cake-pan",
+      "description": "蛋糕模具换算",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T14:43:12Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-cake-pan · 蛋糕模具换算\n\n## 工具\n\n- `cake_pan`：蛋糕模具换算：按参数精确计算，返回详细结果。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-cake-pan\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-cake-pan\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-paint-tint",
+      "html_url": "https://github.com/uckkk/dsh-paint-tint",
+      "description": "乳胶漆调色",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T14:58:05Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-paint-tint · 乳胶漆调色\n\n## 工具\n\n- `paint_tint`：乳胶漆调色：按参数精确计算，返回详细结果。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-paint-tint\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-paint-tint\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     },
     {
       "full_name": "uckkk/dsh-oven-convert",
@@ -7728,447 +8127,6 @@
         "dsh-plugin"
       ],
       "readme_text": "# dsh-script-words · 口播稿字数\n\n## 工具\n\n- `script_words`：口播稿字数：按参数精确计算，返回详细结果。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-script-words\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-script-words\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
-    },
-    {
-      "full_name": "uckkk/dsh-water-electrolyte",
-      "html_url": "https://github.com/uckkk/dsh-water-electrolyte",
-      "description": "出汗电解质",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-20T15:05:41Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-water-electrolyte · 出汗电解质\n\n## 工具\n\n- `water_electrolyte`：出汗电解质：按参数精确计算，返回明确建议（医疗内容请遵医嘱）。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-water-electrolyte\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-water-electrolyte\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
-    },
-    {
-      "full_name": "uckkk/dsh-reading-light",
-      "html_url": "https://github.com/uckkk/dsh-reading-light",
-      "description": "阅读灯光",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-20T20:23:52Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-reading-light · 阅读灯光\n\n## 工具\n\n- `reading_light`：阅读灯光：按参数返回家居灯光设计方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-reading-light\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-reading-light\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
-    },
-    {
-      "full_name": "zaimokuza-yoshiteru/dsh-theme-library",
-      "html_url": "https://github.com/zaimokuza-yoshiteru/dsh-theme-library",
-      "description": "Extensible animated theme library for DeepSeek Harness",
-      "stars": 0,
-      "language": "TypeScript",
-      "pushed_at": "2026-09-15T08:13:57Z",
-      "topics": [
-        "dsh-plugin"
-      ],
-      "categories": [
-        "皮肤/UI"
-      ],
-      "tags": [
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-theme-library\n\nDSH 动态壁纸主题库，支持网页端和桌面客户端。\n\n安装 `@zaimokuza/dsh-theme-library`，打开「设置 → 主题管理」，以预览卡片切换壁纸、调整背景透明度，或选择是否调整原生组件底色。设置自动保存。\n\n所有主题均无音轨，支持浅色/深色外观、后台暂停及系统“减少动态效果”设置。\n\n主题管理使用 DSH 原生设置分区。启动时由黑底衔接壁纸首帧；可按 Esc 跳过开场，加载失败或超时会自动放行。\n\n## 主题效果\n\n### 黑烟\n\n![黑烟主题效果](docs/assets/black-smoke.gif)\n\n### 游侠客\n\n![游侠客主题效果](docs/assets/wandering-swordswoman.gif)\n\n### 上官婉儿\n\n![上官婉儿主题效果](docs/assets/shangguan-waner.gif)\n\n### 水墨侠客\n\n![水墨侠客主题效果](docs/assets/ink-swordsman.gif)\n\n### 正是修行时\n\n![正是修行时主题效果](docs/assets/cultivation-time.gif)\n\n### 雨落狂流之暗\n\n![雨落狂流之暗主题效果](docs/assets/nibelungen.gif)\n\n## 素材来源\n\n原有五款素材来自 Wallpaper Engine；「雨落狂流之暗」为本项目制作的《龙族》非官方同人场景。\n"
-    },
-    {
-      "full_name": "uckkk/dsh-anxiety-check",
-      "html_url": "https://github.com/uckkk/dsh-anxiety-check",
-      "description": "焦虑自评",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-20T17:40:50Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-anxiety-check · 焦虑自评\n\n## 工具\n\n- `anxiety_check`：焦虑自评：按参数返回明确建议（心理健康内容仅供参考）。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-anxiety-check\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-anxiety-check\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
-    },
-    {
-      "full_name": "uckkk/dsh-ai-terms",
-      "html_url": "https://github.com/uckkk/dsh-ai-terms",
-      "description": "AI 术语",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-20T14:54:30Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-ai-terms · AI 术语\n\n## 工具\n\n- `list_ai`：列出 AI 术语 知识条目（名称+英文）。\n- `get_ai`：按 id 或名称查询 AI 术语 条目详情。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-ai-terms\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-ai-terms\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
-    },
-    {
-      "full_name": "uckkk/dsh-daily-plan",
-      "html_url": "https://github.com/uckkk/dsh-daily-plan",
-      "description": "每日练习",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-20T18:47:00Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-daily-plan · 每日练习\n\n## 工具\n\n- `daily_plan`：每日练习：按参数返回书法学习方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-daily-plan\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-daily-plan\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
-    },
-    {
-      "full_name": "uckkk/dsh-diamond-care",
-      "html_url": "https://github.com/uckkk/dsh-diamond-care",
-      "description": "钻石保养",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-20T18:41:38Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-diamond-care · 钻石保养\n\n## 工具\n\n- `diamond_care`：钻石保养：按参数返回手表珠宝保养方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-diamond-care\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-diamond-care\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
-    },
-    {
-      "full_name": "uckkk/dsh-bundle-calc",
-      "html_url": "https://github.com/uckkk/dsh-bundle-calc",
-      "description": "套餐设计",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-20T15:58:54Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-bundle-calc · 套餐设计\n\n## 工具\n\n- `bundle_calc`：套餐设计：按参数精确计算，返回详细结果。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-bundle-calc\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-bundle-calc\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
-    },
-    {
-      "full_name": "uckkk/dsh-burundi",
-      "html_url": "https://github.com/uckkk/dsh-burundi",
-      "description": "布隆迪国",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-20T18:37:01Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-burundi · 布隆迪国\n\n## 工具\n\n- `country_info`：返回 布隆迪（Burundi）的首都、人口（万）、货币与大洲。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-burundi\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-burundi\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
-    },
-    {
-      "full_name": "uckkk/dsh-costa-rica",
-      "html_url": "https://github.com/uckkk/dsh-costa-rica",
-      "description": "哥斯达黎加国家",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-20T22:35:35Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-costa-rica · 哥斯达黎加国家\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-costa-rica\n```\n"
-    },
-    {
-      "full_name": "uckkk/dsh-cuba",
-      "html_url": "https://github.com/uckkk/dsh-cuba",
-      "description": "古巴国家",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-20T23:04:22Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-cuba · 古巴国家\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-cuba\n```\n"
-    },
-    {
-      "full_name": "KureKaruna/dsh-open-folder",
-      "html_url": "https://github.com/KureKaruna/dsh-open-folder",
-      "description": "",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-22T03:34:18Z",
-      "topics": [
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "dsh-plugin",
-        "web ui"
-      ],
-      "readme_text": "# dsh-open-folder\n\nDeepSeek Harness / DSH Web UI 插件：在会话页头（Session Header）最右侧的 `conversation.session.header.utilities` 区域，向 “Session log” 按钮的**左边**增加一个 **“打开工作区”** 按钮。\n\n点击按钮后，插件读取当前 Session 的 `cwd`（当前工作区），通过 Host 的 `workspaces.openPath()` 调用操作系统打开该文件夹。\n\n## 功能\n\n- 使用 `conversation.session.header.utilities` 列表插槽，不动标题旁的 `conversation.session.header.actions` 区域。\n- 注册时使用 `order: -10`，因此会排在默认 `order: 0` 的 “Session log” 按钮左侧。\n- 按钮在会话没有可用 `cwd` 时自动禁用。\n- 纯浏览器插件，Host 侧为无操作入口。\n\n## 文件\n\n```\ndsh-open-folder/\n├── package.json       # 包元数据 + dsh.bundle / dsh.client 声明\n├── index.js           # Host 侧无操作入口\n├── index.d.ts         # Host 侧类型\n├── client.js          # 浏览器侧插件（ModuleLoader bundle）\n├── client.d.ts        # 浏览器侧类型\n├── cordis.patch.yml   # 组合包补丁：把 dsh-open-folder 插入配置\n└── README.md\n```\n\n## 安装\n\n```sh\ncd C:\\Users\\Jason-Woo\\Desktop\ndsh plugin --profile <你的profile> add .\\dsh-open-folder\n```\n\n安装后启动 Web UI，打开任意工作区会话，在页头右侧 `Session log` 左边即可看到 **“打开工作区”** 按钮。\n\n## 说明\n\n- 按钮调用的是 Host 的 `workspaces.openPath(cwd)`，因此打开的是当前 Session 真正的工作目录，而不是浏览器前端路径。\n- 若当前会话没有 `cwd`（例如空白/异常会话），按钮会处于禁用状态。"
-    },
-    {
-      "full_name": "deng7112/web2cli",
-      "html_url": "https://github.com/deng7112/web2cli",
-      "description": "",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-21T14:31:03Z",
-      "topics": [
-        "ai-agent",
-        "chrome-extension",
-        "cli-generator",
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "终端/TUI"
-      ],
-      "tags": [
-        "ai-agent",
-        "chrome-extension",
-        "cli-generator",
-        "deepseek-harness",
-        "dsh-plugin",
-        "agent"
-      ],
-      "readme_text": "# Web2CLI\n\n> Turn recorded browser requests into login-aware CLI tools.\n\n[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)\n[![Chrome MV3](https://img.shields.io/badge/Chrome-MV3-blue.svg)](https://developer.chrome.com/docs/extensions/mv3/)\n\n**Web2CLI** is a Chrome extension + CLI template that helps you — and your AI coding\nagent (e.g. [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)) — turn a\nwebsite's authenticated API calls into a reusable command-line tool, **without manually\ncopying cookies**.\n\n中文说明见 [README.zh-CN.md](./README.zh-CN.md)。\n\n---\n\n## Why\n\nBuilding a quick CLI on top of an internal web service usually means:\n\n1. Open DevTools, copy a `Cookie` header by hand (and it silently expires later).\n2. Copy each `curl`, guess which parameters matter.\n3. Paste everything into a script and pray the auth keeps working.\n\nWeb2CLI automates the painful parts:\n\n- **Cookie sync** — one click exports the current site's cookies (**including `httpOnly`**)\n  to a fixed local file. Generated CLIs read that file **at runtime**, so when the login\n  refreshes, your CLI keeps working with zero edits.\n- **Request recording** — record real XHR/Fetch traffic (including POST bodies and response\n  bodies) via the Chrome DevTools Protocol, then hand a clean `curl`/Markdown bundle to an AI\n  agent that writes the CLI for you.\n\n## How it fits DeepSeek Harness (and other agents)\n\nDeepSeek Harness (`dsh`) is a terminal agent harness (\"everything is a plugin\"). It cannot drive\na browser. Web2CLI covers the browser side and hands the agent everything it needs:\n\n```\n ┌───────────┐   record + sync   ┌────────────────────┐\n │  Browser   │ ───────────────▶ │  Web2CLI extension  │\n └───────────┘                    └─────────┬──────────┘\n                                            │ cookie file + recorded requests\n                                            ▼\n                      ┌───────────────────────────────────────┐\n                      │  AI agent (dsh / any) + this repo's    │\n                      │  AGENTS.md guide + cli-template/       │\n                      └─────────────────────┬─────────────────┘\n                                            │ generates\n                                            ▼\n                              ┌──────────────────────────┐\n                              │  your CLI (Python)        │\n                              │  reads cookie file at run │\n                              └──────────────────────────┘\n```\n\nPoint your agent's workspace at this repo (or reference [`AGENTS.md`](./AGENTS.md)) and ask it to\ngenerate a CLI from your recording — it follows the minimal-interface-set rules and the\ncookie-alignment contract automatically.\n\n## Repository layout\n\n```\nweb2cli/\n├── README.md               # this file\n├── README.zh-CN.md         # 中文文档\n├── AGENTS.md               # guide for AI agents: recording → CLI (read this, dsh!)\n├── LICENSE                 # MIT\n├── extension/              # Chrome MV3 extension (the browser side)\n│   ├── manifest.json\n│   ├── background.js       # service worker: cookie sync + CDP recording\n│   ├── popup.html / popup.js\n│   ├── records.html / records.js   # result page: select + copy curl/Markdown/JSON\n│   └── README.md\n└── cli-template/           # what the agent fills in to produce a CLI\n    ├── cli_template.py     # CLI skeleton (runtime cookie loading, auth-expiry detection)\n    └── read_cookie.py      # inspect synced cookie files\n```\n\n## Install the extension\n\n1. Open `chrome://extensions`.\n2. Enable **Developer mode** (top-right).\n3. Click **Load unpacked** and select the [`extension/`](./extension) directory of this repo.\n4. Pin the **Web2CLI** icon. The popup shows two sections: *Cookie sync* and *Request recording*.\n\n> After any code change, hit the reload icon on the Web2CLI card in `chrome://extensions`.\n\n## Usage\n\n### 1. Sync cookies (login state)\n\n1. Open the target site in the browser (you must be **logged in**).\n2. Click the Web2CLI icon → **Sync Cookie to local file**.\n3. Output: `~/Downloads/web2cli-cookies/{host}.json`. The `cookie_header` field is a\n   ready-to-use `Cookie` string.\n4. Optional: tick **Auto sync** to rewrite the file whenever that site's login cookies change.\n\n### 2. Record requests\n\n1. Open the target page → popup → **Start recording** (the \"debugging this browser\" bar is normal).\n2. Use the page normally; newly opened tabs are captured automatically.\n3. **Stop recording** → **Open results**.\n4. Click **Smart preselect (minimal set)** to auto-pick the relevant requests, adjust as needed,\n   then **Copy Markdown (for AI)**.\n\n### 3. Generate the CLI\n\nPaste the Markdown into your AI agent together with a one-line description, e.g.:\n\n> \"Here are the recorded requests. Build me a CLI to query orders.\"\n\nThe agent follows [`AGENTS.md`](./AGENTS.md): it keeps only the **minimal interface set**\n(target action + its parameter-source queries), fills `cli-template/cli_template.py`, and verifies.\n\n## Cookie file format\n\n`~/Downloads/web2cli-cookies/{host}.json` (`format: \"web2cli-cookie-v1\"`):\n\n```jsonc\n{\n  \"format\": \"web2cli-cookie-v1\",\n  \"host\": \"example.com\",\n  \"base_domain\": \"example.com\",\n  \"updated_at\": \"2026-08-20T08:00:00.000Z\",\n  \"cookie_count\": 12,\n  \"cookie_header\": \"a=1; b=2; ...\",      // paste-ready Cookie string\n  \"cookies\": [ { \"name\": \"a\", \"value\": \"1\", \"domain\": \".example.com\", \"httpOnly\": true } ]\n}\n```\n\nGenerated CLIs read `cookie_header` at **runtime** and apply browser-style domain filtering, so a\nstale/overly-broad file can't trigger `400 Request Header Or Cookie Too Large`.\n\n## Security\n\n- Cookie files are **plaintext credentials** — treat them like passwords. Never commit them to git\n  or share them.\n- CLIs must read cookies from the file at runtime; **never hardcode** cookie values.\n- **Write APIs (POST/PUT/DELETE) are never auto-executed** by the agent — you run them yourself.\n\n## FAQ\n\n| Symptom | Fix |\n|---|---|\n| CLI says `[cookie not synced]` | Sync cookies for that host first (Usage §1). |\n| `400 Request Header Or Cookie Too Large` | Use the latest extension (host-scoped filtering) and re-sync. |\n| Redirected to / served a login page | Login session expired — log in again in the browser, then re-sync. |\n| Missing POST body in recording | Wait for the request to finish before stopping the recording. |\n| Blue \"debugging this browser\" bar | Required by Chrome during recording; cannot be removed. |\n\n## License\n\n[MIT](./LICENSE)\n"
-    },
-    {
-      "full_name": "qewregrfhnm/dsh-session-manager",
-      "html_url": "https://github.com/qewregrfhnm/dsh-session-manager",
-      "description": "Full session management plugin for DeepSeek Harness (DSH) web UI: delete/trash/restore, workspace grouping, move sessions between workspaces, unread markers, context compaction threshold. Fully local, bilingual zh/en.",
-      "stars": 0,
-      "language": "TypeScript",
-      "pushed_at": "2026-08-22T14:51:58Z",
-      "topics": [
-        "deepseek",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "plugin",
-        "session-manager",
-        "workspace"
-      ],
-      "categories": [
-        "皮肤/UI"
-      ],
-      "tags": [
-        "deepseek",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "plugin",
-        "session-manager",
-        "workspace",
-        "web ui"
-      ],
-      "readme_text": "# 🗂️ dsh-session-manager\n\n> DeepSeek Harness Web 界面的一站式会话管理插件：删除（回收站）/ 恢复 / 重命名 / 导出 / 移动工作区 / 批量操作，开箱即用，**不修改 DSH 核心代码**。\n\n[English](README.en.md) | 中文\n\n[![build](https://img.shields.io/github/actions/workflow/status/qewregrfhnm/dsh-session-manager/ci.yml?branch=main&label=build&logo=github)](https://github.com/qewregrfhnm/dsh-session-manager/actions)\n[![release](https://img.shields.io/github/v/release/qewregrfhnm/dsh-session-manager?sort=semver&label=release&color=4d6bfe)](https://github.com/qewregrfhnm/dsh-session-manager/releases)\n[![downloads](https://img.shields.io/github/downloads/qewregrfhnm/dsh-session-manager/total?color=16a34a)](https://github.com/qewregrfhnm/dsh-session-manager/releases)\n[![license](https://img.shields.io/github/license/qewregrfhnm/dsh-session-manager)](LICENSE)\n[![language](https://img.shields.io/badge/language-TypeScript-3178c6?logo=typescript&logoColor=white)](src)\n[![platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey)](#兼容性)\n[![dsh](https://img.shields.io/badge/DSH-0.1.x%20rc-0f1115)](#兼容性)\n\n## ✨ 功能亮点\n\n| 能力 | 说明 |\n| --- | --- |\n| 🗑️ **删除 / 恢复 / 彻底删除** | 删除进入回收站（保留最近 10 条，可恢复或彻底清除）；已归档会话一键恢复 |\n| ✏️ **会话重命名** | 写入官方 `session/title` 事件，自动标题不再覆盖，重启不丢 |\n| 📥 **导出 Markdown / JSON** | Markdown 可读对话记录；JSON 无损完整事件日志；浏览器一键下载 |\n| 📂 **移动到工作区** | 拖拽会话行到工作区标题即可移动；「移动到…」支持批量与**＋新建工作区** |\n| 🔍 **搜索与筛选** | 按标题 / 目录实时过滤 + 全部 / 运行中 / 未读 / 已归档状态筛选 |\n| 🔵 **未读 / 已读标记** | 手动未读、官方待输入 / 完成提醒状态点，点击就地已读 |\n| 📊 **活动统计** | 每个会话的轮次 / 消息数 / 工具调用 / 活动窗口 |\n| ⏯️ **继续 / 暂停 / 新聊天中继续** | 一键继续（归档会话自动恢复后再打开）、暂停运行中回合、fork 子会话 |\n| 🗂️ **工作区管理** | 分组展示、拖拽排序、置于顶部 / 重命名 / 删除工作区 |\n| ⚙️ **全局上下文压缩阈值** | 对所有 Agent 预设统一生效，保存即时 + 持久化 + 重启自动应用 |\n\n另有：对话顶部**对话管理抽屉**（可固定）、**删除本对话**、打开日志文件夹、子代理（孤儿）会话清理、中英文界面自适应。\n\n## 📸 截图\n\n> 截图为脱敏演示界面（会话标题与路径为示例数据）。\n\n| 设置页 · 会话管理总览 | 会话行「更多」菜单 |\n| --- | --- |\n| ![会话管理总览](assets/screenshots/session-manager-overview.png) | ![更多菜单](assets/screenshots/more-menu.png) |\n\n| 已归档会话与回收站 | 对话管理抽屉 |\n| --- | --- |\n| ![已归档与回收站](assets/screenshots/archived-trash.png) | ![对话管理抽屉](assets/screenshots/drawer.png) |\n\n## 📦 安装\n\n### 环境要求\n\n- 全局安装 DSH CLI：`npm i -g @deepseek-ai/dsh`（`0.1.0-rc.6` 或同代 `0.1.x` rc）\n- Node.js `^22.19.0 || >=24.0.0`，pnpm `>=9`（DSH CLI 的插件管理直接转发给 pnpm）\n\n### 从 GitHub Release 安装（推荐）\n\n```sh\ndsh plugin --profile web add 'https://github.com/qewregrfhnm/dsh-session-manager/releases/download/v0.4.1/dsh-session-manager-0.4.1.tgz'\n```\n\n> 最新版本见 [Releases](https://github.com/qewregrfhnm/dsh-session-manager/releases)，把 URL 中的版本号换成最新 tag。\n\n### 从仓库标签安装\n\n```sh\ndsh plugin --profile web add 'github:qewregrfhnm/dsh-session-manager#v0.4.1'\n```\n\n### 从本地目录 / tarball 安装\n\n```sh\n# 本地目录\ndsh plugin --profile web add /absolute/path/to/dsh-session-manager\n# 或先打包再安装\ncd dsh-session-manager && pnpm pack\ndsh plugin --profile web add /absolute/path/to/dsh-session-manager-0.4.1.tgz\n```\n\n### 手动安装（`dsh plugin` 不可用时的后备方案）\n\n`dsh plugin` 只是在 profile 目录里转发给 pnpm 并同步 `dsh.profile.bundles`。手动做法：\n\n```sh\ncd ~/.dsh/profiles/web\npnpm add <上面的包说明>\n# 然后在 package.json 的 dsh.profile.bundles 数组追加 \"dsh-session-manager\"\n```\n\n> **安装完成后重启 `dsh web`**（host 插件与客户端 bundle 在启动时加载）。\n\n## 🚀 使用指南\n\n### 设置页 · 会话管理\n\n1. 打开侧边栏底部 **设置** → 左侧导航 **会话管理**\n2. 主列表为未归档会话，按工作区分组；底部折叠区为**已归档会话**与**回收站**\n3. 行内仅保留 **删除** 按钮；其余操作收进「**更多**」菜单：\n   **继续会话**（归档会话会自动恢复再打开）/ **暂停** / **恢复** / **新聊天中继续** / **重命名** / **导出 Markdown / 导出 JSON** / **统计** / **文件夹** / **移动到…**\n4. 顶部**搜索框** + **状态筛选**（全部 / 运行中 / 未读 / 已归档）快速定位\n5. **拖拽**会话行到工作区标题上直接移动；勾选多行后可**批量移动 / 批量删除**\n6. 工作区标题悬停出现 **置于顶部 / 重命名 / 删除**\n\n### 重命名与导出\n\n1. 会话行「更多」→ **重命名**：输入新名称确认，标题立即更新（侧边栏同步）\n2. 「更多」→ **导出 Markdown**：下载可读对话记录（轮次 / 用户 / 助手 / 工具调用与结果）\n3. 「更多」→ **导出 JSON**：下载无损完整事件日志（会话头 + 全部事件，含 seq/time）\n\n### 把会话移动到其他工作区\n\n1. 找到会话 →「更多」→「**移动到…**」→ 选择目标工作区；或直接把会话行**拖到工作区标题**上\n2. 日志文件夹、会话头工作目录与工作区记账同步更新，重启不丢\n3. 「移动到…」菜单里的 **＋新建工作区（会话所在目录）** 可把未注册路径的会话登记为新工作区\n\n> 限制：**正在运行 / 已加载（live）的会话不能移动**——先暂停或重启 `dsh web` 卸载后再移动。\n\n### 通用设置 · 上下文压缩阈值\n\n**设置 → 通用设置**：设置对话上下文用到模型窗口的多少比例时自动压缩（17%–90%），每次压缩保留最近 16% 原文；对所有 Agent 预设的会话统一生效，保存即时生效并持久化。\n\n### 对话顶部快捷入口\n\n任意对话页右上角：**对话管理**（抽屉，可图钉固定）、**回收站**、**删除本对话**（红色）。\n\n## 🔧 工作原理\n\n| 层 | 实现 |\n| --- | --- |\n| Host | `src/index.ts` 注册 10 条路由：`POST /delete`、`POST /restore`、`POST /purge`、`GET /trash`、`POST /open-folder`、`POST /pause`、`POST /move-workspace`、`GET|POST /compaction-threshold`、`POST /rename`（live 走官方 `sessionTitle.rename`，冷会话追加事件帧 + 同步持久投影缓存）、`POST /export`（`sessionPersistence.inspect` 解码后渲染 Markdown / JSON）。服务：`ctx.sessionPersistence` / `ctx.workspaceRegistry` / `ctx.storageDomain` / `ctx.agentPresets` / `ctx.agents` |\n| Client | `src/client/index.ts` 通过官方 `settings.section` 插槽注册分栏；`useSessions` / `useWorkspaces` 标准数据源；抽屉经 `sessions.list`（ObservableSnapshot）实时订阅；彻底删除的会话 id 记在 localStorage 防止刷新「复活」 |\n\n- **重命名**：标题即日志中的 `session/title` 事件（官方 `@deepseek-ai/dsh-session-title`，来源 `user` 钉住标题）；冷会话由 host 自算续接 seq（兼容打包分片行）追加事件帧，并写入官方持久投影缓存（`session_projcache`），列表与侧边栏即时更新\n- **导出**：官方 `sessionPersistence.inspect` 拿到解码后的平衡事件视图（打包分片行已还原、损坏尾部不进入）；构建器为纯函数模块 `src/export.ts`（含单测）\n- **移动到工作区**：改写 zstd 日志**首帧**（只含一行会话头，`cwd` 更新为目标路径），事件帧原样保留；目录改名搬入目标工作区后写回新文件，最后更新工作区记账（`detachSession` + `attachSession`）；任一步失败都会**先改回目录名再恢复原始字节**，绝不先删后移\n- **已归档会话「继续会话」**：官方工作区投影会在当前会话仍归档时清空选中，因此先自动恢复（取消归档）+ 刷新工作区基线，再打开\n- **未读机制**：手动未读集存于共享 localStorage key `dsh.session-unread.v1`，与其他会话管理插件互通；官方状态点（琥珀 / 绿色 / 转圈）由 `pendingInteraction` / `completed` / `running` 驱动\n- **压缩阈值全局生效**：存于存储域；默认预设为用户预设时同步写入其 `agent.cordis.yml`（系统预设保持只读）；host 在 `agent/pre-step` 钩子写入所有压缩引擎配置\n- 回收站条目持久化在 `~/.dsh/storages/dsh_delete_session.json`，文件在 `~/.dsh/dsh-delete-session-trash/`\n- 无系统提示词改动、无模型工具新增，对 token 与模型行为零影响\n\n## 🔒 隐私与安全\n\n- **完全本地运行**：所有操作只读写本机 `~/.dsh` 下的文件与浏览器 localStorage，**没有任何遥测、统计上报或网络请求**\n- 移动 / 导出 / 重命名只是操作本机日志与元数据，不会上传任何内容\n- 插件不修改 DSH 核心代码，卸载插件不影响已有会话\n\n## ⚠️ 限制\n\n- **不能删除正在运行的会话**（按钮禁用并拒绝删除）\n- **不能移动正在运行 / 已加载（live）的会话**\n- 子代理会话可删除（非运行中），包括主会话已删除的「孤儿子代理」\n- 已彻底删除的会话 id 会保留在浏览器 localStorage 与归档集合中（无害残留，防止刷新「复活」）\n- 侧边栏未读点按标题文本匹配，重复标题会共享该点（面板 / 抽屉内按真实 id 精确标记，不受影响）\n\n## 📄 兼容性\n\n- 适配 DSH `0.1.0-rc.6`（使用 `settings.section` / `settings.general.item` / `conversation.session.header.utilities` 插槽与 `ctx.sessionPersistence` / `ctx.workspaceRegistry` / `ctx.agents` / `ctx.storageDomain` / `ctx.agentPresets` 服务）\n- 运行时 `@deepseek-ai/*` 包由 DSH host 提供（从全局安装解析）\n- DSH 升级后如插槽或服务 API 变化，可能需要适配\n\n## 🛠️ 开发\n\n```sh\npnpm install        # 依赖来自 npm 注册表，任何机器可直接构建\npnpm run check      # typecheck + 单测 + 构建\npnpm pack           # 产出 dsh-session-manager-<version>.tgz（用于 GitHub Releases）\n```\n\n- `lib/` 为已提交的构建产物——改动源码后请重建并提交（`github:` 方式安装无需构建步骤）\n- 每次 push / PR 由 GitHub Actions 自动执行 `pnpm run check`（构建徽章实时反映状态）\n- 更新日志见 [CHANGELOG.md](CHANGELOG.md)\n\n## 🤝 贡献与许可\n\n- 欢迎 Issue / PR：功能建议、缺陷报告、翻译改进\n- 本插件 fork 自 [dream12347/dsh-session-manager](https://github.com/dream12347/dsh-session-manager)（MIT），在此致谢原作者\n- 基于 [MIT License](LICENSE) 发布，版权归 dsh-session-manager contributors\n"
-    },
-    {
-      "full_name": "wkfedor/deepseek-harness-voice-input",
-      "html_url": "https://github.com/wkfedor/deepseek-harness-voice-input",
-      "description": "Local voice typing and speech-to-text plugin for DeepSeek Harness (dsh), powered by multilingual Whisper.",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-22T15:01:52Z",
-      "topics": [
-        "chromium",
-        "deepseek",
-        "deepseek-harness",
-        "dictation",
-        "dsh-plugin",
-        "firefox",
-        "microphone",
-        "offline-speech-recognition",
-        "onnx-runtime",
-        "speech-recognition",
-        "speech-to-text",
-        "transformers-js",
-        "voice-input",
-        "voice-typing",
-        "whisper"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "chromium",
-        "deepseek",
-        "deepseek-harness",
-        "dictation",
-        "dsh-plugin",
-        "firefox",
-        "microphone",
-        "offline-speech-recognition"
-      ],
-      "readme_text": "# Voice Input and Speech-to-Text for DeepSeek Harness\n\nAdd voice typing, microphone dictation, and local speech-to-text to the\n[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (`dsh`) Web UI.\nThis DeepSeek Harness plugin records speech in the browser and transcribes it locally\nwith multilingual Whisper. It works across Firefox, Chrome, Chromium, Edge, and Safari\nwithout a browser extension or a cloud speech-recognition service.\n\nUse it when you want to dictate prompts instead of typing them in the DeepSeek Harness\nconversation composer. Audio stays on the computer running Harness.\n\n## Features\n\n- One microphone button integrated into the DeepSeek Harness prompt input.\n- Local, private voice-to-text powered by Whisper, Transformers.js, and ONNX Runtime.\n- Multilingual speech recognition, including English and Russian voice input.\n- Cross-browser recording through `getUserMedia` and the Web Audio API.\n- A visible first-run model download with percentage, bytes, speed, cancel, and retry controls.\n- Persistent setup state: refreshing the page does not start a duplicate model download.\n- No Python, pip, ffmpeg, administrator access, browser extension, or external speech API.\n\n## Install the DeepSeek Harness voice input plugin\n\nInstall the package into the standard `web` profile:\n\n```bash\ndsh plugin --profile web add github:wkfedor/deepseek-harness-voice-input\n```\n\nThis package is a Cordis plugin rather than a profile bundle. Add it to the YAML list in\n`$DSH_HOME/profiles/web/cordis.patch.yml` (normally `~/.dsh/profiles/web/cordis.patch.yml`):\n\n```yaml\n- insert:\n    - id: voice-input\n      name: deepseek-harness-voice-input\n```\n\nIf that file already contains other entries, merge this `insert` entry into the existing\ntop-level YAML array instead of overwriting the file. Restart the DeepSeek Harness Web UI,\nthen open its usual local address:\n\n```bash\ndsh web\n```\n\n<http://127.0.0.1:3080>\n\n## Use voice typing\n\n1. Open a DeepSeek Harness conversation.\n2. Click the microphone button in the prompt composer.\n3. On first use, click **Install** and wait for the local Whisper model to reach 100%.\n4. Click the microphone to start recording.\n5. Click it again to stop and transcribe. The recognized text is inserted into the prompt.\n\nThe plugin only prepares text. It does not automatically submit the prompt, so you can\nreview or edit the transcription before sending it.\n\n## How local speech recognition works\n\n- The browser records mono PCM audio and produces a 16 kHz WAV payload.\n- The payload is sent only to the local DeepSeek Harness server.\n- A separate worker runs multilingual Whisper through Transformers.js and ONNX Runtime.\n- The downloaded model is stored in the Harness data directory, outside the plugin package.\n- Temporary audio is deleted after transcription.\n\nNo recording is sent to DeepSeek, Google, Microsoft, OpenAI, or another cloud transcription\nprovider by this plugin.\n\n## First use\n\nOn the first microphone click, the plugin opens its own installer card. The user can start or cancel the model download. The card shows:\n\n- current installation stage;\n- downloaded and total bytes;\n- percentage and transfer speed;\n- a clear error and retry action if setup fails.\n\nThe setup endpoint is idempotent: repeated requests attach to the same job and cannot start parallel downloads. Setup state is persisted and survives page reloads.\n\n## Runtime\n\n- Node.js (already required by DeepSeek Harness)\n- `@huggingface/transformers`\n- `onnx-community/whisper-tiny`, q4 multilingual weights (about 100 MB)\n\nThe model cache defaults to `$DSH_HOME/voice-input/models`. If `DSH_HOME` is not set, it uses `~/.cache/deepseek-harness-voice-input/models`.\n\n## Browser support\n\nThe recording path uses `getUserMedia` and the Web Audio API, not the inconsistent browser `SpeechRecognition` service. It is intended for current Firefox, Chromium, Edge, and Safari builds that support microphone capture and Web Audio.\n\nThe page must have permission to use the microphone. Local Harness pages served from\n`http://127.0.0.1` are supported by current desktop browsers.\n\n## Голосовой ввод для DeepSeek Harness\n\nЭтот плагин добавляет голосовой ввод и локальное распознавание русской речи в веб-интерфейс\nDeepSeek Harness (`dsh`). Нажмите кнопку микрофона, продиктуйте запрос и остановите запись —\nраспознанный текст появится в поле сообщения. Поддерживаются Firefox, Chrome, Chromium и Edge.\n\nДля преобразования речи в текст используется локальная multilingual-модель Whisper. Аудио не\nотправляется во внешние сервисы. Не требуются Python, ffmpeg, браузерное расширение или платный\nAPI распознавания речи. При первом запуске интерфейс показывает загрузку модели, процент,\nскорость и объём данных.\n\nПлагин подходит для диктовки запросов в DSH, локального voice typing и преобразования\nрусской речи в текст без облачного API.\n\n## Files\n\n- `lib/client.js` — microphone, WAV recording, installer card, and progress UI\n- `lib/index.js` — status/setup/cancel/transcription HTTP routes\n- `scripts/stt-worker.js` — isolated model loader and transcription worker\n\n## Repository\n\n<https://github.com/wkfedor/deepseek-harness-voice-input>\n"
-    },
-    {
-      "full_name": "uckkk/dsh-palladium",
-      "html_url": "https://github.com/uckkk/dsh-palladium",
-      "description": "钯元素",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-21T11:09:44Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-palladium · 钯元素\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-palladium\n```\n"
-    },
-    {
-      "full_name": "uckkk/dsh-iridium",
-      "html_url": "https://github.com/uckkk/dsh-iridium",
-      "description": "铱元素",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-21T11:12:04Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-iridium · 铱元素\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-iridium\n```\n"
-    },
-    {
-      "full_name": "uckkk/dsh-iron",
-      "html_url": "https://github.com/uckkk/dsh-iron",
-      "description": "铁元素",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-21T11:14:35Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-iron · 铁元素\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-iron\n```\n"
-    },
-    {
-      "full_name": "sidleo/dsh-desktop",
-      "html_url": "https://github.com/sidleo/dsh-desktop",
-      "description": "DeepSeek Harness 桌面壳：打开应用=启动 dsh web 服务并加载界面，关闭应用=自动停止服务。Electron desktop shell for DeepSeek Harness (DSH)",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-23T15:20:17Z",
-      "topics": [
-        "deepseek-harness",
-        "desktop-app",
-        "dsh",
-        "dsh-plugin",
-        "electron",
-        "macos"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "desktop-app",
-        "dsh",
-        "dsh-plugin",
-        "electron",
-        "macos"
-      ],
-      "readme_text": "# DeepSeek Harness Desktop\n\n**DeepSeek Harness 桌面应用**（DeepSeek Harness / DSH 的 Electron 桌面壳）\n\n一个极简的 Electron 桌面壳：**打开应用 = 启动 dsh web 服务 + 内置浏览器加载其界面；关闭应用 = 自动停止 dsh web 服务**。\n\n> [English version](README.en.md) | [中文](README.md)\n\n---\n\n## 核心优势\n\n本应用**不是**重新实现 dsh 界面的第三方客户端，而是直接加载**官方 `dsh web`** 界面——因此**官方 dsh web 支持的所有插件、配置、会话，本应用 100% 支持**，与终端里的 dsh web 完全一致，没有任何功能阉割。\n\n## 特性\n\n- **启动即用**：应用打开时自动在后台启动 `dsh web`（默认端口 **4096**，避开 dsh 默认 3080），等界面就绪后在内置窗口中展示\n- **界面即应用**：窗口就是 dsh web 的完整界面，无浏览器地址栏、标签页\n- **关闭即停**：关闭窗口/退出应用时，自动终止 dsh web 进程树，不留后台残留\n- **复用现有数据**：直接使用 `~/.dsh` 配置、会话与插件（与终端里的 dsh web 是同一份数据）\n- **冲突处理**：检测到另一个 dsh web 实例（task-board 单实例锁）或端口占用时，弹窗让用户选择（关闭旧实例 / 换端口 / 取消）\n- **流畅体验**（v1.1.0）：渲染进程关闭严格沙箱（`sandbox: false`），消除 macOS 上沙箱导致的界面卡顿；同时移除误伤 SPA 路由的导航拦截器\n\n---\n\n## 下载\n\n最新的 macOS（Apple Silicon / arm64）安装包见右侧 **Releases** 页面：**Download → dsh-desktop-1.3.0-arm64.dmg**\n\n## 使用\n\n```bash\n# 安装依赖\nnpm install\n\n# 启动应用\nnpm start\n```\n\n---\n\n## 配置（环境变量）\n\n| 变量 | 默认值 | 说明 |\n|------|--------|------|\n| `DSH_APP_PORT` | `4096` | dsh web 监听端口（避开默认 3080） |\n| `DSH_BIN` | 自动探测 | dsh CLI 路径（显式指定时优先使用） |\n| `DSH_HOME` | `~/.dsh` | dsh 数据目录（保持默认即复用现有配置） |\n\n### 自动发现 dsh（多级探测）\n\n不同用户的 dsh 安装位置差异很大（npm 全局 / pnpm / nvm / 自定义目录，甚至不在 PATH 中）。应用启动时会**按优先级自动探测**：\n\n1. **环境变量** `DSH_BIN`（用户显式指定）\n2. **上次手动选择**（记住的路径）\n3. **常见安装路径**：`~/.local/bin`、`~/.npm-global/bin`、`~/.npm/bin`、`~/.yarn/bin`、`~/.volta/bin`、`/usr/local/bin`、`/opt/homebrew/bin` 等\n4. **PATH**（`which dsh`，覆盖 nvm/volta/asdf shims）\n5. **npm 全局目录**（`npm root -g`）\n6. **pnpm 全局目录**（`pnpm bin -g`）\n7. **Spotlight 搜索**（macOS `mdfind`，兜底）\n\n**全部探测失败时**：应用会弹窗让你**手动选择 dsh 可执行文件**，选择后路径会被记住（存入应用配置），下次启动自动使用。\n\n> 提示：若 dsh 未安装，可先安装它（`npm install -g @deepseek-ai/dsh`）再重新打开应用。\n\n### 使用独立数据目录（可选）\n\n应用与现有 3080 实例完全隔离，各自独立配置/会话：\n\n```bash\nmkdir -p ~/.dsh-desktop-app\nDSH_HOME=~/.dsh-desktop-app npm start\n```\n\n### 开发验证（smoke 模式）\n\n无人值守验证完整链路（启动服务 → 开窗口 → 页面加载 → 自动退出清理），适合 CI/自检：\n\n```bash\nDSH_HOME=/tmp/dsh-test DSH_APP_PORT=5101 npx electron . --smoke\n```\n\n---\n\n## 工作原理\n\n1. **启动**：主进程检测 task-board 锁（`~/.dsh/task-board/ledger-v2.lock`）——若有其他实例，弹窗询问是否关闭；然后 `spawn('dsh', ['web', '--port', PORT, '--no-open'])`\n2. **等待就绪**：轮询 `http://127.0.0.1:PORT` 直到返回 200，再创建 `BrowserWindow` 加载界面\n3. **退出**：`before-quit` 中 `SIGTERM` 终止 dsh 进程树（按端口定位，不误杀其他实例），然后退出应用\n\n---\n\n## 打包为 macOS 应用\n\n使用 electron-builder 将应用打包为 .app / .dmg：\n\n```bash\n# 一步完成：打包 .app -> 完整 adhoc 签名 -> 生成 .dmg（推荐）\nnpm run dist\n\n# 分步执行\nnpm run pack     # 1. 生成 .app（dist/mac-arm64/）\nnpm run sign     # 2. 对 .app 做完整 adhoc 签名（修复未签名导致的启动崩溃）\nnpm run dmg      # 3. 用已签名 .app 生成 .dmg 安装包\n```\n\n> **为什么需要签名**：本机无 Apple Developer ID 证书，electron-builder 默认跳过签名，导致产物 Info.plist 未绑定、资源未 seal，从 DMG 安装后 macOS 会因 quarantine + translocation 启动崩溃（\"Library not loaded: Electron Framework\"）。`scripts/sign-app.js` 用 adhoc 签名（`codesign --force --deep --sign -`）补全签名，安装后即可正常运行。\n\n## 注意事项\n\n- **GUI 环境 PATH**：从 Finder/Dock 双击启动时，应用 PATH 只有 `/usr/bin:/bin:/usr/sbin:/sbin`，不含 `~/.local/bin`（dsh 和 node 所在）。应用会自动多级探测 dsh 位置（见上文「自动发现 dsh」），并在启动 dsh 时把 node 注入 PATH；若 dsh 装在特殊位置，可在首次启动时手动选择，或设 `DSH_BIN` 指向绝对路径\n- 复用 `~/.dsh` 时 task-board 是**单实例锁**：应用运行时，终端里的 `dsh web` 不能同时开（反之亦然）\n\n---\n\n## 目录结构\n\n| 文件/目录 | 说明 |\n|-----------|------|\n| `main.js` | 主进程：服务生命周期管理（启动/就绪/停止）+ 窗口 |\n| `preload.js` | 渲染进程桥（向页面暴露服务状态，预留） |\n| `smoke-test.js` | 服务生命周期冒烟测试（不依赖 Electron GUI） |\n| `scripts/sign-app.js` | adhoc 签名脚本 |\n| `build/icon.icns` | 应用图标 |\n| `dist/` | 打包产物（.app / .dmg，不入库） |\n| `package.json` | Electron + electron-builder 配置 |\n\n---\n\n## License\n\n[MIT](LICENSE)"
-    },
-    {
-      "full_name": "antonkoatl/dsh-message-handoff",
-      "html_url": "https://github.com/antonkoatl/dsh-message-handoff",
-      "description": "",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-22T07:43:10Z",
-      "topics": [
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "dsh-plugin",
-        "web ui"
-      ],
-      "readme_text": "# dsh-message-handoff\n\nPer-message session handoff for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness).\nInspired by [`dsh-session-handoff`](https://github.com/WeiYe6/dsh-session-handoff). The trigger is a\n**handoff icon next to each message's fork button** (no slash command): forking back to an earlier\npoint while staying informed about later progress — the child carries the copied history up to the\nselected message, and an LLM summary of everything that happened **after** it is injected on top.\n\nEach finalized assistant message's icon row renders `copy · ✋ handoff · fork`. Clicking handoff:\n\n1. copies the verbatim history **up to that message** into a fresh session (its whole completed\n   turn — the same pipeline the web UI's own fork button uses);\n2. summarizes only what happened in the source session **after** that point with one auxiliary LLM\n   call (byte-capped input, oldest entries dropped first); clicking the latest message skips the\n   call entirely;\n3. appends the structured handoff document (task goal / progress / decisions / files / next steps /\n   open questions) covering that post-fork activity on top of the copied history;\n4. attaches the child to the source's workspace, pins a `handoff: <title>`, and **auto-opens it**.\n\nThe origin session stays untouched. Any summary failure (no route yet, stream error, timeout,\nempty output) leaves zero side effects — no session is created.\n\n> ⚠️ **Privacy**: the conversation text AFTER the selected message is sent to the configured model\n> to produce the summary.\n\n## Install\n\n```sh\n# no build step needed — lib/client.js is prebuilt\ndsh plugin --profile web add /path/to/dsh-message-handoff\ndsh web\ndsh --profile web --dump-config | grep message-handoff\n```\n\n`dsh plugin add` forwards to `pnpm add` inside the profile directory, so any install spec works: a directory checkout like above, a git URL once pushed, or the bare package name after publishing. Updating later means editing and re-running the same command.\n\nZero runtime dependencies: the host half is plain ESM over public services, and the client half is\nthe official prebuilt browser module (`lib/client.js`). `npm test` runs the pure-function unit\nsuite with `node --test`.\n\n`lib/client.js` is intentionally committed: dsh plugin installs run no registry-side build, so\nthe checked-in module IS the shipped artifact and directory installs work with no toolchain. It\nis hand-maintained source (not generated output) — edit it directly; there is no separate build\nstep to drift from.\n\n## Configuration\n\nOptional `config:` on the cordis.yml row:\n\n```yaml\n- id: message-handoff\n  name: dsh-message-handoff\n  config:\n    maxInputBytes: 24000   # UTF-8 byte cap for the summary input (oldest dropped first)\n    maxTokens: 10000       # summary output budget (reasoning-heavy routes need headroom)\n    timeoutMs: 120000      # summary call timeout\n```\n\nThe summary model route is the source session's latest logged request route (the model that\nactually produced the history), falling back to the deployment's default model selection.\n\n## How it works\n\n- **Host half** (`index.mjs`): registers `/message-handoff <assistant-message-id>` in the public\n  command registry — resolves the fork cut for the addressed message (first completed `turn/end`\n  at or after it, extended through trailing out-of-band appends, exactly like the api-proxy fork\n  handler), summarizes via `ctx.llm.stream`, creates the child via\n  `ctx.agents.create({ seed, seedLength, meta, setup })` with `agentPresets.resolve` → `mount`,\n  then best-effort `workspaceRegistry` attach and `sessionTitle.rename`, and appends the handoff\n  document with `surfaceOp: 'append'`. The success text names the child id in backticks.\n- **Client half** (`lib/client.js`): registers one additive entry in the\n  `conversation.chat.assistant-actions` slot (rendered between the built-in copy and fork\n  controls), dispatches `/message-handoff` through Remote `commands.execute`, extracts the child\n  id from the result, polls `sessions.binding` until it is addressable, and opens it. A failed\n  handoff turns the icon red with the error in its tooltip; clicking retries.\n\n## Model Experience\n\n### Summary request (auxiliary model call)\n\n#### What the model sees\n\nOne auxiliary `llm.stream` request per handoff click with post-fork activity: this package's system prompt below plus a single user message whose text is a JSON array of the conversation turns AFTER the fork cut `[{\"role\":\"user\"|\"assistant\",\"text\":\"...\"}]`, oldest entries dropped first until it fits `maxInputBytes`. Clicking the latest message runs no request.\n\n##### Verbatim summary system prompt\n\n```markdown\nYou are producing a handoff summary that gives a forked agent session the context it is missing.\nThe transcript up to the chosen fork point was copied into the fresh session verbatim; your summary covers ONLY what happened in the source session AFTER that point, so the forked agent knows the later progress without carrying that later transcript.\nThe user input is a JSON array of the post-fork conversation turns: {\"role\":\"user\"|\"assistant\",\"text\":\"...\"}.\nProduce a concise structured handoff in Markdown with these sections:\n## Task goal\n## Current progress (what is done and what is not, concrete)\n## Key decisions (and their reasons)\n## Files involved (paths only)\n## Next steps (numbered)\n## Open questions / risks\nWrite in the language of the conversation. Be concrete and factual; do not invent facts that are not in the conversation.\nReturn only the handoff document, no preamble, no code fences.\n```\n\n#### Token effect\n\nConditional and capped: zero tokens until a handoff runs. The one-shot request is bounded by the `maxInputBytes` input framing and the `maxTokens` output budget; reasoning effort follows the route default unless the route's adapter lists `off`, which the summary then pins.\n\n#### KV Cache effect\n\nIndependent behavior: the summary is a separate one-shot call outside any session loop, so it neither reuses nor invalidates provider caches for the source or child conversations.\n\n### Handoff document injection\n\n#### What the model sees\n\nIn the forked child session, one appended `user/message` headed \"📋 Session handoff\": the source session id, an orientation line stating that the summary covers only post-fork activity, the generated summary, and a continuation note. The copied seed history precedes it unchanged.\n\n#### Token effect\n\nAppend-only growth of the child's context: the copied prefix carries the same tokens as the source history up to the fork cut, plus the document, which scales with the post-fork conversation length under the same `maxInputBytes` cap.\n\n#### KV Cache effect\n\nAppend-only: the seed replays identically from persistence, so the copied prefix stays prefix-stable across the child's later turns; the injected document sits after that prefix and never rewrites earlier request tokens.\n\n## Known Limitations and Deferred Work\n\n- **Assistant-turn-only trigger** — the icon renders where the shipped fork control lives, on finalized assistant turns; user messages expose no per-message action strip to sit beside.\n- **Preset read from the creation header** — a session that switched agent presets mid-flight forks its child under the original composition instead of re-deriving the switch from the log.\n- **No durable artifact** — the handoff document lives only in the child session log; writing `HANDOFF.md` remains deferred work.\n- **Text-only summarization** — tool calls and attachments are excluded from the summary input; only `user/message` + `assistant/message` text blocks are extracted.\n\n## License\n\n[MIT](./LICENSE)\n"
     }
   ]
 }
