@@ -1,7 +1,102 @@
 {
-  "generatedAt": "2026-10-09T22:29:01.580Z",
+  "generatedAt": "2026-10-10T04:00:45.255Z",
   "count": 400,
   "plugins": [
+    {
+      "full_name": "satan9394/dsh-postmortem",
+      "html_url": "https://github.com/satan9394/dsh-postmortem",
+      "description": "DSH skill: 事故复盘写作，无指责文化/根因分析/时间线/行动项（受 wshobson/agents 38k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T18:36:02Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-postmortem\n\n事故复盘写作：无指责文化、根因分析（5 Whys）、时间线、行动项，驱动组织学习。\n\n受 [wshobson/agents](https://github.com/wshobson/agents)（38k★ MIT）\n的 incident-response/postmortem-writing 技能启发，改编为 DSH\n中文原创精简版。\n\n## 安装\n\n```sh\ndsh plugin --profile web add dsh-postmortem\n# 或本地开发：dsh plugin --profile web add link:E:\\DeepSeek_Harness\\workspace\\2026_08_15\\plugins\\dsh-postmortem\n# 重启 dsh web 生效\n```\n\n## 使用\n\n对 agent 说\"写事故复盘 / 复盘这次事故\"，提供事件信息，\n`postmortem` 技能输出无指责复盘文档（摘要/时间线/5 Whys 根因/行动项/教训）。\n\n## 结构\n\n```\ndsh-postmortem/\n├── index.js           # 注册 skills/ 到 ctx.skills\n├── cordis.patch.yml   # bundle patch 层\n├── package.json       # dsh.bundle manifest\n└── skills/postmortem/SKILL.md\n```\n\n## License\n\nMIT。原创精简改编，灵感来自 wshobson/agents（MIT）。\n"
+    },
+    {
+      "full_name": "satan9394/dsh-tdd",
+      "html_url": "https://github.com/satan9394/dsh-tdd",
+      "description": "DSH skill: 测试驱动开发，红绿重构循环 + Prove-It 修复模式（受 addyosmani/agent-skills 88k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T19:09:11Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-tdd\n\n测试驱动开发：先写失败测试再写实现（红-绿-重构）；修 bug 用 Prove-It 模式\n（先复现再修）。测试是证明——\"看起来对\"不算完成。\n\n受 [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)\n（88k★ MIT）的 test-driven-development 技能启发，改编为 DSH\n中文原创精简版。\n\n## 安装\n\n```sh\ndsh plugin --profile web add dsh-tdd\n# 或本地开发：dsh plugin --profile web add link:E:\\DeepSeek_Harness\\workspace\\2026_08_15\\plugins\\dsh-tdd\n# 重启 dsh web 生效\n```\n\n## 使用\n\n对 agent 说\"TDD 方式实现 / 修 bug（先写复现测试）\"，\n`tdd` 技能按红-绿-重构循环 + Prove-It 模式执行。\n\n## 结构\n\n```\ndsh-tdd/\n├── index.js           # 注册 skills/ 到 ctx.skills\n├── cordis.patch.yml   # bundle patch 层\n├── package.json       # dsh.bundle manifest\n└── skills/tdd/SKILL.md\n```\n\n## License\n\nMIT。原创精简改编，灵感来自 addyosmani/agent-skills（MIT）。\n"
+    },
+    {
+      "full_name": "satan9394/dsh-recsys-pipeline",
+      "html_url": "https://github.com/satan9394/dsh-recsys-pipeline",
+      "description": "DSH skill: 推荐/排序流水线, 六阶段框架（受 wshobson/agents 38k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T23:02:51Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-recsys-pipeline\n\nDSH（DeepSeek Harness）技能插件：**推荐/排序流水线**。\n\n六阶段框架（Source→Hydrator→Filter→Scorer→Selector→SideEffect），适用于一切\"为（用户, 上下文）选 Top K\"问题：内容流、搜索排序、RAG 重排、任务优先级、通知分流。受 [wshobson/agents](https://github.com/wshobson/agents) 的 recsys-pipeline-architect（38k★ MIT）启发的中文原创精简版。\n\n## 安装\n\n```bash\ndsh plugin add dsh-recsys-pipeline\n```\n\n## 触发方式\n\n描述中包含\"推荐系统 / 排序流水线 / Top K / 内容流 / RAG 重排 / 通知分流 / 个性化\"等关键词时自动触发。\n\n## 能力\n\n- 六阶段流水线框架\n- 阶段可组合与并行边界\n- 打分与物品分离\n- 典型落地（内容流/RAG 重排/通知分流）\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "satan9394/dsh-llm-finetuning",
+      "html_url": "https://github.com/satan9394/dsh-llm-finetuning",
+      "description": "DSH skill: LLM 微调路由与配方, SFT/DPO/GRPO 选型（受 wshobson/agents 38k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T20:54:03Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-llm-finetuning\n\nDSH（DeepSeek Harness）技能插件：**LLM 微调路由与配方**。\n\n先判断是否该微调（RAG/提示词出口）、方法路由（SFT/DPO/ORPO/KTO/GRPO+RLVR/CPT）、LoRA/QLoRA 配方、评估先行（eval harness）、量化导出。受 [wshobson/agents](https://github.com/wshobson/agents)（38k★ MIT）启发的中文原创精简版。\n\n## 安装\n\n```bash\ndsh plugin add dsh-llm-finetuning\n```\n\n## 触发方式\n\n描述中包含\"微调 / fine-tune / LoRA / QLoRA / DPO / GRPO / RLVR / 偏好优化 / 强化训练 / eval harness\"等关键词时自动触发。\n\n## 能力\n\n- 出口优先路由（易变事实→RAG、未定行为→提示词、稳定知识→CPT+SFT）\n- 方法选型（SFT/DPO/KTO/GRPO 按数据形态）\n- LoRA/QLoRA 配方要点与评估先行纪律\n- 量化导出（FP8/NVFP4/AWQ/GGUF）与质量验证\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "satan9394/dsh-rag",
+      "html_url": "https://github.com/satan9394/dsh-rag",
+      "description": "DSH skill: RAG 检索增强生成，向量库/嵌入/文档管线/检索策略/幻觉治理（受 wshobson/agents 38k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T19:37:13Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "搜索"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-rag\n\nRAG 检索增强生成：向量数据库、嵌入策略、文档处理管线、检索与生成、\n来源引用、常见问题与评估。构建有依据的 LLM 应用，减少幻觉。\n\n受 [wshobson/agents](https://github.com/wshobson/agents)（38k★ MIT）\n的 llm-application-dev/rag-implementation 技能启发，改编为 DSH\n中文原创精简版。\n\n## 安装\n\n```sh\ndsh plugin --profile web add dsh-rag\n# 或本地开发：dsh plugin --profile web add link:E:\\DeepSeek_Harness\\workspace\\2026_08_15\\plugins\\dsh-rag\n# 重启 dsh web 生效\n```\n\n## 使用\n\n对 agent 说\"做 RAG / 文档问答系统\"，`rag` 技能输出\n数据管线 + 向量库选型 + 检索策略 + 评估计划。\n\n## 结构\n\n```\ndsh-rag/\n├── index.js           # 注册 skills/ 到 ctx.skills\n├── cordis.patch.yml   # bundle patch 层\n├── package.json       # dsh.bundle manifest\n└── skills/rag/SKILL.md\n```\n\n## License\n\nMIT。原创精简改编，灵感来自 wshobson/agents（MIT）。\n"
+    },
     {
       "full_name": "satan9394/dsh-spec-driven",
       "html_url": "https://github.com/satan9394/dsh-spec-driven",
@@ -9381,152 +9476,6 @@
         "skin"
       ],
       "readme_text": "# dsh-new-ui\n\nEnglish | [中文](README.zh.md)\n\n> A full-site UI rewrite plugin for DeepSeek Harness (`dsh`): **deep tech blue + liquid glass + motion polish**, with **automatic interception of dsh-web-ui** to prevent skin / slot conflicts.\n\n![logo](./main.png)\n\n---\n\n## What\n\n`dsh-new-ui` is a single-package DSH plugin that does two things:\n\n1. **Full-site UI rewrite** — a deep tech-blue + liquid-glass light/dark theme designed with `ui-ux-pro-max`. It remaps every `--dsw-alias-*` token through the official `ThemeRuntime.overrideTokens()` API and injects a liquid-glass style layer (aurora backdrop, frosted pane, 150–300ms transitions) plus a persistent bottom-right Russian tagline **«Пусть технологии изменят мир!»**.\n2. **Automatic interception of dsh-web-ui** — a bundled patch layer (`cordis.patch.yml`) disables the entire dsh-web-ui family at the load source by row id (`web-ui-*`, standalone `@linxin666/*`, and external `dsh-better-sidebar`), with a host-side runtime conflict detector as defense in depth.\n\nNo DSH source changes — everything mounts through the official profile / bundle mechanism.\n\n---\n\n## Features\n\n| Feature | Description |\n|---|---|\n| 🎨 Full token rewrite | Remaps every `--dsw-alias-*` token: backgrounds, borders, text, buttons, states, sidebar, and more |\n| 🌗 Light + dark | Every token carries a `{ light, dark }` pair and follows the system color scheme automatically |\n| 🧊 Liquid glass | Translucent surfaces + `backdrop-filter` frost + animated aurora background |\n| ✨ Motion polish | 150–300ms transitions on interactive elements, honoring `prefers-reduced-motion` |\n| 🛡️ Auto interception | `cordis.patch.yml` disables all dsh-web-ui rows + host-side runtime warning |\n| 🌐 Russian tagline | Bottom-right «Пусть технологии изменят мир!» |\n\n---\n\n## Install\n\nRequires DeepSeek Harness (`dsh web` runs).\n\n```bash\ndsh plugin --profile web add dsh-new-ui\ndsh web\n```\n\nFrom source (development):\n\n```bash\ngit clone https://github.com/123654qw/dsh-new-ui.git\ncd dsh-new-ui\npnpm install\npnpm run build\ndsh plugin --profile web add link:$(pwd)\ndsh web\n```\n\n---\n\n## How the interception works\n\n`dsh-new-ui` declares `dsh.bundle.patch = ./cordis.patch.yml` in its `package.json`. On install it stacks as a bundle layer and writes `disabled: true` by row id for:\n\n- the aggregate `@linxin666/dsh-web-ui-all` (all 17 `web-ui-*` rows)\n- the standalone `@linxin666/*` packages (their own 15 row ids)\n\nThe host half (`src/index.ts`) enumerates loader entries via `ctx.loader.entries()` and prints a loud warning if any dsh-web-ui plugin is still active:\n\n```\n[dsh-new-ui] detected N dsh-web-ui plugin(s) still active. ...\n```\n\nVerify:\n\n```bash\ndsh --profile web --dump-config\n```\n\nThe `web-ui-*` / `better-sidebar` rows should show `disabled: true`.\n\n---\n\n## How the UI rewrite works\n\n- **Theme** — `src/client/theme.ts` exports `TOKENS` (`ThemeTokenOverrides`); `src/client/index.ts` calls `ctx.theme.overrideTokens('dsh-new-ui', TOKENS)`. The layer stacks over the active theme and picks the right `{ light, dark }` value per color scheme — immediate and reversible (unload restores).\n- **Atmosphere** — `src/client/styles.ts` injects the aurora backdrop, frosted pane, transitions, and the Russian tagline as a plugin-owned `<style>` tag removed on unload / HMR.\n\n---\n\n## Structure\n\n```\ndsh-new-ui/\n├── package.json          # dsh.bundle.patch + dsh.client + peerDeps + exports\n├── cordis.patch.yml      # interceptor: disables all dsh-web-ui rows\n├── tsconfig.json\n├── tsdown.config.ts      # dual build (host + browser)\n├── src/\n│   ├── index.ts          # host half: interceptor (detect + warn)\n│   └── client/\n│       ├── index.ts      # browser half: token layer + styles + tagline\n│       ├── theme.ts      # deep tech blue token remap\n│       └── styles.ts     # liquid glass / motion / aurora / tagline\n├── README.md / README.zh.md\n└── LICENSE               # Available License\n```\n\n---\n\n## License\n\n[Available License](https://license.kscm.top/available.md) — Copyright © 2026 kscm.\n\n---\n\n## Links\n\n- [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)\n- [dsh-web-ui](https://github.com/zhu1090093659/dsh-web-ui) (intercepted by this plugin)\n"
-    },
-    {
-      "full_name": "ddtcorex/dsh-maestro-config",
-      "html_url": "https://github.com/ddtcorex/dsh-maestro-config",
-      "description": "Maestro Config — shared settings service for the dsh-maestro-* suite over the single namespaced store (~/.dsh/maestro/settings.json)",
-      "stars": 1,
-      "language": "TypeScript",
-      "pushed_at": "2026-10-01T01:10:03Z",
-      "topics": [
-        "configuration",
-        "cordis",
-        "deepseek-harness",
-        "dsh-plugin",
-        "maestro",
-        "settings",
-        "settings-ui",
-        "typescript"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "configuration",
-        "cordis",
-        "deepseek-harness",
-        "dsh-plugin",
-        "maestro",
-        "settings",
-        "settings-ui",
-        "typescript"
-      ],
-      "readme_text": "# @ddtcorex/dsh-maestro-config\n\nShared settings service for the `dsh-maestro-*` suite. One namespaced store at\n`~/.dsh/maestro/settings.json` (chmod 600), owned per-domain by each plugin.\nEmbeds [`@ddtcorex/dsh-maestro-config-lib`](https://github.com/ddtcorex/dsh-maestro-config-lib).\n\n- Service `maestroConfig`: `listDomains / get / set(patch-merge) / onChange`\n- Loopback RPC channel `maestro.config`: `list | get | set`\n\nInstall: `dsh plugin --profile <name> add <path-or-git-url>` (bundle patch adds row `maestro-config`). Optional layer — plugins work standalone through the embedded lib alone.\n"
-    },
-    {
-      "full_name": "ddtcorex/dsh-maestro-guard",
-      "html_url": "https://github.com/ddtcorex/dsh-maestro-guard",
-      "description": "Host-only safety gate for DeepSeek Harness: approval store, secret redaction, permission policy, waterfall pre-execute integration.",
-      "stars": 1,
-      "language": "TypeScript",
-      "pushed_at": "2026-09-29T12:54:30Z",
-      "topics": [
-        "approval",
-        "cordis",
-        "deepseek-harness",
-        "dsh-plugin",
-        "maestro",
-        "redaction",
-        "secrets",
-        "security"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "approval",
-        "cordis",
-        "deepseek-harness",
-        "dsh-plugin",
-        "maestro",
-        "redaction",
-        "secrets",
-        "security"
-      ],
-      "readme_text": "# @ddtcorex/dsh-maestro-guard\n\nHost-only safety gate for the DeepSeek Harness: one Cordis row (`dsh-maestro-guard`) listens on\nthe `tools/pre-execute` waterfall and decides every tool call before it runs.\n\nPart of the Maestro Harness suite (`dsh-maestro-*`). Cordis patch row id: `dsh-maestro-guard`.\n\n> Opt-in and intentionally **not** part of the meta-bundle one-liner until published:\n> add it explicitly with `dsh plugin add @ddtcorex/dsh-maestro-guard`.\n\n## What it provides\n\nEvery call runs the same five-step pipeline:\n\n```\nparse → classify → decide → journal → act\n```\n\n1. **parse** — read the executed surface of the call: a shell tool's command text, a file tool's\n   path field. The command is **parsed**, not regex-matched: a shell-aware tokenizer/segmenter\n   splits it on operators that sit outside quotes, unwraps the wrappers that only change *who*\n   runs it (`env VAR=…`, `sudo`, `nohup`, `time`, `command`, `busybox`) and replaces a shell\n   wrapper (`bash -c <script>`, `bash -s`, a `bash <<EOF` body) with the script it runs. Anything\n   unresolvable is marked **ambiguous**, and an ambiguous segment is escalated whenever its\n   unresolved text names a rule verb the guard can act on (`git push`, `gh pr merge`, a package\n   publish, `curl … | sh`) — so an unreadable wrapper around a protected operation is still asked\n   about, never allowed. When the unresolved text names no such verb it stays an `allow`, and\n   quoted or inline program text is deliberately data: a protected operation spelled inside\n   `python3 -c \"…\"` or an `--body \"…\"` is not a command.\n\n   Two hard cases are decided by SHAPE rather than by a longer verb list. A segment whose first\n   token cannot be a command (a `VAR=value` assignment, a `(`/`{` group opener, a shell keyword)\n   or whose LATER tokens name a rule verb while `argv[0]` does not (`pkexec …`, `perf …`,\n   `/usr/bin/git …`, `my-custom-runner …`) is ambiguous, so the operation written behind it is\n   asked about instead of silently allowed — compared by the command BASE name, so a qualified\n   path cannot hide it. A segment LED by a mention verb (`echo`, `printf`, `grep`, `rg`, `sed`,\n   `awk`, `ls`, `find`, …) opts out of that later-token rule, because those verbs cannot execute\n   their arguments: `rg git push docs/` and `echo pnpm publish` are a search and a print, not\n   commands. `find` is the one exception, and through any of its action flags (`-exec`,\n   `-execdir`, `-ok`, `-okdir`) the command it runs is still judged like any other — so\n   `find . -execdir git push origin master +` asks, while `find . -execdir ls -la +` stays an allow.\n   A shell handed a `-c` script by a verb the guard cannot name\n   (`my-custom-runner bash -c \"git push origin master\"`) is\n   unwrapped like any other shell wrapper, so that script is judged as the command that really\n   runs. And a quoted protected path is not erased: `secret.access` reads the parsed segment argv,\n   where the tokenizer has already dropped the quotes and kept the content, so `cat \"<path>\"`,\n   `cp \"<path>\" /tmp/x`, `curl -T \"<path>\" …` and the write-into `cp /tmp/x \"<path>\"` all ask just\n   like their unquoted forms.\n\n   The corpus rows `carried: interpreter inline program pushing a protected branch`, `carried:\n   node -e inline program tagging a release`, `carried: quoted data mentioning a release` and the\n   `protected path: quoted …` rows pin those decisions — including the deliberate fail-closed\n   trade-off that an interpreter inline program which names a protected path asks again.\n   `guard.tamper` is the one rule that judges the raw segment text rather than a resolved shape,\n   and even there only an EDIT counts. A verb that always writes its target (`rm`, `mv`, `cp`, `ln`,\n   `truncate`, `shred`, `dd`, `tee`, `install`, `chmod`, `chown`, `patch`, `sponge`, `unlink`,\n   `rmdir`, `ed`, plus `sed -i` / `perl -i`) naming a guard path denies, and so does a write\n   redirection (`>`, `>>`, `2>`, `&>`, `>|`) whose TARGET is one — in the absolute, `~`, `$HOME` or\n   `${HOME}` spelling. The dual-use verbs are judged on their WRITE SHAPE, not on their name, or\n   their read form would become an unappealable deny: `curl -o <journal> …`, `wget -O <journal> …`,\n   a `rsync`/`scp` DESTINATION, `vi`/`vim`/`nano` without a read-only switch and `patch` deny, while\n   `curl -I <journal>`, `wget -O - <journal>`, `rsync --list-only <journal> /tmp/`,\n   `scp -r host:<journal> /tmp/`, `vi -R <journal>` and `nano -v <journal>` fall through. The\n   mutation does not have to be the segment's own verb either: what a wrapper the parser does not\n   unwrap runs (`nice`, `timeout`, `flock`, `ssh`, `watch`), what a `find` action flag runs, what a\n   `-c` script contains, and what an `xargs` takes from the segment PIPED into it all count,\n   because each is the same edit arriving one level down.\n   A mutation WORD is only read where a command can be — the whole argv for that wrapper class,\n   the tokens after a `find` action flag for a mention-led segment — so `less -p rm <journal>`,\n   `ag rm <journal>` and `docker rm <journal>` stay the reads and non-edits they are, and\n   `tail <journal> && xargs rm -rf /tmp/junk` cannot borrow the path across an `&&`, while\n   `cat <journal> | grep x | xargs rm -f` still follows the pipe to the deleting command. A READ of\n   the same path (`cat`, `tail`, `head`, `grep`, `less`) is not tampering and falls through to the\n   ordinary rules, which is what makes the guard's own deny text (\"see the guard journal\")\n   followable. Three limits are recorded rather than implied: an interpreter inline program\n   (`python3 -c \"… open(p,'w') …\"`) is data, an UNKNOWN runner around a mutating verb\n   (`my-custom-runner rm -f <journal>`) is not read because nothing distinguishes it from a tool\n   whose argument merely spells `rm`, and a `-c` script chain is read two levels deep (a third\n   level is not read).\n2. **classify** — map the call to a stable rule id (below), resolving the branch of the repo the\n   command targets through its `cd` / `git -C`.\n3. **decide** — resolve the tier: the classified tier, unless `domains.guard.rules` carries an\n   entry that DIFFERS from the rule's built-in default. An entry that merely echoes the default is\n   the table repeating itself, not a user choice — honouring those made every classify-level\n   refinement (a `--dry-run` publish is a `journal`, not an `ask`) unreachable.\n4. **journal** — append one redacted record per decision.\n5. **act** — run the call or return a deny decision.\n\n### Rule ids\n\nRule ids are the contract — config overrides, journal entries and approval reasons all key on\nthem. There are **11**:\n\n| Rule id | Default tier | Fires on |\n| --- | --- | --- |\n| `git.push.protected` | `ask` | a push targeting a protected branch: an explicit refspec naming one, `HEAD`/no refspec resolved through the target repo's checked-out branch, `--all`/`--mirror` (they push every local branch), or a branch that cannot be resolved (fail-closed) |\n| `git.merge.protected` | `journal` | a `gh pr merge` (recorded rather than gated) |\n| `git.tag.release` | `ask` | a release/semver tag push (a `refs/tags/*` refspec, a bare `vX.Y.Z`, or `--tags`) |\n| `git.push.force` | `ask` | a force push (`--force`, `--force-with-lease`, `-f`, `+refspec`) |\n| `gh.release.create` | `ask` | `gh release create` / `gh release publish` |\n| `gh.protection.delete` | `ask` | a `gh api … DELETE` against branch protection |\n| `pkg.publish` | `ask` | a package-manager publish (npm / pnpm / yarn) |\n| `secret.access` | `ask` | access to a protected credential path — **any** file tool (read *or* write) whose path field is the protected path, or a parsed segment whose COMMAND is an access verb and whose argv holds the path (a mention-only verb such as `grep`/`ls`/`printf` is never an access, an access verb inside a message or body is not the command, and a heredoc body is never argv) |\n| `fs.write.outside` | `ask` | a file-tool write outside the session working directory (the OS temp dir is exempt, and so is the runtime spill dir while `spillReads` is on) |\n| `net.exec.remote` | `ask` | piping a remote script into a shell (`curl … \\| sh`, `source <(c"
-    },
-    {
-      "full_name": "ddtcorex/dsh-maestro-config-lib",
-      "html_url": "https://github.com/ddtcorex/dsh-maestro-config-lib",
-      "description": "Maestro settings store library — atomic namespaced JSON store shared by dsh-maestro-* plugins (embedded dependency, no Cordis row)",
-      "stars": 1,
-      "language": "TypeScript",
-      "pushed_at": "2026-09-23T04:50:28Z",
-      "topics": [
-        "configuration",
-        "cordis",
-        "deepseek-harness",
-        "dsh-plugin",
-        "maestro",
-        "migration",
-        "settings",
-        "store",
-        "typescript"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "configuration",
-        "cordis",
-        "deepseek-harness",
-        "dsh-plugin",
-        "maestro",
-        "migration",
-        "settings",
-        "store"
-      ],
-      "readme_text": "# @ddtcorex/dsh-maestro-config-lib\n\nEmbedded settings-store library shared by every `dsh-maestro-*` plugin: ONE atomic\nnamespaced JSON store at `~/.dsh/maestro/settings.json` (chmod 600). No Cordis\nsurface — install it as a plain dependency so any subset of plugins works standalone.\n\n## API\n\n```ts\ndefineDomain(name, validator)          // owner registers a schema (validated on write)\nload({ dshHome? })                     // memoized read; runs one-shot legacy migration\nget(domain, { dshHome? })              // domain value or undefined\nset(domain, patch, { dshHome? })       // exclusive-lock write, deep-merge patch, 600 mode\nonChange(cb)                           // fires after writes made through this instance\ndefinedDomains()                       // schema-registered names\n```\n\nLegacy migration: first load with no modern store transforms\n`~/.dsh/dsh-maestro-{harness,remote,review}/config.json` into the namespaced store,\nrenames consumed files `.bak`, drops runtime state (`lastTunnelRunning`), parks\nunknown keys under `_legacy`. Never destructive on corrupt input.\n"
-    },
-    {
-      "full_name": "qwased/dsh-web-search-duckduckgo",
-      "html_url": "https://github.com/qwased/dsh-web-search-duckduckgo",
-      "description": "",
-      "stars": 1,
-      "language": "TypeScript",
-      "pushed_at": "2026-08-14T19:48:29Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "duckduckgo",
-        "search"
-      ],
-      "categories": [
-        "搜索"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "duckduckgo",
-        "search"
-      ],
-      "readme_text": "# dsh-web-search-duckduckgo\n\nEnglish | [中文](README.zh.md)\n\nFree [DuckDuckGo](https://duckduckgo.com) search for the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) — no API key, no credentials, no per-search cost. This repository publishes two npm packages:\n\n- `packages/dsh-web-search-duckduckgo/` — the **implementation package**: a `WebSearchProvider` (id `duckduckgo`) registered into `ctx.web`, plus the model-facing `web_search_ddg` tool that calls the provider directly. It declares no `dsh.bundle`, so it is not installed as a composition layer by itself.\n- `packages/dsh-web-search-duckduckgo-bundle/` — the **installable bundle**: it declares `dsh.bundle.patch`, and its `cordis.patch.yml` inserts one `web-search-duckduckgo` row. The row points at the bundle's own entry (the bundle entry re-exports the embedded implementation package), so the packed artifact is **self-contained** — `bundleDependencies` packs the implementation package (with `schemastery`/`cosmokit`) into the tarball.\n- `dist/` — the built tarballs. **Distribution needs only the single bundle file.**\n\n## Install\n\nThe packed artifact embeds the implementation package, so one command installs and mounts it into a profile:\n\n```sh\ndsh plugin --profile <name> add ./dist/dsh-web-search-duckduckgo-bundle.tgz\n```\n\nRestart that profile afterwards (a new bundle layer / new package needs a restart; `cordis.patch.yml` and settings edits take effect live), then confirm the composed tree carries the `web-search-duckduckgo` row with `dsh --profile <name> --dump-config`.\n\nOnce the package reaches a registry, install by bundle name:\n\n```sh\ndsh plugin --profile <name> add @deepseek-ai/dsh-web-search-duckduckgo-bundle\n```\n\nInstalling only the implementation package (`./dist/dsh-web-search-duckduckgo.tgz`) lands it as a plain dependency with no composition layer; that artifact is for deployments that mount the row manually in their own `cordis.patch.yml`.\n\n## Hot-plug and dynamic loading\n\n- **Loading**: `dsh plugin add` is pnpm profile management plus `dsh.profile.bundles` reconciliation; the bundle patch composes the plugin tree over an empty root, so the `web-search-duckduckgo` row is an ordinary peer of every other DSH row.\n- **Unloading**: `dsh plugin --profile <name> remove @deepseek-ai/dsh-web-search-duckduckgo-bundle` removes both the dependency and the bundle layer; in the profile's own `cordis.patch.yml`, `{ id: web-search-duckduckgo, disabled: true }` temporarily unloads it without touching the package, and removing that patch mounts it again.\n- **Runtime cleanup**: the plugin is a named-export function plugin (`name`/`inject`/`Config`/`apply`, no default export); the provider, the `web_search_ddg` tool, the system-prompt section, and the settings section are all fiber-scoped effects, so HMR replacement or row removal unwinds them with the fiber. Unit tests and the installed-artifact verification both cover disappearance of the tool and provider after dispose.\n- **Live config**: the `web-search-duckduckgo` settings section is re-resolved on every search; a committed settings change applies without re-mounting the plugin or restarting.\n\n## Configuration\n\nAll options are optional; a deployment that pins another provider on the web seam (the shipped `searchProvider: deepseek-official`) can offer this free route side by side and let the model pick per turn.\n\n| Key | Default | Meaning |\n|---|---|---|\n| `proxy` | (unset) | `host:port` or `http://host:port` CONNECT proxy for endpoints a direct connection cannot reach. Unset = direct; a failing tunnel falls back to a direct fetch. |\n| `region` | `us-en` | Region code for the HTML form's `l` field (e.g. `us-en`, `uk-en`, `de-de`). |\n| `baseURL` | `https://html.duckduckgo.com/html/` | HTML search endpoint, searched with a POST `q`/`b`/`l` form. |\n| `fallbackBaseURL` | `https://api.duckduckgo.com/` | Instant Answer JSON endpoint used when HTML yields no sources. |\n| `userAgent` | browser UA | `User-Agent` header sent on every request. |\n| `timeoutMs` | `30000` | Per-request timeout budget in ms. |\n| `maxResults` | `8` | Source cap when a request carries no `maxResults`. |\n\nConfigure through the `web-search-duckduckgo` settings namespace or a composition overlay:\n\n```yaml\n- id: web-search-duckduckgo\n  name: '@deepseek-ai/dsh-web-search-duckduckgo-bundle'\n  config:\n    proxy: http://127.0.0.1:8080\n```\n\n## How it works\n\nThe HTML search POSTs a `q`/`b`/`l` form (query, bang placeholder, region) to `html.duckduckgo.com/html/`, so `result__a` hrefs come back as **direct links** instead of the advertising `uddg` wrapper a GET returns. Results are parsed from the current `results_links` layout, normalized (Unicode NFC, control characters removed), and `y.js` advertising trackers are dropped. When HTML yields no sources, the Instant Answer JSON endpoint is the fallback. An optional zero-dependency CONNECT tunnel (`node:net` + `node:tls`) reaches endpoints a direct connection cannot.\n\n## Build from source\n\nThis repository carries its own pnpm workspace, so it installs, builds, tests, and packs independently of a DeepSeek Harness checkout:\n\n```sh\npnpm install\npnpm build\npnpm test\npnpm pack\n```\n\n`pnpm-workspace.yaml` uses `nodeLinker: hoisted`, which `bundleDependencies` packing requires. The rebuilt tarballs land in `dist/`; distribution needs only `dsh-web-search-duckduckgo-bundle.tgz`.\n\n## License\n\nMIT\n"
-    },
-    {
-      "full_name": "gameswu/dsh-cross-collaboration",
-      "html_url": "https://github.com/gameswu/dsh-cross-collaboration",
-      "description": "dsh跨设备agent协作插件",
-      "stars": 1,
-      "language": "TypeScript",
-      "pushed_at": "2026-09-10T13:24:08Z",
-      "topics": [
-        "dsh",
-        "dsh-plugin",
-        "dsh-plugins"
-      ],
-      "categories": [
-        "Agent/智能体"
-      ],
-      "tags": [
-        "dsh",
-        "dsh-plugin",
-        "dsh-plugins",
-        "agent"
-      ],
-      "readme_text": "# dsh-cross-collaboration\n\n让多台运行 [DSH](https://github.com/deepseek-ai/dsh)（DeepSeek Harness）的设备互相发现、互相**发消息唤醒对方的主 Agent**。\n\n> 兼容性：**v0.5.0 起要求 DSH ≥ 0.1.5-rc.1**。v0.4.0 已适配 0.1.2-alpha.5，v0.2.0 完成 0.1.2-alpha.2 服务契约迁移（`ctx.agents`/`ctx.settings`/`ctx.workspaceRegistry`/`ctx.tools` 新 API、新工具参数 DSL、subprocess 新 stdio 语义等）。0.1.5-rc.1 复核：`ctx.agent` 移除、`Agent.inbox` 接口化、`SubprocessHandle.pid` 移除、Session v3 / persona 前缀后缀拆分均不影响本插件；`Agent.followup(UserMessage)` 与 `ctx.agents.roots()` 仍然存在，已通过类型检查、契约夹具、测试与构建。\n\n- **发现**：同一局域网零配置自动互发现；跨网段按 `ip:port` 手动添加（Minecraft 联机式）；添加的节点会通过组网自动同步给其他设备\n- **通信**：唯一的跨设备操作就是发消息。**粒度是会话**——在 DSH 里一个会话就是一个主 Agent，不存在 workspace 级 Agent；消息可以精确投递给对端设备上的指定会话（不指定则投给其默认主 Agent），不存在任何远端执行\n- **Agent Teams 可见性**：DSH 0.1.5-rc.1 的 `ctx.agents.roots()` 只返回 root agent；Agent Teams 的 teammate 是子 agent，因此不会出现在 `lan_peers`/身份摘要中。若对端已知某个存活子会话的会话 ID，仍可通过 `agents.get(sessionId)` 直接投递（保持既有“按会话投递”行为）\n- **版本兼容检查**：设备间通过发现/握手交换插件版本与协议号，版本不兼容的对端会在节点列表与 `lan_peers` 中以 ⚠ 标出\n- **私密**：中继流量端到端加密；面板只显示通信消息，不显示任何工作状态\n\n> 典型用法：Windows 开发机给 Mac 验证机的某个会话发一句「请在 macOS 上验证构建」，该会话的 Agent 被唤醒后用本机工具完成验证，再回一条消息通报结果。\n\n## 安装\n\n```bash\ncd dsh-cross-collaboration\npnpm install\npnpm run build\n\ndsh plugin --profile web add \"file:$(pwd)\"   # 一步安装进 profile\ndsh web                                       # 重启生效\n```\n\n卸载：`dsh plugin --profile web remove dsh-cross-collaboration`\n\n## 把设备连起来\n\n1. 两台设备都安装并重启 DSH。同一局域网会自动互发现\n2. 跨网段（如 Tailscale）：打开 设置 →「LAN 协作」→「添加节点」，填入对方地址 `ip:port`（如 `192.168.1.100:45232`，省略端口用默认值）\n3. 连接成功后节点信息自动同步——组网内其他设备会获知并自动连接新节点，全组收敛为全互联\n4. 给设备起个名、选个工作区标签，方便对方识别\n\n## 发消息\n\n**模型工具**\n\n| 工具 | 说明 |\n|---|---|\n| `lan_peers` | 查看组网内有哪些设备，以及每台设备**当前有哪些会话**（会话 ID + 标题，一个会话即一个主 Agent） |\n| `lan_message(peer, content, session?)` | 发消息；`peer` 支持设备名、设备 ID 或 `ip:port`；`session` 可选，填 `lan_peers` 里看到的会话 ID 即可精确投递给那个会话，省略则投给设备的默认主 Agent。**对端离线时自动排队，上线后补投** |\n\n消息进入目标 Agent 的收件箱并唤醒它开始新对话。空消息会被拒绝，超过 4000 字自动截断。对端离线时消息进入离线队列（最多 50 条，持久化保存），对端上线后自动按序补投；发给已关闭会话的排队消息会被丢弃。\n\n**界面**：设置页「LAN 协作」的节点列表会显示每台设备的会话数，发消息卡可下拉选择目标会话，通信消息记录标注会话标题，另有「离线队列」卡片可查看/移除排队消息；装有 dsh-plugin-vscode-sidebar 时侧边栏有同名标签页；装有 dsh-notifacation-frame 时收到消息会推送通知。\n\n## 网络场景速查\n\n| 场景 | 做法 |\n|---|---|\n| 同一局域网 | 无需配置，自动发现 |\n| 跨网段 / Tailscale | 「添加节点」填对方的 `ip:port`（tailnet 地址 + 45232）；防火墙放行 UDP 45231 与 TCP 45232 |\n| 跨网络 | 自建中继 `node scripts/relay.cjs [port]`（需 Node ≥ 22），配置 `relayUrl`，两端在「中继配对」填入相同口令（≥ 8 位）完成 E2E 配对 |\n\n## 配置\n\n组合行 `config`（都有默认值，一般无需改动）：\n\n| 字段 | 默认 | 说明 |\n|---|---|---|\n| `udpPort` | `45231` | LAN 发现端口（UDP），通信走 `udpPort + 1` |\n| `deviceName` | 随机 | 展示给对端的设备名 |\n| `beaconMs` | `3000` | 发现心跳间隔（毫秒） |\n| `relayUrl` | `\"\"` | 中继地址（如 `ws://host:8799`），留空禁用中继 |\n\n设备名、工作区标签、节点列表、配对关系都在设置页维护，热生效并持久化。\n\n覆盖 `relayUrl` 示例（profile 的 `cordis.patch.yml`）：\n\n```yaml\n- id: dsh-cross-collaboration\n  config:\n    relayUrl: \"ws://relay.example.com:8799\"\n```\n\n## 安全\n\n- **只通信，不操作**：对端唯一能做的事是把消息投进本机主 Agent 的收件箱，因此不需要授权/白名单体系\n- **端到端加密**：中继传输只接受已配对设备的 AES-256-GCM 信封，中继服务器只能看到密文\n- **同源栅栏**：客户端 API（`/dshcc/api/*`）只接受本机或可信来源请求\n\n## 开发\n\n要求 Node ≥ 22（中继传输）、pnpm。\n\n```bash\npnpm install && pnpm run build     # 编译 src/*.ts → dist/*.js\npnpm run typecheck                 # 普通类型检查（真实 0.1.5-rc.1 dev 类型）\npnpm run typecheck:contract        # Context 增广/服务面契约夹具\npnpm test                          # pretest 自动 build：离线队列 + 主机卸载/重挂载测试\nnode scripts/gateway-smoke.cjs     # LAN 冒烟：组网同步 + 消息往返\nnode scripts/relay-smoke.cjs       # 中继冒烟：配对与 E2E 加密往返\n```\n\n结构：`src/host.ts`（DSH 集成与消息投递）、`src/gateway.ts`（网络子进程：UDP 发现 + TCP JSON-RPC + WebSocket 中继）、`src/client.ts`（设置页与侧边栏 UI）。\n\n## 路线图\n\n- [x] 离线消息队列（对端离线时暂存、上线后补投）\n- [ ] MQTT 传输适配器\n"
     }
   ]
 }
