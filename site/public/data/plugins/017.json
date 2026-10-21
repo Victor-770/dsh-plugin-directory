@@ -1,7 +1,232 @@
 {
-  "generatedAt": "2026-10-20T21:32:50.006Z",
+  "generatedAt": "2026-10-21T03:10:33.306Z",
   "count": 400,
   "plugins": [
+    {
+      "full_name": "satan9394/dsh-agent-loop-engineering",
+      "html_url": "https://github.com/satan9394/dsh-agent-loop-engineering",
+      "description": "DSH skill: Agent 循环工程（L1/L2 循环分级、triage/PR 保姆/依赖清扫/changelog 循环模式、多循环协调、验证器与人工门、loop-audit）（受 cobusgreyling/loop-engineering 10k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T23:33:37Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-agent-loop-engineering\n\nDSH（DeepSeek Harness）技能插件：**Agent 循环工程**。\n\n设计并编排自主 agent 的循环系统：L1 自动 / L2 辅助循环分级、常用循环模式（每日 triage、PR 保姆、依赖清扫、changelog 起草）、多循环协调、验证器与人工门、loop-audit（就绪评分/成本审计）与反模式清单。受 [cobusgreyling/loop-engineering](https://github.com/cobusgreyling/loop-engineering)（10k★）启发的中文原创精简版。\n\n## 安装\n\n```bash\ndsh plugin add dsh-agent-loop-engineering\n```\n\n## 触发方式\n\n描述中包含\"agent 循环 / 自动化循环 / 自主任务循环 / 循环审计 / 多循环协调\"等关键词时自动触发。\n\n## 能力\n\n- L1/L2 循环分级与初始化\n- 循环模式：daily triage、PR babysitter、dependency sweeper、changelog drafter\n- 多循环协调与职责划分\n- 验证器必需 + 人工门规则\n- loop-audit：就绪评分、token/时间成本审计\n- 反模式识别（无验证器自动合并、循环漂移等）\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "satan9394/dsh-bazel-build-optimization",
+      "html_url": "https://github.com/satan9394/dsh-bazel-build-optimization",
+      "description": "DSH skill: Bazel 构建优化, 远程缓存与构建提速（受 wshobson/agents 38k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T20:47:05Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-bazel-build-optimization\n\nDSH（DeepSeek Harness）技能插件：**Bazel 构建优化**。\n\n大型 monorepo 的 Bazel 生产级模式：仓库配置（WORKSPACE/.bazelrc）、细粒度 target、远程缓存/远程执行、依赖固定、visibility 治理与构建提速排查。受 [wshobson/agents](https://github.com/wshobson/agents)（38k★ MIT）启发的中文原创精简版。\n\n## 安装\n\n```bash\ndsh plugin add dsh-bazel-build-optimization\n```\n\n## 触发方式\n\n描述中包含\"Bazel / 构建优化 / BUILD 文件 / 远程缓存 / 构建太慢 / monorepo 构建\"等关键词时自动触发。\n\n## 能力\n\n- Bazel 目录结构与关键概念（target/package/label/rule）\n- 构建提速（profile 定位、缓存命中率、远程执行）\n- 构建问题排查流程与自查清单\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "satan9394/dsh-brand-landingpage",
+      "html_url": "https://github.com/satan9394/dsh-brand-landingpage",
+      "description": "DSH skill: 品牌落地页设计, 访谈到可部署HTML（受 wshobson/agents 38k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T21:31:49Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-brand-landingpage\n\nDSH（DeepSeek Harness）技能插件：**品牌优先落地页设计**。\n\n品牌身份访谈（产品/感觉/视觉）→ 设计系统（色彩/字体/形状 token）→ 落地页结构与文案 → 生成-反馈迭代循环 → 可部署 HTML（响应式+性能）。受 [wshobson/agents](https://github.com/wshobson/agents) 的 brand-landingpage（38k★ MIT）启发的中文原创精简版。\n\n## 安装\n\n```bash\ndsh plugin add dsh-brand-landingpage\n```\n\n## 触发方式\n\n描述中包含\"做落地页 / 设计首页 / 营销页 / 品牌视觉 / 网站视觉方向 / landing page\"等关键词时自动触发。\n\n## 能力\n\n- 三段式品牌访谈框架\n- 设计系统 token 翻译\n- 生成-反馈迭代循环\n- 落地页结构清单与交付纪律\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "satan9394/dsh-gitops",
+      "html_url": "https://github.com/satan9394/dsh-gitops",
+      "description": "DSH skill: GitOps 工作流，声明式基础设施/Git 即真源/持续协调/渐进式交付（受 wshobson/agents 38k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T19:49:34Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-gitops\n\nGitOps 工作流：声明式基础设施、Git 即真源、持续协调、渐进式交付\n（ArgoCD/Flux）、安全检查。\n\n受 [wshobson/agents](https://github.com/wshobson/agents)（38k★ MIT）\n的 kubernetes-operations/gitops-workflow 技能启发，改编为 DSH\n中文原创精简版。\n\n## 安装\n\n```sh\ndsh plugin --profile web add dsh-gitops\n# 或本地开发：dsh plugin --profile web add link:E:\\DeepSeek_Harness\\workspace\\2026_08_15\\plugins\\dsh-gitops\n# 重启 dsh web 生效\n```\n\n## 使用\n\n对 agent 说\"搭 GitOps / 声明式部署\"，`gitops` 技能输出\n仓库结构 + 工具选型 + 接入流程 + 安全检查。\n\n## 结构\n\n```\ndsh-gitops/\n├── index.js           # 注册 skills/ 到 ctx.skills\n├── cordis.patch.yml   # bundle patch 层\n├── package.json       # dsh.bundle manifest\n└── skills/gitops/SKILL.md\n```\n\n## License\n\nMIT。原创精简改编，灵感来自 wshobson/agents（MIT）。\n"
+    },
+    {
+      "full_name": "satan9394/dsh-personal-content-discovery",
+      "html_url": "https://github.com/satan9394/dsh-personal-content-discovery",
+      "description": "DSH skill: 跨平台个性化内容发现（五层灵魂画像、MBTI 推断、主动破茧、跨平台兴趣融合、本地优先、朋友式推荐）（受 whiteguo233/OpenBiliClaw 2.9k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T23:38:06Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "内容/媒体"
+      ],
+      "tags": [
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-personal-content-discovery\n\nDSH（DeepSeek Harness）技能插件：**跨平台个性化内容发现**。\n\n以用户为中心而非内容标签：行为分析推断 MBTI/认知风格/深层需求，构建五层灵魂画像（事件→偏好→觉察→洞察→灵魂），主动猜测陌生兴趣破信息茧房，跨平台兴趣融合（B站/小红书/抖音/YouTube/X/知乎/Reddit…），本地优先 + 朋友式推荐解释 + 反馈闭环学习。受 [whiteguo233/OpenBiliClaw](https://github.com/whiteguo233/OpenBiliClaw)（2.9k★）启发的中文原创精简版。\n\n## 安装\n\n```bash\ndsh plugin add dsh-personal-content-discovery\n```\n\n## 触发方式\n\n描述中包含\"个性化推荐 / 内容发现 / 破信息茧房 / 用户画像 / 灵魂画像 / 跨平台兴趣\"等关键词时自动触发。\n\n## 能力\n\n- 五层灵魂画像（事件→偏好→觉察→洞察→灵魂）\n- MBTI 推断 + 认知风格 + 深层需求\n- 主动探索机制（猜对升级、猜错安静退出）\n- 跨平台兴趣融合\n- 四态反馈闭环（confirm/reject/defer/chat）\n- 本地优先 + 朋友式可解释推荐\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "satan9394/dsh-data-engineering",
+      "html_url": "https://github.com/satan9394/dsh-data-engineering",
+      "description": "DSH skill: 数据工程, Airflow/dbt/Spark（受 wshobson/agents 38k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T21:24:55Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-data-engineering\n\nDSH（DeepSeek Harness）技能插件：**数据工程**。\n\nAirflow DAG 设计（幂等/原子/增量/可观测）、dbt 分层建模（staging/intermediate/marts）与测试文档、Spark 优化（分区/广播/倾斜）、数据管线排障。受 [wshobson/agents](https://github.com/wshobson/agents)（38k★ MIT）启发的中文原创精简版。\n\n## 安装\n\n```bash\ndsh plugin add dsh-data-engineering\n```\n\n## 触发方式\n\n描述中包含\"数据工程 / Airflow / DAG / dbt / 数据管线 / Spark / ETL / 批任务\"等关键词时自动触发。\n\n## 能力\n\n- Airflow DAG 四原则与依赖模式\n- dbt Medallion 分层与命名规范\n- Spark 优化要点（广播 join/倾斜/分区）\n- 管线排障流程\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "satan9394/dsh-parallel-dev",
+      "html_url": "https://github.com/satan9394/dsh-parallel-dev",
+      "description": "DSH skill: 并行功能开发，文件所有权/接口契约/垂直切片 vs 水平分层（受 wshobson/agents 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T19:56:03Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-parallel-dev\n\n并行功能开发：文件所有权、接口契约先行、避免冲突、集成策略\n（垂直切片 vs 水平分层）。\n\n受 [wshobson/agents](https://github.com/wshobson/agents)（38k★ MIT）\n的 agent-teams/parallel-feature-development 技能启发，改编为 DSH\n中文原创精简版。\n\n## 安装\n\n```sh\ndsh plugin --profile web add dsh-parallel-dev\n# 或本地开发：dsh plugin --profile web add link:E:\\DeepSeek_Harness\\workspace\\2026_08_15\\plugins\\dsh-parallel-dev\n# 重启 dsh web 生效\n```\n\n## 使用\n\n对 agent 说\"拆并行开发 / 多 agent 同时实现\"，`parallel-dev` 技能输出\n工作流划分 + 文件所有权 + 接口契约 + 集成计划。\n\n## 结构\n\n```\ndsh-parallel-dev/\n├── index.js           # 注册 skills/ 到 ctx.skills\n├── cordis.patch.yml   # bundle patch 层\n├── package.json       # dsh.bundle manifest\n└── skills/parallel-dev/SKILL.md\n```\n\n## License\n\nMIT。原创精简改编，灵感来自 wshobson/agents（MIT）。\n"
+    },
+    {
+      "full_name": "satan9394/dsh-screenshot-to-code",
+      "html_url": "https://github.com/satan9394/dsh-screenshot-to-code",
+      "description": "DSH skill: 截图转代码, 渲染对比迭代（受 screenshot-to-code 74k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T23:26:29Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "内容/媒体"
+      ],
+      "tags": [
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-screenshot-to-code\n\nDSH（DeepSeek Harness）技能插件：**截图转代码**。\n\n把 UI 截图/设计稿转换为干净的 HTML/Tailwind/React 代码：布局/组件/token 分析 → 生成 → 渲染对比迭代（像素级对齐/响应式/交互）→ 交付。受 [abi/screenshot-to-code](https://github.com/abi/screenshot-to-code)（74k★）思路启发的中文原创精简版。\n\n## 安装\n\n```bash\ndsh plugin add dsh-screenshot-to-code\n```\n\n## 触发方式\n\n描述中包含\"截图转代码 / 设计稿还原 / 做成网页 / 从图片生成前端 / 还原 UI\"等关键词时自动触发。\n\n## 能力\n\n- 布局/组件/token 分析\n- 组件化代码生成\n- 渲染对比迭代循环\n- 响应式与可访问性验证\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "satan9394/dsh-security-requirements",
+      "html_url": "https://github.com/satan9394/dsh-security-requirements",
+      "description": "DSH skill: 安全需求提取, 威胁转可行动需求（受 wshobson/agents 38k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T23:07:44Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-security-requirements\n\nDSH（DeepSeek Harness）技能插件：**安全需求提取**。\n\n把威胁模型与业务上下文转化为可行动安全需求：三层转化（业务→安全需求→技术控制）、需求类型（功能/非功能/约束）、需求属性（可追踪/可测/优先级/风险）、安全用户故事与验收标准。受 [wshobson/agents](https://github.com/wshobson/agents)（38k★ MIT）启发的中文原创精简版。\n\n## 安装\n\n```bash\ndsh plugin add dsh-security-requirements\n```\n\n## 触发方式\n\n描述中包含\"安全需求 / 威胁转需求 / 安全用户故事 / 验收标准 / 合规映射\"等关键词时自动触发。\n\n## 能力\n\n- 三层需求转化\n- 需求类型与属性\n- 追踪到威胁、含验收标准\n- 与威胁建模互补\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "satan9394/dsh-teach",
+      "html_url": "https://github.com/satan9394/dsh-teach",
+      "description": "DSH skill: 教学与讲解, 教学工作区与合意困难（受 mattpocock/skills 223k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T22:16:24Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-teach\n\nDSH（DeepSeek Harness）技能插件：**教学与讲解**。\n\n教学工作区（MISSION/参考/学习记录/课程 HTML/组件）、知识-技能-智慧三要素、流畅度 vs 存储强度、合意困难（检索/间隔/交错）、最近发展区、短而单胜利的课程设计。受 [mattpocock/skills](https://github.com/mattpocock/skills) 的 teach（223k★ MIT）启发的中文原创精简版。\n\n## 安装\n\n```bash\ndsh plugin add dsh-teach\n```\n\n## 触发方式\n\n描述中包含\"教我 / 学习 / 讲解概念 / 教学 / 深入理解 / 学会这个主题\"等关键词时自动触发。\n\n## 能力\n\n- 教学工作区结构与状态记录\n- 合意困难三式（检索/间隔/交错）\n- 课程设计（短/单胜利/最近发展区）\n- 组件复用与参考材料\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "satan9394/dsh-domain-modeling",
+      "html_url": "https://github.com/satan9394/dsh-domain-modeling",
+      "description": "DSH skill: 领域建模，维护术语表 CONTEXT.md 与 ADR 决策记录（受 mattpocock/skills 223k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T17:39:37Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-domain-modeling\n\n领域建模：主动构建并打磨项目的领域模型——挑战模糊术语、推敲边界场景、\n维护术语表（CONTEXT.md）与决策记录（ADR）。\n\n受 [mattpocock/skills](https://github.com/mattpocock/skills)\n（223k★ MIT，Matt Pocock 的\"给真正工程师的技能\"）启发，改编为\nDSH 中文原创精简版。\n\n## 安装\n\n```sh\ndsh plugin --profile web add dsh-domain-modeling\n# 或本地开发：dsh plugin --profile web add link:E:\\DeepSeek_Harness\\workspace\\2026_08_15\\plugins\\dsh-domain-modeling\n# 重启 dsh web 生效\n```\n\n## 使用\n\n对 agent 说\"帮我把项目的术语理清楚 / 这个词到底指什么 / 记录一个架构决策\"，\n`domain-modeling` 技能会挑战模糊术语、压测边界场景，并维护 CONTEXT.md 与 ADR。\n\n## 结构\n\n```\ndsh-domain-modeling/\n├── index.js           # 注册 skills/ 到 ctx.skills\n├── cordis.patch.yml   # bundle patch 层\n├── package.json       # dsh.bundle manifest\n└── skills/domain-modeling/SKILL.md\n```\n\n## License\n\nMIT。原创精简改编，灵感来自 mattpocock/skills（MIT）。\n"
+    },
+    {
+      "full_name": "satan9394/dsh-dotnet-backend",
+      "html_url": "https://github.com/satan9394/dsh-dotnet-backend",
+      "description": "DSH skill: .NET 后端模式, Clean Architecture 与 EF Core（受 wshobson/agents 38k★ 启发）",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-19T21:39:00Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# dsh-dotnet-backend\n\nDSH（DeepSeek Harness）技能插件：**.NET 后端开发模式**。\n\nClean Architecture 分层、依赖注入生命周期（Scoped/Singleton/Transient）、EF Core/Dapper 数据访问（防 N+1）、IOptions 配置、Redis 缓存、Polly 弹性与 xUnit 测试。受 [wshobson/agents](https://github.com/wshobson/agents)（38k★ MIT）启发的中文原创精简版。\n\n## 安装\n\n```bash\ndsh plugin add dsh-dotnet-backend\n```\n\n## 触发方式\n\n描述中包含\"C# / .NET / ASP.NET Core / EF Core / Dapper / 依赖注入 / xUnit / Web API\"等关键词时自动触发。\n\n## 能力\n\n- Clean Architecture 分层与依赖方向\n- DI 生命周期选型与集中注册\n- EF Core/Dapper 查询优化（AsNoTracking/N+1）\n- 配置/缓存/弹性/测试完整纪律\n\n## 许可\n\nMIT\n"
+    },
     {
       "full_name": "satan9394/dsh-performance",
       "html_url": "https://github.com/satan9394/dsh-performance",
@@ -10064,338 +10289,6 @@
         "agent"
       ],
       "readme_text": "# dsh-rss-digest\n\n**English · [简体中文](README.zh.md)**\n\nRSS/Atom aggregation, smart summarization, and daily Markdown briefings — a\nfirst-party-style **dsh bundle** (DeepSeek Harness, \"everything is a plugin\").\n\nThe plugin manages feed subscriptions with local persistence, polls feeds on a\nschedule, deduplicates stories (exact + near-duplicate), summarizes them with\nthe harness's LLM (with a deterministic extractive fallback when the model is\nunavailable), and delivers a daily Markdown digest into live conversations\nand/or files. It also ships a standalone CLI that shares the same core.\n\n- **dsh integration**: bundle spec (`dsh.bundle` + `cordis.patch.yml`),\n  model-facing tools via `ctx.tools`, scheduling via the harness timer seam,\n  delivery via agent follow-up messages. See [Architecture](#architecture).\n- **Zero-friction core**: the fetch/parse/dedupe/store/digest core has no\n  dependencies at all — only the dsh integration layer imports dsh packages.\n\n---\n\n## Features\n\n- **Subscriptions** — add / remove / list / enable / disable RSS 2.0, Atom,\n  and RSS 1.0 (RDF) feeds; persisted in a single versioned JSON document with\n  atomic writes and corruption quarantine.\n- **Scheduled fetching** — configurable poll interval, startup cycle,\n  per-request timeout, size cap, retries, and an item retention cap.\n- **Deduplication** — exact-match hashing plus token-Jaccard near-duplicate\n  detection (CJK-aware bigrams), configurable threshold.\n- **LLM summaries** — one batch call per digest or per-item summaries,\n  Chinese or English, bounded output length; automatic degradation to\n  extractive summaries on any model failure.\n- **Daily digest** — Markdown briefing at a wall-clock time (optional IANA\n  timezone) delivered to live sessions (`Agent.followup`) and/or written to\n  `digests/<day>.md` files.\n- **Two entry points** — the same `RssService` powers both the dsh plugin\n  (`ctx.tools` + scheduler) and the standalone CLI.\n\n## Installation (dsh)\n\nA bundle is an npm package that ships a configuration layer. Install this\npackage into a dsh profile; the loader picks up the `dsh.bundle` declaration\nand applies `cordis.patch.yml` automatically:\n\n```bash\n# from inside a dsh profile (or with --profile <name> from anywhere)\ndsh plugin --profile demo add ./path/to/dsh-rss-digest\n# or from a registry:  dsh plugin --profile demo add dsh-rss-digest\n```\n\nThe profile manifest now lists `dsh-rss-digest` in `dsh.profile.bundles`, and\nthe bundle's patch inserts the plugin row:\n\n```yaml\n- insert:\n    - id: rss-digest\n      name: 'dsh-rss-digest'\n```\n\nOptional: tune the plugin from your profile's own\n`$DSH_HOME/profiles/demo/cordis.patch.yml` (a bare row by id replaces the\nrow's config; every omitted field keeps its default). A fully annotated\nexample lives in [`examples/profile.cordis.patch.yml`](examples/profile.cordis.patch.yml):\n\n```yaml\n- id: rss-digest\n  config:\n    fetch:\n      intervalMinutes: 60\n    summary:\n      language: zh\n      mode: batch\n    digest:\n      time: '08:30'\n      timezone: Asia/Shanghai\n      deliverTo: both\n```\n\nThe plugin starts with sensible defaults even with no configuration at all;\nuse `rss_add` in a conversation or `dsh-rss-digest add` in a shell to register\nfeeds at runtime.\n\n> **Peer dependencies**: the plugin declares the dsh packages it links\n> against (`@deepseek-ai/cordis`, `@deepseek-ai/dsh-tools`,\n> `@deepseek-ai/dsh-llm`, `@deepseek-ai/cordis-plugin-timer`) as peers. A dsh\n> profile already provides them; if your package manager complains about\n> unmet peers, `pnpm --dir $DSH_HOME/profiles/demo add` the same four packages\n> once (the profile linker heals the rest).\n\n## Configuration reference\n\nAll fields are optional; `apply(ctx, config)` always receives fully defaulted\nvalues.\n\n| Field | Default | Description |\n| --- | --- | --- |\n| `dataPath` | `''` | Store file path. `''` resolves to `$DSH_RSS_DIGEST_DATA`, else `$DSH_HOME/data/rss-digest/store.json`, else `./.dsh-rss-digest/store.json`. |\n| `sources[]` | `[]` | Initial subscriptions merged at startup: `{ url, title?, enabled? }`. Duplicate URLs are ignored. |\n| `fetch.enabled` | `true` | Whether the periodic poller runs. |\n| `fetch.intervalMinutes` | `60` | Poll interval (min 5). |\n| `fetch.onStartup` | `true` | Run one cycle ~10 s after startup. |\n| `fetch.requestTimeoutMs` | `15000` | Per-request timeout. |\n| `fetch.sizeLimitBytes` | `1048576` | Max accepted document size. |\n| `fetch.retries` | `2` | Retries for transient failures (network / 5xx / 429 / 408). |\n| `fetch.maxItemsPerSource` | `50` | Parsed items kept per source per cycle (newest kept). |\n| `fetch.storeContentChars` | `4000` | Truncation for stored summary/content text. |\n| `fetch.maxStoredItems` | `1000` | Retention cap (oldest fetched pruned on save). |\n| `dedupe.threshold` | `0.9` | Min token-set Jaccard similarity for near-duplicates. |\n| `dedupe.compareContent` | `false` | Let identical bodies collapse empty-title items. |\n| `summary.enabled` | `true` | `false` forces extractive summaries. |\n| `summary.mode` | `batch` | `batch` = one model call per digest; `single` = per item. |\n| `summary.language` | `zh` | Output language of the summary body: `zh` \\| `en`. |\n| `summary.maxLength` | `800` | Hard character cap on the summary body. |\n| `summary.maxTokens` | `1024` | Token budget hint for the model call. |\n| `summary.provider` | `''` | dsh provider route; `''` = first registered provider. |\n| `summary.model` | `''` | Model id; `''` = first listed model of the provider. |\n| `digest.enabled` | `true` | Whether the daily digest scheduler runs. |\n| `digest.time` | `'08:00'` | Wall-clock fire time (`HH:MM`). |\n| `digest.timezone` | `''` | IANA timezone; `''` = host local time. |\n| `digest.maxItems` | `20` | Max items per digest. |\n| `digest.deliverTo` | `both` | `agents` \\| `file` \\| `both` — deliver to live sessions, to `digests/<day>.md`, or both. |\n| `digest.includeItemLinks` | `true` | Whether the item list embeds permalinks (http/https only). |\n\n## Tools (model-facing)\n\nRegistered through `ctx.tools`; the model can call them in any conversation:\n\n| Tool | Parameters | Behavior |\n| --- | --- | --- |\n| `rss_list` | — | Lists subscriptions (id, url, title, enabled). |\n| `rss_add` | `url` (req), `title?` | Subscribes to a feed; returns the new source. |\n| `rss_remove` | `id` (req) | Unsubscribes and drops that source's items. |\n| `rss_fetch` | `id?` | Polls one source (or all) now; dedupe is automatic. |\n| `rss_digest` | `language?`, `mode?`, `maxItems?` | Builds the Markdown digest over undigested items and returns it. |\n\nExample conversation flow:\n\n```\nuser: 帮我把 Hacker News 加进来，然后生成今天的简报\nmodel: [rss_add: https://hnrss.org/frontpage]\n       [rss_fetch]\n       [rss_digest: language=zh]\n```\n\n## Scheduling model\n\ndsh's `ctx.jobs` registry tracks long-running task *executions* (bash /\nsubagent jobs) — it is not a cron API. The harness's scheduling seam is the\ntimer service (`ctx.timeout` / `ctx.interval`, injected via `'timer'`), which\nis what this plugin uses:\n\n- fetch cycles: `ctx.interval` (configurable), plus one startup cycle;\n- daily digest: a self-re-arming `ctx.timeout` — after every run the next\n  `HH:MM` occurrence is recomputed (`Intl`-based, timezone- and DST-aware), so\n  the digest stays anchored to the configured wall-clock time; overlapping\n  runs are guarded with an in-flight lock.\n\n## Delivery\n\nThe harness has no broadcast API; a plugin reaches live sessions by queueing\na user-role message on each running `Agent` (`Agent.followup`, the same\nmechanism the shipped job notices use). `digest.deliverTo = agents` does that;\n`file` writes `digests/<day>.md` next to the store; `both` is the default.\nHeadless profiles without the agent service simply get the file/log path, and\nthe plugin never depends on the agent service at startup.\n\n## CLI\n\nThe same core, no harness required:\n\n```bash\ndsh-rss-digest add https://hnrss.org/frontpage\ndsh-rss-digest fetch\ndsh-rss-digest digest --lang en --out digest.md\ndsh-rss-digest list --items\ndsh-rss-digest status\n```\n\nRun `dsh-rss-digest help` for the full command reference. The CLI talks to an\nOpenAI-compatible `/chat/completions` endpoint for summaries (DeepS"
-    },
-    {
-      "full_name": "JohnXu22786/memory-standard",
-      "html_url": "https://github.com/JohnXu22786/memory-standard",
-      "description": "Memory Standard Protocol (mm) for DeepSeek Harness: layered MEMORY.md, deterministic budgets, frozen snapshots, cross-agent markdown/URI interop; dsh bundle + standalone CLI.",
-      "stars": 1,
-      "language": "TypeScript",
-      "pushed_at": "2026-09-29T21:06:21Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "终端/TUI"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "agent"
-      ],
-      "readme_text": "# dsh-memory-standard\n\n[English](./README.md) | [简体中文](./README.zh.md)\n\n[![CI](https://github.com/JohnXu22786/memory-standard/actions/workflows/ci.yml/badge.svg)](https://github.com/JohnXu22786/memory-standard/actions/workflows/ci.yml)\n\nA **Memory Standard Protocol (mm)** plugin for the DeepSeek Harness (dsh): a\ndeterministic, layered, cross-agent memory system built on plain markdown\nfiles — not a proprietary protocol.\n\nThe dsh ecosystem has dozens of memory plugins but no shared standard, and\nthe official core only ships a default-off MCP memory example. This plugin\nclaims the missing \"standard seat\": **deterministic budgets + layered\nMEMORY.md + cross-agent mutual recognition + session-log ingestion** that\nworks with official compaction/session logs.\n\n- **Layered memory** — `MEMORY.md` is the hand-loaded index (hard cap:\n  200 lines / 25 KiB, default); detailed notes live in `memories/<topic>.md`\n  and load on demand.\n- **Deterministic budgets** — over any budget is a structured error with\n  usage metrics demanding an index rewrite, **never a silent truncation**.\n  Writes carry a character budget and return usage so an agent can compress\n  on the spot.\n- **Cross-agent mutual recognition** — a documented plain-markdown format,\n  portable `mm://<memoryId>/<topic>` URIs, a JSON Schema\n  (`schema/memory.schema.json`), and an open read/write API. No closed\n  protocol.\n- **Write timing** — `mem_write` API plus session-end / periodic nudging;\n  writes persist to disk immediately and load in the **next** session\n  (in-session reads stay frozen, protecting any prompt cache).\n- **Ingestion collaboration** — `mem_digest` recognizes official dsh session\n  logs / compaction output as a memory source and distills candidate memories\n  (optional, self-contained, LLM-free).\n- **Toolchain** — dsh tools `mem_read`, `mem_write`, `mem_search`,\n  `mem_budget`, `mem_digest`, plus a `dsh-memory` CLI.\n\nThe core library is dependency-free (Node built-ins only) and works both\ninside dsh and standalone.\n\n## Status\n\nDeveloper-preview dsh ecosystem; format version `mm v1` (see\n[`SPEC.md`](SPEC.md)). Compatible with the installed `@deepseek-ai/dsh` CLI\nand bundle format (`dsh.bundle.patch` + `cordis.patch.yml` + `apply(ctx)`).\n\n---\n\n## Quick start\n\n### 1. Integrate with dsh (local directory bundle)\n\nFrom the directory that contains this package (`dsh-memory-standard/`):\n\n```bash\ndsh plugin --profile demo add ./\n\n# or install directly from this GitHub repository\ndsh plugin --profile demo add github:JohnXu22786/memory-standard\n# or from npm once published\ndsh plugin --profile demo add dsh-memory-standard\n# the standalone CLI is also published as a global npm bin\nnpm install -g dsh-memory-standard\n\n# boot the profile; the five mem_* tools + the 'memory-standard' system section load\ndsh --profile demo\n```\n\n`dsh plugin` forwards to pnpm inside the profile; peer dependencies\n(`@deepseek-ai/cordis`, `@deepseek-ai/dsh-tools`, `@deepseek-ai/schemastery`)\nresolve from the dsh installation. Verified against `dsh@0.1.0-rc.6`.\n\n> Notes for other install paths:\n> - As a dev overlay → copy `cordis.patch.yml` and point a `--patch` overlay at\n>   the package's entry (`name` = package name for the row).\n> - The plugin auto-initializes the memory root (`$DSH_HOME/memory`, or\n>   `$DSH_MEMORY_ROOT`) on first load — no manual `init` needed.\n\n### 2. Configure\n\nThe bundle ships defaults; every value is overridable by overriding the\n`memory-standard` row by id in a later layer (profile `cordis.patch.yml`,\n`$DSH_HOME` overlay, or `--patch`):\n\n```yaml\n- id: memory-standard\n  config:\n    root: ''                 # '' => $DSH_MEMORY_ROOT, else $DSH_HOME/memory\n    memoryId: local\n    indexLines: 200          # hard cap on MEMORY.md lines\n    indexBytes: 25600        # hard cap on MEMORY.md bytes (25 KiB)\n    detailMaxBytes: 65536    # hard cap per detail file\n    defaultWriteBudget: 4000 # per-write character budget\n    search:\n      mode: auto             # auto | scan | fts5\n      limit: 10\n      maxSnippetChars: 160\n    nudge:\n      enabled: true          # session-end / periodic nudging (memory/nudge events)\n      intervalMs: 1800000\n    lang: auto               # auto | en | zh (system-prompt section language)\n```\n\n### 3. Use it\n\nIn a dsh session the agent gets the five tools (plus a system-prompt section\nthat explains the protocol):\n\n| tool | purpose |\n| --- | --- |\n| `mem_read` | read the index, all summaries, or one note's full body (frozen snapshot) |\n| `mem_write` | write/update a note with a character budget; returns usage; never truncates |\n| `mem_search` | search memory (FTS5 when available, else scan; CJK-aware scan) |\n| `mem_budget` | deterministic budget report (index caps, per-note usage, pending writes) |\n| `mem_digest` | distill candidate memories from a session log / text (never writes) |\n\nOther plugins can access memory directly via the provided service:\n\n```ts\nconst memory = ctx.get('memory')\nmemory.write({ topic: 'deploy-region', content: 'us-east-1', summary: 'Deployment region' })\nmemory.search('deploy')\n```\n\n### 4. Standalone CLI\n\n```bash\nnpm run build                # needed once to compile lib/\nnode lib/cli.js init --root <dir>\nnode lib/cli.js write deploy --content \"we deploy to us-east-1\" --root <dir>\nnode lib/cli.js read deploy --root <dir>\nnode lib/cli.js budget --root <dir>\nnode lib/cli.js search deploy --root <dir>\nnode lib/cli.js digest --file <session.log.jsonl> --root <dir>\n```\n\nAll commands accept `--json` for machine-readable output; `--root` selects the\nmemory root. Install globally with `npm i -g .` to get the `dsh-memory` bin.\n\n---\n\n## How it works\n\n### Layered memory\n\n```\n<root>/MEMORY.md          hand-loaded index (small, hard-capped)\n<root>/memories/t1.md     on-demand detail notes (free markdown)\n```\n\n`mem_read` without a topic returns the index (the hand-load surface); a topic\nreturns that note's full body. Budget lets the agent decide what belongs in\nthe index summary vs. the detail note.\n\n### Deterministic budgets\n\nThree no-truncation guarantees (see [`SPEC.md`](SPEC.md) §6):\n\n1. a write over its **character budget** fails with `usage.overflow`, writes\n   nothing; compress and retry,\n2. a note over its **byte cap** fails, preserving the previous content,\n3. an index over its **line/byte hard cap** fails and *demands a rewrite* —\n   the error text says so explicitly. Deleting/consolidating to fit again is\n   the recovery path.\n\nA compliant writer must never \"fix\" an over-budget write by silently dropping\ncontent — the standard views that as data loss.\n\n### Frozen snapshots\n\n`Memory` loads a snapshot once per session. Reads and search serve that\nsnapshot; writes go to disk for the next session. `pendingWrites` exposes\nstaged writes; `reload()` re-snapshots (used by the CLI and integrations).\nThis keeps the session's view self-consistent and protects prompt caches.\n\n### Cross-agent interop\n\n- The on-disk format is plain, documented markdown (`SPEC.md`) and the URI\n  scheme is `mm://<memoryId>/<topic>`.\n- `schema/memory.schema.json` describes the note shape for any compliant\n  writer/reader.\n- The public API (`Memory`, and `ctx.get('memory')` in dsh) is an open\n  interface — not a closed tool protocol. Any agent or tool can read/write the\n  same files.\n\n### Ingestion collaboration\n\ndsh stores sessions under `$DSH_HOME/sessions` and compacts them; those logs\nare recognized as a memory source. `mem_digest` reads the most recent\n`*.jsonl`/`*.md` (or an explicit file/text), recognizes `mm:` markers,\n`MEMO:`/`记忆：`/`记住：` lines, summary lines, and markdown headings, and\nreturns budgeted candidates for review. It never auto-writes — the agent\nchooses what to commit.\n\n---\n\n## Project layout\n\n```\nsrc/\n  types.ts            shared/interop types + defaults (mm v1)\n  core/               dependency-free library (Node built-ins only)\n    memory.ts         Memory facade: snapshots, writes, budget, search, digest\n    format.ts         index/note markdown grammar + URIs (SPEC implementation)\n    budget.ts         deterministic budget arithmetic\n    search.ts         scan search + optional SQLite FTS5 (node:sqlite)\n    digest.ts         session-log distillation\n    "
-    },
-    {
-      "full_name": "JohnXu22786/auditrail",
-      "html_url": "https://github.com/JohnXu22786/auditrail",
-      "description": "Security auditing and session forensics for DeepSeek Harness (dsh): full tool-invocation-chain recording (who/what/files/status/duration) fr",
-      "stars": 1,
-      "language": "TypeScript",
-      "pushed_at": "2026-09-30T00:11:34Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "skin",
-        "terminal"
-      ],
-      "readme_text": "# dsh-audit-trail\n\nSecurity auditing & session forensics for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (dsh).\n\nA dsh **bundle** (plugin) that records every tool-invocation across the harness\nsession stream and the tool pipeline, flags high-risk operations, persists a\nredacted, hash-chained audit trail to SQLite, and gives you query, export,\npolicy, and plain-text replay tools — plus a standalone CLI that works on the\nsame database without starting the harness.\n\n> **Fills a gap:** the dsh ecosystem has observability plugins for *performance*\n> (OTel / Prometheus). Nobody was doing a *security* audit trail — complete\n> tool-invocation-chain recording with sensitive-operation marking, privacy\n> masking, query/export, and text-terminal replay. That is what this bundle is.\n\n---\n\n## Table of contents\n\n- [What it does](#what-it-does)\n- [How it works](#how-it-works)\n- [Install & integrate with dsh](#install--integrate-with-dsh)\n- [Configuration](#configuration)\n- [Model-facing tools](#model-facing-tools)\n- [CLI](#cli)\n- [Replay](#replay)\n- [Compliance export format](#compliance-export-format)\n- [Sensitive-operation rules](#sensitive-operation-rules)\n- [Privacy & redaction](#privacy--redaction)\n- [SQLite schema](#sqlite-schema)\n- [Project layout](#project-layout)\n- [Development](#development)\n- [License](#license)\n\n---\n\n## What it does\n\n1. **Complete audit chain recording** — subscribes to the append-only\n   `session/event` stream and the live tool pipeline (`tools/result`,\n   `tools/change`) and records, for every event: *who* (session/actor), *when*\n   (timestamp + sequence), *which command* (tool name + masked argument\n   digest), *which files* were touched, *which outbound network destinations*\n   were targeted, *result status*, and *duration*.\n2. **Sensitive-operation marking** — a configurable rule table detects\n   high-risk patterns (`rm -rf`, `curl | sh`, key/secret material, destructive\n   git/db operations, outbound exfil-style requests, privilege escalation, …)\n   and attaches severity + rule tags to the affected records.\n3. **SQLite (WAL) persistence with privacy** — all stored content is masked\n   and truncated by default; nothing raw is persisted unless you relax the\n   redaction config. An append-only hash chain ties each row to the previous\n   one, so tampering is detectable with `auditrail chain verify`.\n4. **Query & export** — filter records by time window, session, tool, minimum\n   severity, sensitive-rule tag, and kind; export JSON reports, Markdown\n   reports, or the fixed-format compliance JSONL (with optional hash chain).\n5. **Session replay** — render the audit trail as a plain-text terminal\n   timeline and slow-play it with pause / step / seek / speed controls. No\n   browser involved.\n6. **Compliance output** — a versioned, fixed-format JSONL (`schema:\n   dsh-audit-trail/compliance/1`) that third parties can validate with the\n   bundled verifier or their own tooling.\n7. **Tool chain** — four model-facing tools (`audit_query`, `audit_export`,\n   `audit_playback`, `audit_policy`) plus a standalone CLI (`auditrail`).\n\n---\n\n## How it works\n\n```\n ┌────────────── dsh harness ──────────────┐\n │ session/event  (append-only durable log) │\n │ tools/result   (live tool dispatch)      │\n │ tools/change   (registry changes)        │\n └──────────────┬──────────────────────────-┘\n                │  Recorder (contained, never throws)\n                ▼\n        Normalize → RuleEngine (flag) → Redact/mask/truncate\n                │\n                ▼\n        AuditStore (SQLite, WAL, hash chain, tags)\n                │\n        ┌───────┴───────────┐\n        ▼                   ▼\n   audit_query / export   auditrail CLI\n   /playback / policy      (same database)\n```\n\n### Record kinds\n\n| Kind | Source event | Meaning |\n|---|---|---|\n| `user_message` | `session/event` `user/message` | user/synthetic input |\n| `assistant_message` | `session/event` `assistant/message` | model output |\n| `assistant_chunk` | `session/event` `assistant/chunk` | token-level (opt-in) |\n| `turn_start` / `turn_end` | `turn/start` / `turn/end` | turn brackets |\n| `step_start` / `step_end` | `step/start` / `step/end` | step brackets |\n| `todo_update` | `todo/write` | todo snapshot |\n| `request_header` / `request_context` | `request/header` / `request/context` | model routing |\n| `tool_call` | `tool/call` | the durable command record (args digest, files, network, flags) |\n| `tool_result` | `tool/result` | the durable outcome (status, error, duration) |\n| `tool_dispatch` | `tools/result` | the live precise outcome (status, structured error, duration) |\n| `tool_registered` | `tools/change` | registry add/remove deltas |\n| `session_live` | `session/end-seed` | live history begins |\n\n`audit_query --chains` merges `tool_call` + `tool_result` + `tool_dispatch`\n(correlated by `callId` / session+turn+step) into one **invocation chain** per\ntool call — a single row with status, duration, files, network, severity, and\nflags.\n\n### Ordering & determinism\n\nThe recorder ingests synchronously in arrival order and the store assigns a\nmonotonic `AUTOINCREMENT` id, so identical input streams produce byte-identical\ntrails (verified by a dedicated determinism test). Within a session the durable\nevent stream is already ordered; cross-source ordering (session log vs. live\ntool pipeline) is the harness's emission order, and the query layer re-joins\nthe two sources deterministically by correlation keys.\n\n---\n\n## Install & integrate with dsh\n\nThe bundle follows the [official dsh bundle\nspec](https://deepseek-harness.github.io/deepseek-harness/en/develop/basic/publish):\n\n- `package.json` declares `dsh: { bundle: { patch: \"./cordis.patch.yml\" } }`\n- `cordis.patch.yml` mounts the plugin row\n- the entry module exports `name`, `inject`, and `apply(ctx, config)`\n\n### Local development bundle (link)\n\n```bash\n# from a dsh profile directory (a profile's package.json has \"dsh\": {\"profile\": {...}})\ndsh plugin --profile <name> add /path/to/dsh-plugin/auditrail\ndsh --profile <name>\n```\n\n`dsh plugin add` links the package into the profile's dependencies and appends\nit to `dsh.profile.bundles`, which activates the `cordis.patch.yml` layer.\n\n### From a tarball / npm\n\n```bash\nnpm pack            # produces dsh-audit-trail-0.1.0.tgz\ndsh plugin --profile <name> add ./dsh-audit-trail-0.1.0.tgz\n```\n\nOn boot the patch layer inserts one row:\n\n```yaml\n- insert:\n  - id: audit-trail\n    name: 'dsh-audit-trail'\n```\n\nYou normally need **no configuration** — every field defaults in code. To tune\na single profile, override that row (`id: audit-trail`) from the profile's own\n`cordis.patch.yml` (a patch replaces the whole `config` block — restate every\nfield you keep).\n\n### Requirements\n\n- Node.js `>= 22.13` (uses the built-in `node:sqlite`, no native deps).\n- A harness that emits `session/event` and `tools/*` events (everything in the\n  current `@deepseek-ai/dsh-*` set does).\n\n---\n\n## Configuration\n\nAll fields optional. Defaults shown.\n\n```ts\ninterface AuditConfig {\n  storage: {\n    /** null => <dshHome>/audit-trail/audit.sqlite\n     *  dshHome = $DSH_HOME || ~/.dsh; AUDITRAIL_DB overrides for the CLI */\n    path: string | null;\n  };\n  redact: {\n    /** Mask known secret patterns before storing (default true). */\n    maskSecrets: boolean;\n    /** Tool-argument digest cap in chars.            */ truncateArgs: number;   // 512\n    /** Summary cap in chars.                         */ truncateSummary: number; // 240\n    /** Detail JSON cap in chars.                     */ truncateDetail: number;  // 4096\n    /** Max file paths captured per record.           */ maxFiles: number;        // 16\n    /** Max outbound destinations captured per record.*/ maxNetwork: number;      // 16\n    /** Extra secret regex patterns (regex source).   */ extraSecretPatterns: string[];\n  };\n  rules: {\n    /** Built-in rule ids to disable, e.g. [\"net:plaintext-http\"]. */\n    disabledIds: string[];\n    /** Operator rules added to (not replacing) the default table. */\n    custom: Array<{\n      id: string; severity: 'info'|'low'|'medium'|'high'|'critical';\n      pattern: string; scope: 'args'|'result'|'files'|'network'|'all'|'tool';\n "
-    },
-    {
-      "full_name": "JohnXu22786/dsh-web-submit",
-      "html_url": "https://github.com/JohnXu22786/dsh-web-submit",
-      "description": "DeepSeek Harness plugin: run headless-style tasks through the live dsh web process — CLI-invoked sessions appear in the Web UI in real time (POST /x/headless, GET status, SSE live events).",
-      "stars": 1,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-24T15:32:05Z",
-      "topics": [
-        "bridge",
-        "cordis",
-        "deepseek-harness",
-        "dsh-plugin",
-        "headless",
-        "plugin",
-        "web"
-      ],
-      "categories": [
-        "终端/TUI"
-      ],
-      "tags": [
-        "bridge",
-        "cordis",
-        "deepseek-harness",
-        "dsh-plugin",
-        "headless",
-        "plugin",
-        "web",
-        "web ui"
-      ],
-      "readme_text": "# dsh-web-submit\n\nDeepSeek Harness plugin that lets you drive the **running** `dsh web` instance\nfrom the command line — the task executes inside the web process, so the Web\nUI shows it live (same sessions store, same event stream), and permission /\napproval questions appear in the Web UI.\n\nNo separate headless process, no webhook glue: one plugin, three endpoints.\n\n## Endpoints\n\n| Method | Path | Description |\n|---|---|---|\n| `POST` | `/x/headless` | `{\"task\": \"...\", \"cwd\": \"...\", \"preset\": \"standard\", \"mode\": \"queue\"}` → `{\"ok\": true, \"sessionId\": \"session-...\"}` |\n| `GET` | `/x/headless/status?sessionId=...` | Latest session events (non-streaming poll) |\n| `GET` | `/x/headless/events?sessionId=...` | SSE live event stream; ends after `turn/end` |\n\nLoopback requests only (`127.0.0.1` / `localhost`), same trust posture as the\nbuilt-in `/api` surface. The plugin reuses the in-process `ApiProxyService`,\nso it stays identical to the UI's own session/prompt path.\n\n## Install\n\n```bash\ndsh plugin --profile web add file:C:/dsh-web-submit\n```\n\nThe bundle patch rule (`cordis.patch.yml`) is applied automatically by `dsh plugin add`, so no manual edit to the host profile is needed.\n\nRestart `dsh web` (`~/.dsh/start-web.cmd`) to load the plugin.\n\n## Example (CLI)\n\n```bash\n# submit a task\ncurl -s -X POST http://127.0.0.1:3080/x/headless \\\n  -H 'content-type: application/json' \\\n  -d '{\"task\":\"Summarize the README\",\"cwd\":\"C:/my/project\",\"preset\":\"coding\"}'\n\n# tail it live\ncurl -sN \"http://127.0.0.1:3080/x/headless/events?sessionId=session-xxx\"\n```\n\nWhile it runs, open the Web UI: the session is visible in real time, exactly\nas if you had typed the task there.\n\n## Config\n\n| Key | Default | Meaning |\n|---|---|---|\n| `routePrefix` | `/x` | Route prefix for all endpoints |\n| `maxBodyBytes` | `1048576` | Max request body size |\n\n## License\n\nMIT"
-    },
-    {
-      "full_name": "JohnXu22786/subtitle-studio",
-      "html_url": "https://github.com/JohnXu22786/subtitle-studio",
-      "description": "Multi-language subtitle translation workflow for dsh: SRT/VTT parsing, sentence-level LLM translation, bilingual merge, alignment validation",
-      "stars": 1,
-      "language": "TypeScript",
-      "pushed_at": "2026-09-29T19:11:59Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin"
-      ],
-      "readme_text": "# subtitle-studio\n\nA self-contained multilingual subtitle translation workflow plugin for **dsh**\n(DeepSeek Harness), built around the \"everything is a plugin\" idea. It parses\nand writes SRT/VTT subtitles, translates them sentence-by-sentence through a\nconfigurable LLM, merges bilingual outputs, validates alignment, and processes\nwhole directories — exposed both as dsh tools (`ctx.tools`) and as a\ndependency-free CLI.\n\n> `subtitle-studio` is a new, self-contained implementation. Its subtitle\n> parsers are written from scratch (no heavy subtitle libraries), its LLM layer\n> speaks OpenAI-compatible HTTP out of the box (DeepSeek by default) and can\n> plug into the harness's `ctx.llm` seam, and everything is UTF-8 on both ends.\n\n---\n\n## Table of contents\n\n- [Features](#features)\n- [Installation](#installation)\n- [Using subtitle-studio as a dsh bundle](#using-subtitle-studio-as-a-dsh-bundle)\n- [CLI](#cli)\n- [Configuration](#configuration)\n- [Glossary format](#glossary-format)\n- [Library & service API](#library--service-api)\n- [Testing](#testing)\n- [Limitations](#limitations)\n- [License](#license)\n\n## Features\n\n1. **Parsing & writing** — SRT and WebVTT with a tolerant state machine:\n   - accepts missing sequence numbers, missing blank separators, CRLF, and a UTF\n     BOM (UTF-8 / UTF-16LE / UTF-16BE);\n   - keeps multi-line cue text and VTT identifiers/settings verbatim;\n   - skips junk lines and malformed timecode lines, reporting them as issues\n     instead of aborting;\n   - output is always UTF-8 and round-trips preserve timing to the millisecond.\n\n2. **Sentence-by-sentence translation** — batched requests over a character\n   budget, JSON payloads keyed by cue index for reliable alignment, bounded\n   retries (with a corrective nudge on malformed JSON), timeouts, and glossary\n   injection. Works with any OpenAI-compatible endpoint (DeepSeek is default)\n   or the dsh `ctx.llm` seam.\n\n3. **Bilingual subtitles** — merge original + translation either *stacked*\n   (translation lines under the original) or *interleaved* (alternating cues),\n   with optional per-line tags and a separator. The timeline is copied verbatim\n   from the source, so it is preserved by construction.\n\n4. **Alignment validation** — checks translation count vs. source, missing and\n   extra cues, empty translations, overlong cues that should be split, and\n   timeline overlaps.\n\n5. **Batch processing** — translate whole directories with a bounded concurrency\n   pool, per-file retry with backoff, an atomic checkpoint file for pause/resume,\n   and token/cost estimation (with approximate per-model rates that can be\n   overridden).\n\n6. **Two entry points** — five dsh tools (`sub_parse`, `sub_translate`,\n   `sub_merge`, `sub_export`, `sub_glossary`) plus a full CLI.\n\n## Installation\n\nRequirements: Node.js ≥ 18.18.\n\n```bash\n# 1. install dev dependencies and build\nnpm install\nnpm run build\n\n# 2. run the CLI directly\nnode bin/subtitle-studio.js --help\n\n# or install the bin globally (makes `subtitle-studio` available)\nnpm link\n```\n\nThe package ships **zero runtime dependencies**. TypeScript is only a dev\ndependency (build to `lib/` with `tsc`).\n\n## Using subtitle-studio as a dsh bundle\n\nThe package is a valid dsh **bundle**: `package.json` declares the bundle\nmanifest, `cordis.patch.yml` inserts the plugin row into a profile, and\n`lib/index.js` exports the Cordis-style entry (`name` + `apply(ctx, config)`).\n\n### 1. Add the bundle to a profile\n\n```bash\ndsh plugin --profile <name> add subtitle-studio\n```\n\nThis installs the package and appends `subtitle-studio` to the profile's\n`dsh.profile.bundles`. The profile loader then applies our patch (the\n`cordis.patch.yml` shipped by the bundle), which inserts a row:\n\n```yaml\n- insert:\n    - id: subtitle-studio\n      name: subtitle-studio\n      config:\n        targetLanguages: []\n        sourceLanguage: ''\n```\n\n### 2. What the plugin registers\n\n- **Tools** on `ctx.tools` (registered when the `tools` service is available):\n\n  | tool           | purpose                                                              |\n  | -------------- | -------------------------------------------------------------------- |\n  | `sub_parse`    | parse a subtitle file into structured cues (JSON output)             |\n  | `sub_translate`| translate a subtitle file into one or more languages (LLM call)      |\n  | `sub_merge`    | combine a source subtitle with a translation payload (stacked/interleaved) |\n  | `sub_export`   | convert/export a subtitle to SRT or VTT (UTF-8), optionally bilingual |\n  | `sub_glossary` | manage the JSON terminology glossary (list/add/remove/merge)         |\n\n- **Service** `subtitleStudio` (when `ctx.provide` exists) exposing\n  `parse`, `translate`, `merge`, `validate`, `glossary`, `cost`, `stringify`,\n  `convert` — a convenient library surface for other plugins.\n\n### 3. Plugin configuration\n\nThe plugin reads the `config` object of its patch row (and any profile\noverride). Keys:\n\n| key                     | type            | default                         | meaning                                    |\n| ----------------------- | --------------- | ------------------------------- | ------------------------------------------ |\n| `llm.provider`          | `\"openai\"\\|\"dsh\"` | `\"openai\"`                    | HTTP backend vs. harness `ctx.llm` seam    |\n| `llm.baseUrl`           | string          | `https://api.deepseek.com/v1`   | OpenAI-compatible endpoint                 |\n| `llm.apiKey`            | string          | —                               | API key; supports `${ENV_VAR}` expansion   |\n| `llm.model`             | string          | `deepseek-chat`                 | model name                                 |\n| `llm.timeoutMs`         | number          | `120000`                        | per-request timeout                        |\n| `llm.maxRetries`        | number          | `2`                             | retries on transient failures              |\n| `llm.jsonMode`          | boolean         | `true`                          | request a JSON object response             |\n| `llm.chunkChars`        | number          | `3500`                          | cue-character budget per request           |\n| `sourceLanguage`        | string          | `\"\"` (auto)                     | source language tag                        |\n| `targetLanguages`       | string[]        | `[]`                            | target languages for translation           |\n| `glossary.paths`        | string[]        | `[]`                            | glossary JSON files (merged)               |\n| `output.layout`         | `stacked\\|interleaved` | `stacked`              | bilingual merge layout                     |\n| `output.separator`      | string          | `\"\"`                            | line between original & translated blocks  |\n| `output.tagTarget`      | string          | —                               | per-line tag prefix for translated lines   |\n| `output.format`         | `srt\\|vtt`      | keep source                     | output container format                    |\n| `output.utf8Bom`        | boolean         | `false`                         | write a UTF-8 BOM                          |\n| `batch.concurrency`     | number          | `2`                             | parallel files during batch                |\n| `batch.maxRetries`      | number          | `2`                             | per-file retries                           |\n| `batch.checkpoint`      | string          | `subtitle-studio.checkpoint.json` | checkpoint path                          |\n| `validation.maxChars`   | number          | `160`                           | CJK over-long cue threshold                |\n| `validation.maxWords`   | number          | `40`                            | Latin over-long cue threshold              |\n\nExample patch override (in the profile's own `cordis.patch.yml`, whole-row\nconfig replacement — see the dsh docs on patch layer semantics):\n\n```yaml\n- id: subtitle-studio\n  config:\n    llm:\n      provider: openai\n      baseUrl: https://api.deepseek.com/v1\n      apiKey: ${DEEPSEEK_API_KEY}\n      model: deepseek-chat\n    sourceLanguage: en\n    targetLang"
-    },
-    {
-      "full_name": "zhuweiyou/dsh-plugin-clawbot",
-      "html_url": "https://github.com/zhuweiyou/dsh-plugin-clawbot",
-      "description": "DSH（DeepSeek Harness）的微信 ClawBot 通道插件",
-      "stars": 1,
-      "language": "TypeScript",
-      "pushed_at": "2026-09-29T02:55:13Z",
-      "topics": [
-        "dsh-plugin"
-      ],
-      "categories": [
-        "Agent/智能体"
-      ],
-      "tags": [
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-plugin-clawbot\n\nDSH（DeepSeek Harness）的**微信 ClawBot 通道插件** —— 与微信 ClawBot\n（`@tencent-weixin/openclaw-weixin` 协议）双向通信，并支持**扫码登录 / 重新绑定账号**。\n管理面板已集成进 DSH Web **设置界面**的左侧菜单（「微信 ClawBot」）。\n\n- 支持**文字、图片、带微信转写的语音**，并支持在微信里用 `/model` 查看、切换当前会话模型\n- 收到微信消息 → 写入对应 DSH 会话 → 等待智能体回复 → 回发微信\n- 微信凭据自动从 ClawBot 账号库（`~/.openclaw/openclaw-weixin`）发现，\n  与 OpenClaw 通道共用账号，互不覆盖游标\n- 管理面板位于 DSH 设置 → 「微信 ClawBot」：查看状态、扫码绑定、重新登录、解绑账号、运行日志\n- token 过期（errcode=-14）时通道自动暂停，在面板重新扫码即可\n- 面板样式跟随 DSH 主题（浅色 / 深色自适应）\n\n## 安装（DSH 插件方式）\n\n插件已发布到 **npm**，直接安装包名即可：\n\n```bash\ndsh plugin --profile web add dsh-plugin-clawbot\n```\n\n安装后即可用（插件自带的 `cordis.patch.yml` 作为 bundle 层会自动激活 clawbot 行）。\n\n然后重启：\n\n```bash\ndsh web\n```\n\n重启后：\n\n- 打开 DSH Web 设置界面 → 左侧菜单出现 **「微信 ClawBot」**\n- 首次使用：点开面板 → 「扫码绑定 / 重新登录」→ 手机微信扫码 → 自动生效\n- 已绑定账号时重启自动复用，无需重新扫码\n- 微信 token 过期后通道暂停，在面板重新扫码即可\n\n## 运行截图\n\n管理面板位于 DSH 设置 → 「微信 ClawBot」，浅色 / 深色主题自适应：\n\n<img src=\"assets/settings-panel.png\" width=\"100%\" alt=\"微信 ClawBot 设置面板\">\n\n<img src=\"assets/wechat-screenshot.jpg\" width=\"320\" alt=\"微信侧聊天界面：收到智能体回复\">\n\n## 消息命令\n\n- `/new`、`/reset` — 为当前联系人开启全新会话\n- `/help` — 帮助\n- 文字、图片（可附文字）、带微信转写的语音 → 发送给 DSH 智能体\n- 附图的 `/new`、`/reset`、`/help`、`/model` 视为普通提问，不会执行命令\n- 每个微信联系人 / 群聊对应一个独立 DSH 会话，模型按会话切换\n\n## 支持的消息类型\n\n微信侧发来的内容会按原顺序合成**一次** DSH 提示，由 DSH 自己入库并写入会话记录：\n\n| 类型 | 支持情况 |\n| --- | --- |\n| 文字 | ✅ 直接作为提示词发送 |\n| 图片 | ✅ 含图文混发、多图；需要所选模型支持视觉输入 |\n| 语音 | ⚠️ 仅使用微信自带转写（`voice_item.text`） |\n| 文件 / 视频 | ❌ 回复暂不支持 |\n\n**图片**：插件从微信 CDN 下载并按协议解密（`image_item.aeskey` 优先，其次 `media.aes_key`，无密钥走明文路径），校验通过后交给 DSH 作为图片附件持久化。只接受 HTTPS 且属于微信 CDN 主机的地址、不跟随跳转，并受 DSH 自身的张数与字节上限约束；按真实文件头识别 PNG / JPEG / WebP / GIF。下载、解密、格式或大小校验失败时会明确回复错误，**不会**退化成只发送附图文字。\n\n**语音**：只使用微信消息里已附带的转写文字，转写存在时按普通文字提问。插件不下载、不转码、不做语音识别，因此语音是否可用取决于微信是否给出转写；没有转写时会提示改用文字。\n\n## 切换模型（/model）\n\n在微信里直接发命令即可，模型清单来自 DSH 实时目录，插件不自行维护：\n\n```\n/model                          # 列出可用模型与当前会话选型\n/model 4                        # 按清单序号切换\n/model q/q-model                # 按 provider/model-id 切换\n/model q-model                  # 模型 ID 唯一时可直接写\n```\n\n- 无参数时显示：当前会话模型（尚未创建会话时显示部署默认模型）、带序号的 `provider/model` 清单、获取失败的 provider，以及用法提示；内容过长会自动分成多条消息。\n- 同一模型 ID 存在于多个 provider 时必须写完整的 `provider/model-id`；序号越界、ID 不存在或重名时只回复候选项，**不会改变当前选择**。\n- 命令不会被转发给智能体，也不会启动一次模型回合。\n- 切换成功后回显规范化后的 `provider/model`（含 reasoning effort），新模型从**下一次**模型请求开始生效，正在进行的请求不会被打断。\n- ⚠️ 与 DSH Web 端的模型选择语义一致：切换当前会话模型**也会异步更新部署默认模型**，可能影响此后创建的其他会话。\n- 该命令需要当前 DSH 提供 `sessionController` 的 `modelCatalog` / `selectModel` / `projections` 接口；缺失时会明确回复不支持，而不是静默失败。\n\n## 结构\n\n```\nsrc/               TypeScript 源码（Host 半侧）\n  index.ts         插件入口\n  manager.ts       通道生命周期 / 轮询 / 消息处理 / 登录状态机\n  weixin.ts        ClawBot API 客户端（getupdates / sendmessage / 扫码）\n  media.ts         微信 CDN 图片下载、解密与格式校验\n  models.ts        模型清单解读、/model 参数解析与消息分段\n  dsh.ts           DSH API 客户端\n  config.ts        配置解析 + 账号库\n  state.ts         状态持久化\n  ui.ts / qr.ts    保留的旧 HTML 渲染（非入口）\nsrc/client/        React 客户端半侧（浏览器）\n  index.tsx        注册「微信 ClawBot」设置菜单项\n  ClawbotSection.tsx 面板组件（状态 / 扫码 / 解绑 / 日志）\n  api.ts           面板调用 /clawbot/api/* 的客户端\n  locales.ts       中英文案\nlib/               构建产物（由 src/ 编译，勿手改）\nclient/            客户端 bundle 构建产物\nscripts/           构建脚本\ntest/              测试\n```\n\n## 构建\n\n运行时所需的 `lib/` 与 `client/` 都是构建产物，已加入 `.gitignore`：\n\n```bash\nnpm install        # 安装 devDependencies\nnpm run build      # esbuild 编译 Host + tsdown 打包客户端\nnpm test           # 构建并运行离线测试\n```\n\n> 从 GitHub 克隆下来的源码不含构建产物（`lib/`、`client/` 已忽略），\n> 构建后才能作为插件加载。\n\n## 后端 HTTP 接口（面板数据源，/clawbot/api/*）\n\n仅供面板及同机调用，仅接受回环 Host（与 DSH /api 信任围栏一致，防 DNS rebinding）：\n\n- `GET  /clawbot/api/status` — 状态 JSON（含日志尾部）\n- `POST /clawbot/api/login/start` `{force?}` — 获取登录二维码\n- `POST /clawbot/api/login/poll` `{verifyCode?}` — 长轮询扫码状态\n  （`wait/scaned/confirmed/expired/need_verifycode/...`；confirmed 即绑定并热切换）\n- `POST /clawbot/api/login/cancel` — 取消登录\n- `POST /clawbot/api/unbind` — 解绑当前账号\n- `POST /clawbot/api/resume` — 手动恢复通道\n\n## 注意事项\n\n- **不要与 OpenClaw 微信通道同时运行**（共享 getupdates 游标）。\n- 重新扫码绑定后，旧账号文件会被清理（同一微信用户只保留最新账号），\n  会话映射与上下文 token 保留，聊天连续性不受影响。\n- 媒体限制见上文「支持的消息类型」：图片需要模型支持视觉输入，且只处理当前消息（不回溯引用消息里的历史图片）；语音依赖微信给出的转写。\n- 切模型会同步更新部署默认模型，并依赖当前 DSH 的模型接口，详见上文「切换模型（/model）」。\n\n## License\n\nMIT"
-    },
-    {
-      "full_name": "QIN-SMART/dsh-session-tabs",
-      "html_url": "https://github.com/QIN-SMART/dsh-session-tabs",
-      "description": "Single-client session tabs preserving native sidebars and background work",
-      "stars": 1,
-      "language": "JavaScript",
-      "pushed_at": "2026-10-15T12:18:55Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "native-navigation",
-        "session-tabs"
-      ],
-      "categories": [
-        "终端/TUI"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "native-navigation",
-        "session-tabs",
-        "sidebar"
-      ],
-      "readme_text": "# 轻量会话标签 / dsh-session-tabs\n\n单客户端会话标签，复用 DSH 原生聊天视图和任务服务，保留左右侧栏及底部工作台。无 iframe，无运行时依赖。\n\n[English](README_EN.md) · 版本 0.1.6 · MIT\n\n[![verify](https://github.com/QIN-SMART/dsh-session-tabs/actions/workflows/verify.yml/badge.svg)](https://github.com/QIN-SMART/dsh-session-tabs/actions/workflows/verify.yml)\n[![npm](https://img.shields.io/npm/v/dsh-session-tabs.svg)](https://www.npmjs.com/package/dsh-session-tabs)\n\n![合成会话中的标签栏与面板按钮](https://raw.githubusercontent.com/QIN-SMART/dsh-session-tabs/main/docs/assets/session-tabs.png)\n\n## 当前状态\n\n**0.1.6 修复了 0.1.5 中打开插件管理等全局页面时整个窗口卡死的问题，建议 0.1.5 用户更新。**\n\n已针对 DSH **0.2.0-rc.2** 验证，源代码采用 MIT 协议。DSH 的客户端 API 仍在演化，升级宿主后需要重新验收。\n\n## 使用\n\n- 原生左栏打开的会话自动加入顶部标签。点击标签切换，`＋` 使用原生新建会话。\n- 当前标签与内容区使用同一亮色表面，通过两侧底部反向圆角衔接；其他标签在较暗背景上，悬停时标题和关闭按钮共用一块灰色底色。跟随 DSH 的亮/暗主题。\n- `＋` 紧跟标签，与 `×` 图标居中对齐，旁边不再显示 `⋯`。底部工作区和右侧栏入口位于标签行右端，复用对应原生按钮的图标、状态和点击事件。右栏展开后，中央的打开入口隐藏，只保留窗口最右侧原生收起按钮；打开按钮采用相同的 28px 点击区域和 15px 图标。原生其他标题栏按钮保持原位。缺少原生入口时不显示对应按钮，切回原生视图或卸载时恢复原入口。\n- 右栏开关位置在动画期间固定保留，底部按钮不会挤进来。收起时若原生打开入口尚未恢复，该位置暂时禁用；就绪后恢复点击。两个按钮均使用 28px 点击区域并居中对齐，底部图标沿用原生 16px。\n- `×` 只关闭标签，不删除、归档或停止会话。运行或待确认的会话在后台保留，结束后释放额外引用。\n- 左栏底部的「标签窗口」线条图标用于显示/隐藏标签，悬停显示目标视图名称。焦点在标签栏内时，`⌘/Ctrl + Shift + T` 可恢复本次打开窗口内刚关闭的标签；输入框不拦截此快捷键。\n- 拖动调整顺序；标签获得焦点后，左右方向键切换，`Alt + Shift + 左/右` 调整顺序。输入框没有新增全局快捷键，中文组字不受拦截。\n- `●` 运行中，`!` 等待确认，`✓` 完成未读，`…` 正在连接；空闲时不显示状态圆点。\n\n关闭整个客户端、卸载插件与关闭标签是不同操作。原生任务的存续仍由宿主负责。不同会话同时修改同一文件的冲突也仍由宿主与用户处理。\n\n## 安装与回退\n\n### 从 npm 安装和下载（推荐）\n\nnpm 页面：[dsh-session-tabs](https://www.npmjs.com/package/dsh-session-tabs)。建议先在独立 profile 试用。\n\n**Desktop：**在应用内插件管理器添加 `dsh-session-tabs`。\n\n**Web：**使用 DSH 命令安装：\n\n```sh\ndsh plugin --profile web add dsh-session-tabs@0.1.6\n```\n\n如果使用 npm 手动管理 profile，先进入目标 profile 目录，再执行：\n\n```sh\nnpm install dsh-session-tabs@0.1.6 --ignore-scripts\n```\n\n手动安装包后，还需在该 profile 的 `dsh.profile.bundles` 中启用 `dsh-session-tabs`，再刷新或重开 DSH；DSH 插件管理器和上面的 `dsh plugin` 命令会处理插件启用。\n\n**只下载离线安装包：**在希望保存文件的目录运行：\n\n```sh\nnpm pack dsh-session-tabs@0.1.6\n```\n\n会生成 `dsh-session-tabs-0.1.6.tgz`，可在 DSH 插件管理器中用该文件的完整路径添加。\n\n### 从 GitHub 安装\n\n```sh\ndsh plugin --profile web add github:QIN-SMART/dsh-session-tabs\n```\n\nCLI 的 `--profile desktop` 是保留名称，不能套用上述 Web 命令。已有本地安装的用户可在目标 profile 的包管理器更新为 `dsh-session-tabs@0.1.6`，再完全退出并重开应用。开发用的模拟模型和测试 profile 不包含在 npm 包中。\n\n临时回退：点击左栏底部的视图切换图标。完整移除：在目标 profile 的插件管理器移除 `dsh-session-tabs`，再刷新客户端；注入节点、样式、订阅与会话引用会清理。浏览器本地标签清单仍保留，可在需要时清除该站点的 `dsh-session-tabs.v1` 键。\n\n## 状态和性能\n\n标签顺序、启用偏好及活动身份存于 `localStorage['dsh-session-tabs.v1']`。刷新恢复标签；失效/归档 ID 会剔除。不同窗口同步偏好与标签身份，但不会抢占另一个窗口的当前会话。\n\n只有一棵原生聊天视图。重开客户端时，非活动标签只恢复身份，不立即加载全部历史。已经访问过的标签保留轻量会话绑定，以沿用原生草稿/附件状态；其数量仍会影响内存，因此本插件不承诺无限标签或固定内存开销。草稿沿用原生机制，本插件不提供跨重启草稿持久化保证。\n\n标签节点按身份复用，点击后立即更新标签；后台状态通知合并更新，浏览器存储写入短暂合并。实际会话内容仍由宿主原生导航加载，不能保证所有开关操作即时完成。实际验证范围与兼容性边界见 [验收说明](docs/validation.md)。\n\n中心挂载点使用稳定 `data-slot=\"main\"`，没有专用的官方标签栏插槽；宿主结构变化是主要兼容性风险。原生 sidebar/rightbar 插槽和右栏服务没有被替换或代理。顶栏入口仅转发到仍留在原处的原生控件，不搬动 React 管理的节点。若挂载失败，回滚新增节点并保留原生界面。\n\n## 开发与验收\n\n开发本仓库时：\n\n```sh\nnode --test test/verify.mjs\nnode tools/start-test-profile.mjs --runtime /absolute/path/to/installed/@deepseek-ai/dsh --port 3096\n# 可选复用已安装的右栏插件：--better-sidebar /absolute/path/to/dsh-better-sidebar\n```\n\n测试数据、profile 和日志仅写入本仓库 `.tmp/`。测试模型 `Local delayed echo` 本地流式输出约 60 秒，无网络模型请求；需在界面中明确选择该模型后发送合成任务。它仅用于验证并发、关闭和取消隔离。\n\n真实 GUI 冒烟：`node tools/real-ui-check.mjs --url-file /absolute/path/to/test-url.txt --out docs/real-ui.png`，URL 文件仅保存隔离服务启动时给出的本机认证 URL，不提交。连接自己启动的 Electron 验收副本可用 `--connect-port 9346 --target-match <observed-main-target>`。`--edge-ui-check` 检查右栏开关；配合 `--handoff-ui-check` 在上述合成会话中检查底部按钮规格、连续点击和动画期间的位置。范围见 [验收说明](docs/validation.md)。\n\n源码不需要构建，`lib/client.js` 即真实客户端产物；`npm pack` 只包含生产插件和说明，不包含测试模型、日志、profile、桌面副本或截图。\n\n## License\n\n[MIT](LICENSE)。\n"
-    },
-    {
-      "full_name": "zhangyuzhangyu233/dsh-claudelike",
-      "html_url": "https://github.com/zhangyuzhangyu233/dsh-claudelike",
-      "description": "A wind-lit field of drifting code characters: a DeepSeek Harness Web UI plugin and a standalone WebGL2 live wallpaper.",
-      "stars": 1,
-      "language": "JavaScript",
-      "pushed_at": "2026-10-17T13:55:22Z",
-      "topics": [
-        "code-art",
-        "cordis",
-        "deepseek",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "live-wallpaper",
-        "wallpaper",
-        "webgl"
-      ],
-      "categories": [
-        "皮肤/UI"
-      ],
-      "tags": [
-        "code-art",
-        "cordis",
-        "deepseek",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "live-wallpaper",
-        "wallpaper"
-      ],
-      "readme_text": "<div align=\"center\">\n  <img src=\"docs/banner.png\" alt=\"Code Ripple\" width=\"100%\" />\n</div>\n\n# dsh-claudelike\n\n> 想要 Claude 桌面端那种「一整片代码在呼吸」的动态背景，又不想为了一张背景去订阅、折腾账号？\n> 这个插件把那层效果做成了自己的——装进 DSH 就能用，也能单独当壁纸。\n\n![DSH 里的实际效果](docs/screenshot.png)\n\n一片**会呼吸的代码**：成片的等宽字符被一阵缓慢转向的风吹亮，每个格子按自己的节奏换字；指针划过留下一串余温，点击处荡开一圈由字符组成的水波（每第 3 次点击是心形）。全部是 WebGL2 实时算的，不是贴图，也没有任何网络请求。\n\n## 两个形态，同一套引擎\n\n| 目录 | 是什么 |\n|---|---|\n| [`code-ripple-background/`](code-ripple-background) | **DeepSeek Harness Web UI 插件**。装在 DSH 里，铺满整个界面 |\n| [`wallpaper/`](wallpaper) | **独立壁纸**：单文件 HTML，可直接在浏览器 / Lively 使用，也能录成无缝循环视频喂给 Razer Axon 这类只吃视频的壁纸工具 |\n\n## 亮点\n\n- **实时风场**：阵风、细流、大尺度涌浪三层噪声叠加，光带真的在走，不是循环动画。\n- **字符会变**：每个格子有自己的字符序列和节奏，涟漪经过时加速翻滚——所以你看到的是「字符组成的波」，不是一圈光。\n- **跟手的余温**：指针留下一串有时间衰减的暖点，字符被逐个点亮，停手后慢慢凉下去。\n- **两种主题**：自动跟随 DSH 的明暗配色；壁纸版可用 `?theme=` 指定。\n- **无订阅、无联网、无遥测**：纯前端 Canvas/WebGL2，复制一个文件夹就能跑。\n\n## 一、DSH 插件\n\n`code-ripple-background/` 是一个标准的 Cordis bundle（`dsh.bundle.patch` + `./client`），不依赖任何第三方运行时。\n\n1. 把 `code-ripple-background/` 放到磁盘任意位置；\n2. 在 DSH 的插件管理里「从本地目录安装」，或直接调用 Harness 的 `plugin_manager` 工具：\n\n```text\ninstall_bundle  target = <绝对路径>/code-ripple-background\n```\n\n3. 刷新页面。插件条目名为 **代码涟漪背景 / Code Ripple Background**，可以随时禁用。\n\n实现要点：\n\n- 整层挂在 `shell.overlay`，`pointer-events: none`，不挡任何交互；\n- 渲染分两趟：① 风场写进 `cols × rows*2` 的 RGBA8 缓冲；② 每个格子 6 个顶点（`gl_VertexID`）从字符图集里取字，按风场逐像素受光；\n- 字符集是可打印 ASCII + `·`，16×6 图集；每个格子按种子轮流换字，涟漪经过时额外推进；\n- 「第 3 次点击是心形」是沿用的彩蛋。\n\n## 二、独立壁纸\n\n```text\nwallpaper/index.html     # 单文件，无依赖、无联网\n```\n\n- **浏览器**：双击打开，`F11` 全屏；\n- **Lively Wallpaper**：添加壁纸 → 浏览 → 选 `index.html`；\n- **Wallpaper Engine**：新建「网页」类型壁纸，入口选 `index.html`；\n- **Razer Axon / 只吃视频的工具**：先录成无缝循环视频\n\n```powershell\npwsh -File wallpaper/record.ps1                 # 1920x1080，约 77 秒无缝循环\npwsh -File wallpaper/record.ps1 -Theme light -Seed 42\n```\n\n`record.ps1` 会用 Edge 的 kiosk 模式打开页面、用 ffmpeg 的 `gdigrab` 抓屏，再把尾部交叉淡入头部（`xfade`），得到首尾相接的循环。需要 ffmpeg（脚本会自动找 PATH 或常见安装位置）和 Edge/Chrome。\n\n### 可调参数\n\n在地址后加查询串，例如 `index.html?theme=light&cell=7&seed=1234`：\n\n| 参数 | 取值 | 默认 | 说明 |\n|---|---|---|---|\n| `theme` | `dark` / `light` | `dark` | 配色 |\n| `cell` | 4–24 | `6.5` | 格子宽度（CSS px），越小字越密 |\n| `look` | `mixed` / `lettered` / `figured` | `mixed` | 字符轮换序列 |\n| `seed` | 任意整数 | 随机 | 固定风向/风速/阵风尺寸，复现同一种气质 |\n| `auto` | `1` / `0` | `1` | 无人操作时是否自动生成涟漪 |\n| `capture` | `1` / `0` | `0` | 录制模式：隐藏提示文字，配合 `record.ps1` |\n\n## 环境要求\n\n- 需要 **WebGL2** 与硬件加速；软件渲染（SwiftShader 之类）会被跳过；\n- 插件面向 DSH Web UI；壁纸 HTML 在任何现代浏览器可用；\n- `record.ps1` 只支持 Windows（PowerShell + Edge/Chrome + ffmpeg）。\n\n## 许可\n\n[MIT](LICENSE)。\n\n## 关于出处\n\n视觉语言参考了 Claude 桌面版落地页的「代码纹理」效果。这里的实现是独立重写的：没有包含、复制或分发任何 Anthropic 的代码或资源，本项目与 Anthropic 无关联、未获其背书。\n\n---\n\n**English** — A wind-lit field of drifting code characters: a WebGL2 plugin for the DeepSeek Harness Web UI, plus a standalone single-file live wallpaper with a seamless-video recorder. MIT licensed. The visual language is inspired by the Claude desktop landing texture; this is an independent reimplementation with no Anthropic code or assets included, and no affiliation.\n"
-    },
-    {
-      "full_name": "km5473/dsh-custom-theme",
-      "html_url": "https://github.com/km5473/dsh-custom-theme",
-      "description": "DSH自定义主题：可自行修改背景图片，主题色，表情包与文案。基于[dsh-vesna-theme](https://github.com/Mahiru0427/dsh-vesna-theme)",
-      "stars": 1,
-      "language": "JavaScript",
-      "pushed_at": "2026-10-17T14:28:29Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin",
-        "theme"
-      ],
-      "categories": [
-        "皮肤/UI"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin",
-        "theme"
-      ],
-      "readme_text": "# dsh-custom-theme · 外观全项自定义\n\n为 DeepSeek Harness Web / Desktop 制作的独立可自定义主题插件。出厂外观是延续原项目（[Mahiru0427/dsh-vesna-theme](https://github.com/Mahiru0427/dsh-vesna-theme)）的青蓝与奶白的明暗双色，配一整张角色壁纸和六个卡通表情；这套外观的每一项都可以改成你自己的。\n\n**壁纸、明暗两套配色、欢迎语、主题名称与描述、浅色/深色的名字、六个表情与它们的名字**全部可以自定义，并且可以**导出／导入配置文件**。\n\n## 能自定义什么\n\n设置 → 通用 → 卡片下方有三个折叠区：\n\n| 折叠区 | 可改内容 |\n| --- | --- |\n| 配色自定义 | 浅色与深色各 19 个颜色项，**用十六进制色值（`#rrggbb`）直接改**，左边色块实时预览，右边是这一项的名字。最后三项是三个辅助色（**辅助色1 / 辅助色2 / 辅助色3**，出厂值分别是珊瑚粉、淡金、淡紫）。改过的项会高亮，可单项清除，也可整组恢复。 |\n| 文案与名称 | 主题名称、主题描述、欢迎语（默认「找我什么事呀，亲爱的朋友~」）、**浅色名称**（默认「春日浅色」）与**深色名称**（默认「夜宴深色」）。留空即回到内置文案。 |\n| 图片与表情 | 全窗口壁纸，以及六个表情槽位（比耶→新会话、思考→欢迎区、读书→文件入口、疑惑→负面评价、点赞→正面评价、爱心→发送）。每个槽位可单独选图、**单独改名字**、单独恢复默认。 |\n\n卡片底部：**导出配置** / **导入配置** / **恢复默认配置**。自定义的名称会同时出现在配色分组的标题、明暗切换按钮和表情图库上。\n\n### 聊天框效果\n\n勾选「全窗口壁纸」后，卡片上多一个**聊天框效果**开关：\n\n- **高斯模糊**：用户气泡与模型回答换成静态模糊的玻璃面板，**关掉开关**恢复宿主原生面板。\n- **高级模糊**：给每条消息卡片套一圈 **2px** 的高斯模糊边框——环里的模糊半径（10px）比卡片内部（3px）更大，所以卡片边缘会多出一层更柔的毛玻璃边，以实现接近于液态玻璃的显示效果。\n- **发送框 3px 高斯模糊**：输入卡保留 92%／95% 的近实色底，再叠一层 `blur(3px)`，壁纸在它下面被轻轻化开。\n- **信息栏胶囊**：「N 轮 M 步 · x tok/s · 缓存命中 x%」那一行套上侧栏同色的胶囊底，以提升可读性。\n\n关掉「全窗口壁纸」，或点「默认配色」，上述效果一起撤下，原生界面完全回来；系统关闭透明效果时会自动调整。\n\n### 十六进制配色\n\n配色输入框接受 `#a1b2c3` 也接受 `a1b2c3`：\n\n- 输入到第六位合法数字时立即生效，色块同步更新；\n- 还没打完的中间状态会标出来，但**不会**写进设置；\n- 失焦或回车时若仍不合法，就退回原来的颜色——所以打错字不会把颜色改坏。\n\n## 配置文件\n\n导出得到 `dsh-custom-theme-<时间>.json`：\n\n```json\n{\n  \"format\": \"dsh-custom-theme\",\n  \"version\": 1,\n  \"palette\": { \"light\": { \"accent\": \"#227c89\" }, \"dark\": {} },\n  \"title\": \"\", \"description\": \"\", \"greeting\": \"找我什么事呀，亲爱的朋友~\",\n  \"modeNames\": { \"light\": \"春日浅色\", \"dark\": \"夜宴深色\" },\n  \"stickerNames\": [\"比耶\", \"\", \"\", \"\", \"\", \"\"],\n  \"images\": { \"wallpaper\": \"data:image/webp;base64,...\", \"stickers\": [\"data:...\", null, null, null, null, null] }\n}\n```\n\n- 只写**自定义项**：图片是内嵌 data URL，所以一个文件就是一整套外观，换机器直接导入即可。\n- 导入是**全量替换**：文件里没有的图片会被清空。\n- 校验失败（格式不对、版本不符、颜色非法、图片过大或不是图片）会拒绝整份文件并提示，**不会**改坏现有配置。\n\n## 数据存放\n\n| 内容 | 位置 |\n| --- | --- |\n| 启用开关、壁纸／表情开关、聊天框效果 | `localStorage` 键 `dsh-custom-theme.preference.v1` |\n| 配色、文案与名称 | `localStorage` 键 `dsh-custom-theme.custom.v1` |\n| 壁纸与表情图片 | IndexedDB 数据库 `dsh-custom-theme`，对象仓库 `assets` |\n\n上传的图片会先在 canvas 里缩放并重新编码（壁纸最长边 2560，表情最长边 320，优先 WebP 以保留透明通道），再存入 IndexedDB。**图片不会上传到任何服务器。**\n\n## 安装\n\n1. 从 Releases 下载 `dsh-custom-theme-0.1.0.tar.gz`，你也可以复制项目主页让dsh帮你装。\n2. **设置 → 插件 → 添加插件**，选择该安装包，然后「立即启用」。\n3. **重启 DSH**：插件清单是在启动时按包名组装的，改名必须重启才生效。\n4. 重启后到 **设置 → 通用设置** 找到这张卡片。\n\n从旧名字的版本升级的话：先在旧版里导出配置，装好新包、重启，确认外观无误后再把旧插件移除，然后导入配置文件。启用开关与明暗偏好归 DSH 自己保存，重启后仍然保留。\n\n## 卸载与恢复\n\n- 临时恢复：卡片里点「默认配色」，撤下插件配色与壁纸、隐藏表情，原生明暗模式保留。\n- 清除自定义：点「恢复默认配置」，配色、文案、名称、图片回到默认状态，但主题仍是启用状态。\n- 卸载：先「默认配色」，再到插件页禁用或移除 `dsh-custom-theme`，然后重新打开窗口。自定义记录留在本机，重新安装会沿用。\n\n## 原理与边界\n\n- 配色通过官方 `ThemeRuntime.overrideTokens(source, { light, dark })` 覆盖 `--dsw-alias-*` 令牌，插件不替换程序文件、不改 DOM 结构。\n- 卡片用 `useSyncExternalStore` 读控制器的不可变快照，所有状态只有一份。\n- 图片以 Blob URL 喂给 CSS，样式表里只出现短 URL，不会把几 MB 的 base64 反复写进 CSS。\n- 欢迎语只改主页那一个已验证的标题文本节点，禁用或卸载时还原。\n- 表情挂在原有按钮的伪元素上，按钮的文字、快捷键、禁用状态与事件处理都会保留。\n- 错误、警告、成功与差异配色不参与覆盖，保留平台语义。\n- **停止与插话按钮全部用强调色**：修正原有项目中停止按钮不够醒目的问题。回合运行中，输入区那颗按钮会从「发送」变成「停止生成」——同一个元素，只换了标签。主题的令牌把它的填充色定成偏淡的 `raised`，所以运行中看着发灰；这条规则单独把该状态指到强调色（悬停用强调悬停色，图形用强调前景色）。它挂在 `body[data-dct-theme]` 上，跟着主题开关走，选「默认配色」时一切还原。\n\n## 开发\n\n```text\nnode scripts/build.mjs                  # 生成 lib/client.js（内嵌素材，无运行时依赖）\nnode tests/controller.test.mjs          # 状态、持久化与配置校验\nnode tests/plugin.smoke.mjs             # 打包产物：真实渲染设置卡片\nnode scripts/verify-served-bundle.mjs <已安装的 lib/client.js> [origin] [entry-id]\n```\n\n`plugin.smoke.mjs` 会用一个假的模块加载器把 `lib/client.js` 真正跑起来：解码内嵌素材、装配插件、渲染设置卡片的各种状态、检查卡片用到的每个文案键都存在于词典里，还要求**卡片渲染出的每个 class 在 card.css 里都有规则**（否则界面会静默掉样式）。**部署前请让它先通过。**\n\n`verify-served-bundle.mjs` 复算宿主用来做缓存版本号的那串 sha1，再比对宿主实际返回的字节，因此「旧文件被当成新版」不可能蒙混过关。DSH 的网页服务需要启动时打印的带 token 链接才能打开首页，但插件包本身的路由不受影响，所以这个脚本不需要 token。\n\n`node scripts/build.mjs <模块 id> <输出路径>` 可以把同一份代码构建成另一个模块 id，用于在过渡期让已启动的会话继续拿到新功能。\n\n源码在 `src`，预构建产物在 `lib`，无新增 npm 依赖：\n\n| 文件 | 职责 |\n| --- | --- |\n| `src/palette.js` | 出厂配色、颜色校验、令牌层构建 |\n| `src/config.js` | 配置文件的构建与校验（纯函数，可测） |\n| `src/controller.js` | 状态、持久化、图片、覆盖层 |\n| `src/image-store.js` | IndexedDB 存取、上传图片处理 |\n| `src/art.js` | 壁纸／表情 CSS、按钮预览、欢迎语替换 |\n| `src/glass.js` | 聊天框高斯模糊（含开关标记与标记扫描）、高级模糊环、发送框模糊、信息栏胶囊 |\n| `src/client.js` | 设置卡片与插件装配 |\n\n## 版权与来源\n\n- **作者**：[@km5473](https://github.com/km5473)\n- **项目主页**：[km5473/dsh-custom-theme](https://github.com/km5473/dsh-custom-theme)\n- **许可**：[MIT](LICENSE) — © 2026 km5473\n- **基于**：[Mahiru0427/dsh-vesna-theme](https://github.com/Mahiru0427/dsh-vesna-theme)（原项目主页），© 2026 dsh-vesna-theme contributors\n\n原作者B站主页[Cyrefirefly](https://space.bilibili.com/1920514469?spm_id_from=333.788.upinfo.detail.click)\n\n本项目由上游主题改名而来，并在基础上扩展了配色与文案自定义、表情命名、配置导入导出；原项目的版权归原作者所有，MIT 许可的完整条款见 [LICENSE](LICENSE)。\n\n这是非官方主题。MIT 许可仅适用于本插件代码，不包含角色名称与角色图像的权利。"
-    },
-    {
-      "full_name": "TPSCE/dsh-small-talk",
-      "html_url": "https://github.com/TPSCE/dsh-small-talk",
-      "description": "一个用于deepseek harness网页版的侧边助手：当你想知道任务进行的怎么样但是又无法暂停时，侧边助手可以读取主对话的思维链并且告诉你现在正在发生什么。             A side assistant for the DeepSeek Harness web version: when you want to know how a task is progressing but can't pause it, the side assistant can read the main conversation's chain of thought and tell you what is currently happening.",
-      "stars": 1,
-      "language": "JavaScript",
-      "pushed_at": "2026-10-17T07:53:04Z",
-      "topics": [
-        "cordis",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "dsh-plugin-market",
-        "dsh-plugins",
-        "sidebar",
-        "web-ui"
-      ],
-      "categories": [
-        "Agent/智能体"
-      ],
-      "tags": [
-        "cordis",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "dsh-plugin-market",
-        "dsh-plugins",
-        "sidebar",
-        "web-ui"
-      ],
-      "readme_text": "# dsh-small-talk\n\n[English](README.en.md) · 中文 · [仓库](https://github.com/TPSCE/dsh-small-talk) · [AGPL-3.0](LICENSE)\n\n给当前会话一键开一个**常驻侧边助手**：它知道这个会话此前聊了什么（以一段压缩摘要的形式，不进它的聊天记录），\n可以反复追问，不会打断主任务；\n面板顶部是一条**实时进展条**，默认只占一行——主 Agent 在跑什么、想到了什么，最新一句摘要直接看得见，展开能回看最近几步的思维链。\n\n主 Agent 之后每跑完一步，侧助手都会收到一块**进展**（这一步的想法、调了什么工具、得出了什么）——所以它不再只知道创建那一刻的历史：\n你问「它现在在干什么」，侧助手答的是最新一块。块走的是系统提示，不进聊天记录（见「进展条」一节）。\n\n按钮长在会话标题栏右侧。按一下，右侧栏里就出现一个独立的对话面板：\n它知道你这个会话之前聊过什么、干过什么，之后你可以一直问它，主 Agent 继续跑自己的。\n已经有侧助手时，按一下会先弹出选择菜单：**助手 1 / 助手 2 / … / 新建助手**——\n可以换一个重开，也可以再开一个（各自独立，各自拿到同一份历史摘要）。\n\n侧助手**不是子智能体**：它不出现在子智能体目录、不参与子智能体计数、不占 continuable 名额，\n也从会话列表里缺席。它对「子智能体系统」唯一可见的痕迹是会话头上的一行血统信息（见「工作原理」）。\n\n---\n\n## 它做什么\n\n| 需求 | 落点 |\n| --- | --- |\n| 侧边对话面板 + 输入框 + 消息流 | 由本插件自己的标签页承载，聊天本体直接选 DSH 的 `conversation.content` 工厂（`embedded` 变体） |\n| **看主 Agent 的实时进展（工具调用 + 思维链）** | 面板顶部自绘进展条，`session.follow` 直连主会话的事件流与 assistant stream |\n| **侧助手也知道之后发生了什么** | 主 Agent 每完成一个 step，宿主把这一步折成一块写进侧助手的系统提示片段（`side-assistant:progress`），不进聊天记录 |\n| **知道主会话已完成的历史** | 建会话时把主会话已完成回合压成一段摘要，作为系统提示片段 `side-assistant:history`（order 120）——它自己的日志从开场白开始，侧栏里看不到主对话 |\n| 可反复追问（持久化侧助手） | 会话自带 `subagent/descriptor`，每次提问按需冷恢复，记录一直留着 |\n| **一个都不占子智能体名额** | 用 `ctx.agents.create()` 建游离会话，**不追加** `subagent/catalog` 事实 |\n| 关掉再开不丢 | 侧栏按会话把打开的标签页存进 localStorage |\n| 一个会话多个侧助手、换一个重开 | 按一下弹菜单：已有的按创建顺序编号，末尾另有「新建助手」 |\n| **回答下面两颗快捷卡片** | `conversation.input.dock` 里挂两颗圆角矩形卡片：`这个项目是在干什么？` / `agent 正在进行什么工作？`。点一下等于自己打出来发出去（`conversation.send`，和输入框同一条路） |\n\n## 它**不**做什么（有意为之）\n\n- **不重新实现聊天界面。** 消息流、Markdown、工具调用、流式输出、Stop、向上翻页都来自\n  `@deepseek-ai/dsh-client-ui-conversation` 的 `conversation.content` 工厂（`embedded` 变体）；\n  本插件只加自己的标签页类型、资源提供方和那条进展条。自己画一套只会更差。\n  相位固定传 `active`：游离会话在客户端没有可判的元数据，交给工厂自己判会停在空壳上。\n- **不把自己登记成子智能体。** 不走 `ctx.subagents.startContinuable()`，不往父会话追加\n  `subagent/catalog`；`parentSession` 只是血统字段（工作区分组 + 侧栏寻址），不代表运行时父子关系\n  （创建时不传 `parentAgent`）。子智能体目录、计数、会话树、`list_agents` 全部只读那份目录事实。\n- **不轮询主会话。** 进展条用的是框架自己的推送：`session.follow`（持久事件 + `assistantStream` 增量），\n  没有自建 `/status`、没有定时器。\n- **不往侧助手的聊天记录里塞“进展”。** 块走系统提示片段，不走 `user` / `assistant` 消息：\n  聊天记录里只有你和它的对话，翻历史时不会被一堆系统播报淹掉。\n- **不往会话流里塞插件私有事件。** 唯二写进日志的是框架自己的两个协议事件：\n  `subagent/descriptor`（这个会话是什么）与创建窗口内的沙箱/审批策略覆盖（与旧版委派路径一致）。\n\n---\n\n## 安装\n\nprofile 是 `web` 的话，直接从仓库安装：\n\n```sh\ndsh plugin --profile web add https://github.com/TPSCE/dsh-small-talk.git\n```\n\n不想让 pnpm 走 `git clone`（网络慢、或者本机没装 git）就用 tarball，一次 HTTPS 下载：\n\n```sh\ndsh plugin --profile web add https://github.com/TPSCE/dsh-small-talk/archive/refs/heads/main.tar.gz\n```\n\n装完刷新页面；如果按钮没出现，重启 `dsh web`（Host 半区的新路由需要重新加载进程）。\n\n卸载：\n\n```sh\ndsh plugin --profile web remove dsh-side-assistant\n```\n\n## 使用\n\n1. 打开任意会话。\n2. 点标题栏右侧的 **侧边助手**。\n   - 一个侧助手都还没有：直接创建（读取历史摘要、发一句开场白），随即在右侧栏打开。\n   - 已经有侧助手：先弹出菜单，列出 **助手 1 / 助手 2 / …**（按创建顺序）和 **新建助手**。\n     选其中一个 = 把那个重开到右侧栏（各自保留自己的对话记录）；选「新建助手」= 再开一个。\n   - 收起菜单：菜单外点一下、按 `Esc`、或者再点一次按钮。收起菜单不会创建任何东西。\n3. 面板顶部是一条**进展条**，默认折叠成一行（一个小圆点 + 「主 Agent 进展」+ 最新一句思考）：\n   展开后是主 Agent 的工具调用、工具结果，以及**每个 step 各自的思维链**——正在写的标亮，跑完的变灰留着，\n   所以一轮跑完再点开，最近几步想过什么还在。中途打开面板也会从当前 step 的开头补齐。\n   折叠只是显示——它照样把主会话的流订阅着，圆点该闪还是闪；展开/折叠的选择在本次页面里一直记着。\n4. 在下方输入框里正常提问：它起手一行高，写满后像主对话一样逐行长高。可以一直问，也可以按 Stop 打断正在生成的回答。\n5. 不要了：再点一次按钮，在菜单里那个助手右边点 **删除**，再点一次 **确认**。它从菜单里消失，标签页随即关闭\n   （删掉的是「显示」——会话日志留在盘上，可从归档列表恢复，见「已知边界」第 6 条）。\n6. 关闭面板不销毁会话，再点按钮就回来了。\n\n## 界面：侧栏只有一个输入框\n\n复用自带的对话视图意味着**连主对话的输入区一起继承**——所有插件往输入区塞的东西都会出现在侧栏里。\n`client.js` 里的 `SIDEBAR_CSS` 把侧栏面板裁回一个朴素的输入框，只在这个面板内生效：\n\n| 裁掉 | 谁带来的 |\n| --- | --- |\n| `conversation.composer.dock`（`N 轮 · M 步 · tok/s · 缓存命中`） | `dsh-client-ui-chat` 的 `stats` 统计条、`dsh-cost-meter` |\n| `conversation.input.dock`（`未提交的更改：N 个文件`、额度条） | `dsh-client-ui-git-graph`、`dsh-cost-meter`、`@openmaic/dsh-openmaic` |\n| `conversation.input.attachments`（附件栏 / 拖放区） | `dsh-client-ui-attachment` |\n| `conversation.input.left` / `.right`（余额、插件杂项按钮） | `deepseek-harness-wallet`、`@linxin666/dsh-web-all` 等 |\n| `conversation.input.activity`（横跨工具行的活动指示） | 对话外壳 |\n| 输入区左侧整行（`+` 上传/命令菜单 + 计划 + 权限选择） | 对话外壳 |\n\n留下的是：消息流、输入框、模型选择、发送/Stop，以及每条回复下的复制 / 用量 / 时间。\n\n想调整就改 `client.js` 顶部的 `TRIMMED_SLOTS` 数组（每个槽一行，删掉哪行哪样东西回来）；\n只想藏 `+` 而保留「计划 / 权限」两个座位，就删掉 `SIDEBAR_CSS` 里最后那条\n`div:has(> input[type=\"file\"])` 规则。\n\n> 裁剪规则选的是 `[data-sidebar-chat]`。这个属性以前由自带的 subagent 标签页打上，\n> 现在**由本插件自己的面板根节点打上**（`chatTab` 的根 `div`），所以规则依然只在侧栏面板内生效。\n\n### 消息动作行\n\n助手回复下面那排按钮不在槽里，是聊天视图自己画的固定条：\n复制 → `conversation.chat.assistant-actions` 座位 → 分支 → 用量 + 时间。只留复制、用量、时间：\n\n| 裁掉 | 怎么认得它 |\n| --- | --- |\n| 点赞 / 踩（`dsh-client-ui-message-feedback`）、在上下文浏览器中查看（`dsh-context`） | 两者都注册进 `conversation.chat.assistant-actions` 座位，藏掉座位一次全消 |\n| 分支按钮 | 助手尾部这一行的最后一个直接子元素按钮 |\n\n分支那条规则带了 `[data-actions-reveal]` 限定：这个属性只有助手轮次尾部会写，\n而用户气泡那一排的最后一个按钮**正是复制**——不限定就会顺手把用户消息的复制也藏掉。\n用量按钮在 `span.endInfo` 里，不是这一行的直接子元素，所以 `> button:last-of-type` 够不到它。\n\n### 输入框：起手一行，之后照抄主对话\n\n侧栏输入框**起手只有一行高**（24px，正好是自带输入区的行高），主对话那份是 36px——没写满第一行时一眼分得开。\n写满之后它和主对话**完全一样**：每多一行长 24px，长到自带的上限（336px，约 14 行）才开始在框内滚动。\n\n只动了两处，都是「下限」而不是「上限」：\n\n| 规则 | 作用 |\n| --- | --- |\n| `[data-composer-input]` 的 `min-height: 24px` + `padding-top: 0` | 一行的行高就是 24px，所以这就是「一行」的起手高度；之后每换一行自然 +24 |\n| `[data-composer-placeholder]` 的 `inset` 上边归零 | 提示语是绝对定位的，跟着编辑区的新内边距走，否则会飘到文字下面 |\n\n**没有**设 `max-height`、没有给编辑区挂 `overflow`、也没有重声明 `--dsh-composer-text-max-height`——\n这三样任何一个都会把「第二行」变成滚动而不是长高：光标在第二行，滚动跟着光标走，第一行就被挤出那个没变高的盒子，\n看起来像「第一行消失了，第二行顶到第一行的位置」。这个坑 0.9.1 踩过一次，测试里现在反过来钉死这三条不许出现。\n\n卡片的上内边距与间距顺手收窄（8→6、12→6）；下面那排按钮（模型选择、发送 / Stop）不动——它们不是本插件的东西。\n想完全照主对话（36px 起手），删掉 `min-height` 与 `inset` 这两条即可。\n\n### 运行中只有一个按钮\n\n主对话在跑的时候，那颗主按钮会**变成** Stop。侧栏用的是子会话，自带输入区不做这个替换\n（`primaryStops` 要求 `subagent === null`），而是在 Send 旁边**额外长出一颗** Stop\n（`interruptible = running && continuable`）。消息一提交草稿就清空，Send 便停在禁用态——\n于是侧栏会出现「Stop + 一颗灰色的 Send」，看着像坏了一颗。\n\n`SIDEBAR_CSS` 只在这一种状态下藏掉后面那颗：行尾容器里出现**两颗相邻按钮**、且最后一颗是 `[disabled]` 时才隐藏；\n一旦你开始打字、Send 重新可用，规则立刻失效，按钮自己回来。判据只用属性选择器与行结构，不依赖构建期哈希类名；\n自带 DOM 若改成嵌套结构，这条只是不再匹配，不会误藏别的按钮。\n\n### 输入框提示语\n\n提示语是真实渲染出来的文本节点（`[data-composer-placeholder]`，与可编辑区同级），CSS 换不掉，\n所以做法是：把原文字号压成 0 藏起来，再用 `::before` 画上自己的。\n\n> ask me anything you wanna know~\n\n只有输入框可用时才替换。不可用 / 离线 / 被拦截时，原提示语是**状态**而不是装饰，\n那几条规则会把它放回来——判据是同一父节点里可编辑区的 `aria-disabled=\"true\"`。\n无障碍名称仍来自原本的 `aria-label`，读屏听到的还是官方那句（含 `/`、`@` 的提示）。\n\n**为什么用 CSS 而不是接管 `conversation.composer` 链。** 那条链是官方的「替换本会话输入区」扩展点，\n但它的 `select` 只拿到 Session：一旦接管，子会话在主视图里被打开时输入区也会跟着变；\n而且接管会把常驻输入区（它持有待处理的审批交互和 Stop 按钮）藏起来。CSS 只动观感，不动功能。\n\n**为什么不在 locale 里改提示语。** 那会连主对话的输入框一起改，而主对话正需要\n`/` 指令和 `@` 文件的提示；侧栏要的是「这是聊天」的口气，不是全局换文案。\n\n### 开场消息：行为不走对话框\n\n新建侧助手时 Host 会投递一条 `hello`。它不是提示词，只是**点火**：DSH 用首条消息打开会话的第一轮。\n\n侧助手的**行为**走的是会话的 agent 组合，不经过对话框：\n\n| 行为载体 | 落在哪 |\n| --- | --- |\n| `persona` | 这个会话的 scoped `deployment:persona-prefix` 段，只覆盖它自己 |\n| `denyTools` | 这个会话的 scoped `tools.restrict()`：工具既从提示里消失，也不可调用 |\n| `reasoningEffort` | 创建时的 `agentOptions`，并随 `subagent/descriptor` 持久化 |\n\n这样面板读起来就是「一个助手，不是用户塞了一段提示词」。代价是那句 `hello` 仍是一条真实的\nuser 消息，所以它会在面板里显示成一个用户气泡——见「已知边界」第 11 条。\n不想要它就配 `opener: \"\"`：会话会开在一个空对话上，等你先说话。\n\n**面板不等这句开场白。** `/side-assistant/ensure` 在会话建出来、问候投递出去之后就应答，\n问候那一轮在后台跑完才落盘、释放 agent。所以「按下按钮 → 面板出现」之间没有模型往返：\n面板先开，回复随后流进来，这期间你已经可以输入（消息排在问候之后）。\n\n## 点开之前就已经准备好了\n\n侧边助手不是「点一下才开始做」——面板里那个按钮出现在会话标题栏之后，页面会先安静半秒，\n然后向宿主请求把这个会话的侧助手**提前建好**（`POST /side-assistant/preload`）。\n点开时只剩一次查表：会话已经在列表里，面板直接进对话。\n\n它挑的是便宜的做法：\n\n- **已经有侧助手就复用**，不重建——所以反复切换、反复重开都不会越建越多。\n- **只在你真的在的会话里做。** 请求里只有一个 `sessionId`，宿主先看这个会话有没有驻留 agent；\n  没有就跳过（`skipped: \"parent-not-live\"`）——那种会话本来就建不了侧助手，也不该建。\n- **半秒防抖。** 只是路过一个会话不该留下一个助手。\n- **开场白照样在后台跑**，不等它；面板开的时候你可能已经能打字了。\n\n代价是实打实的：**每个你停留过的会话，提前建好一个侧助手**（一份会话日志 + 一轮问候的模型调用）。\n不想要这笔开销就配 `preload: false`，回到「点了才建」。\n\n---\n\n## 进展条：主 Agent 在想什么\n\n面板顶部那条是**只读的观察窗**，数据全部来自框架自己的会话流：\n\n| 看到什么 | 从哪来 |\n| --- | --- |\n| `工具名` + 参数摘要、工具结果（错误标红） | 主会话的 `tool/call` / `tool/result` 持久事件 |\n| 每个 step 的**思维链**（流着的是 live，跑完的标灰保留） | `assistantStream` 的 `reasoning-delta`，以及 `assistant/message` 里的 `stream` |\n| 本回合结束 | `turn/start` / `turn/end` |\n| 小圆点状态：`待命 / 进行中 / 读不到` | 流是否活着 |\n\n**思维链是留下来的，不是闪一下就没。** 主 Agent 每个 step 的思考单独成块：正在写的那块标 `live`（左边框高亮），\n这个 step 结束就转成 `done`（变灰保留），下一个 step 不会把它冲掉——所以跑完一轮再点开，最近几步想过什么还在。\n两块补看是自动的：\n\n- **面板是中途打开的**：`session.follow` 的快照帧带 `assistantStream.activeAttempt`，也就是\"这个 attempt 到现在\n  已经流出了什么\"的压缩前缀。打开时把它展开、按 `nextIndex` 截到已发布的部分，从 step 开头补齐，之后接增量——\n  不是你打开那一刻才开始记。\n- **面板打开时某"
-    },
-    {
-      "full_name": "ZiFan1117/bazidiy",
-      "html_url": "https://github.com/ZiFan1117/bazidiy",
-      "description": "基于 DeepSeek Harness 的八字五行手串定制插件",
-      "stars": 1,
-      "language": "TypeScript",
-      "pushed_at": "2026-09-09T15:04:23Z",
-      "topics": [
-        "deepseek-harness",
-        "deepseek-harness-plugin",
-        "dsh",
-        "dsh-plugin",
-        "dsh-plugin-desktop",
-        "dsh-plugin-market",
-        "dsh-plugins",
-        "software-atom"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "deepseek-harness-plugin",
-        "dsh",
-        "dsh-plugin",
-        "dsh-plugin-desktop",
-        "dsh-plugin-market",
-        "dsh-plugins",
-        "software-atom"
-      ],
-      "readme_text": "# BaziDIY 八字五行手串定制\n\n基于 [DeepSeek Harness（dsh）](https://github.com/deepseek-ai/deepseek-harness) 的八字五行手串定制助手。把「八字排盘 → 喜用神 → 珠子匹配 → 款式方案」这一套需要专业玄学与工艺知识的手艺，做成一个 AI 可用的插件，让用户通过对话即可定制一条五行手串。\n\n> 本项目是 dsh 的插件集合，依赖 dsh 运行（`@deepseek-ai/dsh-*` 0.1.1-rc.x）。不包含 dsh 本体，也不内置任何 API Key——模型 Key 由使用者在 dsh 层自行配置。\n\n## 设计理念：确定性工具 + LLM 编排\n\nAI 大模型是「概率生成」，直接让它算八字、配珠子，会一本正经地胡说八道。本项目的核心原则是分层：\n\n| 层 | 谁来管 | 说明 |\n|---|---|---|\n| **对不对**（八字排盘、五行喜用神、珠子匹配、款式求解） | 确定性工具（代码） | 有客观对错，由规则引擎精确计算，禁止 LLM 自算 |\n| **好不好**（怎么解释、怎么推荐、说话的温度） | LLM | AI 只负责编排流程、解释结果、做个性化推荐 |\n\n一句话：**把「算账」交给工具，把「聊天」交给 AI。**\n\n## 架构\n\n```\ndsh 内核（agent-loop + session-log + tools 注册表 + LLM 适配 + Web UI）\n        ▲                              ▲\n        │ preset 组合                   │ client 插件\n        │ agent.cordis.yml              │ @bazidiy/ontology/client\n   ┌────┴────────────┐           ┌──────┴─────────────┐\n   │ 手串定制助手角色 │           │ 手串 SVG 渲染       │\n   │ （编排 + 话术）  │           │ 换珠子编辑器        │\n   └─────────────────┘           └────────────────────┘\n        │ 调用工具\n        ▼\n   @bazidiy/ontology（host 半区）\n   5 个确定性工具 + 珠子数据 + 静态资源\n```\n\n## 目录结构\n\n```\natoms/                       # 【唯一真源】每个原子一个文件夹：文档+代码+测试+资源 同夹\n  bazidiy.kb/                # 知识本体原子：atom.md · impl/(绑定) · tests/ · assets/beads(35图)\n  bazidiy.calculate_chart/   #   · tools/\n  bazidiy.infer_verdict/     #  （…其余每个原子同构：atom.md · detail.json · impl/ · tests/）\n  …（共 16 个 bazidiy.* 原子）＋ bazidiy.plugin/   # 插件装配原子：impl/(壳代码) · pkg/(打包配置)\n  __shared/                  # 跨原子共享（bazidiy.framework 契约/判据 + 集成测试）\ntools/\n  sync-atoms.mjs             # 原子真源 → 组装 .build/ontology（src/_atoms + tests + assets + persona）\n  gen-ossie-db.mjs           # 建库+自检（源在 atoms/bazidiy.kb/kb/ossie/data）\n  gen-bindings.mjs           # DB → atoms/bazidiy.kb/impl 绑定 + kb/*.ttl\n  ossie-validate.mjs         # Apache Ossie 官方 validator（4 文档闸）\n  contract-check.mjs         # 原子契约回归（先跑 sync 组装 .build）\n  check-imports.mjs          # 引用纪律：原子真源只允许相对/裸包 import\n  check-encoding.mjs         # 编码闸：UTF-8 无 BOM + 无 GBK mojibake 残码\n  check-deps.mjs             # 依赖透明闸：atom.md/detail.json 的 deps == 真实 import（--fix 回写）\n.build/ontology              # 组装视图（gitignore；发布/打包输入）\ndist/                        # 产物（tgz）\n```\n\n> 规则：**改代码/测试/资源只动 `atoms/<id>/…`**；发布/回归前 `node tools/sync-atoms.mjs`。桌面插件由组装视图打包，桌面端安装为快照不受重构影响。\n\n## 五个工具\n\n| 工具 | 输入 | 输出 | 说明 |\n|---|---|---|---|\n| `calculate_bazi` | 公历生日、时辰、性别 | `bazi_result` | 八字四柱 + 日主五行 |\n| `propose_designs` | 珠子限定、腕围、日主五行、月支五行 | `design_proposal` | 喜用神 + 珠子分类 + 款式方案 |\n| `generate_design` | 款式、珠子序列、腕围、说明 | `design_result` | 最终手串方案（校验珠子全称） |\n| `save_design` | 方案数据 | `design_saved` | 按会话保存方案 |\n| `load_design` | — | `design_loaded` | 恢复当前会话的方案 |\n\n工具只做确定性计算，不调 LLM。`generate_design` 会拒绝缩写珠子名（如「小叶紫檀」必须全称）。\n\n## 角色（preset）\n\n`atoms/bazidiy.assistant_preset/impl/agent.cordis.yml` 定义了一个「手串定制助手」角色（persona），通过 system prompt 约束 AI：\n\n- **严格流程**：缺信息先问 → 算八字 → 提方案 → 用户确认款式 → 出图 → 用户想换则换款（不重算八字）\n- **硬约束**：禁止 AI 自己算旺衰/编造珠子名/展示八字内部细节/每次回复超过 150 字\n- **AI 的自由**：从工具返回的多个方案里挑最合适的、用通俗话解释五行、按用户偏好换款\n\n## 在 dsh 中加载\n\n本项目是 dsh 的插件，需在 dsh 环境内加载（开发源码或对应 npm 包环境）：\n\n1. 将 `packages/ontology` 作为 dsh 的 workspace 包（或 npm 依赖）加入\n2. 在 dsh 的 `packages/bundle/web-app/cordis.patch.yml` 挂载 client 半区（`name: '@bazidiy/ontology'`）\n3. 将 `atoms/bazidiy.assistant_preset/impl`（agent.cordis.yml + preset.yml）放进 dsh 的 preset 扫描目录（如桌面端 `~/.dsh/.agent-presets/bazidiy/`），新会话即可选「八字手串定制」persona。\n\n依赖的 dsh 包（peerDependencies）：`@deepseek-ai/dsh-tools`、`dsh-host-webserver`、`dsh-storage-domain`、`dsh-client-ui-tool`、`dsh-client-ui-slots`、`dsh-client-runtime` 等（对应 dsh 0.1.1-rc.x）。\n\n## 模型 Key\n\n本项目**不内置、不管理任何 API Key**。使用者在 dsh 层通过环境变量 `DEEPSEEK_API_KEY`（优先级最高）或 dsh 的凭据文件配置自己的 Key，与插件完全解耦。\n\n## 许可\n\n[GPL-3.0](LICENSE) © BaziDIY\n"
-    },
-    {
-      "full_name": "ZiFan1117/dsh-atom-market",
-      "html_url": "https://github.com/ZiFan1117/dsh-atom-market",
-      "description": "DeepSeek Harness 社区插件（dsh-plugin）：把 Software Atom Market 变成 Agent 可逛/可校验/可投稿的能力库。Tools: atom_search/atom_read/atom_validate/atom_draft. 默认数据源=GitHub 商店，零配置。",
-      "stars": 1,
-      "language": "JavaScript",
-      "pushed_at": "2026-09-08T13:07:31Z",
-      "topics": [
-        "agentic-ai",
-        "agents",
-        "ai-agents",
-        "cordis",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "software-atom",
-        "tool-use"
-      ],
-      "categories": [
-        "Agent/智能体"
-      ],
-      "tags": [
-        "agentic-ai",
-        "agents",
-        "ai-agents",
-        "cordis",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "software-atom"
-      ],
-      "readme_text": "# dsh-atom-market\n\n> 把 **Software Atom Market（软件原子市场）** 变成 DeepSeek Harness Agent 可逛、可校验、可投稿的能力库。\n> 原子 = 带类型化契约的最小能力单元：`intent + input + output`。本插件让 Agent 在商店里**选砖、读契约、验投稿、起草新原子**，而不是一遍遍生成同一段代码。\n\nDSH community plugin · Cordis · Everything is a plugin. · [软件原子市场（商店）](https://github.com/ZiFan1117/software-atom-market)\n\nTopics: `dsh-plugin` `dsh` `cordis` `deepseek-harness` `ai-agents`\n\n## 它做什么\n\n| 工具 | 作用 | 例子 |\n| --- | --- | --- |\n| `atom_search` | 按意图/标签/id 逛店（公共字段） | \"搜能抽 PDF 表格的原子\" |\n| `atom_read` | 读某原子完整 manifest（含 input/output 形状与 tests） | 拿到 `pdf.extract_tables` 的完整契约 |\n| `atom_validate` | 投稿前按 spec 校验候选 manifest → valid/errors/warnings | 拦下一个缺 input 的坏投稿 |\n| `atom_draft` | 由一句意图起草 `verified:false` 候选 + 投稿步骤 | 为\"把金额换算成人民币\"生成骨架 |\n\n商店数据源（**默认 GitHub，无需任何本地配置**）：\n- 默认读取 GitHub 商店仓库 `ZiFan1117/software-atom-market` 的 `atoms/*.atom.json`（目录即索引），带 5 分钟内存缓存；可用 `GITHUB_PERSONAL_ACCESS_TOKEN` 规避 API 限流。\n- 可选覆盖：\n  - `DSH_ATOM_STORE_OWNER` / `DSH_ATOM_STORE_REPO` / `DSH_ATOM_STORE_BRANCH` → 指向其它 GitHub 商店；\n  - `DSH_ATOM_STORE_DIR` → 指向本地 `atoms/` 目录（离线/开发用）。\n- 别的人装这个插件，**不需要设任何环境变量**——装上即用。\n\n## 安装\n\n本包声明 `dsh.bundle.patch`（见 `cordis.patch.yml`），安装后即激活插件行，`apply(ctx)` 自动向 `ctx.tools` 注册四个工具。`lib/` 随仓提供，装完即可用、无需本地构建。\n\n```sh\ndsh plugin add github:ZiFan1117/dsh-atom-market\n```\n\n> npm 发布已放弃（npm 账号受限）。不影响安装：DSH 插件管理器原生支持 github spec，本仓 `lib/` 随仓直接可用。dsh-market / awesome-dsh-plugin 收录仍以该安装方式申报。\n\n## 开发\n\n```sh\nnpm install\nnpm run build      # tsc → lib/\nnpm run test       # node --test，覆盖 store/validate/draft 纯逻辑\nnpm run demo       # 无 DSH 全链路冒烟（读本仓 atoms/）\n```\n\n## 与 atom 契约的映射\n\n| Software Atom Market | DSH defineTool |\n| --- | --- |\n| `intent` | `description` |\n| `input`（数据形状） | `parameters` |\n| `output`（数据形状） | `output.schema`（canonical value，程序化可读） |\n| manifest（黑盒契约） | `execute` 只返回 canonical JSON，人话在 `render` |\n| `side_effects` | 由工具本身的实现负责（本插件是纯读/查，无副作用） |\n\n渐进披露：`atom_search` 只给 `intent` 一句话；`atom_read` 展开 `description`（四节 Markdown 详情，结构见商店仓库的 [`spec/detail-convention.md`](https://github.com/ZiFan1117/software-atom-market/blob/main/spec/detail-convention.md)）。\n\n投稿/校验/收录流程见软件原子市场仓库的 [`CONTRIBUTING.md`](https://github.com/ZiFan1117/software-atom-market/blob/main/CONTRIBUTING.md) 与 [`spec/`](https://github.com/ZiFan1117/software-atom-market/tree/main/spec)。roadmap：v0.2 `atom_assemble`（意图 → 检索 → 接线图 → 拼装期校验）。\n\n## License\n\nMIT © ZiFan1117\n"
-    },
-    {
-      "full_name": "BOWLUNA/dsh-zcode-farm",
-      "html_url": "https://github.com/BOWLUNA/dsh-zcode-farm",
-      "description": "Multi-instance ComfyUI orchestration for DeepSeek Harness: give the agent a live view of every GPU in the farm and dispatch each generation job to the idlest instance instead of always hitting the busiest endpoint.",
-      "stars": 1,
-      "language": "JavaScript",
-      "pushed_at": "2026-09-24T05:27:04Z",
-      "topics": [
-        "comfyui",
-        "cordis",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "gpu-scheduling",
-        "image-generation",
-        "load-balancer",
-        "multi-instance",
-        "workflow",
-        "zcode"
-      ],
-      "categories": [
-        "Agent/智能体"
-      ],
-      "tags": [
-        "comfyui",
-        "cordis",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "gpu-scheduling",
-        "image-generation",
-        "load-balancer"
-      ],
-      "readme_text": "# dsh-zcode-farm\n\n**English** | [中文](README.zh.md)\n\n[![test](https://github.com/BOWLUNA/dsh-zcode-farm/actions/workflows/test.yml/badge.svg)](https://github.com/BOWLUNA/dsh-zcode-farm/actions/workflows/test.yml)\n[![license](https://img.shields.io/badge/license-MIT-6b7a4f?style=flat-square)](LICENSE)\n[![dsh](https://img.shields.io/badge/dsh-%3E%3D0.1.5--rc.2%20%3C0.2.0--0-6b7a4f?style=flat-square)](package.json)\n[![node](https://img.shields.io/badge/node-%3E%3D22.19-6b7a4f?style=flat-square)](package.json)\n\n> Let the DeepSeek Harness agent see a **whole farm** of ComfyUI instances and dispatch each job to the idlest one.\n\n```bash\ndsh plugin --profile web add dsh-zcode-farm\n```\n\n![How the farm picks an instance](docs/ordering-replay.svg)\n\n| | `dsh-comfyui` (77★) | **this plugin** |\n| --- | --- | --- |\n| Endpoints it can address | one | **many, probed concurrently** |\n| Queue depth | read from `/queue`, but with one instance it informs the user rather than a choice | **weighted into the ranking, across instances** |\n| When the job lands | on that one instance | on the instance with the **most free VRAM and an empty queue** |\n| Writes to ComfyUI | yes | **yes (`comfyui_farm_run`), but reading is enough** |\n\nZero runtime dependencies · Node ≥ 22 · MIT\n\n---\n\n## Why this exists\n\nComfyUI's own docs are explicit: **one ComfyUI process executes one workflow at a time**.\nReal concurrency only comes from running one process per GPU and routing each job to the\nleast-busy instance. The ecosystem already has pooling libraries such as `comfyui-orchestrator`.\n\nBut when you wire that up to an AI agent, one piece is missing: **the agent can't see the farm.**\n\nMeasured on a real machine (a single moment on 2026-09-21, taken with this plugin's own probe):\n\n| Instance | GPU | Free VRAM | Queue | Verdict |\n| --- | --- | --- | --- | --- |\n| `18100` ← the only one `dsh-comfyui` can see | RTX 5090 | 0.8 / 33.7 GB | 1 running | too full |\n| `18300` | RTX 5090 | 0.8 / 33.7 GB | 1 running | too full |\n| `18301` | RTX 5090 | 0.9 / 33.7 GB | 1 running | too full |\n| `18302` | RTX 5090 | 0.5 / 33.7 GB | 1 running | too full |\n| **`18303`** | **RTX PRO 6000 Blackwell** | **99.4 / 102.0 GB** | **0** | **✅ idle** |\n\n`dsh-comfyui` (77★, the most mature plugin in this space) talks to **one** endpoint, so every\ngeneration request hits the busiest machine — while 102 GB of VRAM sits idle.\n\n**This plugin fills exactly that gap: let the agent see, then let it dispatch.**\n\n---\n\n## What it does\n\nThree tools:\n\n| Tool | Purpose |\n| --- | --- |\n| `comfyui_farm_status` | Full farm view: per-instance GPU, free VRAM, queue depth, what's running, and **who should get the next job** |\n| `comfyui_farm_pick` | Choose without executing: filter by VRAM floor / queue ceiling / GPU-name hint / exclude list, and get the **reason** |\n| `comfyui_farm_run` | Load-aware dispatch: auto-pick (or force an instance), accepting a raw API workflow or a one-shot \"prompt + checkpoint\" text-to-image |\n\n---\n\n## Install\n\n```bash\ndsh plugin --profile web add dsh-zcode-farm\n```\n\nRestart the app and the agent gets all three tools.\n\n---\n\n## Configuration\n\n```yaml\n- id: comfyui-farm\n  config:\n    primaryUrl: 'http://127.0.0.1:8188'\n    instances:\n      - { id: gpu-18301, baseUrl: 'http://127.0.0.1:18301', label: '5090 shard' }\n      - { id: gpu-18303, baseUrl: 'http://127.0.0.1:18303', label: 'Blackwell 102G' }\n    needVramGb: 8\n    maxQueueDepth: 3\n    queueWeight: 1000\n    probeTimeoutMs: 5000\n    probeRetries: 1\n```\n\n### How an instance is chosen (two stages)\n\n1. **Filter** — unreachable, or free VRAM `< needVramGb`, or queue depth `> maxQueueDepth` → out.\n2. **Rank** — `score = freeVramGb − queueDepth × queueWeight`\n\nThe default `queueWeight = 1000` is deliberate: **queue depth dominates the ranking** and free\nVRAM only breaks ties. That matches the intuition — an idle small GPU finishes sooner than a\nbusy large one.\n\n> Prefer \"biggest VRAM wins\"? Set `queueWeight: 0`.\n\n---\n\n## Relationship to `dsh-comfyui`: complementary, not competing\n\n| | `dsh-comfyui` (77★) | `dsh-zcode-farm` | How to check the `dsh-comfyui` side |\n| --- | --- | --- | --- |\n| Scope | **one** endpoint | **a whole** farm | `grep -n baseUrl package/lib/config.js` → one `z.string()` |\n| Strength | workflow library, skill packs, canvas, asset panel | awareness, selection, dispatch | `ls package/lib` |\n| How a job is routed | wherever the single endpoint is | ranked by `free VRAM − depth × weight` | `grep -n \"constructor(baseUrl\" package/lib/comfyui.js` |\n| Assembly row id | `comfyui` | `comfyui-farm` | both appear in this repo's `cordis.patch.yml` |\n\nThe row ids differ, so **both can be installed side by side**. Neither depends on the other.\n`dsh-comfyui`'s single-endpoint design is verified from its published source, not asserted —\nsee \"Reproducing the comparison\" below for the three commands.\n\n---\n\n## Relationship to ZCode\n\n**This repository is self-developed — there is no ZCode code lineage.** ZCode\n(`zai-org/ZCode`, `zai-org/GLM-skills`) is credited here as a *source of inspiration for the\nengineering conventions this project follows*, not as a dependency: nothing in the install\npath, the runtime, or the acceptance checks requires it, and no third-party vendor key is\ninvolved anywhere in this repository.\n\nMost cells below are therefore deliberately blank rather than filled with something invented.\n\n| What ZCode has | What this plugin took | What this plugin adds beyond it | Evidence (run it yourself) |\n| --- | --- | --- | --- |\n| Nothing for ComfyUI farm scheduling | —— | the whole probe → rank → dispatch loop | `grep -rli comfyui <zcode-checkout> \\| wc -l` → **0** |\n| A memory-extraction sub-agent with two skip conditions (`apps/zcode-cli/packages/core/src/memory/extraction.ts:23`) | —— (different domain) | —— | *n/a — nothing was taken, so there is no claim to reproduce* |\n| Bilingual paired documents | adopted as the house convention | **extended to cover figure files** (`*.svg`), so a diagram can't drift from its translation | `node tools/verify-translation-pairing.mjs` |\n| Guard discipline — runnable checks before every commit | adopted as the house convention | **extended to six guards, the sixth being a real-boot check** | `node test/run.mjs` and `node tools/boot-check.mjs --port 32041` |\n\nA row reading `——` is an honest blank, not an oversight.\n\n---\n\n## Reproducing the comparison\n\nNothing above needs to be taken on trust. These are the commands behind it:\n\n```bash\ngit clone https://github.com/BOWLUNA/dsh-zcode-farm && cd dsh-zcode-farm\nnode test/run.mjs                        # 23 checks in 2 suites\nnode tools/ordering-replay.mjs           # the ranking table behind the figure\nnode tools/boot-check.mjs --port 32041   # really installs and really boots (needs a harness)\n```\n\nThe `dsh-comfyui` claims are checked against its published package, not against this repo:\n\n```bash\nnpm view dsh-comfyui version                # 0.5.1\nnpm pack dsh-comfyui@0.5.1 && tar xzf dsh-comfyui-0.5.1.tgz\ngrep -n baseUrl package/lib/config.js       # a single string, not a list\ngrep -n \"constructor(baseUrl\" package/lib/comfyui.js\n```\n\n```text\n9:    baseUrl: z.string().default('http://127.0.0.1:8188'),\n71:    constructor(baseUrl, apiKey, connectTimeoutMs, maxMediaBytes) {\n```\n\nRun on 2026-09-22 against `dsh-comfyui@0.5.1`.\n\n---\n\n## Design notes\n\n- **Zero runtime dependencies.** Node's built-in `fetch` / `AbortController` only.\n- **No workflow editing.** That's `dsh-comfyui`'s territory; this plugin only answers \"who gets it\".\n- **No assumption of locality.** Every member is just a URL — SSH tunnels, LAN and remote hosts\n  are treated identically. The 5 tunnels on the test machine are plain `ssh -L` forwards.\n- **Probe failures are retried.** Tunnel flakiness is real: the same instance once timed out at\n  `>3s` and answered in `106ms` on the very next call. A single failure is not a verdict — we\n  retry, then report `attempts` so the agent can tell \"down\" from \"hiccup\".\n- **Failure reasons are never overwritten.** When filtering by GPU hint, an unreachable instance\n  keeps its \"unreachable\" reason instead of being relabelled \"GPU mismatch\", which would hide"
     }
   ]
 }
