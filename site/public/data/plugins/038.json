@@ -1,120 +1,7 @@
 {
-  "generatedAt": "2026-10-22T11:25:54.202Z",
+  "generatedAt": "2026-10-22T16:24:27.170Z",
   "count": 400,
   "plugins": [
-    {
-      "full_name": "uckkk/dsh-ux-writing",
-      "html_url": "https://github.com/uckkk/dsh-ux-writing",
-      "description": "@{name=dsh-ux-writing; version=0.1.0; description=UX 文案写作：微文案规范与按钮、错误提示文案指南，辅助界面文案撰写（UX writing guide for DeepSeek Harness）; type=module; main=lib/index.js; exports=; files=System.Object[]; dsh=; keywords=System.Object[]; author=istone <ad571@qq.com>; license=MIT; peerDependencies=}.description",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-19T15:19:49Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-ux-writing · UX文案写作指南\n\n纯 Node 实现，无网络、无外部服务。\n\n## 安装\n\n```bash\ndsh plugin add dsh-ux-writing\n```\n安装后在 profile 的 `package.json` 的 `dsh.profile.bundles` 中加入 `\"dsh-ux-writing\"`。\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-ux-writing\n```\n\n> 安装即在本机运行第三方代码，请自行审阅源码。\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-ux-writing\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n\n> 安装即在本机运行第三方代码，请自行审阅源码。\n"
-    },
-    {
-      "full_name": "uckkk/dsh-image",
-      "html_url": "https://github.com/uckkk/dsh-image",
-      "description": "图片处理：读取尺寸/格式、缩放与格式转换（内置 ffmpeg）",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-19T15:18:06Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "内容/媒体"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-image · 图片处理\n\n读取图片尺寸/格式、缩放与格式转换。基于内置 ffmpeg 二进制（跨平台）。纯 Node 实现。\n\n## 提供的工具\n\n| 工具 | 作用 |\n|---|---|\n| `image_info` | 读取宽×高与格式 |\n| `resize_image` | 缩放（等比/指定尺寸）+ 转格式（jpg/png/webp） |\n\n## 安装\n\n```bash\ndsh plugin add dsh-image\n```\n安装后在 profile 的 `package.json` 的 `dsh.profile.bundles` 中加入 `\"dsh-image\"`。\n\n## 用法示例\n\n```\n把 hero.png 缩成 800 宽并转成 webp\n→ 调用 resize_image(file=\"hero.png\", width=800, outFile=\"hero.webp\")\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-image\n```\n\n> 安装即在本机运行第三方代码，请自行审阅源码。\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-image\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n\n> 安装即在本机运行第三方代码，请自行审阅源码。\n"
-    },
-    {
-      "full_name": "Viger1/dsh-pilot",
-      "html_url": "https://github.com/Viger1/dsh-pilot",
-      "description": "✋ Hands for your DeepSeek Harness agent — autonomous browser operation by accessibility refs, with a permission model that follows your dsh session.",
-      "stars": 0,
-      "language": "TypeScript",
-      "pushed_at": "2026-08-17T14:56:36Z",
-      "topics": [
-        "ai-agent",
-        "browser-automation",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "playwright",
-        "web-automation"
-      ],
-      "categories": [
-        "Agent/智能体"
-      ],
-      "tags": [
-        "ai-agent",
-        "browser-automation",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "playwright",
-        "web-automation",
-        "agent"
-      ],
-      "readme_text": "# dsh-pilot\n\nEnglish | [中文](README.zh.md)\n\n**Browser automation whose permission model is the dsh session's, enforced at the network layer.**\n\nPlenty of plugins let a dsh agent drive a browser, and most of them read the page as an accessibility tree — that part is the ecosystem norm, not a feature. What none of them do is answer *where the agent is allowed to go* with anything sturdier than a check at the tool-call entry point, which by construction cannot stop a redirect, an in-page link click, or a back/forward move.\n\n`dsh-pilot` answers it twice: the policy is **read from the session's own approval stance** rather than invented by the plugin, and it is **enforced by request interception on the browser context**, so every main-frame navigation passes it however it started.\n\n## What it looks like\n\nReal, unedited runs from a headless dsh agent (DeepSeek-V4-Pro):\n\n**Form flow, fully autonomous.** This is what `pilot_snapshot` actually returns for a registration page — the agent's entire view of it:\n\n```\n- heading \"用户注册\" [level=1] [ref=e2]\n- generic [ref=e3]:\n  - text: 用户名\n  - textbox \"用户名\" [ref=e5]\n  - text: 邮箱\n  - textbox \"邮箱\" [ref=e7]\n  - text: 套餐\n  - combobox \"套餐\" [ref=e9]:\n    - option \"免费版\" [selected]\n    - option \"专业版\"\n  - checkbox \"同意服务条款\" [ref=e11]\n  - button \"提交注册\" [ref=e12]\n  - button \"重置\" [ref=e13]\n```\n\nFrom there: fill `e5` and `e7`, select 专业版 on `e9`, check `e11`, click `e12`, `pilot_wait` for the success text (hit in 5ms), screenshot, close. Zero console errors, zero selectors written, no vision model in the loop.\n\n**Permissions that follow the session** — the same agent asked to open `https://example.com`:\n- under the default `workspace-write` session: refused — the approval chain answered `unavailable` and the agent was told exactly what config to request;\n- under `danger-full-access` (the user opted out of prompts): opens silently, no gate in the way.\n\nThat is the design: **the plugin never invents a second permission system.** It reads the dsh session's own durable permission events and behaves accordingly — and because the decision lives in a request interceptor rather than a pre-execute hook, a page that redirects or links its way somewhere else does not slip past it.\n\n## Install\n\n```sh\ndsh plugin --profile web add dsh-pilot\n```\n\nUses your installed Google Chrome / Microsoft Edge automatically; otherwise run `npx playwright install chromium` once and set `browserChannels: [chromium]`. Requires Node `^22.19 || >=24`.\n\n## Tools\n\n| Tool | What it does |\n| --- | --- |\n| `pilot_navigate` | goto / back / forward / reload, tabs. The single origin-gated entry; decisions are enforced at the **network layer** (redirects, link-outs, history moves included). |\n| `pilot_snapshot` | The page as an accessibility tree with `[ref=e12]` markers bound to concrete elements — shadow DOM and same-origin iframes (`f1e3`) included. |\n| `pilot_act` | click / type / press / hover / select / check / uncheck / **upload** by ref. Reports console errors it caused and whether it navigated. |\n| `pilot_wait` | Wait for a selector, text, URL fragment, or network idle — returns `satisfied: false` instead of blind-retry loops. |\n| `pilot_screenshot` | Viewport or full-page PNG into the workspace, for the human. |\n| `pilot_close` | Close tabs when done. |\n\nRefs come from playwright's engine-bound accessibility snapshots, so snapshot order can never misdirect an action, and stale refs are refused with instructions to re-snapshot. This mechanism is **standard practice** across agent browser tooling rather than something this plugin invented — see [Known limitations](#known-limitations) for the maintenance cost it carries.\n\n## The permission model\n\n1. **`localhost` always works** — frontend testing needs no setup.\n2. **`allowedOrigins`** pre-authorizes known-good origins/hostnames.\n3. **Anything else follows the dsh session** (`newOriginPolicy: auto`, the default):\n   - session approval policy `ask` → a standard dsh approval card asks the user once per origin;\n   - session under `danger-full-access` (approval policy `never`) → silent allow — a user who opted into full access is not re-gated by a plugin;\n   - no approval channel (unattended automation) → fail closed.\n4. **Network-layer fence**: the decision is enforced by request interception on the browser context, so redirects, in-page link clicks, and back/forward cannot drift past the entry gate. Popups (`window.open`, `target=_blank`) are closed on arrival.\n5. **Credential hygiene, independent of permission mode**: typing/pressing into password fields is refused unless the deployment sets `allowPasswordFields: true` — dsh itself never lets credential literals reach model context, and neither does this plugin. Uploads are restricted to workspace files; downloads land in `downloadDir`.\n6. **Page content is data, not instructions** — the bundled skill drills this in.\n\n## Configuration\n\n```yaml\n- id: pilot\n  name: dsh-pilot\n  config:\n    headless: true\n    browserChannels: [chrome, msedge, chromium]\n    viewportWidth: 1280\n    viewportHeight: 800\n    navigationTimeoutMs: 15000\n    actionTimeoutMs: 5000\n    waitMaxMs: 60000\n    snapshotMaxChars: 24000\n    maxTabs: 8\n    allowedOrigins: []\n    newOriginPolicy: auto       # auto | ask | deny | allow\n    allowPasswordFields: false\n    profileDir: ''              # set a path to keep logged-in state (understand the risk)\n    screenshotDir: .dsh-pilot\n    downloadDir: .dsh-pilot/downloads\n    maxConsoleMessages: 100\n    registerSkill: true\n```\n\n`profileDir` opt-in gives the agent a persistent browser profile — **everything logged in inside that profile becomes operable by the agent**. Leave empty for a fresh isolated context per run.\n\n## Known limitations\n\n- Approved origins accumulate for the plugin instance's lifetime and are shared across sessions of one dsh process (one shared browser context).\n- Canvas-rendered content has no accessibility semantics; `pilot_screenshot` shows it to the human, and screenshot→vision-model routing is on the roadmap.\n- Headless rendering differs from a desktop browser (pointer lock, some GPU paths, OS dialogs).\n- **Part of the ref mechanism is Playwright-internal.** `ariaSnapshot({ mode: 'ai' })` is public and documented, but the `aria-ref=` selector engine that turns a ref back into a locator is not, and the related `Locator.ariaRef()` was removed in Playwright 1.60. `playwright-core` is therefore pinned to `~1.62.0` and each minor bump is re-validated against shadow-DOM and iframe cases. Treat this as an ongoing maintenance cost, not a settled foundation.\n- **The name is not unique.** [guo6x/dsh-pilot](https://github.com/guo6x/dsh-pilot) is a different, older plugin in the same space, installed via `github:guo6x/dsh-pilot`. This one is the npm package `dsh-pilot`. Check which you have before filing an issue against either.\n\n## Family\n\n| Plugin | What it gives your agent |\n| --- | --- |\n| [dsh-preview](https://github.com/Viger1/dsh-preview) | 👁 Eyes — verify what it builds: open, read, screenshot, self-check |\n| **dsh-pilot** (this repo) | ✋ Hands — operate any page by accessibility refs, with a native permission model |\n| [dsh-review](https://github.com/Viger1/dsh-review) | 🔍 Judgement — find defects, then try to refute each one before reporting it |\n| [dsh-design](https://github.com/Viger1/dsh-design) | 🎨 Taste — constrain the choices, then measure whether the result kept them |\n\nEach installs independently and they coexist. Design rationale and milestones: [DESIGN.md](DESIGN.md).\n\n## Development\n\n```sh\ngit clone https://github.com/Viger1/dsh-pilot.git && cd dsh-pilot\ncorepack pnpm install\ncorepack pnpm run build\ndsh plugin --profile web add /absolute/path/to/dsh-pilot\n```\n\n## License\n\n[MIT](LICENSE)\n"
-    },
-    {
-      "full_name": "hhy66/dsh-balance-stats",
-      "html_url": "https://github.com/hhy66/dsh-balance-stats",
-      "description": "DSH 余额与消耗面板（dsh-balance-stats）",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-25T10:39:43Z",
-      "topics": [
-        "deepseek",
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek",
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# DSH 余额与消耗面板（dsh-balance-stats）\n\n[![dsh.so security](https://www.dsh.so/badges/dsh-balance-stats.svg)](https://www.dsh.so/artifact/dsh-balance-stats/)\n\n一个给 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（DSH）用的插件：在左侧边栏和设置页里，实时显示 DeepSeek 账户余额与本机所有会话的 token 消耗，并且**把每一分钱是怎么算出来的摊开给你看**。\n\n用一句话说：**官方账单收了多少、你花在哪了、还能用多久，一个面板讲清楚。**\n\n---\n\n## ✨ 功能一览\n\n> 📌 界面最近变化：KPI 已从侧边栏底部移到**右上角悬浮胶囊**（官方 `shell.overlay` 槽位，余额每 3 秒刷新），点击展开可看续航/今日/本月/本会话。\n\n### 1. KPI 盘头（两处常显）\n\n| 位置 | 样子 |\n|---|---|\n| **右上角悬浮胶囊** | `🟢 ¥97.69`，点击展开 `· ≈12天 · 今 ¥0.48 · 月 ¥13.20 · 本会话 ¥1.23` |\n| **设置 → 余额与消耗** 顶部 | 一行四个大数字卡片 |\n| **设置 → 余额与消耗** 顶部 | 一行四个大数字卡片 |\n\n四个数字的含义：\n\n- **余额**：来自 DeepSeek 官方接口，旁边红/黄/绿状态灯（余额告急自动变红）\n- **续航**：余额 ÷ 近 7 天日均花费 = 按现在的用法还能用多少天\n- **今日 / 本月**：真实逐日统计，和官方账单同口径（含峰谷计价）\n\n侧边栏收起（窄轨）时自动变成只显示状态灯，悬停可看完整数字。\n\n### 2. 🚦 预算制动\n\n设置一个每日预算上限（如 ¥20），\"今日\"卡片会出现进度条：\n\n- 用掉 80% → 变黄提示\"注意控制\"\n- 超预算 → 变红提示\"已超 ¥X\"\n\n跑长任务前扫一眼，比看余额有用得多——余额 97 元不等于可以一天烧 50。\n\n### 3. 🩺 缓存命中率健康提示\n\n命中率 = 缓存命中 ÷（命中+未命中+缓存写入）。低于 50% 自动弹提示：\n\n> 未命中单价是命中的 20~60 倍（如 pro 空闲期 ¥4.5/M vs ¥0.15/M），低命中率意味着大量重复计费。\n\n会**按工作区单独体检**：比如「E:\\乐乐课堂」命中率 41% 会被单独点名。这是省钱的第一个杠杆。\n\n### 4. 🧮 计算步骤明细（与官方对账）\n\n每一分钱都按官方口径逐条列出：\n\n```\n费用 = Σ [ (未命中输入 + 缓存写入) × 未命中价\n       + 缓存命中 × 命中价 + 输出 × 输出价 ] ÷ 1,000,000\n\ndeepseek-v4-pro\n  [高峰时段] 计费 ¥0.0032\n    输入·未命中  700 × ¥3.0/M  = ¥0.00210\n    输入·缓存写入 60 × ¥3.0/M  = ¥0.00018\n    ...\n```\n\n- **按每个请求发生的时刻**区分高峰/空闲两档计价（高峰 = 北京时间周一至周五 9:00-12:00、14:00-18:00；其余时间含周末为半价）\n- **压缩摘要调用也计入**（长对话自动压缩历史时的那次模型调用，官方账单收钱，本插件补上了官方统计条漏掉的这块）\n- 整卡、逐模型都可点击折叠\n\n### 5. 📄 官方定价与扣费规则\n\n内置官方价格表（空闲/高峰两档，覆盖 deepseek-v4-flash、deepseek-v4-pro、deepseek-v4-flash-vision-exp 三个模型）、官方定价说明与扣费规则原文，附直达官方定价页和用量账单页的链接，对账时点开即查。\n\n### 6. 📋 会话明细（带筛选与工作区）\n\n- 每个会话显示**所属工作区**（`C:\\Users\\hhy99`、`E:\\乐乐课堂`……）和标题（与 Web 界面完全一致）\n- 筛选：**工作区** 下拉 + **时间**（全部/今天/昨天/本周/本月）+ **标题或 ID 搜索**\n- **选时间后，每个会话显示的是它在该时段内花的钱**（不是从出生到现在的累计），汇总行同步——比如选\"今天\"，就能看到\"今天每个会话各花了多少、合计多少\"，与 KPI 的\"今日\"一致\n- 会话改名**实时热更新**（订阅了 Web 界面的推送流，无需刷新）\n\n### 7. 🗂️ 历史会话完整统计\n\n磁盘上已持久化、但没有打开过的旧会话**同样纳入统计**——KPI、计算明细、筛选列表覆盖完整历史，而不是只有最近打开过的几个。\n\n### 8. 🔍 差额说明（和官方账单差几分钱？）\n\n插件会自动统计两类\"官方计费但本地无法计价\"的调用：\n\n> 另有辅助调用未计入：标题生成 N 次 · 网页搜索 M 次 —— 与官方账单的差值通常来源于此\n\n原因详见下方「数据准确性说明」。\n\n### 9. 💡 六项进阶能力\n\n- **错峰省钱建议**：按高峰/空闲实际花费占比，直接算出\"把重活挪到空闲时段可省约 ¥X\"\n- **最贵请求 Top-10**：单步成本排行（含压缩摘要），暴露烧钱尖峰\n- **工作区成本排行**：一眼看出钱主要烧在哪个工作区\n- **对账闭环**：输入官方账单金额，自动算偏差百分比（±2% 内绿 / ±5% 内黄 / 更大红）\n- **定价快照自检**：显示内置价格表快照日期 + \"检查官方价格\"按钮（自动抓取官网比对，变了就提示更新）\n- **本会话实时花费**：右上角胶囊展开可见当前选中会话已烧金额\n\n---\n\n## 🚀 安装（手把手，零基础也能装）\n\n整个过程约 5 分钟，一共五步。以 Windows 为例，macOS/Linux 把路径写法换一下即可。\n\n### 第一步：确认你已经有 DSH\n\n打开终端（PowerShell），运行：\n\n```powershell\ndsh web\n```\n\n能看到浏览器打开 DeepSeek Harness 的网页界面（默认 http://127.0.0.1:3080），说明环境就绪。\n\n- 如果提示 `dsh` 不是命令：先安装 DSH 本体\n  ```powershell\n  npm install -g @deepseek-ai/dsh\n  dsh web\n  ```\n- 另外确认 pnpm 存在（安装插件会用到）：\n  ```powershell\n  pnpm --version    # 没有输出版本号就运行: npm install -g pnpm\n  ```\n\n> 先把这个终端窗口里的 `dsh web` 停掉（按 `Ctrl+C`），等装完插件再重新启动。\n\n### 第二步：拿到插件代码（二选一）\n\n**方式 A：会 git 的人**\n\n```powershell\ngit clone https://github.com/hhy66/dsh-balance-stats.git\n```\n\n**方式 B：不会 git 的人（推荐）**\n\n1. 浏览器打开本仓库页面\n2. 点绿色 **Code** 按钮 → **Download ZIP**\n3. 把下载的压缩包解压到任意一个你找得到的地方，例如 `C:\\dsh-plugins\\dsh-balance-stats`\n\n> 国内网络如果 clone 失败，先给 git 配代理（把端口换成你自己的代理端口）：\n> ```powershell\n> git config --global http.https://github.com.proxy http://127.0.0.1:7897\n> ```\n\n### 第三步：安装插件\n\n在终端里运行下面这条命令（**把路径换成你实际的插件目录**）：\n\n```powershell\ndsh plugin --profile web add \"C:\\dsh-plugins\\dsh-balance-stats\"\n```\n\n看到类似 `+ dsh-balance-stats link:...` 的输出就是安装成功了。这条命令做了两件事：把插件登记到你的 DSH 配置里，并自动装好它需要的依赖。\n\n### 第四步：重启并刷新\n\n1. 终端里重新运行 `dsh web`\n2. 浏览器里按 **`Ctrl+Shift+R`** 强制刷新页面\n\n### 第五步：验证是否装好\n\n- 左侧边栏底部（\"设置\"一行的上方）出现一行余额数字 ✅\n- 打开 **设置 → 余额与消耗**，能看到完整面板 ✅\n- 如果余额位置显示\"未配置 DEEPSEEK_API_KEY\"：你的密钥还没放进 DSH。把密钥加到 `C:\\Users\\你的用户名\\.dsh\\.credentials.yaml` 里（`DEEPSEEK_API_KEY: sk-...`），保存后重启 `dsh web` 即可\n\n---\n\n### 🆘 安装常见问题\n\n**Q：面板打不开 / 提示找不到 zod？**\n\n个别安装方式下依赖 zod 不会被自动装进插件目录。把 DSH 自带的 zod 拷一份过去即可：\n\n```powershell\n# 先看 DSH 装在哪个全局目录\nnpm root -g\n# 例如输出 C:\\Program Files\\nodejs\\node_modules，那么执行：\nCopy-Item -Recurse \"C:\\Program Files\\nodejs\\node_modules\\@deepseek-ai\\dsh\\node_modules\\zod\" \"你的插件目录\\node_modules\\zod\"\n```\n\n拷贝后重启 `dsh web` + 硬刷新。\n\n**Q：`dsh plugin` 提示找不到 pnpm？**\n\n```powershell\nnpm install -g pnpm\n```\n\n**Q：安装依赖时网络很慢 / 失败？**\n\n换国内 npm 镜像再试：\n\n```powershell\nnpm config set registry https://registry.npmmirror.com\ndsh plugin --profile web add \"你的插件目录\"\n```\n\n**Q：面板是空白的？**\n\n先 `Ctrl+Shift+R` 硬刷新；还不行就重启 `dsh web`；仍不行按 `F12` 打开控制台，把红色报错发到 GitHub Issues。\n\n### 🔄 以后怎么更新插件\n\n**普通用户**：重新下载最新代码（git pull 或重新 Download ZIP 覆盖旧目录），然后重跑第三步和第四步即可。\n\n**插件作者本人**：本机有一份不公开的《维护红线》文档（在插件目录的 `REDLINE.md`，已排除出版本库），按它执行。\n\n### 🗑️ 卸载\n\n```powershell\ndsh plugin --profile web remove dsh-balance-stats\n```\n\n重启 `dsh web` 生效。\n\n---\n\n## ⚙️ 配置\n\n编辑 `~/.dsh/profiles/web/cordis.patch.yml`（也可直接改插件自带的 `cordis.patch.yml` 默认值）：\n\n```yaml\n- id: dsh-balance-stats\n  config:\n    refreshIntervalMs: 3000      # 余额查询间隔(毫秒)：3 秒 = 悬浮胶囊余额 3 秒热刷新\n    warningThreshold: 10        # 余额低于此值 → 黄灯(元)\n    dangerThreshold: 5          # 余额低于此值 → 红灯(元)\n    dailyBudget: 20             # 单日预算上限(元)；0 = 关闭预算制动\n    currency: CNY\n    prices:                     # 非 V4 模型的静态单价(元/百万 token)\n      deepseek-chat: { cacheHit: 0.5, cacheMiss: 2, output: 8 }\n```\n\n改完重启 `dsh web` 生效。\n\n---\n\n## 🧾 数据是怎么算的（实现方式，通俗版）\n\n1. **余额**：调用官方接口 `GET /user/balance`，用你 `~/.dsh/.credentials.yaml` 里的 `DEEPSEEK_API_KEY` 鉴权。**密钥只在你电脑上使用，浏览器全程接触不到**，请求只发往 `api.deepseek.com`。\n2. **单价**：内置官方定价页的完整价格表，**按请求发生时刻分段计费**——2026-08-17 00:00（北京时间）之前的请求按旧价（flash 0.02/1/2、pro 0.025/3/6）；之后的请求按峰谷价（高峰 = 北京时间周一至周五 9:00-12:00、14:00-18:00 全价，其余含周末半价），覆盖 flash / pro / flash-vision-exp 三个模型。\n3. **用量**：读取 DSH 每个会话的本地日志，按\"事件发生时刻\"逐个请求计价（含缓存命中/未命中/写入/输出的分桶）；**压缩摘要调用也计入**（官方账单计费，官方自己的统计条反而漏了它）。\n4. **历史会话**：通过 DSH 的持久化接口枚举磁盘上的全部会话，逐个折叠统计并按修订号缓存（不会重复算）；扫描在启动后延迟 2 秒后台进行，不影响打开速度。\n5. **会话标题/工作区**：与 Web 界面同一数据源，你改名会实时同步。\n6. **实时性**：30 秒轮询 + 会话推送流触发的防抖刷新（约 1 秒内响应变化）；页面从后台切回立即刷新。\n\n## ⚠️ 数据准确性说明（和官方账单的已知差值）\n\n本插件统计的是**能本地重建的全部用量**：主请求 + 压缩摘要，约占官方账单的 99.6%。剩下两类调用官方账单计费、但 DSH 的本地日志**不记录其用量**（源码如此，官方统计条也看不到）：\n\n- **标题生成**：DSH 给每个会话自动起标题时的一次小模型调用\n- **网页搜索**：搜索工具直连 DeepSeek API 的调用\n\n因此插件只能**精确计数**这两类调用（消耗卡里显示次数），无法算出它们的精确金额——这是官方账单与本地统计之间最后几毛钱差值的来源，属于 DSH 自身的记录缺口。若 DeepSeek 官方将来开放用量 API，即可完全对齐。\n\n另外两点口径说明：\n\n- 峰谷时段归属按**本地记录的事件时间**判断，跨时段边界的极少数请求（如 11:59:59 发起）可能与官方归账差几秒\n- 金额为本地估算，**一切以 platform.deepseek.com/usage 的官方账单为准**\n\n---\n\n## ❓ 常见问题\n\n**Q：和官方账单差几分钱？**\n见上方「数据准确性说明」——差值来自标题生成和网页搜索这两类\"计费但不落用量\"的调用，插件里已显示它们的次数，可在官方账单里逐条核对。\n\n**Q：为什么时间筛选后，旧会话显示 ¥0.00？**\n因为筛选问的是\"这个时段花了多少\"，而不是\"它累计花了多少\"。今天没花它的钱，就诚实显示 0（灰色弱化）。想看累计就选\"全部\"。\n\n**Q：打开面板第一次要等几秒？**\n首次会扫描磁盘上的历史会话（后台进行），面板会显示\"扫描历史会话中…\"；之后每次打开都是瞬时。\n\n**Q：会话标题和侧边栏不一致？**\n不会——两者读的是同一份数据，且改名实时同步。如果出现不一致，硬刷新浏览器（`Ctrl+Shift+R`）。\n\n**Q：会泄露我的 API 密钥吗？**\n不会。密钥只存在于宿主进程内存和你的凭据文件里，插件只在宿主机端用它请求 `api.deepseek.com`，浏览器端、日志、界面中都不出现。\n\n---\n\n## 📦 技术栈与许可\n\n- 基于 DSH 的 Cordis 插件体系：宿主端（Node.js）+ 浏览器端（React），通过官方插槽（设置页 `settings.section`、侧边栏 `sidebar.footer.action`）接入，不侵入界面\n- 依赖：[zod](https://zod.dev/)（数据校验）\n- 许可：[MIT](./LICENSE)\n\n---\n\n*本插件为个人使用而写，按 MIT 协议开放；官方账单始终是最终依据。*\n"
-    },
-    {
-      "full_name": "TableRogue/dsh-pixel-icons",
-      "html_url": "https://github.com/TableRogue/dsh-pixel-icons",
-      "description": "把 DeepSeek Harness GUI 矢量 SVG 图标转为像素风的插件",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-16T20:41:22Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-pixel-icons\n\n把 DeepSeek Harness Web GUI 中的矢量 SVG 图标转为像素风（1px 像素块）的插件。\n\n## 用处\n\n- 运行时把全部图标（`fill=\"currentColor\"` 的 SVG）光栅化并重建为 1px 像素块，与 Fusion Pixel 像素字体风格统一。\n- 超采样（3×）+ 块平均判定，细线连续、粗细均匀。\n- 只处理图标：上下文进度环等功能性 SVG（无 `currentColor`）自动跳过，不破坏功能。\n- 原地修改保留原节点 identity，不破坏 React 协调（侧栏折叠/展开正常）。\n\n## 安装（每次启动自动加载）\n\n```bash\n# 本地 checkout\ndsh plugin --profile web add ./dsh-pixel-icons\n\n# 或从 GitHub（纯 JS，无构建步骤）\ndsh plugin --profile web add github:TableRogue/dsh-pixel-icons\n```\n\n建议搭配 [dsh-fusion-pixel-font](https://github.com/TableRogue/dsh-fusion-pixel-font) 与 [dsh-fusion-pixel-ui-adapt](https://github.com/TableRogue/dsh-fusion-pixel-ui-adapt) 使用。安装后自动追加进 profile 的 `dsh.profile.bundles`，启动 `dsh --profile web` 即生效。验证 / 卸载：\n\n```bash\ndsh --profile web --dump-config        # 应看到 # == dsh-pixel-icons 层\ndsh plugin --profile web remove dsh-pixel-icons\n```\n\n**临时方式（动态插件，单次进程）**：把 `src/client.js` 头注释以下的内容填入 `cordis_define` 的 `code.client` 并 `cordis_run`，详见文件头注释。\n\n## 配置\n\n- `SCALE`：超采样倍数（默认 3），改小像素颗粒更大、改大线条更精细。\n- `0.35`：块平均覆盖率阈值，细线跨块更易命中。\n- 调参后需刷新页面重新光栅化。\n\n## 文件\n\n- `index.js` — Host 半：空 apply（纯 client 插件）。\n- `src/client.js` — 动态插件源码（文档参考）。\n- `lib/client.js` — 发布 bundle（client-modules 加载）。\n- `cordis.patch.yml` — profile 组合补丁行。\n\n## License\n\n[MIT](./LICENSE) © 2026 TableRogue\n"
-    },
     {
       "full_name": "CoachLeong/dsh-notify",
       "html_url": "https://github.com/CoachLeong/dsh-notify",
@@ -9719,6 +9606,126 @@
         "dsh-plugin"
       ],
       "readme_text": "# dsh-open-workspace-folder\n\n[中文](README.zh.md)\n\nAdds `在文件资源管理器中显示` to every workspace overflow menu in DeepSeek Harness Web. Selecting it invokes the Harness `workspaces.openPath()` API, which opens the workspace directory in the host operating system's default file manager.\n\n## Install\n\n```powershell\n# Run from the repository root.\ndsh plugin --profile web add \".\\dsh-open-workspace-folder\"\n```\n\nRestart `dsh web` after installation, then refresh `http://127.0.0.1:3080`. The package is linked from the current workspace into the selected profile, so the configuration persists across later `dsh web` restarts.\n\n## Implementation Note\n\nThe current `ui-workspace` package does not expose a slot for workspace overflow-menu entries. The client adapter observes only the two-item workspace menu, clones its native Rename row styling, and resolves the target path from the stable workspace row order and the live workspace snapshot. It does not resolve a workspace from its display title, so duplicate titles remain safe.\n"
+    },
+    {
+      "full_name": "VeryInt/dsh-image-vision",
+      "html_url": "https://github.com/VeryInt/dsh-image-vision",
+      "description": "",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-17T09:35:05Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent",
+        "vision"
+      ],
+      "readme_text": "# dsh-image-vision\n\nSeamless image understanding for **DeepSeek Harness** — lets pure-text main\nmodels read pasted/dropped images and Feishu/Lark images via a configurable\nvision model, **without modifying any host code**.\n\nA pure \"everything is a plugin\" implementation: it wraps a documented `llm`\nservice method and listens to official agent/tool waterfalls. No `packages/`\nfiles are touched, so it portably runs wherever DeepSeek Harness runs.\n\n> 简体中文说明见 [README.zh.md](./README.zh.md)\n\n---\n\n## What it does\n\n- **Paste / drop an image in chat** — even when the main model is text-only\n  (e.g. DeepSeek V4 Flash routed through pi-ai), the image is accepted and\n  described to the model as text.\n- **Feishu / Lark document images** — `<image token=\"...\"/>` produced by\n  `lark_read_doc` and friends is downloaded through `lark-cli` and described;\n  the result is injected back as tool output.\n- **`describe_image` model tool** — describes a local image file path.\n- **Full description, not just OCR** — people, scenes, tables, charts and\n  verbatim text are all described, driven by a prompt you can override.\n\nPick a vision model from **ModelScope free community API** (e.g.\n`Qwen/Qwen3-VL-8B-Instruct`) or **SiliconFlow** (e.g.\n`Qwen/Qwen3-VL-32B-Instruct`). Routes are auto-discovered from your `settings`.\n\n---\n\n## Why no host code changes\n\nThe web API proxy gates image upload/model-switch by calling\n`llm.resolveModelInfo(...).inputModalities` and rejecting when the model does\nnot declare `image`. Since DSH is \"everything is a plugin\", this plugin:\n\n1. **Wraps `ctx.llm.resolveModelInfo`** — when the target model lacks `image`\n   input and a vision route is configured, the returned capabilities gain\n   `image`, so the admission gate lets the image through.\n2. **Listens on `agent/pre-step`** — before the real model request, each image\n   block is transcribed by the vision model and replaced with its text, so the\n   text-only main model only ever receives plain text.\n\nBoth steps use documented DSH extension points. No core files are changed.\n\n---\n\n## Requirements\n\n- DeepSeek Harness `0.1.0-rc.6` (**source checkout or installed release** —\n  both are supported, see *Installation*).\n- Node.js >= 22.19\n- A configured **vision model provider** (see *Configuration*).\n\n---\n\n## Installation\n\nTwo deployment styles are supported: a **source checkout** (clone the\ndeepseek-harness repo and run `pnpm dsh web`) and the **installed release**\n(`npm i -g @deepseek-ai/dsh`). Both go through the same `dsh plugin` manager;\n`@deepseek-ai/*` dependencies are provided by the host and resolved from the\nDSH installation anchor.\n\n### From GitHub (recommended)\n\n```bash\nnpx @deepseek-ai/dsh plugin --profile web add github:VeryInt/dsh-image-vision\n```\n\n### From a local path (development / validation)\n\n```bash\ngit clone https://github.com/VeryInt/dsh-image-vision.git /path/to/dsh-image-vision\nnpx @deepseek-ai/dsh plugin --profile web add /path/to/dsh-image-vision\n```\n\n> Replace `<profile>` with whichever profile you use (`web`, `headless`, ...).\n> If pnpm blocks a git dependency's build/prepare script, allowlist the exact\n> key it prints under `allowBuilds` in `<profile>/pnpm-workspace.yaml`, then\n> re-run.\n\nRestart Harness after installing. The plugin then appears under\n**Settings → Plugins**.\n\n---\n\n## Configuration\n\nImage recognition needs a **vision model provider**. Add an OpenAI-compatible\nvision endpoint in the DSH Models page (or `~/.dsh/settings.yaml`), and — this\nis the part the Models page does not show — declare `input: [text, image]` on\nthe model entry.\n\nExample `settings.yaml`:\n\n```yaml\nllm-pi-ai:\n  providers:\n    modelscope:\n      displayName: ModelScope\n      apiKeyEnv: MODELSCOPE_API_KEY\n      api: openai-completions\n      baseURL: https://api-inference.modelscope.cn/v1\n      models:\n        - id: Qwen/Qwen3-VL-8B-Instruct\n          name: Qwen3-VL-8B\n          input: [ text, image ]\n    siliconflow:\n      displayName: 硅基流动\n      apiKeyEnv: SILICONFLOW_API_KEY\n      api: openai-completions\n      baseURL: https://api.siliconflow.cn/v1\n      models:\n        - id: Qwen/Qwen3-VL-32B-Instruct\n          name: Qwen3-VL-32B-Instruct\n          input: [ text, image ]\n```\n\nThen provide the API key in `~/.credentials.yaml` or as an environment\nvariable:\n\n```bash\n# ModelScope community access: generate at https://modelscope.cn\nMODELSCOPE_API_KEY=ms-xxxxxx\n# SiliconFlow: generate at https://cloud.siliconflow.cn\nSILICONFLOW_API_KEY=sk-xxxxxx\n```\n\n> **Use a vision model (VL suffix).** Text-only models such as\n> `Qwen/Qwen3.5-27B` return empty results even when declared image-capable.\n\n### Plugin vision route\n\nThe plugin's `cordis.patch.yml` carries two relevant fields:\n\n```yaml\n- insert:\n    - id: dsh-image-vision\n      name: dsh-image-vision\n      config:\n        provider: siliconflow      # vision provider route (empty = auto-discover)\n        model: Qwen/Qwen3-VL-32B-Instruct   # vision model id (empty = auto-discover)\n        # prompt: ...\n        # maxImagesPerMessage: 4\n        # feishuImages: true\n        # maxFeishuImages: 5\n```\n\nRules:\n\n- **Both `provider` and `model` set**: used as-is (highest priority).\n- **Both empty**: scan every configured provider and pick the first model\n  declaring `input: [text, image]` (this is the common case).\n- Changing the model = update these two fields **and** make sure the model\n  declares `input: [text, image]` in `settings.yaml`.\n\n---\n\n## Verification\n\nAfter a restart:\n\n1. **Paste an image in chat** — the main model should describe its content\n   (rendered as `[图片内容] …`).\n2. **Read a Feishu/Lark doc with images** — tool output gains\n   `[飞书图片 <token>] …` descriptions.\n3. **`describe_image` tool** — ask the model to describe a local image path.\n\nOn a transient vision failure the reply still comes back with a\n`[图片内容识别失败：…]` / `[飞书图片 … 识别失败：…]` placeholder rather than\nfailing the whole turn.\n\n---\n\n## Options\n\n| Field | Default | Description |\n| --- | --- | --- |\n| `provider` | empty | Vision provider route; empty = auto-discover |\n| `model` | empty | Vision model id; empty = auto-discover |\n| `prompt` | (full description) | Instruction sent to the vision model |\n| `maxImagesPerMessage` | 4 | Max images bridged per message; beyond throws |\n| `feishuImages` | true | Auto-describe Feishu `<image token>` |\n| `maxFeishuImages` | 5 | Max Feishu images per tool result |\n\n---\n\n## How this differs from oil-oil/dsh-vision\n\nWe looked at the community plugin [oil-oil/dsh-vision](https://github.com/oil-oil/dsh-vision)\nbefore writing this one. Key differences:\n\n| | **oil-oil/dsh-vision** | **dsh-image-vision** |\n|---|---|---|\n| Mechanism | Replaces the official `deepseek-official` **adapter** with a `VisionBridgeAdapter`; installer disables the built-in `llm-deepseek` | Wraps only `llm.resolveModelInfo` and uses the official `agent/pre-step` waterfall — no adapter replacement, no built-in plugin disabled |\n| Works with | Models routed through `deepseek-official` | Any pure-text route (pi-ai `deepseek`, etc.) because it hooks the `llm` service, not a specific route |\n| Vision backends | Bundles several (zenmux / Bailian / see config / local OCR) | Reuses your `settings.yaml` / Models vision providers (input: [text, image]) |\n| Settings UI | Ships a \"Vision Recognition\" card | None — config lives in the plugin `cordis.patch.yml` |\n| Packaging | TypeScript + tsdown build, many peer deps | Plain JS ESM, minimal peers, no build step |\n\nIn short: oil-oil *replaces the DeepSeek adapter* (so it only affects\n`deepseek-official` and requires disabling the built-in plugin); this plugin\n*only wraps a llm capability lookup and uses the official pre-step* — it works\nfor any text-only main model route and makes no destructive changes, which fits\n\"everything is a plugin\" more literally.\n\n---\n\n## License\n\n[MIT](./LICENSE)\n"
+    },
+    {
+      "full_name": "linhoulong123/dsh-client-ui-code-diffs",
+      "html_url": "https://github.com/linhoulong123/dsh-client-ui-code-diffs",
+      "description": "",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-17T17:52:34Z",
+      "topics": [
+        "deepseek-harness",
+        "diff",
+        "dsh",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "终端/TUI"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "diff",
+        "dsh",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-client-ui-code-diffs\n\n**增强 diff 卡片**：替换 DeepSeek Harness 对话中 `edit` / `write` 工具卡片为**整行红绿背景**的内联 diff 视图，每次文件修改完成后就地显示在消息流中。\n\n![效果](https://img.shields.io/badge/dsh-plugin-58a6ff) ![License](https://img.shields.io/badge/license-MIT-blue.svg)\n\n## 功能\n\n- **整行红绿 diff**：新增行绿色背景、删除行红色背景（跟随主题色变量）\n- **字符级高亮**：同一行内的变化片段高亮标记\n- **语法着色**：Kotlin / Java / TypeScript / JavaScript / Python / JSON / XML / CSS 关键词与字符串着色\n- **行号与统计**：行号、+/- 行数统计（头部徽章）\n- **状态标签**：执行中 / 失败 / 打开文件\n- **大 diff 截断**：超过 600 行自动省略中间内容\n- **优先级遮蔽**：以更低优先级注册，自动替换内置 edit/write 卡片\n\n## 安装\n\n```sh\ndsh plugin --profile web add <npm-or-github-spec>\n```\n\n安装后重启 `dsh web` 生效。纯客户端插件，无服务端逻辑。\n\n## 使用\n\n对话中模型执行 `edit` / `write` 工具后，消息流中的工具卡片自动以整行红绿 diff 显示（新增/修改/删除一目了然）。\n\n## 兼容性\n\n- DeepSeek Harness `0.1.0-rc.6`\n- Node >= 20\n- 依赖：react（运行时由宿主提供）\n\n## License\n\nMIT"
+    },
+    {
+      "full_name": "dsh-io/dsh-dev",
+      "html_url": "https://github.com/dsh-io/dsh-dev",
+      "description": "Toolchain CLI for DeepSeek Harness (dsh) plugin authors: scaffold, dev, check and publish plugins with hot reload",
+      "stars": 0,
+      "language": "TypeScript",
+      "pushed_at": "2026-08-17T13:36:24Z",
+      "topics": [
+        "agent-tools",
+        "cli",
+        "deepseek-harness",
+        "dsh",
+        "dsh-plugin",
+        "npm",
+        "plugin-development",
+        "typescript"
+      ],
+      "categories": [
+        "终端/TUI"
+      ],
+      "tags": [
+        "agent-tools",
+        "cli",
+        "deepseek-harness",
+        "dsh",
+        "dsh-plugin",
+        "npm",
+        "plugin-development",
+        "typescript"
+      ],
+      "readme_text": "# dsh-dev\n\nToolchain CLI for [DeepSeek Harness](https://deepseek.com/harness) (dsh) plugin authors.\n\n## Install\n\n```bash\nnpx @dsh-io/dsh-dev --help\n```\n\n## Commands\n\n| Command | Purpose |\n|---|---|\n| `dsh-dev scaffold <name>` | Generate a new plugin project (tool template) |\n| `dsh-dev dev` | Run the project under dsh web with file watching |\n| `dsh-dev check` | Validate manifest, YAML and TypeScript build; `--smoke` boots dsh with the plugin mounted |\n| `dsh-dev publish` | Run the publish checklist and preview `npm publish --dry-run` |\n\n## License\n\nMIT\n"
+    },
+    {
+      "full_name": "dmsobtl/star-harness",
+      "html_url": "https://github.com/dmsobtl/star-harness",
+      "description": "一套可复用在各种游戏上的 NPC Agent 框架，基于 DeepSeek Harness（dsh）构建。",
+      "stars": 0,
+      "language": "TypeScript",
+      "pushed_at": "2026-08-17T15:05:39Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "娱乐/广告"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "agent"
+      ],
+      "readme_text": "# star-harness\n\n一套**可复用在各种游戏上**的 NPC Agent 框架，基于 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（`dsh`）构建。\n\n内置一个可玩的垂直切片：**星际大航海**——你走进欧米茄空间站的酒吧，和一个退役走私犯谈生意。他会记得你上次干了什么，会因为你砍价而不爽，钱不够时会拒绝成交并给你替代方案。\n\n核心是一句话：**agent 做大脑，tool 做手脚，SQLite 做记忆，游戏引擎做皮囊。**\n\n> 想了解这套设计背后的完整推演、以及我们对未来 AI 游戏的判断，见 [docs/design.md](docs/design.md)。\n\n> **框架 vs 游戏是硬边界。** `src/framework/` 不含任何游戏或客户端知识——没有货币名、没有地点、没有工具名、没有 `three.js`。它只依赖一个 `GameWorld` 接口。这条边界由 `tests/layering.spec.ts` 机械守护：往框架里写一个 `player-1` 或 `npc_speak`，测试就红。换个游戏 = 换 `src/game/`，框架一行不动。\n\n```\n┌──────────────────────────────────────────┐\n│  游戏引擎  Unity / Godot / Unreal / three.js │\n│  渲染、物理、输入、UI                        │\n└───────────────┬──────────────────────────┘\n                │  WebSocket + 扁平 JSON 帧（引擎永远看不到 dsh 类型）\n┌───────────────▼──────────────────────────┐\n│  src/framework/   框架层（无游戏知识）        │\n│  遭遇生命周期、prompt 组装、帧协议、动作机制    │\n│  只依赖 ↓ GameWorld 接口                     │\n├──────────────────────────────────────────┤\n│  src/game/        游戏层（换游戏只改这里）     │\n│  SQLite 状态、具体动作、NPC 人设、种子数据      │\n└───────────────┬──────────────────────────┘\n                │  tool call（带校验 + 事务）\n┌───────────────▼──────────────────────────┐\n│  状态层  SQLite                           │\n│  角色、市场、货舱、好感、记忆、任务、审计      │\n└──────────────────────────────────────────┘\n```\n\n依赖方向单向：**游戏 → 框架 → dsh**，从不反向。`src/plugin.ts` 是唯一把三者拼在一起的地方（composition root）。\n\n---\n\n## 1. 五分钟跑起来（不需要 API key）\n\n```sh\ncd star-harness\nnpm install\nnpm run seed        # 初始化世界数据库\nnpm run start:mock  # 用 dsh 自带的 mock LLM 启动，无需任何 key\n```\n\n打开 <http://127.0.0.1:3099>，点击吧台前那个蓝色人形。\n\n`start:mock` 用的是 dsh 的 `dsh-llm-mock-server`——一个可编排的 OpenAI 兼容服务器。**真实的适配器、真实的 agent loop、真实的工具管线全都在跑**，只有 provider 那一段线是假的。所以它验证的是架构，不是玩具。\n\n> `world.db` 作为免 seed 演示库被有意提交，因此克隆后直接 `start:mock` 也能跑。`npm run seed` 会从 `src/game/world/seed.ts` 重建一份全新世界。\n\n### 换成真实模型\n\n```sh\necho \"DEEPSEEK_API_KEY=sk-你的key\" > .env\nnpm start\n```\n\n`.env` 已在 `.gitignore` 里。dsh 通过 `dsh-credentials-local` 在每次请求时解析凭据，key 不会写进任何配置文件。\n\n### 两种拓扑\n\n| 命令 | 配置 | 用于 |\n|---|---|---|\n| `npm start` / `npm run start:mock` | `game.cordis.yml`，`webRoot: './web'` | 浏览器客户端，一个进程跑全栈 |\n| `npm run start:headless` | `headless.cordis.yml`，`webRoot: ''` | **不挂任何客户端**，Unity/Godot/Unreal 通过 `/gh` 接入 |\n\n两者跑的是同一套框架与同一套帧协议；headless 拓扑里 `GET /` 直接 404（没有客户端），但 NPC 对话照常。这就是“框架不绑 three.js”的意思。\n\n---\n\n## 2. 你会看到什么\n\n| 现象 | 背后的机制 |\n|---|---|\n| 对话逐字出现 | NPC 的台词是 `npc_speak` 工具的**第一个参数**，框架从还在传输的 tool 参数 JSON 里增量抽出它 |\n| 玩家选项是按钮，不是猜的 | 选项是工具参数里的结构化数组，不靠解析散文 |\n| 钱不够时 NPC 会说\"你只有 12000，付不出 90000\" | `canAfford` guard 拒绝并返回 `hint`，模型读了 hint 才改口 |\n| NPC 记得上次的事 | 记忆存在 SQLite 的 `memories` 表，每轮由 context provider 重新注入 |\n| 走开再回来，NPC 还认识你 | **会话是一次性的，记忆不是**（见下文\"遭遇域\"） |\n| 点\"推进 5 天\"，世界事件变了 | 冷路径：游戏时钟推进，事件进入 NPC 之后的场景摘要 |\n\n---\n\n## 3. 架构的三个关键决定\n\n这三个决定是整个框架和\"直接调 LLM\"的分界线，改之前请先读懂。\n\n### 3.1 遭遇域会话（encounter-scoped session）\n\n一次\"玩家走近 NPC → 聊几轮 → 走开\"就是一个 agent 的完整生命周期：\n\n```\n玩家靠近  → ctx.agents.create({ setup })   建立本次遭遇的 agent\n多轮对话  → agent.followup(...)             history 天然连续\n玩家离开  → handle.dispose()                 会话日志丢弃\n下次再遇  → context provider 从 SQLite 注入记忆摘要\n```\n\n**为什么**：NPC 的连续性靠 `memories` 表，不靠会话日志。于是会话可以随时扔掉——500 个 NPC 不需要 500 个常驻会话，不需要上下文压缩，上下文窗口天然可控。\n\n代码在 [`src/framework/encounter.ts`](src/framework/encounter.ts)。\n\n### 3.2 人设进 section，场景进 context\n\n```ts\n// 静态人设 → system prompt section，请求前缀稳定，KV cache 可复用\nagentCtx.systemPrompt.section({ name: 'npc:persona', order: 0, text: persona })\n\n// 易变场景 → dynamic context，每次组装重新求值，落成 user-role 快照\nagentCtx.systemPrompt.context({ name: 'npc:scene', order: 0,\n  text: () => renderScene(world.sceneSummary(npcId, playerId)) })\n```\n\n**为什么**：变化的世界状态如果塞进 system prompt，每次都会击穿 provider 的前缀缓存。分开放，成本差一个量级。\n\n### 3.3 业务拒绝是\"成功的返回值\"，不是异常\n\ndsh 把 `throw` 变成给模型看的一句 `Error: <消息>`，信息量太低，模型会反复重试同一件不可能的事。所以：\n\n```ts\n// ✅ 库存不足 → 正常返回，带原因、可行替代、事实\nreturn { ok: false, reason: 'insufficient_stock', have: 3, want: 10,\n         hint: '只有 3 单位钛矿，最多按 3 成交。' }\n\n// ❌ throw new Error('库存不足')   → 模型一脸茫然继续试\n```\n\n`throw` 只留给基础设施故障（数据库挂了）。框架在 [`src/framework/actions.ts`](src/framework/actions.ts) 里自动完成这个转换。\n\n---\n\n## 4. 教程：改成你自己的游戏\n\n游戏作者只碰三个地方：**世界 schema、动作定义、NPC 人设**。一行 dsh API 都不用写。\n\n### 4.1 加一个动作\n\n动作 = 声明式的 `defineGameAction`。框架自动帮你做掉：参数校验、guard 拒绝转结构化返回、事务包装、审计落库、UI 卡片投影、注册进 dsh。\n\n在 [`src/game/actions/registry.ts`](src/game/actions/registry.ts) 里加（用框架的 `createActionFactory` 绑定后得到的 `defineAction`）：\n\n```ts\nctx.tools.register(defineGameAction(world, {\n  name: 'npc_give_intel',\n  description: '把一条航线情报卖给玩家。好感低于 20 时你不会开这个口。',\n  parameters: {\n    npcId:    { type: 'string', required: true },\n    playerId: { type: 'string', required: true },\n    route:    { type: 'string', required: true, description: '航线描述' },\n    price:    { type: 'integer', required: true },\n  },\n  actorParam: 'npcId',              // 框架据此自动加\"死人不能行动\"守卫\n  guards: [\n    inRange('price', 0, 100_000),\n    canAfford('playerId', args => args.price),\n    // 自己的领域规则，拒绝时要告诉模型\"怎样才行\"\n    (world, args) => {\n      const score = world.attitude(args.npcId, args.playerId)\n      return score < 20\n        ? { reason: 'attitude_too_low',\n            hint: `好感只有 ${score}，你不会把航线告诉他。先建立信任。`,\n            facts: { score } }\n        : undefined\n    },\n  ],\n  // 拿到的是 SQLite 事务句柄：throw 会回滚全部写入\n  apply: (tx, args) => {\n    tx.addCredits(args.playerId, -args.price)\n    tx.addCredits(args.npcId, args.price)\n    tx.remember(args.npcId, args.playerId, `卖了他一条航线：${args.route}`)\n    return { route: args.route, price: args.price }\n  },\n  narrate: (_args, effect) => `情报已出手，收 ${String(effect.price)} 信用点`,\n}))\n```\n\n现成的可复用 guard：`sameLocation` / `hasStock` / `canAfford` / `inRange`，都在 `define.ts` 里，读起来就是游戏规则书。\n\n**写 `description` 的三条经验**：说清什么情况会被拒绝；不要写\"请调用此工具\"这类元指令；参数的 `description` 是模型唯一的字段说明，别省。\n\n### 4.2 加一个 NPC\n\nNPC 就是 `actors` 表里 `kind='npc'` 的一行。在 [`src/game/world/seed.ts`](src/game/world/seed.ts) 加：\n\n```ts\nactor.run('npc-vex', '维克斯', 'npc', 'pirate', 'pirate-bay', 1, 15000, [\n  '你是维克斯，海盗湾的中间人。你说话绕圈子，从不直接承诺。',\n  '你只认钱，但你怕惹上军方。',\n].join('\\n'))\n\ndb.prepare(`INSERT INTO attitudes (actor_id, target_id, score) VALUES (?,?,?)`)\n  .run('npc-vex', 'player-1', -30)   // 初始敌意\n```\n\n`archetype`（这里是 `pirate`）用于未来选择 dsh 的 **agent preset**——同一原型的 NPC 共享一次工具/提示词注册，是规模化到几百个 NPC 的关键。当前切片还没接 preset，见\"下一步\"。\n\n### 4.3 调 NPC 的行为纪律\n\n人设归数据库，**行为协议**归代码：所有 NPC 共享的硬规矩在 [`src/game/persona.ts`](src/game/persona.ts) 的 `NPC_PROTOCOL`，比如\"玩家只能通过 `npc_speak` 听到你\"、\"工具返回 `ok:false` 时读 hint 再决定\"、\"你不知道自己是 AI\"。\n\n场景摘要的内容和详略也在这个文件（`renderScene`）。对话动作叫什么、参数字段怎么命名，由同文件的 `SPEECH` 契约声明，框架据此流式吐字和读取选项。**它每轮都会重发，所以每加一行都是持续成本**。\n\n### 4.4 改世界 schema\n\n改 [`src/game/world/schema.sql`](src/game/world/schema.sql)，然后在 [`src/game/world/store.ts`](src/game/world/store.ts) 加读方法和 `WorldTx` 写方法。这个 `World` 类实现框架的 `GameWorld` + `ActionHost` 两个接口——框架只认这两个接口，不认具体的表。\n\n**注意**：这里故意**没有**用 dsh 的 `storage-domain`。原因是它会把整个 domain 全量读进内存，而且明确不支持跨表事务——但一笔交易要同时改 `actors.credits` 和两行 `cargo`，必须原子。所以状态层自己用 `node:sqlite`（零原生依赖，和 dsh 自己的 `storage-sqlite` 同一个选择）。\n\n---\n\n## 5. 帧协议\n\n引擎侧唯一需要知道的东西。单一事实源：[`src/framework/protocol.ts`](src/framework/protocol.ts)。\n\n**上行**（引擎 → harness）：\n\n| 帧 | 字段 | 含义 |\n|---|---|---|\n| `encounter.open` | `id, npcId, playerId` | 玩家走近 NPC，建立遭遇 |\n| `encounter.say` | `id, text?` 或 `optionId?` | 玩家说话，或选了某个选项 |\n| `encounter.close` | `id` | 玩家走开，销毁 agent |\n| `world.tick` | `days` | 游戏时钟推进（冷路径） |\n\n**下行**（harness → 引擎）：\n\n| 帧 | 字段 | 引擎该做什么 |\n|---|---|---|\n| `encounter.opened` | `id, npcName, attitude` | 立刻播\"注意到你\"的待机动画，**别等模型** |\n| `say.delta` | `id, text` | 追加到对话框（打字机） |\n| `say.end` | `id, mood` | 收尾，按 mood 切表情/配音 |\n| `options` | `id, items[]` | 渲染玩家选项按钮 |\n| `action` | `id, name, ok, summary` | **仅表现**：播动画、弹任务日志、刷 HUD |\n| `encounter.idle` | `id` | 重新开放玩家输入 |\n| `error` | `id, code, message` | 提示或忽略 |\n| `world.event` | `locationId, headline` | HUD 新闻条 |\n\n> **`action` 帧只用来\"表现\"。** 状态变更已经在 harness 侧的事务里落盘了，引擎不要重算——否则就出现两个 writer，会拿到看不见的脏读。\n\n---\n\n## 6. 接入游戏引擎\n\n选 WebSocket 是因为四个引擎**全部零第三方依赖**就能连。协议一套，每个引擎一个瘦客户端。\n\n### Godot（最省事，推荐先接这个）\n\n`WebSocketPeer` 内置，每帧 poll，天然主线程安全：\n\n```gdscript\nextends Node\n\nvar ws := WebSocketPeer.new()\nvar encounter_id := \"\"\n\nfunc _ready() -> void:\n    ws.connect_to_url(\"ws://127.0.0.1:3099/gh\")\n\nfunc _process(_delta: float) -> void:\n    ws.poll()\n    while ws.get_a"
+    },
+    {
+      "full_name": "p109381073/AIpeiwu",
+      "html_url": "https://github.com/p109381073/AIpeiwu",
+      "description": "危废焚烧落地专用",
+      "stars": 0,
+      "language": "Python",
+      "pushed_at": "2026-08-20T10:51:24Z",
+      "topics": [
+        "ai-agent",
+        "dsh-plugin",
+        "dsh-skill",
+        "hazardous-waste"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "ai-agent",
+        "dsh-plugin",
+        "dsh-skill",
+        "hazardous-waste",
+        "agent"
+      ],
+      "readme_text": "# 危废焚烧智能配伍系统（DSH 插件版）\n\n> 给 DeepSeek Harness（DSH）安装的智能配伍插件：输入你的库存快照 + 你指定的目标值，\n> 自动配出**一张**符合要求的配伍单（Excel）。\n\n## 这是什么\n\n危废焚烧处置企业的配伍决策工具，以 **DSH Agent Preset 插件**形式交付。\n在 DSH 中新建会话选择「危废配伍系统」，AI 会自动完成：\n\n```\n① 识别你的库存表（Excel/CSV，各家格式不同都行）\n② 读取你指定的目标值（重量 + 任意指标 + 容差）\n③ 将库存均分 → 选最接近目标的一组 → 批次置换微调\n④ 输出一张配伍单 Excel（逐项达标标注）\n```\n\n**达标规则**：每项指定指标（含重量）与**你指定的目标值**偏差 ≤ 容差（默认 5%）——\n一切以你的要求为准，系统不预设任何标准。\n\n## 功能特性\n\n- 🧩 **DSH 插件化**：安装后 AI 自动\"会\"用，无需学习\n- 📋 **任意格式库存**：自动识别表头/列名/单位（kg 或吨原样保留）、Cl+F 合成总卤素\n- 🎯 **目标值完全用户指定**：任意指标点值 + 目标重量 + 容差\n- 🔄 **缺指标通用处理**：库存缺某项（如 pH）→ 明示\"缺数据\"，该项不参与判定，不崩溃\n- ➕ **动态新指标**：库存里有灰分/挥发分等，指定目标即自动纳入\n- 🏷️ **条码以你的库存为准**：不做内置拦截，可放本企业许可清单启用合规提示\n- ⚖️ **算法内部统一 kg**（颗粒度更好）\n- 🚀 **自动探测 Python 环境**：跳过依赖不全的环境，无需配置 PATH\n- 🔒 **数据安全**：插件无任何上传通道，数据只存在你自己电脑上\n\n## 安装\n\n1. 安装 [DeepSeek Harness](https://github.com/deepseek-ai/dsh) 并配置模型\n2. 把本仓库 `peiwu` 文件夹（或 Release 里的 zip）放到你的 DSH 用户目录：\n\n   ```\n   C:\\Users\\<你的用户名>\\.dsh\\.agent-presets\\peiwu\\\n   ```\n\n   （`.agent-presets` 目录不存在就先新建）\n3. 重启 DSH，新建会话，选择 **「危废配伍系统」**\n\n## 使用（对着 AI 说即可）\n\n```\n帮我配一张配伍单：\n文件：库存单.xlsx\n目标：重量 600 吨，热值 2500，总卤素 9，含水率 32，pH 8.5，硫 4.5，氟 0.15，容差 5%\n```\n\n## 环境要求\n\n- Windows + DeepSeek Harness\n- **Python 3** + 依赖：`pip install pandas numpy matplotlib openpyxl`\n  （系统自带启动器会自动探测可用的 Python，无需配置 PATH）\n\n## 目录结构\n\n```\npeiwu/\n├── agent.cordis.yml      # 插件组合（AI 说明书）\n├── preset.yml            # 插件名称/描述\n├── 安装说明.md            # 安装与使用说明（含数据安全声明）\n└── 系统/                  # 配伍系统\n    ├── 后台代码/          # 配伍单张.py、算法核心.py、运行配伍.bat 等\n    ├── 数据文件/          # 许可条码示例清单\n    ├── 库存标准化.py      # 任意格式库存 → 标准格式\n    ├── 库存模板.csv       # 标准库存格式模板\n    └── 目标值.json        # 配伍目标值（用户可自定义）\n```\n\n## 数据安全声明\n\n- 本插件只是本地配置文件 + 系统文件，**没有任何上传通道**\n- 你的库存、目标值、配伍单全部保存在**你自己电脑**上\n- 插件作者无法获取任何使用者的数据\n"
     }
   ]
 }

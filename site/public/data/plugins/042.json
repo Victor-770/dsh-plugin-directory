@@ -1,107 +1,7 @@
 {
-  "generatedAt": "2026-10-22T11:25:54.202Z",
+  "generatedAt": "2026-10-22T16:24:27.170Z",
   "count": 400,
   "plugins": [
-    {
-      "full_name": "uckkk/dsh-hand-care",
-      "html_url": "https://github.com/uckkk/dsh-hand-care",
-      "description": "手部护理",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-20T19:04:25Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-hand-care · 手部护理\n\n## 工具\n\n- `hand_care`：手部护理：按参数返回美甲护理方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-hand-care\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-hand-care\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
-    },
-    {
-      "full_name": "uckkk/dsh-wash-machine",
-      "html_url": "https://github.com/uckkk/dsh-wash-machine",
-      "description": "洗地机",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-20T20:24:13Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-wash-machine · 洗地机\n\n## 工具\n\n- `wash_machine`：洗地机：按参数返回家庭清洁电器方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-wash-machine\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-wash-machine\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
-    },
-    {
-      "full_name": "uckkk/dsh-curtain-calc",
-      "html_url": "https://github.com/uckkk/dsh-curtain-calc",
-      "description": "窗帘用量计算",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-20T23:33:28Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-curtain-calc · 窗帘用量计算\n\n## 工具\n\n- `curtain_calc`：窗帘用量计算：按参数精确计算，返回详细结果（行业经验估算）。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-curtain-calc\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-curtain-calc\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
-    },
-    {
-      "full_name": "uckkk/dsh-antibiotic",
-      "html_url": "https://github.com/uckkk/dsh-antibiotic",
-      "description": "抗生素使用",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-20T20:34:33Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-antibiotic · 抗生素使用\n\n## 工具\n\n- `antibiotic`：抗生素使用：按参数精确计算，返回用药建议（用药请遵医嘱）。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-antibiotic\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-antibiotic\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
-    },
-    {
-      "full_name": "uckkk/dsh-asset-alloc",
-      "html_url": "https://github.com/uckkk/dsh-asset-alloc",
-      "description": "资产配置",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-20T19:45:43Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-asset-alloc · 资产配置\n\n## 工具\n\n- `asset_alloc`：资产配置：按参数返回家庭财务规划方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-asset-alloc\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-asset-alloc\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
-    },
     {
       "full_name": "uckkk/dsh-barbados",
       "html_url": "https://github.com/uckkk/dsh-barbados",
@@ -8145,6 +8045,106 @@
         "dsh-plugin"
       ],
       "readme_text": "# dsh-bandwidth · 带宽需求估算\n\n## 工具\n\n- `bandwidth`：带宽需求估算：按参数精确计算，返回详细结果。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-bandwidth\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-bandwidth\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-water-resist",
+      "html_url": "https://github.com/uckkk/dsh-water-resist",
+      "description": "防水等级判断",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T18:37:15Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-water-resist · 防水等级判断\n\n## 工具\n\n- `water_resist`：防水等级判断：按参数返回手表珠宝保养方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-water-resist\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-water-resist\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-sub-audit",
+      "html_url": "https://github.com/uckkk/dsh-sub-audit",
+      "description": "订阅审计",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T17:50:50Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-sub-audit · 订阅审计\n\n## 工具\n\n- `sub_audit`：订阅审计：按参数精确计算，返回详细结果。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-sub-audit\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-sub-audit\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-season-health",
+      "html_url": "https://github.com/uckkk/dsh-season-health",
+      "description": "四季养生",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T18:52:13Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-season-health · 四季养生\n\n## 工具\n\n- `season_health`：四季养生：按参数返回中医养生方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-season-health\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-season-health\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-pour-over",
+      "html_url": "https://github.com/uckkk/dsh-pour-over",
+      "description": "手冲参数",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T18:43:09Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-pour-over · 手冲参数\n\n## 工具\n\n- `pour_over`：手冲参数：按参数返回咖啡冲煮方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-pour-over\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-pour-over\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
+    },
+    {
+      "full_name": "uckkk/dsh-anniversary",
+      "html_url": "https://github.com/uckkk/dsh-anniversary",
+      "description": "纪念日计算",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T15:41:29Z",
+      "topics": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-anniversary · 纪念日计算\n\n## 工具\n\n- `anniversary`：纪念日计算：按参数精确计算，返回详细结果。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-anniversary\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-anniversary\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
     }
   ]
 }

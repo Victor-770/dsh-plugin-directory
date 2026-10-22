@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-22T11:25:54.202Z",
+  "generatedAt": "2026-10-22T16:24:27.170Z",
   "count": 400,
   "plugins": [
     {
@@ -2536,40 +2536,6 @@
       "readme_text": "<p align=\"center\">\n  <img src=\"assets/brand/jevdo-icon.png\" width=\"112\" alt=\"JevDo\">\n</p>\n\n<h1 align=\"center\">JevDo</h1>\n\n<p align=\"center\"><strong>The model is a tool now.</strong></p>\n<p align=\"center\">\n  以 Jev 为调度核心的新一代 harness 架构。<br>\n  Action 沉淀经验 · Jev 决定下一步 · 大模型只是选项之一\n</p>\n<p align=\"center\"><em>Just Jev it.</em></p>\n\n<p align=\"center\">\n  <a href=\"LICENSE\"><img src=\"https://img.shields.io/badge/license-MIT-d8c9ed?style=flat-square&amp;labelColor=eee8f6\" alt=\"MIT license\"></a>\n  <a href=\"docs/REFERENCE.md\"><img src=\"https://img.shields.io/badge/DSH-0.2.0--rc.1-c8cdf2?style=flat-square&amp;labelColor=e9eafb\" alt=\"DSH 0.2.0-rc.1\"></a>\n  <a href=\"package.json\"><img src=\"https://img.shields.io/badge/Node.js-24.14%2B-c6e3f3?style=flat-square&amp;labelColor=e7f1f8\" alt=\"Node.js 24.14+\"></a>\n</p>\n\n<p align=\"center\">\n  <b>简体中文</b> · <a href=\"README.en.md\">English</a>\n</p>\n<p align=\"center\">\n  <a href=\"#接力长什么样\">使用场景</a> · <a href=\"#快速开始\">快速开始</a> · <a href=\"#一轮是怎么走的\">工作方式</a> · <a href=\"#实测\">实验结果</a> · <a href=\"CONTRIBUTING.md\">贡献指南</a>\n</p>\n\n**会做的事，为什么还要再想一遍？** 第十次打开同一个项目，它还在读配置、找脚本、拼命令，把上周已经走通的路再想一遍。JevDo 在调用大模型之前，先让 **Jev** 判断：这件事，是不是已经会了？已有操作能处理，就直接调度执行；遇到新问题，再交给主模型。主模型把值得复用的做法保存为 **Action**，经过验证，留给下一次会话。\n\n## 接力长什么样\n\n三个使用示例，假设项目已保存并验证了对应的 Action。\n\n**① 日常修 bug**\n\n“启动后台，修掉订单列表的分页 bug，跑完单测和构建再交给我。”\n\n```text\nJev     启动依赖与服务，检查就绪           [start-admin-backend]\n  ↓\n主模型  读 issue，定位并修复分页逻辑\n  ↓\nJev     跑单测、构建，核对退出码与产物     [test-and-build]\n  ↓\n主模型  说明修改与验证结果\n```\n\n**② CI 红了**\n\n“CI 的 lint 又挂了，本地复现修一下，确认能过。”\n\n```text\nJev     准备依赖，按 CI 配置复现 lint     [repro-ci-lint]\n  ↓\n主模型  根据报错修改代码\n  ↓\nJev     重跑 lint，再执行提交前检查       [verify-before-push]\n  ↓\n主模型  解释改动，给出 commit message\n```\n\n**③ 准备发版**\n\n“走一遍发版流程：版本号、changelog、tag、构建产物。”\n\n```text\nJev     跑全量回归，检查发版条件          [regression-gate]\n  ↓\n主模型  读合并记录，更新版本号与 CHANGELOG\n  ↓\nJev     按项目脚本打 tag、构建、校验产物  [cut-release]\n  ↓\n主模型  整理 release notes\n```\n\n**Jev 调度重复操作，主模型处理新问题。** 启动 → 代码修改 → 测试构建的完整交接已在[实验中跑通](reports/developer-workflows-v3/ANALYSIS.md)。如果请求只是“启动项目”或“跑一遍回归”，已有 Action 能覆盖全部工作且满足完成条件时，Jev 可以独立完成，**全程零次主模型调用**。\n\n## 一轮是怎么走的\n\n- **Jev**：决定下一步。读取与主模型相同的已组装会话和工具历史，选择 Action、请求主模型、澄清或结束本次请求。\n- **Action**：留下怎么做。命令或脚本，连同用途、项目绑定和验收方式，跨会话保留；简单操作直接保存命令，复杂行为更适合脚本。\n- **主模型**：解决新问题，积累新操作。写代码、做推理、处理异常，也在任务中主动维护 Action 库。\n\n> 基于 DeepSeek Harness，早期版本优先支持 DSH 0.2.0-rc.1 的 headless 使用。包名和工具前缀保留 `jevaction`。主模型参与后，由它完成最终答复。\n\n```mermaid\nflowchart LR\n    U[\"任务与会话历史\"] --> J{\"Jev\"}\n    J -->|已有 Action| A[\"Harness 执行与验收\"]\n    J -->|新问题 / 异常| M[\"主模型\"]\n    A --> H[\"结果回到共同历史\"]\n    M -->|工具调用与结果| H\n    H --> J\n    M -.->|保存并验证| K[(\"Action 库\")]\n    K -.->|候选操作| J\n    classDef judge fill:#ede8ff,stroke:#9b8deb,color:#302653\n    classDef model fill:#eef3ff,stroke:#5171ae,color:#162b50\n    class J judge\n    class M model\n```\n\nJev 选择，代码执行。它只能选择当前可用的操作和参数，实际命令仍经过宿主工具权限与验收。实现发生变化、执行失败，或没有合适的操作时，工作交回主模型。\n\n## Action 怎么留下来\n\n第一次，主模型读取项目，找到可复用的命令或脚本，通过 `jevaction_create` 保存用途、项目绑定和验收方式，再用 `jevaction_validate` 验证并激活。它会主动考虑保存稳定的开发操作，也遵守用户“不保存”的要求。\n\n下一次，Jev 根据当前请求选择 Action 和项目，Harness 补全已保存的执行参数，运行并验收。操作成功不等于整个任务结束：还需要分析、修改或解释，就继续调用主模型。\n\n同一个构建 Action 可以绑定不同项目的命令。实现脚本变化后，旧版本需要复核；测试针对的源码、报表读取的数据变化，则由验收检查当前结果。完整规则见 [Action 规格](docs/ACTION_SPEC.md) 与 [使用场景](docs/ACTION_USAGE.md)。\n\n## 实测\n\n在三个常见开发场景——**项目启动、项目测试与构建、本地发布**——中，对比 JevDo 与原生 DSH Loop。所有组获得相同现成脚本，原实验 Action 库从空开始；原生 DSH Loop 每项测一次，JevDo 每轮新会话、相同输入并保留操作库。\n\n| 每组 3 个任务 | 原生 Loop | JevDo 第 1 轮（积累） | 第 2 轮 | 第 3 轮 |\n|---|---:|---:|---:|---:|\n| 验收成功 | 3/3 | 3/3 | **3/3** | **3/3** |\n| 主模型调用 | 24 | 22 | **0** | **0** |\n| 无需主模型的任务 | 0/3 | 0/3 | **3/3** | **3/3** |\n| Jev 调用 | 0 | 56 | 20 | 15 |\n| 平均耗时 | 10.06 s | 19.36 s | **3.61 s** | **3.17 s** |\n| 估算费用（含 Jev） | ¥0.2245 | ¥0.6065 | **¥0.0828** | **¥0.0587** |\n| 相对原生的费用降低 | — | — | **63.14%** | **73.86%** |\n\n表中为自主保存组。**后两轮均无需主模型，平均估算费用比原生同任务降低 68.50%。** 降幅仅指复用阶段；包含首次积累的三轮合计 ¥0.7480，仍比原生单轮乘三的外推参考高 11.04%。费用包含 Jev，沿用固定费率，非实际账单。\n\n这是原实验的事后三任务子集统计，没有重跑或改写原始数据；小样本一次采样，非公开基准成绩。原四任务的 31 → 8 次、约 74% 调用降幅及回滚记录保留在历史报告中。[最终三任务结果](reports/developer-workflows-v3/FINAL_RESULTS.md) · [费用拆解](reports/developer-workflows-v3/COST_BREAKDOWN.md) · [原四任务报告](reports/developer-workflows-v3/REPORT.md) · [原始轨迹](reports/developer-workflows-v3/traces)\n\n## 快速开始\n\n需要 **Node.js 24.14+**。先运行不需要 API 密钥的跨会话复用演示：\n\n```bash\ngit clone https://github.com/yinhong-zhou/jevdo.git\ncd jevdo\nnpm ci\nnpm run demo\n```\n\n接入真实 Jev 与主模型，或替换自己的 DSH 默认 Loop，见 [安装与配置](docs/REFERENCE.md#本地准备)。插件提供 Loop、Action 工具和维护提示；实际执行继续使用宿主工具。\n\n## 文档与开发\n\n[配置与实现参考](docs/REFERENCE.md) · [Action 规格](docs/ACTION_SPEC.md) · [使用场景](docs/ACTION_USAGE.md) · [反馈问题](https://github.com/yinhong-zhou/jevdo/issues)\n\n欢迎提交 Action 示例、复现用例、Loop 修复与文档改进。开发约定与上游协作方式见 [贡献指南](CONTRIBUTING.md)。\n\n```bash\nnpm run check\nnpm test\nnpm run build\n```\n\n当前可学习操作以固定命令和项目绑定为主，任意自由参数、完整 Web UI 和多 Agent 组合兼容性不在已验证范围内。核心入口见 [src/dsh/index.ts](src/dsh/index.ts)，完整实现边界见 [参考文档](docs/REFERENCE.md#第一版边界)。\n\n## 来源与协议\n\nMIT。感谢 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 的作者与贡献者提供插件与 Agent 运行底座。本项目适配了其官方 Loop 生命周期代码，原版权与来源保留在 [第三方声明](THIRD_PARTY_NOTICES.md) 和 [适配代码](src/vendor/dsh-loop)。\n"
     },
     {
-      "full_name": "kuangre123/iosdev",
-      "html_url": "https://github.com/kuangre123/iosdev",
-      "description": "ios app 开发 skill",
-      "stars": 26,
-      "language": null,
-      "pushed_at": "2026-01-09T06:03:17Z",
-      "topics": [
-        "app",
-        "apple",
-        "apple-intelligence",
-        "apple-watch",
-        "dsh-plugin",
-        "dsh-plugins",
-        "ios",
-        "mac",
-        "macos",
-        "swift"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "app",
-        "apple",
-        "apple-intelligence",
-        "apple-watch",
-        "dsh-plugin",
-        "dsh-plugins",
-        "ios",
-        "mac"
-      ],
-      "readme_text": "# iOSdev（iosdev-cn）\n\n本仓库提供通用的 iOS App 开发与上架流程技能（面向中国区），用于帮助开发者快速梳理从开发、构建、签名、测试到 App Store Connect 提交与审核的全流程。内容涵盖上架前关键清单、常见审核注意事项、隐私合规与 ATS 配置建议，以及订阅/IAP 的创建与测试。\n\n## 包含内容\n- `SKILL.md`：技能触发与输出结构（输入 `iosdev` 即可调用）\n- `references/`：按主题拆分的参考资料\n  - 构建/签名/依赖与版本号管理\n  - 上架流程与审核要点（中国区）\n  - 订阅（IAP）配置与测试\n  - 隐私、ATS 与安全合规\n- `iosdev-cn.skill`：可分发的技能包\n\n## 使用方式\n1. 将本目录复制到 `~/.codex/skills/helloagents/`\n2. 或使用 `iosdev-cn.skill` 进行分发安装\n3. 在 Codex 中输入触发词 `iosdev` 即可调用\n\n## 许可\nMIT\n"
-    },
-    {
       "full_name": "Roarpeng/GraphFlow",
       "html_url": "https://github.com/Roarpeng/GraphFlow",
       "description": "Local-first code knowledge graph and context harness for coding agents. MCP + DeepSeek Harness (dsh) plugin.",
@@ -3077,6 +3043,40 @@
         "skin"
       ],
       "readme_text": "| ![](cover/blue-maid.png) | ![](cover/orange-reading.png) |\n| --- | --- |\n\n> ~~**我看鲸小妹和克小妹也是一对苦命鸳鸯啊。**~~\n\n# Claude — DSH Web GUI 主题\n\n> ~~**Anthropic 觉得侵权可以联系我下架。**~~\n\n把 DSH Web GUI 换成 claude.ai 的样子：暖米色画布、衬线正文、珊瑚色强调。\n\n仓库里有五样东西，各装各的，互不影响：\n\n| | 是什么 |\n| --- | --- |\n| **皮肤** `claude/` | 配色、字体、圆角。就是皮肤本体 |\n| **皮肤插件** `plugins/skin/` | 装载皮肤：不装皮肤中心也能用皮肤，并自动把皮肤装到位；同时提供 **Claude-X** 设置页 |\n| **Claude 插件** `brand-plugin/` | 品牌替换：侧栏的星芒标记和字标、首页问候语、浏览器标题和图标、加载动画 |\n| **Clawd 插件** `crab-plugin/` | 宠物：输入框上沿那只可以戳的像素蟹 |\n| **字体切换插件** `plugins/font-switcher/` | 小工具：换掉皮肤用的三组字体 |\n\n### 它们之间\n\n五个各管各的，设置页不共用（皮肤和品牌外观在 **Claude-X**、蟹在 **Clawd**、字体在 **字体**）。有两条**共享**，都是同一个模式——**数据归品牌插件，UI 可以来自两个地方**：\n\n- **名字、副标题、头像**存在 `dsh-claude-brand.prefs` 里。侧栏底部的弹窗和 Claude-X 页都能改，改完两边同时更新。\n- **加载动画**（星芒 / 螃蟹 / 关闭）在同一个存储里，目前只在 Claude-X 页选。\n\n两个插件不能共享模块作用域，所以约定是：**localStorage 是共享状态，window 事件是共享通知**——谁写谁广播，谁显示谁监听。只装品牌插件时，它自己的弹窗就是唯一入口。\n\n字体切换插件跟着当前皮肤走。皮肤没装，它就没东西可换。\n\n装插件不装皮肤也好看，只是颜色跟官方主题走；装皮肤不装插件，星芒、加载动画和蟹都不出现，但配色、字体、问候语旁的像素星星都在。\n\n**为什么换品牌不做进皮肤里**：皮肤跑不了官方的钩子（见[已知限制](#已知限制)），换 logo 这种事只有插件做得了。\n\n---\n\n## 效果预览\n\n![](claude/preview/light.jpg)\n\n![](claude/preview/dark.jpg)\n\n上图为真实运行界面的截图。亮色画布是暖米色，暗色画布是暖黑，都和设计值一致。\n\n---\n\n## 特性\n\n- **暖米色画布**：不再是默认的冷灰白。亮色暖米、暗色是 Claude 那种暖黑（不是纯黑）。\n- **衬线正文**：正文、标题、引用用衬线体（Newsreader），按钮菜单这类界面用无衬线（Inter），代码用等宽（JetBrains Mono）。中文自动回退到系统字体。\n- **Clawd 像素蟹**：Claude Code 那只小螃蟹，纯 CSS 画的，没有图片。在插件里：眼睛跟着鼠标转，闲着会眨眼，没人理它会犯困、蜷起来睡，戳一下会说句应景的话。皮肤只是给它留了位置。\n- **字体自带**：四个字体文件全部放在皮肤目录里，不请求任何外部资源。\n- **第三方插件也顺眼**：其他插件的界面会被捎带上一套中性化处理，跟着 Claude 的卡片风格走，不会五颜六色。\n- **可改的名字与头像**：侧栏底部有一行头像和名字，点开就地改。新装默认显示 `moon` 和内置头像，只存在这台浏览器里，不上传。\n- **可换的加载动画**：「深度求索中」旁边那个会动的图标，三选一——**星芒**（八种形态轮播，15.55 秒一轮）、**螃蟹**（敲键盘的像素蟹）、**关闭**（保留原来的蓝色鲸尾）。默认星芒。在 **设置 → Claude-X** 里选。\n- **问候语轮换**：24 句，每次打开页面换一句，第一句永远是时段问候。会带上你设的名字。\n- **切换即时生效**：用皮肤中心的话，切皮肤不用刷新页面；用独立插件的话，切完刷新一下就好。\n\n---\n\n## 目录结构\n\n```\ndsh-claude-theme/\n├── claude/                          # 皮肤本体\n│   ├── skin.json                    #   皮肤的信息（名字、作者、配色）\n│   ├── skin.css                     #   全部配色和字体定义\n│   ├── patches.css                  #   细节调整（圆角、输入框、卡片、滚动条）\n│   ├── assets/fonts/                #   自带的四个字体文件 + 重新下载脚本\n│   ├── preview/                     #   预览图（真机截图，亮暗各一张）\n│   ├── crab.generated.css           #   问候语旁的像素星星（生成文件，勿手改）\n│   └── patches.base.css             #   patches.css 的手写底稿\n├── plugins/\n│   ├── skin/                        # 皮肤插件\n│   │   ├── README.md                #   它是怎么让皮肤生效的\n│   │   ├── lib/index.js             #   读皮肤、把样式送进页面、管字体图片\n│   │   ├── lib/css-contract.js      #   样式改写（详见它自己的 README）\n│   │   ├── lib/client.js            #   设置页（Claude-X）\n│   │   └── test/                    #   单测\n│   └── font-switcher/               # 字体切换插件\n│       ├── README.md\n│       ├── lib/index.js             #   扫描字体文件夹\n│       └── lib/client.js            #   设置页（字体）\n├── crab-plugin/                     # Clawd 插件\n│   ├── LICENSE                      #   MIT + Clawd 署名\n│   ├── README.md\n│   ├── docs/preview.png             #   预览图\n│   └── lib/client.js                #   蟹本体：像素画、动画、台词\n├── pet/                             # 给宠物系统用的蟹图集\n├── brand-plugin/                    # Claude 插件\n│   ├── README.md\n│   ├── assets/default-avatar.webp   #   默认头像\n│   └── lib/client.js                #   星芒、字标、问候语、名字头像\n├── cover/                           # 封面图（视频封面 + 仓库卡片两种比例）\n├── scripts/                         # 维护脚本（重新生成皮肤、校验、截图等）\n├── README.md                        # 本文件\n├── README.en.md                     # 英文版\n├── INSTALL.md                       # 逐步安装与排错\n└── LICENSE                          # MIT + 字体与商标声明\n```\n\n`scripts/` 的用法见 [`scripts/README.md`](scripts/README.md)。\n\n---\n\n## 安装\n\n每样东西各装各的，缺哪个都不影响另一个。**只有皮肤需要选一下装法。**\n\n### 一、皮肤\n\n**走皮肤中心**（二选一）：装好 `@linxin666/dsh-client-ui-skin-center`，在它的市场里搜 Claude 装上，然后开 **设置 → 皮肤中心** 点中 Claude。市场会自动装到 `$DSH_HOME/skins/`，不用手动拷贝。不用重启。\n\n**走独立插件**（二选一）：装 `plugins/skin/`，然后重启：\n\n```bash\ndsh plugin --profile web add link:/path/to/dsh-claude-theme/plugins/skin\n```\n\n插件首次加载时会**自己**把仓库里的 `claude/` 拷进 `$DSH_HOME/skins/claude`，所以你什么都不用拷。重启后在 **设置 → Claude-X** 里点中 Claude 就行。\n\n（想手动放皮肤也可以：`cp -r claude \"$HOME/.dsh/skins/claude\"`。插件只补缺失的文件，不会覆盖已经在那儿的。）\n\n**两种别一起装**，会各送一遍同样的样式。\n\n#### 走皮肤中心的话，这些功能没有\n\n皮肤中心**只收 CSS，不收插件**，所以它那份 `claude/` 里一个 JS 都没有。下面这些是插件才做得到的，**走皮肤中心不会带上**：\n\n| 功能 | 在哪个插件 |\n| --- | --- |\n| 侧栏的星芒标记和「Claude」字标 | `brand-plugin` |\n| 名字、副标题、头像 | `brand-plugin` |\n| 关闭侧栏底部那行 | `brand-plugin` |\n| 「深度求索中」旁的加载动画（蟹 / 星芒 / 关闭） | `brand-plugin` |\n| 字体切换 | `plugins/font-switcher` |\n\n想要就再装两个——**只装 `brand-plugin` 也行**，改名和换头像走侧栏底部那一行的弹窗；再装上 `plugins/skin/` 会多出一个 **设置 → Claude-X** 页，上面那些开关都在里面：\n\n```bash\ndsh plugin --profile web add <仓库路径>/brand-plugin\ndsh plugin --profile web add <plugins 路径>/plugins/skin\n```\n\n### 二、Claude 插件（品牌替换）\n\n```bash\ndsh plugin --profile web add link:/path/to/dsh-claude-theme/brand-plugin\n```\n\n装完**重启一次 DSH**（插件是启动时加载的，改了就要重启）。侧栏的鲸鱼会变成星芒，字标变成 \"Claude\"，标签页标题和图标也跟着换。名字/副标题/头像的数据也是它的（编辑界面在皮肤插件的 Claude-X 页，见上）。\n\n**「深度求索中」旁边那个图标也归它管**，三选一：星芒（八种形态轮播）、螃蟹（敲键盘的像素蟹）、关闭（保留原来的蓝色鲸尾）。默认星芒。选择界面在 **设置 → Claude-X**（也就是装了皮肤插件才会有的那一页）。\n\n### 三、Clawd 插件（宠物）\n\n```bash\ndsh plugin --profile web add link:/path/to/dsh-claude-theme/crab-plugin\n```\n\n同样重启。输入框上沿会出现那只像素蟹，戳一下有反应。蟹只在插件里，皮肤不画蟹，所以不会出现两只。\n\n### 四、字体切换插件（小工具）\n\n```bash\ndsh plugin --profile web add link:/path/to/dsh-claude-theme/plugins/font-switcher\n```\n\n同样重启。然后开 **设置 → 字体**，把字体文件丢进它显示的文件夹，回来点「重新扫描」。想标明用途就放进 `serif/`、`sans/`、`mono/` 子文件夹，或者写进文件名（认中文关键词）。\n\n字体文件要自备，仓库里只有皮肤自带那四份。\n\n每一步的详细排查和回滚见 [`INSTALL.md`](INSTALL.md)。\n\n### **嫌麻烦可以丢给dsh或者Claude Code和codex让他们装**\n\n---\n\n## 已知限制\n\n- **皮肤跑不了官方的钩子脚本。** 皮肤中心只放行从它市场里装来的皮肤，本地的直接拒绝。所以换 logo 这类事只能做成插件，做不成皮肤的一部分。\n- **远程字体两条路不一样。** 走皮肤中心时，字体必须放在皮肤目录里，引用外面的会被拒。走独立皮肤插件没有这个限制——但也因此不帮你把关，只装自己写得明白的皮肤。\n- **工具调用卡片是照着感觉画的。** claude.ai 没有这个东西（它是 DSH 特有的界面），所以是按 Claude 的风格重绘的，不是 1:1 复刻。\n- **蟹的画法来自别人。** 像素点阵取自酒馆扩展 [claude-web](https://github.com/claudenoshujin/claude-web)（作者 **claudenoshujin**），画法的功劳归他；这里的选择器、动画、配色、摆放都是自己写的。详情见下面[许可与声明](#许可与声明)。\n- **宠物面板里的蟹不会动。** 宠物系统要一套九格动画图，而蟹只有一组静态像素，所以九格是同一只蟹换着色。想要真动画得补美术。\n- **蟹不走官方的插槽系统。** 走过，出过事故：报错被吞掉、插件装了蟹却不出现、还不报错。现在直接挂在输入框上。代价是官方哪天改了那个位置的标记，蟹会消失——不过控制台会留一句警告，不是无声无息。\n- **皮肤不再自己画蟹。** 早期皮肤带过一只静态蟹，和插件蟹打架（两只蟹或没有蟹），后来删了。现在蟹只在插件里，只装皮肤的话输入框上沿没有蟹。\n- **皮肤只对选中的页面生效。** 样式都圈在皮肤自己的地盘里，换别的皮肤不会串味。两条安装路径都是这样。\n\n---\n\n## 许可与声明\n\n- 代码与 CSS：MIT，见 [`LICENSE`](LICENSE)。\n- 内置字体：Newsreader、Inter、JetBrains Mono 均为 SIL Open Font License 1.1 授权，随附于 `claude/assets/fonts/`。\n- 商标：这是**非官方粉丝复刻**。\"Claude\" 与 \"Anthropic\" 是 Anthropic PBC 的商标。本项目与 Anthropic 无任何隶属或背书关系。\n- **Clawd 的署名。** Clawd（Claude Code 的像素蟹吉祥物）属于 Anthropic。本仓的蟹是**纯 CSS**：由 `scripts/gen-crab.py` 从像素点阵数据生成，不含任何图片文件。点阵几何源自酒馆扩展 [claude-web](https://github.com/claudenoshujin/claude-web)，作者 **claudenoshujin**——原像素美术的功劳归该作者。本项目只复用几何数据，未从该仓库复制任何文件；选择器、动画、配色、摆放均为自写。\n- **星芒动画的版权。** 「加载动画」里的星形素材属于 Anthropic，此处按非官方粉丝复刻的用途引用。本项目与 Anthropic 无隶属或背书关系。\n- **Copernicus 和 StyreneB 未包含在内。** 这两个是 Anthropic 实际使用的字体，属于商业授权字体，不能分发。本项目用开源的 Newsreader（替代 Copernicus 的衬线角色）和 Inter（替代 StyreneB 的无衬线角色）作为替代品——形似但不等同。\n\n---\n\n## 致谢\n\n- 皮肤中心插件 [`@linxin666/dsh-client-ui-skin-center`](https://github.com/zhu1090093659/dsh-web)：提供了皮肤加载、清单校验、CSS 清洗与热切换的整套机制。\n- Newsreader、Inter、JetBrains Mono 的字型作者与 Google Fonts 的 latin 子集构建。\n- Anthropic 的 claude.ai 界面：本项目是照着它的观感做的复刻。\n- 酒馆扩展 [claude-web](https://github.com/claudenoshujin/claude-web)（作者 **claudenoshujin**）：Clawd 像素几何数据的来源，也是配色与观感的重要参照。\n"
+    },
+    {
+      "full_name": "kuangre123/iosdev",
+      "html_url": "https://github.com/kuangre123/iosdev",
+      "description": "ios app 开发 skill",
+      "stars": 26,
+      "language": null,
+      "pushed_at": "2026-01-09T06:03:17Z",
+      "topics": [
+        "app",
+        "apple",
+        "apple-intelligence",
+        "apple-watch",
+        "dsh-plugin",
+        "dsh-plugins",
+        "ios",
+        "mac",
+        "macos",
+        "swift"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "app",
+        "apple",
+        "apple-intelligence",
+        "apple-watch",
+        "dsh-plugin",
+        "dsh-plugins",
+        "ios",
+        "mac"
+      ],
+      "readme_text": "# iOSdev（iosdev-cn）\n\n本仓库提供通用的 iOS App 开发与上架流程技能（面向中国区），用于帮助开发者快速梳理从开发、构建、签名、测试到 App Store Connect 提交与审核的全流程。内容涵盖上架前关键清单、常见审核注意事项、隐私合规与 ATS 配置建议，以及订阅/IAP 的创建与测试。\n\n## 包含内容\n- `SKILL.md`：技能触发与输出结构（输入 `iosdev` 即可调用）\n- `references/`：按主题拆分的参考资料\n  - 构建/签名/依赖与版本号管理\n  - 上架流程与审核要点（中国区）\n  - 订阅（IAP）配置与测试\n  - 隐私、ATS 与安全合规\n- `iosdev-cn.skill`：可分发的技能包\n\n## 使用方式\n1. 将本目录复制到 `~/.codex/skills/helloagents/`\n2. 或使用 `iosdev-cn.skill` 进行分发安装\n3. 在 Codex 中输入触发词 `iosdev` 即可调用\n\n## 许可\nMIT\n"
     },
     {
       "full_name": "834063245-creator/HoloGram",

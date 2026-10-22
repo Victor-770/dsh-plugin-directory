@@ -1,107 +1,7 @@
 {
-  "generatedAt": "2026-10-22T11:25:54.202Z",
+  "generatedAt": "2026-10-22T16:24:27.170Z",
   "count": 400,
   "plugins": [
-    {
-      "full_name": "uckkk/dsh-water-resist",
-      "html_url": "https://github.com/uckkk/dsh-water-resist",
-      "description": "防水等级判断",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-20T18:37:15Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-water-resist · 防水等级判断\n\n## 工具\n\n- `water_resist`：防水等级判断：按参数返回手表珠宝保养方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-water-resist\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-water-resist\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
-    },
-    {
-      "full_name": "uckkk/dsh-sub-audit",
-      "html_url": "https://github.com/uckkk/dsh-sub-audit",
-      "description": "订阅审计",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-20T17:50:50Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-sub-audit · 订阅审计\n\n## 工具\n\n- `sub_audit`：订阅审计：按参数精确计算，返回详细结果。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-sub-audit\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-sub-audit\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
-    },
-    {
-      "full_name": "uckkk/dsh-season-health",
-      "html_url": "https://github.com/uckkk/dsh-season-health",
-      "description": "四季养生",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-20T18:52:13Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-season-health · 四季养生\n\n## 工具\n\n- `season_health`：四季养生：按参数返回中医养生方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-season-health\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-season-health\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
-    },
-    {
-      "full_name": "uckkk/dsh-pour-over",
-      "html_url": "https://github.com/uckkk/dsh-pour-over",
-      "description": "手冲参数",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-20T18:43:09Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-pour-over · 手冲参数\n\n## 工具\n\n- `pour_over`：手冲参数：按参数返回咖啡冲煮方案。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-pour-over\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-pour-over\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
-    },
-    {
-      "full_name": "uckkk/dsh-anniversary",
-      "html_url": "https://github.com/uckkk/dsh-anniversary",
-      "description": "纪念日计算",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-20T15:41:29Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh-plugin"
-      ],
-      "readme_text": "# dsh-anniversary · 纪念日计算\n\n## 工具\n\n- `anniversary`：纪念日计算：按参数精确计算，返回详细结果。\n\n纯 Node 实现，无网络依赖。\n\n```bash\ndsh plugin add github:uckkk/dsh-anniversary\n```\n\n## 安装\n\n```bash\ndsh plugin add github:uckkk/dsh-anniversary\n```\n\n## 使用\n\n安装后在会话中调用该插件注册的工具即可。\n\n## 许可\n\nMIT\n"
-    },
     {
       "full_name": "uckkk/dsh-antigua",
       "html_url": "https://github.com/uckkk/dsh-antigua",
@@ -8998,6 +8898,142 @@
         "vision"
       ],
       "readme_text": "# dsh-governor\n\nBehavioural supervision for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)\nagents. It watches a running agent for the failure shapes that waste money quietly:\nretry storms, reasoning-budget burn, and sessions that outlive their backstop.\n\n**Status: phase 2.** Observation is the default and still changes nothing. Enforcement is\nopt-in via `mode: 'enforce'`, because a supervisor that intervenes before you have seen its\nfindings on your own traffic is one you will not trust.\n\n## Why these three detectors\n\nThey are not guesses. Each one exists because a naive version of it failed against real\ntraffic across five providers, and the fix is baked in here from the start.\n\n### Retry storms, by ratio rather than consecutive runs\n\nCounting \"three identical failures in a window\" misreads a flaky provider as a stuck agent.\nFour scattered `503`s across twelve otherwise-productive steps is a vendor having a bad\nafternoon, and pausing there costs the user a working session.\n\nRequiring strict consecutiveness fails the other way: a storm that thinks between attempts\nis still a storm.\n\n`RetryStormDetector` requires the repeated failure signature to occupy at least half the\nwindow. Both shapes are covered, and the flaky-provider case is a permanent test.\n\n### Output tokens billed, no visible text\n\nReasoning models spend the completion budget on hidden thinking first. When the cap is\nconsumed before any answer is emitted, the provider returns a truncation reason and an\nempty body. Measured across five providers, two returned **zero characters while billing\nthe full budget**, at both a 16-token and a 200-token cap.\n\nThis is invisible to text-based supervision by construction. Repetition, oscillation and\ndistress detectors all read the output text, and there is no text to read. Only token\naccounting sees it.\n\nThe harness makes this easier to catch than most runtimes do. `llm/stream` separates\n`text-delta` from `reasoning-delta` and carries `TokenUsage`, so the detector can report\n*why* the answer is empty rather than only that it is: \"200 output tokens billed, no visible\ntext; the budget went to reasoning (72 chars of hidden thinking)\".\n\n### A backstop that survives a closed laptop lid\n\n`performance.now()` is monotonic, which is right for measuring work, but it stops advancing\nwhile the host is suspended. A watchdog built on it alone silently never fires across a\nsleep. Wall-clock sees suspended time but can jump backwards under NTP correction.\n\n`DualClock` takes the larger of the two. Firing slightly early is a much better failure than\nnever firing.\n\nThis one was found the hard way: a 1813-second run sailed past an 1800-second backstop\nbecause step one happened on a laptop with the lid shut.\n\n## The ladder\n\nFindings raise a score, clean steps decay it, and only the upper rungs touch the agent.\n\n| rung | `observe` | `enforce` |\n|---|---|---|\n| `ok` | nothing | nothing |\n| `notice` | logs at info | nothing |\n| `pause` | logs at warn | `agent/pre-step` returns `reject`; tool calls return `ask` |\n| `stop` | logs at warn | `agent/pre-step` returns `reject`; tool calls return `deny` |\n\nThe `ask` rung is the useful one. It hands the decision to a human instead of choosing\nbetween letting a suspect run continue and killing it outright, and the harness supports it\nnatively through `PreToolDecision`.\n\nPresets `gentle`, `standard` and `paranoid` move the thresholds. **These numbers are\nstarting points, not measurements.** Governor's were tuned against replayed sessions; these\nhave not been, and you should expect to adjust them for your own traffic. The backstop is weighted so\nthat it reaches `stop` immediately under every preset, since it is the floor that exists to\ncatch everything the other detectors miss, including bugs in the detectors.\n\n## Install\n\n```sh\nnpm install dsh-governor\n```\n\n```yaml\n# cordis.yml\n- name: 'dsh-governor'\n  config:\n    mode: 'observe'      # 'enforce' to let the upper rungs intervene\n    preset: 'standard'   # gentle | standard | paranoid\n    backstopMs: 1800000\n```\n\n### A note on peer versions\n\nThe `@deepseek-ai` packages currently publish inconsistent `latest` dist-tags: at the time\nof writing `dsh-tools` and `dsh-llm` resolve `latest` to `0.0.1-rc.1` while `0.1.1-rc.2` is\npublished, and that old version peers on an ancient `dsh-agent`. Pin the set explicitly:\n\n```sh\nnpm i @deepseek-ai/cordis@4.0.1 @deepseek-ai/dsh-agent@0.1.1-rc.2 \\\n      @deepseek-ai/dsh-llm@0.1.1-rc.2 @deepseek-ai/dsh-tools@0.1.1-rc.2\n```\n\n## Development\n\n```sh\nnpm run typecheck   # tsc --strict, skipLibCheck off, against the real dsh declarations\nnpm test            # node:test via tsx\n```\n\n## Roadmap\n\n- ~~**Phase 2:** the escalation ladder.~~ Done.\n- ~~**Phase 3:** integration tests.~~ Done: 7 of them drive a real Cordis `Context`.\n- **Next:** publish, once the preset thresholds have been tuned against real sessions.\n\n## Provenance\n\nThe detectors are ported from Governor, part of the Sheepdog trilogy, where they were\nmeasured against five providers rather than designed against fixtures. The false-positive\nguard, the empty-output detector and the dual clock all exist because the obvious version\nwas wrong in a way that only showed up on live traffic.\n\n## License\n\nMIT\n"
+    },
+    {
+      "full_name": "bigfurma-bot/dsh-todos",
+      "html_url": "https://github.com/bigfurma-bot/dsh-todos",
+      "description": "Persistent shared to-do list for DeepSeek Harness: web UI tab + agent tools over one JSON store, writable from both sides",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-22T14:29:51Z",
+      "topics": [
+        "cordis",
+        "deepseek",
+        "deepseek-harness",
+        "dsh",
+        "dsh-plugin",
+        "productivity",
+        "task-management",
+        "todos",
+        "web-gui"
+      ],
+      "categories": [
+        "皮肤/UI"
+      ],
+      "tags": [
+        "cordis",
+        "deepseek",
+        "deepseek-harness",
+        "dsh",
+        "dsh-plugin",
+        "productivity",
+        "task-management",
+        "todos"
+      ],
+      "readme_text": "# dsh-todos\n\nOne persistent shared to-do list for [DeepSeek Harness (DSH)](https://github.com/deepseek-ai/deepseek-harness),\nwritable from **both sides**:\n\n- **Owner** — a \"To-dos\" tab in the web GUI: add tasks, change status/priority\n  inline, delete. Active tasks first, settled ones grouped and dimmed.\n- **Agent** — model tools `todos_list` / `todos_add` / `todos_update` /\n  `todos_remove`, so your agent can read and maintain the same list.\n\nThe store is one JSON file rewritten through a single in-process writer queue;\nhuman HTTP requests and agent tool calls never race. Survives restarts.\n\n![To-dos tab in the DSH web GUI](Scr1.png)\n\n## Model\n\n| Field | Values |\n|---|---|\n| Status | `pending` · `frozen` · `cancelled` · `done` |\n| Priority | `low` · `normal` · `high` · `urgent` *(highest — renders bold red)* |\n\n`done` and `cancelled` rows are struck through; sorting is status → priority → age.\n\n## Install\n\n```bash\ncd ~/.dsh/profiles/web\nrm -rf node_modules/@deepseek-ai/dsh-todos          # drop any stale copy\npnpm add --force \"file:/path/to/this/repo\"\n```\n\nAdd the composition row to `~/.dsh/profiles/web/cordis.patch.yml`:\n\n```yaml\n- insert:\n    - id: dsh-todos\n      name: '@deepseek-ai/dsh-todos'\n```\n\nRestart DSH web. Verify:\n\n```bash\ncurl -s http://127.0.0.1:3080/todos        # -> {\"ok\":true,\"tasks\":[...]}\ncurl -sI http://127.0.0.1:3080/plugins/@deepseek-ai/dsh-todos/client.js   # 200\n```\n\n> Boot-order note: the host half declares `inject: ['fs','webServer','tools']`.\n> If you fork this, keep `webServer` in the inject list or your HTTP routes will\n> silently skip at boot.\n\n## Configuration\n\n| Key | Default | Meaning |\n|---|---|---|\n| `todosPath` | `/home/<you>/documents/todos.json`* | absolute path of the JSON store |\n| `workspaceRoot` | `/home/<you>/documents`* | workspace root used for write-policy scoping |\n\n\\* The defaults in `host.js` are the author's paths — set both overrides for\nyour machine via the plugin's `config` in your profile composition.\n\n## HTTP API\n\n| Route | Body | Purpose |\n|---|---|---|\n| `GET /todos` | — | full task list + open/total counts |\n| `POST /todos/add` | `{text, status?, priority?}` | create |\n| `POST /todos/update` | `{id, text?, status?, priority?}` | patch one task |\n| `POST /todos/remove` | `{id}` | delete |\n\nCorrupt store files are never overwritten — fix or remove them by hand.\n\n## License\n\nMIT — see [LICENSE](LICENSE).\n"
+    },
+    {
+      "full_name": "todayer/todayer-dsh-telegram-bridge",
+      "html_url": "https://github.com/todayer/todayer-dsh-telegram-bridge",
+      "description": "DeepSeek Harness Telegram bridge (bot) plugin, Hermes-style: per-topic sessions, DM topics, group gating, media, commands. Fork/extension of hi-wenw/dsh-telegram-channel.",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-25T15:37:32Z",
+      "topics": [
+        "agent",
+        "bot",
+        "cordis",
+        "deepseek-harness",
+        "dsh",
+        "dsh-plugin",
+        "hermes",
+        "telegram",
+        "telegram-bot"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "agent",
+        "bot",
+        "cordis",
+        "deepseek-harness",
+        "dsh",
+        "dsh-plugin",
+        "hermes",
+        "telegram"
+      ],
+      "readme_text": "# DSH Telegram Bridge (todayer)\n\nTelegram bridge (bot) for **DeepSeek Harness (dsh)**: manage local sessions, topics and media right from Telegram. Based on [`hi-wenw/dsh-telegram-channel`](https://github.com/hi-wenw/dsh-telegram-channel) and extended with mechanisms from the Telegram gateway of the [Hermes](https://github.com/NousResearch/hermes-agent) agent.\n\n> **Quick start:** `dsh plugin --profile web add github:todayer/todayer-dsh-telegram-bridge`\n\n---\n\n## Features\n\n- 🧵 **Per-chat/topic sessions** — each topic (forum / DM topic) is its own session; bot replies land in the same thread.\n- 📌 **Topics** — `message_thread_id`, correct handling of the General topic (`1`), `createForumTopic`/`editForumTopic`/`deleteForumTopic`; **auto-renames the topic to the session title**.\n- 💬 **DM Topics (Bot API 9.4)** — topics right in a 1-on-1 chat, each an isolated session; root-DM lobby mode. (`DSH_TELEGRAM_DM_TOPICS`)\n- 👥 **Group gating** — `require_mention`, `allowed_chats`, `allowed_topics`, `free_response_chats/topics`, `guest_mode`, `ignored_threads`.\n- 🖼 **Media in/out** — accept photos/videos/voices/files/stickers; send files natively via `MEDIA:/path` tags.\n- ⌨️ **Commands** — `/new /reset /stop /sessions /last /model /status /unbind /help`.\n- ✅ **Status indicator** Online/Offline (`setMyShortDescription`).\n- 🛡 **Tool-call filter** — `<tool_calls>` never leak into Telegram.\n- 🔥 **Polling resilience** (409 conflict + exponential backoff).\n- 🔘 **Choice/clarify** — `ask_user_question` → inline buttons (when `userQuestions` is available).\n- 🌐 **Bilingual** — Russian and English (set `DSH_TELEGRAM_LANG=ru|en`).\n\n## Install\n\n> Requires: Node ≥ 22, `dsh web` with a model, and a bot from `@BotFather`.\n\n```bash\n# locally (from this machine)\ndsh plugin --profile web add ./dsh-telegram-channel-local\n\n# from the repository\ndsh plugin --profile web add github:todayer/todayer-dsh-telegram-bridge\n# or from tarball\ndsh plugin --profile web add ./dsh-telegram-channel-0.3.5.tgz\n```\n\n## Configuration (`~/.dsh/telegram.env`)\n\n```ini\n# required\nDSH_TELEGRAM_TOKEN=123456789:AA...            # from @BotFather\nDSH_TELEGRAM_ALLOWED_USER_IDS=123456789        # your user id (from @userinfobot)\n\n# optional — topics/groups\nDSH_TELEGRAM_LANG=ru                           # ru | en\nDSH_TELEGRAM_REQUIRE_MENTION=false\nDSH_TELEGRAM_ALLOWED_CHATS=\nDSH_TELEGRAM_ALLOWED_TOPICS=\nDSH_TELEGRAM_FREE_RESPONSE_CHATS=\nDSH_TELEGRAM_FREE_RESPONSE_TOPICS=\nDSH_TELEGRAM_GUEST_MODE=false\nDSH_TELEGRAM_IGNORED_THREADS=\n\n# DM topics (JSON)\nDSH_TELEGRAM_DM_TOPICS=[{\"chatId\":1212123,\"topics\":[{\"name\":\"General\"}]}]\n\n# status indicator\nDSH_TELEGRAM_STATUS_INDICATOR=1\nDSH_TELEGRAM_STATUS_ONLINE=🟢 Online\nDSH_TELEGRAM_STATUS_OFFLINE=🔴 Offline\n```\n\nPut these in the `EnvironmentFile` of the `dsh.service` and restart:\n```bash\nsudo systemctl restart dsh.service\n```\n\n## Bot commands\n\n| Command | Purpose |\n|---|---|\n| `/start` | Welcome / help |\n| `/sessions` | List sessions by workspace + attach |\n| `/new` | Create a new session (force-new) |\n| `/reset` | Alias for `/new` |\n| `/last` | Last turn of the bound session |\n| `/model` | Switch model |\n| `/status` | Current binding |\n| `/stop` | Stop and detach |\n| `/unbind` | Detach (without deleting) |\n| `/help` | Full command list |\n\n## Structure\n\n```\nlib/\n  bridge.js      — core logic (message handling, topics, sessions, commands)\n  client.js      — Telegram Bot API client (polling, files, topics)\n  catalog.js     — sessions/workspaces catalog\n  commands.js    — commands and messages (bilingual)\n  format.js      — formatting/cleanup (incl. stripToolCalls)\n  history.js     — \"last turn\"\n  index.js       — plugin registration (Config/inject)\n  ...\n```\n\n## License\n\n[MIT](./LICENSE)\n\n## Origin\n\nBased on [hi-wenw/dsh-telegram-channel](https://github.com/hi-wenw/dsh-telegram-channel). Mechanics extended following the Telegram gateway of [Hermes Agent](https://github.com/NousResearch/hermes-agent).\n\n---\n\n**Русский:** [README.ru.md](./README.ru.md)\n"
+    },
+    {
+      "full_name": "Wickaninnish/dsh-skill-manager",
+      "html_url": "https://github.com/Wickaninnish/dsh-skill-manager",
+      "description": "DeepSeek Harness 技能运维插件：自动发现、审计、去重和优化技能，构建安全可控的维护闭环。",
+      "stars": 0,
+      "language": "TypeScript",
+      "pushed_at": "2026-09-05T07:55:49Z",
+      "topics": [
+        "automation",
+        "dsh-plugin",
+        "skill-management"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "automation",
+        "dsh-plugin",
+        "skill-management"
+      ],
+      "readme_text": "# dsh-skill-manager 0.4.0\n\nDeepSeek Harness 原生技能运维插件，提供使用追踪、反馈归因、热度排行、人工审阅和优化效果评测。\n\n默认 `read-only`，不修改技能文件。`review` 先保存候选、再由人类批准；`automatic` 可自动应用描述修复、指令优化和 specialize。移除源技能的 keep/composite 始终需要人类批准。\n\n## 普通用户安装\n\n使用 DSH 0.1.1-rc.2，Node `^22.19.0 || >=24.0.0`。完整宿主 SHA 与 pnpm 版本见 [compatibility.json](compatibility.json)。本次交付三个 tarball，未自动发布 npm。\n\n```sh\ndsh plugin --profile web add ./artifacts/skill-ops-engine-0.4.0.tgz ./artifacts/skill-ops-dsh-0.4.0.tgz ./artifacts/skill-ops-dsh-client-0.4.0.tgz\ndsh web\n```\n\nhost/client 的 `dsh.bundle` 使安装后的插件进入 profile 配置层；engine 作为库依赖，不激活为插件。启动后执行 `/skill-ops doctor`、`/skill-ops status`。普通安装需要 npm registry 可达；离线源码验收由固定宿主提供第三方依赖。\n\n## 源码开发\n\n使用 [指定宿主提交](https://github.com/deepseek-ai/deepseek-harness/commit/b150a551b8d465e31e418e1b2eaf5e79bbb7d28e)，按其 lockfile 执行 `pnpm install --frozen-lockfile` 和 `pnpm build`。本插件脚本使用 `DSH_CHECKOUT` 或项目内 `.cache/deepseek-harness`，不依赖固定盘符。\n\n```powershell\n$env:DSH_CHECKOUT = '/absolute/path/to/deepseek-harness'\nnode scripts/typecheck.mjs\nnode scripts/test.mjs\nnode scripts/test.mjs --vitest\nnode scripts/integration.mjs\nnode scripts/browser.mjs\nnode scripts/pack.mjs\nnode scripts/package-smoke.mjs\n```\n\n首次浏览器测试缺少 Chromium 时运行 `node scripts/browser.mjs --install`。脚本检测错误/失效链接后会停止；只移除诊断指出的链接，再用正确 DSH_CHECKOUT 重跑。不要删除其指向的宿主目录。\n\n继续支持 overlay 接入：将工作区三个包链接至 DSH profile 的 `node_modules/@skill-ops`，然后执行 `dsh web --patch ./overlays/skill-ops.cordis.yml`。已经通过 bundle 安装的 profile 不要重复插入同名条目。\n\n打包根据各包 `files` 清单收集构建产物、组合配置、doctor 和示例资源，在独立临时目录转换 workspace 依赖，验证前后源码 package.json 完全一致。`scripts/publish.mjs` 是单独的显式发布工具，CI 不调用它。\n\n## 故障排查\n\n插件能启动时执行 `/skill-ops doctor`：逐项显示通过/警告/失败、影响和修复方法，检查宿主版本、服务、反馈服务、目录、存储就绪和当前模型路由，不调用模型、不修改配置。\n\n插件不能启动时运行独立 Node 命令：\n\n```sh\nskill-ops-doctor --json --root /absolute/path/to/skills\n# 尚未建立 bin 链接时：\nnode packages/dsh/bin/doctor.mjs --json --root /absolute/path/to/skills\n```\n\n支持重复 `--root`、`--package <host包目录>`、`--config <含skillRoots数组的JSON>`。阻断问题返回非零退出码；独立命令只使用 Node 内置模块，检查入口、依赖解析和目录配置。无模型路由只影响生成/live评测，不影响基础查询。\n\n## 配置与维护模式\n\n默认配置见 [只读 overlay](overlays/skill-ops.cordis.yml)，审阅见 [review 示例](overlays/skill-ops.review.example.yml)，自动维护见 [automatic 示例](overlays/skill-ops.automatic.example.yml)。skillRoots 与 skill-filesystem 的 customSkillDirs 应一致。\n\n```yaml\nwriteMode: review\nautomaticActions:\n  - merge\n  - optimize-instructions\n  - repair-descriptions\nskillRoots:\n  - /absolute/path/to/skills\nsnapshotRetentionDays: 30\ncorrectionThreshold: 3\ncorrectionAgeDays: 7\nevaluationTestSets:\n  my-regression-set: /absolute/path/to/my-regression-set.json\n```\n\nreview/automatic 沿用启动、技能变化、反馈对账和 Agent 空闲窗口扫描。描述修复是确定性推导，无需模型；指令优化和合并使用当前 DSH 模型生成、独立复审，再执行静态校验。模型自报 confidence 是**自评值**，不是校准后的正确率。模型维护工具只允许 run/retry，没有批准权限。\n\n## 命令\n\n| 命令（前缀 `/skill-ops`） | 行为 |\n|---|---|\n| `doctor` | 只读环境诊断 |\n| `status [n]` | 热度排行，默认前10 |\n| `quality [skill]` | 加载次数、反馈消息数、纠错/赞扬/澄清次数、纠错比例 |\n| `duplicates [threshold]` | TF-IDF 重复候选 |\n| `forget` | 遗忘建议，不压缩或删除 |\n| `descriptions` / `names` | 描述、命名和调用控制审计 |\n| `operations [n\\|id]` | 操作历史、状态、门禁和快照 |\n| `run <all\\|merge\\|optimize\\|descriptions>` | review/automatic 扫描 |\n| `preview <id>` | 理由、逐文件差异、资源变化、检查与到期时间 |\n| `approve <id>` | 应用保存的确切候选，不重新生成 |\n| `reject <id>` | 拒绝候选，抑制相同输入 |\n| `retry <id>` | 从最新输入创建新 ID，旧记录保留 |\n| `rollback <id>` | 显式恢复未被后续修改的快照 |\n| `evaluate <id> <测试集ID> [--live]` | 默认只校验适用性、展示调用计划 |\n| `evaluate demo [--live]` | 默认使用离线固定回答演示 |\n| `evaluations [id]` | 查询独立存储的评测摘要 |\n\n## 审阅与安全边界\n\n候选完整树与原版本位于 `.skill-ops/proposals/<id>`，操作记录保存原根、候选、反馈证据和清单摘要。有效期沿用 snapshotRetentionDays，默认30天。源文件、反馈或候选完整性变化后不得批准；过期或陈旧方案需要 retry。等待审阅的方案不会因切换 automatic 而自动应用。\n\n批准重查当前动作配置、根目录和摘要，使用跨进程锁及持久化决策记录阻止重复提交。提交复用快照、日志、按差异原子替换、宿主刷新校验和失败恢复。keep/composite 完整安装目标后才移出源技能。卡片只展示结果和下一步命令；完整差异以 preview 为准，最新状态以 operations 为准。\n\n根目录必须存在、可读写、无链接且互不重叠。模型不能指定路径，资源必须在技能边界内。`.skill-ops` 是宿主管理的私有控制目录，不应手工编辑。\n\n## 热度与质量证据\n\n热度分继续使用原频率、新鲜度和重要性算法。存储字段 successCount 保留兼容，含义是成功加载，不代表任务成功率。合并不再按热度差强制指定保留项；模型输入将热度和反馈证据分开。\n\n质量报告按 sessionId/messageId 去重计数，纠错比例分母是有反馈的消息数。少于10条提示证据不足；零反馈显示未知。反馈是累计证据，可能跨技能版本，也可能多技能共同归因；不能据此宣称某版本的任务成功率。\n\n## 评测测试集\n\n参考 [15题中英文演示](packages/dsh/examples/demo.json) 和 [旧版](packages/dsh/examples/old/SKILL.md)/[新版](packages/dsh/examples/new/SKILL.md) 示例技能。固定回答仅演示评测能力，不是任意用户技能的改善证据。\n\n```json\n{\n  \"id\": \"my-regression-set\",\n  \"skills\": [\"my-skill\"],\n  \"tasks\": [{\n    \"id\": \"structured-output\",\n    \"prompt\": \"只返回JSON，status字段为ok。\",\n    \"assertions\": [\n      {\"type\": \"json-field\", \"path\": [\"status\"], \"value\": \"ok\", \"critical\": true},\n      {\"type\": \"excludes\", \"value\": \"```\"},\n      {\"type\": \"length\", \"min\": 1, \"max\": 200}\n    ]\n  }]\n}\n```\n\n支持 contains、excludes、json-field（字段路径数组、精确JSON值类型）、length（Unicode码点长度）。未知字段、脚本类型、重复题ID和超过20题会被拒绝。JSON测试集不执行脚本。\n\n只有 `--live` 才调用当前 DSH 模型。两侧同一路由和参数、独立上下文、无工具，每侧每题一次，最多20题、2048输出tokens/次、60秒/次，支持宿主取消。报告列出前后通过数、失败断言序号、耗时和实际token用量；缺失用量显示未知，不推算费用。调用失败、取消、输出截断或结果不完整显示无法判定；出现单题退步或关键约束失败不得标为改善。\n\n摘要绑定测试集、原版本和候选摘要，存入新域 skill_ops_evaluations。不额外存储任务全文或模型回答；评测不会批准或修改技能。\n\n## 升级与 CI\n\n从0.3.x升级保留 skill_ops 和 skill_ops_mutations 的版本1及原表布局，仅添加可选字段和状态。出现 awaiting-approval/rejected/stale/expired 等新状态后，旧插件不能完整读取所有记录；降级前需要保留完整数据备份，不要让新旧插件同时写同一存储。\n\nGitHub Actions 固定宿主完整 SHA 和 pnpm 11.7.0，覆盖 Linux/Node22、Linux/Node24、Windows/Node24；包含类型检查、原生测试、Vitest、构建、离线评测、宿主集成、打包安装，Linux/Node24额外执行浏览器验证。工作流不读取模型密钥、不调用外部模型、不发布 npm。\n\n实际验收结果见 [0.4.0 测试记录](docs/test-review-0.4.0.md)。卡片约定见 [DESIGN.md](DESIGN.md)；历史设计见 [架构说明](docs/architecture.md)。\n"
+    },
+    {
+      "full_name": "hanshanxue83/collaborative-emergent-intelligence",
+      "html_url": "https://github.com/hanshanxue83/collaborative-emergent-intelligence",
+      "description": "",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-27T07:01:11Z",
+      "topics": [
+        "cognitive",
+        "dsh",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "cognitive",
+        "dsh",
+        "dsh-plugin"
+      ],
+      "readme_text": "# 协作模式（Collaborative Emergent Intelligence）\n\n> 协作模式· DSH 动态插件\n\n协作模式是一种人机协作认知方法。结构为：算法负责发散，人负责收敛。算法不执行最终选择，人不进行穷举搜索。\n**核心公式：协作涌现智能 = 工程化发散（AI）+ 直觉化收敛（人）**\n\n二、理论依据：AI 的幻觉与涌现源于同一机制——模型选择低概率输出。有利的低概率选择称为涌现，不利的称为幻觉。算法只有概率一个维度，无法区分两者，因此最终判断必须由人执行。\n\n三、作用：主流 AI 范式以准确率最大化为目标，系统性地排除低概率输出。被排除的内容恰是新认知的可能来源。协作模式改变这一结构：算法不再过滤低概率方向，而是将其作为候选提供给人，由人根据自己的目标函数裁决。\n\n四、工作流程\n一轮认知循环分两个相位：\n发散相位（算法执行）：穷举推演 → 碎片捕获 → 共振探测（五档）→ 联系建立\n收敛相位（人执行）：涌断裁决 → 盲区显影 → 底层逻辑合成\n两条不可违反的边界：算法不执行最终选择；人不进行穷举搜索。\n\n五、技术实现\n协作模式在 DSH 中实现为动态插件。包含 13 个工具、9 个双副本数据档案、3 个代码级安全阀（无显影不凝结 / 旧档案不覆盖新记忆 / 广度下限门）、三态相位状态机（发散 / 收敛 / 过渡）。\n操作方式为双轨操控：\n对话操控，如\"进入发散\"\"把XX记成碎片，领域YY\"\"探测 frag-3，auto 档\"\"选候选 B\"\"盲区是……\"\"凝结\"。\nUI 操控，对话栏灯条显示相位，三个裁决点（涌动确认、涌断收束、盲区显影）触发弹窗，一次一个，互斥。\n\n六、与主流范式的区别\n主流范式追求闭合：问→答→结束，低概率输出被压制，选择权在算法，系统看不到自己排斥的内容。\n协作模式延迟闭合：发散→收敛→再发散，低概率输出作为候选保留，选择权在人，系统能显影被排斥的内容。\n\n七、适用条件\n适用于方向不明确、需要扩大搜索空间、需要在互斥方向间裁决、需要避免过早闭合的场景。\n不适用于毫秒级事实查询、无涌动感的用户、算法发散能力不足的场景。\n\n## 能力清单（v8.3）\n\n| 维度 | 内容 |\n|---|---|\n| 工具 | 13 个：相位标记/状态查询/碎片捕获/五档共振探测/涌断裁决/盲区显影/碎片联系/发散穷举推演/底层逻辑综合/涌动报告/涌动裁决/涌动记录/自反递归 |\n| 共振探测 | 五档：manual（人主导）/ semi（web同向粗筛）/ audit（偏向审计）/ adversarial（对抗检索）/ auto（四路并行：同向+对抗+审计+**时序共振**，LLM 整合候选） |\n| LLM 引擎 | 真实 DeepSeek API（`deepseek-chat`），失败自动降级人工整合 |\n| 时序共振 | 时间维度：扫描池内历史碎片（bigram重叠+领域前缀+question锚点），LLM 判定结构复现，跨时间联系 kind:'temporal' 落盘 |\n| 三裁决点 | 涌动确认（追/不追，30分钟冷却）/ 涌断收束（方向裁决）/ 盲区显影（无显影不凝结——安全阀，消费型） |\n| 安全阀 | 无显影不凝结（代码级拒绝）/ 旧档案不得覆盖新记忆（seq单调保护）/ 广度下限门（伪深度截断） |\n| 记忆 | 9 档案 × 双副本（.bak 容灾）：相位/碎片/涌断/盲区/联系/收敛/涌动/自反/归档；启动自动恢复 |\n| 只沉默不删除 | 七池超限转归档区（archive.json），绝不 splice 丢弃 |\n| 界面 | DeepSeek 官方风格：对话栏极简灯条 + 三裁决点触发式弹窗（一次一个，互斥） |\n\n## 安装（DSH 会话内重建）\n\n1. 新对话中告知：启动协作模式。\n\n## 数据档案（矿区 workspace）\n\n相位（.drill-chassis-phase.json）/ fragments.json / yongduan.json / blindspots.json / links.json / convergences.json / surge.json / reflections.json / archive.json —— 全部自动双写 `.bak`。\n\n## 版本\n\n- npm: 1.0.0（对应机器版本 v8.3 / cei-5 pkg-19）\n- 数据档案格式向后兼容（id 去重 + seq 单调保护）\n\n## License\n\nMIT\n"
+    },
+    {
+      "full_name": "scientisbo/dsh-codex-usage",
+      "html_url": "https://github.com/scientisbo/dsh-codex-usage",
+      "description": "Codex 用量 · 订阅配额 + DeepSeek 余额聚合（DeepSeek Harness host 插件） | Codex subscription quota & DeepSeek balance aggregator for DeepSeek Harness",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-23T15:52:03Z",
+      "topics": [
+        "chatgpt",
+        "codex",
+        "deepseek-harness",
+        "dsh-plugin",
+        "usage"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "chatgpt",
+        "codex",
+        "deepseek-harness",
+        "dsh-plugin",
+        "usage"
+      ],
+      "readme_text": "# dsh-codex-usage ·「Codex 用量」\n\n> **Codex 订阅配额 + DeepSeek 余额聚合，一键并入 DeepSeek Harness 的用量面板。**\n>\n> 一个 DeepSeek Harness (DSH) **host 插件**：只读、回环、带缓存的聚合接口\n> `GET /api/dsh-usage/overview`，把 **Codex (ChatGPT 订阅)** 的滚动配额窗口\n> 和 **DeepSeek 账户余额** 收进同一个 JSON 里，供 UI 插件渲染。\n>\n> `Codex Usage` — a DeepSeek Harness host plugin that aggregates your Codex\n> (ChatGPT) subscription quota windows and DeepSeek account balance into one\n> loopback-only API endpoint.\n\n---\n\n## 这个插件是干什么的？\n\n如果你在用 **DeepSeek Harness + Codex 子代理**（把日常工作委派给 Codex），\n**最怕的就是订阅额度不知不觉刷爆**——Plus 账号是按 5 小时 / 7 天 / 每月\n滚动窗口限流的。这个插件：\n\n- 📊 **查 Codex 订阅配额**：通过锁定版 `@openai/codex@0.147.0` 的\n  app-server 协议读取 `account/read` + `account/rateLimits/read`，\n  得到 5h / 7d / month 三个滚动窗口的 **已用百分比 + 重置倒计时**；\n- 💰 **查 DeepSeek 余额**：官方 `api.deepseek.com/user/balance`\n  （总余额 / 赠金 / 充值分列，自动按有余额的 USD 优先选币种）；\n- 🔗 **给 UI 一个聚合端点**：一个 JSON、5 分钟缓存、`?refresh=1` 强制穿透，\n  前端只管渲染，不用碰任何密钥。\n\n> 💡 **有 ChatGPT Plus 账号？把它物尽其用。**\n> 配合 DSH 的 Codex 子代理（`dsh-subagent-codex`），日常写码、查资料、\n> 跑测试都能交给 Codex 分担 DeepSeek 的 token 压力；本插件 + 配套的\n> [DeepSeek 用量面板](#搭配-deepseek-用量面板) 就是你的\"仪表盘\"——\n> 一边干活，一边盯着配额不超限。\n\n## 安装（需要 DSH ≥ 0.1.1-rc.x、Node ≥ 22）\n\n```bash\n# 从本地目录安装（开发中）\ndsh plugin --profile web add \"file:/绝对路径/dsh-codex-usage\"\n# 或发布到 npm 后：\ndsh plugin --profile web add dsh-codex-usage\n```\n\n安装后 `dsh web` 会自动通过 `cordis.patch.yml` 注册插件；浏览器里不必刷新服务端\n以外的任何东西（UI 面板请看配套插件）。插件依赖的 `@openai/codex@0.147.0`\n由 npm 自动安装，**Codex 侧需已登录**（`codex login status` 显示\n`Logged in using ChatGPT`）。\n\n## 接口\n\n```http\nGET /api/dsh-usage/overview\n```\n\n| 查询参数 | 说明 |\n| --- | --- |\n| 无 | 命中 5 分钟内存缓存 |\n| `?refresh=1` | 强制穿透缓存，刷新数据 |\n\n响应示例：\n\n```json\n{\n  \"ok\": true,\n  \"updatedAt\": 1787492831169,\n  \"codex\": {\n    \"configured\": true,\n    \"windows\": [\n      { \"label\": \"5h\",    \"usedPercent\": 42.5, \"resetIn\": \"3h20m\", \"resetsAt\": 1787492831169 },\n      { \"label\": \"7d\",    \"usedPercent\": 18.2, \"resetIn\": \"5d\",    \"resetsAt\": null },\n      { \"label\": \"month\", \"usedPercent\": 61.0, \"resetIn\": \"12d\",   \"resetsAt\": null }\n    ],\n    \"error\": null\n  },\n  \"deepseek\": { \"balance\": { \"currency\": \"USD\", \"total\": 12.66, \"granted\": 0, \"toppedUp\": 12.66 } },\n  \"links\": {\n    \"codexUsage\":    \"https://codex.app/account/usage\",\n    \"deepseekUsage\": \"https://platform.deepseek.com/usage\"\n  }\n}\n```\n\n- `window.label`：`5h` / `7d` / `month` 英文短标签，多语言由 UI 层翻译；\n  `usedPercent` 0–100；`resetIn` 给人读的倒计时，`resetsAt` 时间戳（无则 `null`）。\n- Codex 未登录 / 网络异常时返回 `codex.configured: false` + 友好错误文本，**不抛 500**；\n  余额失败不影响 Codex 数据。\n\n## 安全设计\n\n- **回环-only**：仅接受本机回环地址 + `Host` 头校验（`127.x` / `::1` / `localhost`），\n  外部请求一律 403；\n- **只读 GET**：不接收请求体、不写任何状态，仅两个只读上游调用；\n- **密钥不出 DSH**：DeepSeek 的 API Key 通过 DSH 的 `credentials` 服务解析\n  （`~/.dsh/.credentials.yaml` 的 `DEEPSEEK_API_KEY` ref 或同名环境变量），\n  不落盘、不写日志；Codex 配额走本机已登录的 `~/.codex`，也不需要密钥。\n\n## 可选配置\n\n`cordis.patch.yml` 的 insert 条目加 `config`：\n\n```yaml\n- insert:\n    - id: codex-usage\n      name: dsh-codex-usage\n      config:\n        apiKeyRef: DEEPSEEK_API_KEY        # 余额接口 API Key ref（默认）\n        codexUsageUrl: https://codex.app/account/usage     # 官方用量页链接（默认）\n        deepseekUsageUrl: https://platform.deepseek.com/usage\n        refreshMs: 300000                  # 缓存 TTL（默认 5 分钟）\n        timeoutMs: 30000                   # Codex app-server / 上游超时（默认 30s）\n```\n\n## 与 Codex 子代理的关系（别搞混）\n\n- **\"用 Codex 干活\"**（把任务委派出去 / 发布 subagent）：这是**官方插件**\n  `@deepseek-ai/dsh-subagent-codex` 的事——一条命令装上：\n  `dsh plugin --profile web add @deepseek-ai/dsh-subagent-codex`，\n  之后 DSH 里出现 `subagent_codex` 工具，由它把任务交给 Codex 执行\n  （需 ChatGPT 账号先 `codex login`）。该插件由 deepseek-ai 官方维护，\n  **不随本仓库分发**；\n- **\"看 Codex 用了多少\"**（本插件）：只通过 app-server 的 `account/read` +\n  `account/rateLimits/read` 读配额，**不发布任何任务、不参与调用**；\n- 组合玩法：如果你想用 ChatGPT Plus 账号分担日常工作，先装官方子代理去\n  **干活**，再用本插件**盯着配额**——5h / 7d 滚动窗口用了多少、多久重置，\n  一目了然，不会刷爆限流。\n\n## 搭配 DeepSeek 用量面板\n\n数据是拿来**看得舒服**的。配套客户端插件\n[`dsh-deepseek-usage`](https://github.com/scientisbo/dsh-deepseek-usage)：\n一个**简洁美观**的浮动面板——侧边栏底部入口、余额徽标、今日/本月 token\n与花费、Top 模型、每日热力图，并自带「Codex 订阅」区块消费本插件这个\n`/api/dsh-usage/overview` 接口（缺端时静默隐藏）。\n\n- 本插件提供**数据**（Codex 配额 + DeepSeek 余额）；\n- 面板负责**展示**（界面、刷新按钮、5 分钟自动轮询）。\n\n两者独立安装、独立更新，用同一个数据契约串联。\n\n## 接口契约 / 致谢\n\n`account/rateLimits/read` 等 app-server 方法为 Codex 插件协议；聚合口径参考\n[CodexBar](https://github.com/steipete/CodexBar)、\nDeepSeek 余额结构参考官方 `/user/balance` 文档。\nDSH 插件骨架与回环护栏借鉴\n[@ychris12138/dsh-usage-stats](https://github.com/Ychris12138/dsh-usage-stats)（MIT）。\n\n## License\n\nMIT\n"
     }
   ]
 }

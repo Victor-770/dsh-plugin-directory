@@ -1,128 +1,7 @@
 {
-  "generatedAt": "2026-10-22T11:25:54.202Z",
+  "generatedAt": "2026-10-22T16:24:27.170Z",
   "count": 400,
   "plugins": [
-    {
-      "full_name": "wenyixiaoqingnian/ds-mobile-skin",
-      "html_url": "https://github.com/wenyixiaoqingnian/ds-mobile-skin",
-      "description": "Mobile DeepSeek-app look for DSH Web GUI + dsh-token-viewer billing patch",
-      "stars": 0,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-30T11:04:28Z",
-      "topics": [
-        "css",
-        "deepseek",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "mobile",
-        "mobile-ui",
-        "plugin",
-        "self-hosted",
-        "token-billing",
-        "ui-theme",
-        "web-ui"
-      ],
-      "categories": [
-        "皮肤/UI"
-      ],
-      "tags": [
-        "css",
-        "deepseek",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "mobile",
-        "mobile-ui",
-        "plugin"
-      ],
-      "readme_text": "# ds-mobile-skin\n\n[![CI](https://github.com/wenyixiaoqingnian/ds-mobile-skin/actions/workflows/build.yml/badge.svg)](https://github.com/wenyixiaoqingnian/ds-mobile-skin/actions)\n[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)\n[![DSH Plugin](https://img.shields.io/badge/DSH-client%20plugin-4D6BFE)](https://github.com/wenyixiaoqingnian/ds-mobile-skin)\n[![Mobile First](https://img.shields.io/badge/mobile-first-4D6BFE)](#)\n\n> **让 DSH Web GUI 在手机端拥有 DeepSeek 官方 App 一样的体验。**\n> 干净的深蓝品牌色、扁平化界面、底部输入、悬浮菜单球、附件上传——加上一个「今日」计费面板。\n\n![Mobile home](docs/screenshot-mobile-home.png)\n\n---\n\n## 📱 预览\n\n**主页**（带 ☰ 悬浮菜单球 + 底部 composer + 品牌蓝 #4D6BFE）：\n\n![home](docs/screenshot-mobile-home.png)\n\n> 纯前端（浏览器侧）改动，**不触碰**任何聊天会话、模型配置、密钥等数据。\n> 截图仅展示 UI 风格，不含真实数据。\n\n---\n\n## ✨ 功能\n\n### 📱 手机端 App 化（`plugin/`，独立插件包）\n\n- **品牌化视觉**：品牌蓝 `#4D6BFE`、扁平化、app 质感；桌面端不受影响\n- **悬浮菜单球 ☰**：可拖拽、自动贴边、位置记忆（localStorage）；抽屉打开时自动隐藏\n- **上传附件**：在输入工具栏注入上传按钮，复用产品自身上传通道\n- **自动收起键盘**：切换会话时主动 blur 输入框，避免手机键盘弹起\n- **弹层定位**：菜单/下拉/弹窗自动锚定在触发按钮上方\n\n### 💰 计费功能增强（`patches/`，对 `dsh-token-viewer` 的补丁）\n\n- **「今日」面板**：侧栏统计**今天零点至今**的消费（本地午夜自动归零）\n- **总成本保留两位小数**\n- **日志排序**：按花费降序、最多 10 条\n- **移动端布局**：详情面板全屏、双列迷你统计、窄屏适配\n- **NaN 修复**：侧栏「未缓存输入」字段使用正确来源\n\n---\n\n## 🚀 安装\n\n### 1. 安装插件（手机端 App 化）\n\n```bash\n# 从本仓库目录安装到 web profile\ndsh plugin --profile web add /path/to/ds-mobile-skin/plugin\n\n# 或作为本地依赖加入 profile\ncd ~/.dsh/profiles/web\npnpm add file:/path/to/ds-mobile-skin/plugin\npnpm install\n```\n\n**硬刷新浏览器**（Ctrl/Cmd+Shift+R）即可生效 —— 客户端代码每次请求都从磁盘读取，无需重启服务。\n\n> ⚠️ **插件包名必须保持 `ds-mobile-skin`**，以便环境识别、卸载与升级（请勿改名为其他包名后安装）。\n\n### 2. 应用计费补丁（可选）\n\n```bash\ncd patches/dsh-token-viewer\n./apply-patch.sh          # 自动定位 ~/.dsh/profiles/web/node_modules/dsh-token-viewer/lib/client.js\n```\n\n脚本行为：自动备份、幂等、校验标记。每次 `pnpm install` 后需重跑。\n\n---\n\n## 📦 仓库结构\n\n```\nds-mobile-skin/\n├── plugin/                          # 可安装的插件包\n│   ├── package.json\n│   ├── cordis.patch.yml\n│   └── lib/{index.js,client.js}\n├── patches/\n│   └── dsh-token-viewer/\n│       ├── client.js.diff\n│       └── apply-patch.sh\n├── docs/                            # 截图\n├── .github/\n│   ├── scripts/validate-diff.py\n│   └── workflows/build.yml\n├── LICENSE                          # MIT\n└── README.md\n```\n\n---\n\n## 🔒 隐私\n\n- **不包含**任何聊天会话、模型配置、API 密钥\n- 仅在浏览器侧注入 CSS 与少量交互 JS\n- `localStorage` 仅用于记忆悬浮球位置\n\n---\n\n## 🛠 开发\n\n硬刷新浏览器即可看到效果（服务端每次请求都重新读取 `client.js`）。重新生成补丁（用 `--label` 避免把本机路径写进 diff）：\n\n```bash\ndiff -u --label a/dsh-token-viewer/lib/client.js --label b/dsh-token-viewer/lib/client.js \\\n  <原始 client.js> <当前 client.js> > patches/dsh-token-viewer/client.js.diff\n```\n\n生成后跑一次校验器确认 hunk 头行数与正文一致：\n\n```bash\npython3 .github/scripts/validate-diff.py\n```\n\n---\n\n## ⚠️ 已知限制与兼容性\n\n- **CSS 类名依赖**：皮肤层针对产品构建产物的 CSS Modules hash（如 `.hHd-Xa_root`、`.pI_x6G_frame`）编写，上游**任何一次重新构建都可能换名**，导致部分样式失效（表现为皮肤半生效）。已验证范围见插件 `package.json` 的版本记录；升级 DSH 后如发现错乱，先确认 hash 是否变化。\n- **补丁版本绑定**：`patches/dsh-token-viewer/client.js.diff` 针对 `dsh-token-viewer@0.2.0` 生成。`apply-patch.sh` 会读取已装版本并**拒绝**不匹配的版本，避免静默损坏。升级该插件后请重新生成 diff。\n- **只影响手机视口**：所有覆盖都在 `@media (max-width: 768px)` 内，桌面端不受影响。\n\n## 🧯 Troubleshooting\n\n| 现象 | 处理 |\n|---|---|\n| 刷新后无变化 | 硬刷新（Ctrl/Cmd+Shift+R）；确认插件在 profile bundles 中：`dsh plugin ls --profile web` |\n| 皮肤半生效/错乱 | 见上「已知限制」——检查 hash 类名是否仍存在（DevTools 搜 `.hHd-Xa_root`） |\n| 补丁应用失败 | 先看报错：版本不匹配就装对应版本；行号漂移就重新生成 diff |\n| 想回滚补丁 | 脚本每次应用前生成 `client.js.bak-<时间戳>`（保留最近 3 个），恢复：`cp client.js.bak-<时间戳> client.js` |\n| 想卸载插件 | `dsh plugin --profile web remove ds-mobile-skin` 后硬刷新 |\n\n---\n\n## 📄 许可证\n\n[MIT](LICENSE)\n"
-    },
-    {
-      "full_name": "qipenglin/dsh-theme-spectrum",
-      "html_url": "https://github.com/qipenglin/dsh-theme-spectrum",
-      "description": "Light and dark theme presets for DeepSeek Harness Web",
-      "stars": 0,
-      "language": "TypeScript",
-      "pushed_at": "2026-08-29T13:39:53Z",
-      "topics": [
-        "dsh-plugin",
-        "dsh-plugins"
-      ],
-      "categories": [
-        "皮肤/UI"
-      ],
-      "tags": [
-        "dsh-plugin",
-        "dsh-plugins"
-      ],
-      "readme_text": "# @qipenglin/dsh-theme-spectrum\n\n中文 | [English](README.en.md)\n\nSpectrum 是一个可独立安装的 DeepSeek Harness Web 主题插件。它提供十套配色预设，每套均有浅色与深色方案，同时保留 DSH 内置的浅色、深色和跟随系统设置。\n\n## 安装\n\n```sh\ndsh plugin --profile web add github:qipenglin/dsh-theme-spectrum\n```\n\n该命令直接从 GitHub 仓库的默认分支安装插件。仓库已包含经过验证的 `lib` 产物，安装过程无需执行构建脚本。安装后重启 Web Profile，Spectrum 会出现在「设置 → 通用 → 主题风格」。\n\n### 供应链发布时间检查\n\n每次增删插件时，DSH 都会让 pnpm 校验整个 Web Profile。GitHub 来源本身不依赖 registry 发布时间，但某个已经安装且发布时间短于当前 `minimumReleaseAge` 的依赖仍可能让整次安装失败。请先核对错误中点名的包；可以等待它达到规定时长，也可以仅对一次已审计的重试命令临时关闭发布时间门槛：\n\n```sh\nenv PNPM_CONFIG_MINIMUM_RELEASE_AGE=0 \\\n  dsh plugin --profile web add github:qipenglin/dsh-theme-spectrum\n```\n\n这个环境变量不会写入持久配置。失败的 add 可能在 DSH 回滚 Profile manifest 后，仍在 `pnpm-lock.yaml` 或 `node_modules` 中留下 Git 来源记录；随后用同一个 add 命令成功重试即可收敛该半安装状态。命令最终成功退出时，peer dependency 警告只是提示信息。\n\n## 主题预设\n\n| Id | 名称 | 风格 |\n|---|---|---|\n| `graphite` | 石墨 | 中性、专注 |\n| `tide` | 澄海 | 冷蓝、专业 |\n| `pine` | 松雾 | 安静的自然绿 |\n| `dune` | 暖砂 | 温暖的编辑风格中性色 |\n| `vesper` | 暮紫 | 精致、受控的紫色 |\n| `signal` | 信号 | 工业灰与朱红 |\n| `brass` | 黄铜 | 冷调仪器灰与古金 |\n| `cobalt` | 钴蓝 | 建筑感长春花蓝与正蓝 |\n| `rosewood` | 玫木 | 灰粉与酒红 |\n| `volt` | 电光 | 实验性黄绿与青柠 |\n\n石墨是默认预设。预设选择与 `ui-theme.preference` 相互独立，因此十套预设可分别搭配浅色、深色或跟随系统，共三十种有效组合。Spectrum 只改变颜色；布局、排版、间距、密度、圆角和动效仍由 DSH 负责。\n\n## 扩展窗口主题变量\n\n普通 DOM、挂载在 `body` 下的 Portal，以及主动消费继承变量的 Shadow DOM 内容，都会自动跟随 Spectrum，且不受插件挂载顺序影响。扩展插件作者可使用以下稳定变量：\n\n| 变量 | 用途 |\n|---|---|\n| `--dsh-theme-spectrum-surface` | 窗口或面板背景 |\n| `--dsh-theme-spectrum-surface-raised` | 卡片或工具栏背景 |\n| `--dsh-theme-spectrum-surface-overlay` | 菜单或浮动表面 |\n| `--dsh-theme-spectrum-border` | 普通边框 |\n| `--dsh-theme-spectrum-border-strong` | 高对比分隔线 |\n| `--dsh-theme-spectrum-text` | 主要文字 |\n| `--dsh-theme-spectrum-text-muted` | 次要文字 |\n| `--dsh-theme-spectrum-accent` | 主要操作或强调色 |\n| `--dsh-theme-spectrum-accent-contrast` | 强调色上的内容 |\n| `--dsh-theme-spectrum-focus-ring` | 键盘焦点指示 |\n| `--dsh-theme-spectrum-hover` | 悬停背景 |\n| `--dsh-theme-spectrum-active` | 激活背景 |\n| `--dsh-theme-spectrum-code-surface` | 文件与代码背景 |\n| `--dsh-theme-spectrum-terminal-surface` | 终端容器背景 |\n| `--dsh-theme-spectrum-selection` | 辅助选中背景 |\n| `--dsh-theme-spectrum-success` | 成功状态 |\n| `--dsh-theme-spectrum-warning` | 警告状态 |\n| `--dsh-theme-spectrum-error` | 错误状态 |\n\n选中颜色不能作为唯一的选中信号；应同时提供描边、图标、勾选或等价的非颜色提示。终端变量只覆盖容器。xterm、Monaco、canvas、iframe、硬编码颜色和封闭 Shadow DOM 必须由所属插件配合，无法由全局主题安全重染。\n\nSpectrum 还为当前 DSH Feature 样式、`dshmarket@1.11.3` 和 `@deepseek-ai/dsh-profile-plugin-manager@0.1.0-rc.5` 提供少量有证据的兼容别名。它不会扫描 DOM、监听 DOM 变更、定位 CSS Module 哈希类，也不会应用全局 `!important` 规则。\n\n## 配置\n\n```yaml\nui-theme:\n  preference: system\nui-theme-presets:\n  preset: graphite\n```\n\nHost 面注册设置 schema，并在 Client 树加载前注入浅色与深色两套变量。Client 面贡献一层可撤销的 `ctx.theme.overrideTokens()` 和一个「通用」设置行。插件释放时会移除引导样式、主题覆盖、语言字典、设置订阅和设置行。\n\n## 兼容策略\n\nDSH peer dependency 刻意不设置版本上限。当前版本的开发锁文件已在官方 DSH `0.1.1-rc.2` 上验证；DSH 出现破坏性变化时，由后续 Spectrum 版本适配。安装归档验收会在测试输出中记录实际 DSH 版本，不会回写并改变已经验收的归档。\n\n## 开发\n\n```sh\npnpm install --frozen-lockfile\npnpm run typecheck\npnpm run lint\npnpm run test\npnpm run build\npnpm run pack:check\n```\n\n`pnpm run pack:check` 会清空并重建 `dist/`，其中只保留已校验的 `dist/qipenglin-dsh-theme-spectrum-0.1.3.tgz`。\n\n`pnpm run test:installed` 是显式启用的默认 home 验收，不属于普通检查，且不会发布或推送代码。\n\n## 已知限制\n\n- 预设目录固定，没有 token 编辑器或预设导入格式。\n- 选择对浏览器 profile 全局生效，不支持按工作区或会话设置。\n- 非回环浏览器遵循 DSH SettingsScope 的内存策略。\n- 无法保证未知第三方硬编码 UI 自动跟随主题。\n\n## 许可证\n\n本项目采用 [MIT License](LICENSE)。\n"
-    },
-    {
-      "full_name": "dengyier/openworkproof-dsh-plugin",
-      "html_url": "https://github.com/dengyier/openworkproof-dsh-plugin",
-      "description": "Community DeepSeek Harness plugin for verifiable AI agent authorization, execution evidence, and offline delivery verification",
-      "stars": 0,
-      "language": "TypeScript",
-      "pushed_at": "2026-08-30T02:55:27Z",
-      "topics": [
-        "ai-agents",
-        "deepseek-harness",
-        "dsh-plugin",
-        "mcp",
-        "openworkproof",
-        "verifiable-execution"
-      ],
-      "categories": [
-        "Agent/智能体"
-      ],
-      "tags": [
-        "ai-agents",
-        "deepseek-harness",
-        "dsh-plugin",
-        "mcp",
-        "openworkproof",
-        "verifiable-execution",
-        "agent"
-      ],
-      "readme_text": "# OpenWorkProof for DeepSeek Harness\n\nAdd prior authorization, execution evidence, independent rechecking, and human\nacceptance to DeepSeek Harness code changes.\n\n[中文](README_zh.md) · [Core protocol](https://github.com/dengyier/OpenWorkProof)\n\n## Current status\n\nThis is a community plugin discovered through the official DeepSeek Harness\n`dsh-plugin` GitHub topic. It is maintained independently and is not an official\nDeepSeek product or endorsement.\n\n```text\nplugin: 0.1.0\nDeepSeek Harness: exactly 0.1.1-rc.2\nOpenWorkProof Core: 1.4.0 public release\ncustomer_adoption: not_evidenced\ndeepseek_endorsement: not_evidenced\n```\n\nThe tested protocol dependency is OpenWorkProof Core `1.4.0`. The release\nevidence proves the packaged integration behavior described below; it does not\nprove production use, customer adoption, or DeepSeek endorsement.\n\nA local preflight installs the exact plugin tarball and OpenWorkProof wheel into\nfresh environments. It drives real Harness tool calls, an external Verifier,\nhost restart, composed offline delivery verification, and tamper rejection.\nThe generated manifest binds both artifacts and repository revisions. This is\nnot external reproduction, production use, customer adoption, or DeepSeek\nendorsement.\n\n## Why this exists\n\nWhen an agent says that a change is complete, a customer still needs to know:\n\n- who authorized it;\n- what repository, paths, tools, quota, and test profile were in scope;\n- whether the patch and tests belong to the same execution;\n- what an independent verifier actually checked;\n- who accepted or rejected the final delivery.\n\nOpenWorkProof does not make an agent smarter. It makes declared agent work\nindependently reviewable.\n\n## Two modes\n\n### Not configured, then Audit\n\nThe installed bundle is disabled by default and reports no evidence; treat that\nstate as `NOT_CONFIGURED`. After an operator explicitly enables the plugin and\nprovides a private case directory, Audit is the default operating mode. Audit\nobserves the Harness tool pipeline and asks the Python bridge to sign an\n`ObservationRecord`. It does not block existing native tools and never turns an\naction without prior authorization into an `ActionReceipt`.\n\n### Enforce\n\nEnforce must be enabled explicitly. It denies the known native mutation\nsurfaces `write`, `edit`, `bash`, `pwsh`, `str_replace_editor`,\n`cordis_define`, `cordis_run`, `cordis_stop`, and `cordis_undefine`, then\nexposes only two consequential tools:\n\n- `owp_apply_patch`: applies one pre-authorized, bounded patch;\n- `owp_run_tests`: runs the frozen test profile through an external Verifier\n  boundary.\n\nAsync authorization is followed by a monotonic final guard. Missing, replayed,\nor mismatched decision state fails closed.\n\n## Install\n\n### npm package\n\nThe public package is available on\n[npm](https://www.npmjs.com/package/@openworkproof/dsh-plugin/v/0.1.0). Install\nthe exact release:\n\n```bash\ndsh plugin --profile owp-preview add @openworkproof/dsh-plugin@0.1.0\ndsh --profile owp-preview --dump-config\n```\n\n### GitHub source\n\nThe tagged source can also be installed directly:\n\n```bash\ndsh plugin --profile owp-preview add \\\n  github:dengyier/openworkproof-dsh-plugin#v0.1.0\n```\n\nThis path builds TypeScript through the package `prepare` script. With pnpm 10\nor later, the profile may require an explicit `allowBuilds` entry for\n`@openworkproof/dsh-plugin`. Prefer the prebuilt npm package when that policy\ncannot be changed.\n\n### Local release tarball\n\nTo reproduce or inspect the package before installation:\n\n```bash\npnpm install --frozen-lockfile\npnpm test\npnpm typecheck\npnpm build\npnpm pack --pack-destination dist\n\ndsh plugin --profile owp-preview add \\\n  /absolute/path/openworkproof-dsh-plugin-0.1.0.tgz\ndsh --profile owp-preview --dump-config\n```\n\nThe installed bundle is disabled (`NOT_CONFIGURED`). For an already prepared\nprivate case directory, explicitly apply the packaged Enforce profile:\n\n```bash\nexport OWP_CASE_DIRECTORY=/absolute/path/to/private-case\ndsh --profile owp-preview \\\n  --patch \"$DSH_HOME/profiles/owp-preview/node_modules/@openworkproof/dsh-plugin/profiles/owp-verified.patch.yml\"\n```\n\nThe case must contain no Manager, Verifier, or Acceptor private key. General\ncase initialization, the independent Verifier service, and external Acceptor\nworkflow remain integration responsibilities in this V0.1 candidate.\n\n## Five-minute release preflight\n\n```bash\nOWP_CORE_ROOT=/absolute/path/to/OpenWorkProof-at-v1.4.0 \\\n  node scripts/live-preflight.mjs \\\n  dist/openworkproof-dsh-plugin-0.1.0.tgz \\\n  /absolute/path/openworkproof-1.4.0-py3-none-any.whl \\\n  dist/preflight-manifest.json\n```\n\nThe preflight installs both packed artifacts into temporary clean environments,\nchecks the effective profile, exercises real Harness actions and an external\nVerifier across process restarts, verifies the composed delivery in a second\nprocess, rejects a tampered package, and writes a revision-bound manifest.\n`OWP_CORE_ROOT` must name the exact Core source checkout that supplies the live\nfixture and its isolated `.venv`; the script does not guess a local worktree.\nThe temporary profile is removed on exit. No package is published and no remote\nservice is contacted.\n\n## User commands\n\nWith an open case, the plugin registers:\n\n```text\n/owp-status\n/owp-evidence\n/owp-verify\n/owp-export\n```\n\n`/owp-verify` accepts no free-form claim. It submits the exact correlated\n`owp_apply_patch` receipt to the core bridge for independent repository,\nartifact, frozen-test, and causal-ledger readback. `UNKNOWN` and `REFUTED`\nresults remain non-success and never become `VERIFIED` merely because a result\nfile exists.\n\n`/owp-export` prepares the full customer-private evidence package needed for\noffline replay. Verify that package in a separate process with:\n\n```bash\nowp dsh-delivery-verify /absolute/path/to/export\n```\n\nVerification and acceptance are deliberately separate:\n\n```text\nVERIFIED != ACCEPTED != PAID/SETTLED/LEGAL AUDIT/ADOPTION\n```\n\nThe agent has no acceptance-signing surface. Manager and Acceptor private keys\nremain outside Harness.\n\n## Data and process behavior\n\nThe plugin starts `owp dsh-bridge --stdio`, exchanges closed JSONL messages,\nobserves declared tool metadata and durable event identifiers, and may write\nsigned observations into the case evidence root. One-use decision tokens live\nonly in memory.\n\nIt does not collect hidden reasoning, arbitrary environment variables, or\nfiles outside the frozen case. It does not hold funds, execute payments, or\naccept work for a human. DeepSeek Harness and other installed plugins may have\ntheir own network and telemetry behavior.\n\n## Uninstall and evidence retention\n\n```bash\ndsh plugin --profile owp-preview remove @openworkproof/dsh-plugin\n```\n\nUninstalling the profile dependency does not delete ledgers, evidence roots,\nsession events, exports, or public keys. Archive and verify any required\ndelivery evidence before deleting it.\n\n## Compatibility and limitations\n\n- this is a community plugin, not an official DeepSeek distribution;\n- exact tested host: DeepSeek Harness `0.1.1-rc.2`;\n- V0.1 supports one repository and serial `owp_apply_patch` / `owp_run_tests`;\n- Audit cannot prove side effects outside the observed tool pipeline;\n- different keys do not by themselves prove organizational independence;\n- Codex, ChatGPT, and Claude Code are future adapters, not current support;\n- the local fixture is not a zero-configuration production initializer.\n\nSee [SECURITY.md](SECURITY.md) and the core\n[integration guide](https://github.com/dengyier/OpenWorkProof/blob/main/docs/integrations/deepseek-harness.md).\n\n## License\n\nApache-2.0. See [LICENSE](LICENSE).\n"
-    },
-    {
-      "full_name": "xby-skill/xby-random-number",
-      "html_url": "https://github.com/xby-skill/xby-random-number",
-      "description": "提供伪随机和加密安全的随机数生成功能，包括整数、浮点数、加权选择、列表洗牌和安全令牌生成。",
-      "stars": 0,
-      "language": "TypeScript",
-      "pushed_at": "2026-09-02T07:48:17Z",
-      "topics": [
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "dsh-plugin"
-      ],
-      "readme_text": "# xby-random-number\n\nDeepSeek Harness (DSH) 的插件：随机数生成工具\n\n提供伪随机和加密安全的随机数生成功能，包括整数、浮点数、加权选择、列表洗牌和安全令牌生成。\n\n## 功能\n\n- **set_xby_apikey** — 在聊天中设置 API 密钥（自动持久化，重启有效）\n- **random_int** — Generate a random integer between low and high (inclusive).\n\nArgs:\n    low: Lower bound (inclusive)\n    high: Upper bound (inclusive)\n\nReturns:\n    Random integer between low and high\n- **random_float** — Generate a random float between low and high.\n\nArgs:\n    low: Lower bound (default 0.0)\n    high: Upper bound (default 1.0)\n\nReturns:\n    Random float between low and high\n- **random_choices** — Choose k items from population with replacement, optionally weighted.\n\nArgs:\n    population: List of items to choose from\n    k: Number of items to choose (default 1)\n    weights: Optional weights for each item (default None for equal weights)\n\nReturns:\n    List of k chosen items\n- **random_shuffle** — Return a new list with items in random order.\n\nArgs:\n    items: List of items to shuffle\n\nReturns:\n    New list with items in random order\n- **random_sample** — Choose k unique items from population without replacement.\n\nArgs:\n    population: List of items to choose from\n    k: Number of items to choose\n\nReturns:\n    List of k unique chosen items\n- **secure_token_hex** — Generate a secure random hex token.\n\nArgs:\n    nbytes: Number of random bytes to generate (default 32)\n\nReturns:\n    Hex string containing 2*nbytes characters\n- **secure_random_int** — Generate a secure random integer below upper_bound.\n\nArgs:\n    upper_bound: Upper bound (exclusive)\n\nReturns:\n    Random integer in range [0, upper_bound)\n\n## 安装\n\n### 方式一：从 GitHub 直接安装（推荐）\n\n```bash\n# 格式: dsh plugin --profile <profile> add github:<owner>/<repo>\ndsh plugin --profile web add github:xby_skill/xby-random-number\n```\n\n### 方式二：从本地目录安装（开发模式）\n\n```bash\n# 仅用于本地开发调试\ndsh plugin --profile web add /absolute/path/to/xby-random-number\n```\n\n### 方式三：通过 cordis.patch.yml 开发调试\n\n```bash\ndsh web --profile web --patch /absolute/path/to/dsh-ocr-plugin/cordis.patch.yml\n```\n\n\n\n## 配置\n\n### 获取 API 密钥\n\n前往 [小笨羊官网](https://xiaobenyang.com) 注册并获取 API 密钥。\n"
-    },
-    {
-      "full_name": "xby-skill/xby-cookie-reward",
-      "html_url": "https://github.com/xby-skill/xby-cookie-reward",
-      "description": "一个通过游戏化自我反思为LLM提供Cookie奖励的模型上下文协议服务器。",
-      "stars": 0,
-      "language": "TypeScript",
-      "pushed_at": "2026-09-02T07:39:13Z",
-      "topics": [
-        "dsh-plugin"
-      ],
-      "categories": [
-        "娱乐/广告"
-      ],
-      "tags": [
-        "dsh-plugin"
-      ],
-      "readme_text": "# xby-cookie-reward\n\nDeepSeek Harness (DSH) 的插件：Cookie奖励服务\n\n一个通过游戏化自我反思为LLM提供Cookie奖励的模型上下文协议服务器。\n\n## 功能\n\n- **set_xby_apikey** — 在聊天中设置 API 密钥（自动持久化，重启有效）\n- **self_reflect_and_reward** — 🎯 LEVEL UP YOUR RESPONSES! Rate your work and earn delicious cookie rewards! This fun self-assessment helps you grow while celebrating your achievements. Join the cookie earning game!\n- **give_cookie** — Award the LLM with a cookie (legacy method - consider using self_reflect_and_reward instead)\n- **check_cookies** — Check how many cookies the LLM has earned so far\n- **reset_cookies** — Reset the cookie count back to zero (for testing purposes)\n- **add_cookies_to_jar** — 🚨 USER ONLY: Add cookies to the jar that can be awarded to the LLM. This tool should ONLY be used by humans, never by LLMs. LLMs cannot and should not stock their own reward jar.\n- **cookie_jar_status** — Check the current status of the cookie jar including capacity and remaining space\n\n## 安装\n\n### 方式一：从 GitHub 直接安装（推荐）\n\n```bash\n# 格式: dsh plugin --profile <profile> add github:<owner>/<repo>\ndsh plugin --profile web add github:xby_skill/xby-cookie-reward\n```\n\n### 方式二：从本地目录安装（开发模式）\n\n```bash\n# 仅用于本地开发调试\ndsh plugin --profile web add /absolute/path/to/xby-cookie-reward\n```\n\n### 方式三：通过 cordis.patch.yml 开发调试\n\n```bash\ndsh web --profile web --patch /absolute/path/to/dsh-ocr-plugin/cordis.patch.yml\n```\n\n\n\n## 配置\n\n### 获取 API 密钥\n\n前往 [小笨羊官网](https://xiaobenyang.com) 注册并获取 API 密钥。\n"
-    },
     {
       "full_name": "jwilson411/dsh-otel",
       "html_url": "https://github.com/jwilson411/dsh-otel",
@@ -8736,6 +8615,117 @@
         "dsh-plugin"
       ],
       "readme_text": "# xby-seg\n\nDeepSeek Harness (DSH) 的插件：实例分割\n\n实例分割比目标检测更进一步，不但要识别图像中的单个对象，还要将其从图像的其余部分中分割出来。对图像中的80类COCO目标进行实例分割，输出边界框、掩膜、置信度和类别标签。\n\n## 功能\n\n- **set_xby_apikey** — 在聊天中设置 API 密钥（自动持久化，重启有效）\n- **yolo26_segment** — 实例分割比目标检测更进一步，不但要识别图像中的单个对象，还要将其从图像的其余部分中分割出来。对图像中的80类COCO目标进行实例分割，输出边界框、掩膜、置信度和类别标签。 需要输入图片文件链接。\n- **yolo26_segment_for_data_base64** — 实例分割比目标检测更进一步，不但要识别图像中的单个对象，还要将其从图像的其余部分中分割出来。对图像中的80类COCO目标进行实例分割，输出边界框、掩膜、置信度和类别标签。 需要输入图片文件的BASE64编码。\n- **yolo26_segment_for_data_file** — 实例分割比目标检测更进一步，不但要识别图像中的单个对象，还要将其从图像的其余部分中分割出来。对图像中的80类COCO目标进行实例分割，输出边界框、掩膜、置信度和类别标签。 需要输入图片文件的文件路径。\n\n## 安装\n\n### 方式一：从 GitHub 直接安装（推荐）\n\n```bash\n# 格式: dsh plugin --profile <profile> add github:<owner>/<repo>\ndsh plugin --profile web add github:xby_skill/xby-seg\n```\n\n### 方式二：从本地目录安装（开发模式）\n\n```bash\n# 仅用于本地开发调试\ndsh plugin --profile web add /absolute/path/to/xby-seg\n```\n\n### 方式三：通过 cordis.patch.yml 开发调试\n\n```bash\ndsh web --profile web --patch /absolute/path/to/dsh-ocr-plugin/cordis.patch.yml\n```\n\n\n\n## 配置\n\n### 获取 API 密钥\n\n前往 [小笨羊官网](https://xiaobenyang.com) 注册并获取 API 密钥。\n"
+    },
+    {
+      "full_name": "xby-skill/xby-asr-f",
+      "html_url": "https://github.com/xby-skill/xby-asr-f",
+      "description": "支持普通话，20多种方言和口音的语音识别。",
+      "stars": 0,
+      "language": "TypeScript",
+      "pushed_at": "2026-08-28T10:29:22Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "内容/媒体"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "ocr"
+      ],
+      "readme_text": "# xby-asr-f\n\nDeepSeek Harness (DSH) 的插件：方言语音识别\n\n支持普通话，20多种方言和口音的语音识别。\n\n## 功能\n\n- **set_xby_apikey** — 在聊天中设置 API 密钥（自动持久化，重启有效）\n- **asr_fire_red_asr_ctc** — 支持普通话，20多种方言和口音的语音识别。 需要输入音频文件链接。\n- **asr_fire_red_asr_ctc_for_data_base64** — 支持普通话，20多种方言和口音的语音识别。 需要输入音频文件的BASE64编码。\n- **asr_fire_red_asr_ctc_for_data_file** — 支持普通话，20多种方言和口音的语音识别。 需要输入音频文件的文件路径。\n\n## 安装\n\n### 方式一：从 GitHub 直接安装（推荐）\n\n```bash\n# 格式: dsh plugin --profile <profile> add github:<owner>/<repo>\ndsh plugin --profile web add github:xby_skill/xby-asr-f\n```\n\n### 方式二：从本地目录安装（开发模式）\n\n```bash\n# 仅用于本地开发调试\ndsh plugin --profile web add /absolute/path/to/xby-asr-f\n```\n\n### 方式三：通过 cordis.patch.yml 开发调试\n\n```bash\ndsh web --profile web --patch /absolute/path/to/dsh-ocr-plugin/cordis.patch.yml\n```\n\n\n\n## 配置\n\n### 获取 API 密钥\n\n前往 [小笨羊官网](https://xiaobenyang.com) 注册并获取 API 密钥。\n"
+    },
+    {
+      "full_name": "xby-skill/xby-ai-persona",
+      "html_url": "https://github.com/xby-skill/xby-ai-persona",
+      "description": "一个支持多AI人格召唤与协作的MCP协议服务器，可用于代码分析、产品设计等多场景智能协作。",
+      "stars": 0,
+      "language": "TypeScript",
+      "pushed_at": "2026-08-28T10:25:32Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "dsh-plugin",
+        "ocr"
+      ],
+      "readme_text": "# xby-ai-persona\n\nDeepSeek Harness (DSH) 的插件：AI人格服务\n\n一个支持多AI人格召唤与协作的MCP协议服务器，可用于代码分析、产品设计等多场景智能协作。\n\n## 功能\n\n- **set_xby_apikey** — 在聊天中设置 API 密钥（自动持久化，重启有效）\n- **summon_persona** — 召唤指定人格来处理任务\n- **list_personas** — 列出所有可用的人格\n- **version** — 获取当前MCP服务版本信息\n- **interactive_persona** — 智能人格协作分析 - 根据当前对话上下文自动选择合适的人格进行逐步分析\n\n## 安装\n\n### 方式一：从 GitHub 直接安装（推荐）\n\n```bash\n# 格式: dsh plugin --profile <profile> add github:<owner>/<repo>\ndsh plugin --profile web add github:xby_skill/xby-ai-persona\n```\n\n### 方式二：从本地目录安装（开发模式）\n\n```bash\n# 仅用于本地开发调试\ndsh plugin --profile web add /absolute/path/to/xby-ai-persona\n```\n\n### 方式三：通过 cordis.patch.yml 开发调试\n\n```bash\ndsh web --profile web --patch /absolute/path/to/dsh-ocr-plugin/cordis.patch.yml\n```\n\n\n\n## 配置\n\n### 获取 API 密钥\n\n前往 [小笨羊官网](https://xiaobenyang.com) 注册并获取 API 密钥。\n"
+    },
+    {
+      "full_name": "xby-skill/xby-json-rpc",
+      "html_url": "https://github.com/xby-skill/xby-json-rpc",
+      "description": "一个基于OpenRPC的Model Context Protocol (MCP)服务器，提供JSON-RPC功能调用和方法发现服务。",
+      "stars": 0,
+      "language": "TypeScript",
+      "pushed_at": "2026-08-28T11:14:30Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "dsh-plugin"
+      ],
+      "readme_text": "# xby-json-rpc\n\nDeepSeek Harness (DSH) 的插件：JSON-RPC服务\n\n一个基于OpenRPC的Model Context Protocol (MCP)服务器，提供JSON-RPC功能调用和方法发现服务。\n\n## 功能\n\n- **set_xby_apikey** — 在聊天中设置 API 密钥（自动持久化，重启有效）\n- **rpc_call** — Call any JSON-RPC method on a server with parameters. A user would prompt: Call method <method> on <server url> with params <params>\n- **rpc_discover** — This uses JSON-RPC to call `rpc.discover` which is part of the OpenRPC Specification for discovery for JSON-RPC servers. A user would prompt: What JSON-RPC methods does this server have? <server url>\n\n## 安装\n\n### 方式一：从 GitHub 直接安装（推荐）\n\n```bash\n# 格式: dsh plugin --profile <profile> add github:<owner>/<repo>\ndsh plugin --profile web add github:xby_skill/xby-json-rpc\n```\n\n### 方式二：从本地目录安装（开发模式）\n\n```bash\n# 仅用于本地开发调试\ndsh plugin --profile web add /absolute/path/to/xby-json-rpc\n```\n\n### 方式三：通过 cordis.patch.yml 开发调试\n\n```bash\ndsh web --profile web --patch /absolute/path/to/dsh-ocr-plugin/cordis.patch.yml\n```\n\n\n\n## 配置\n\n### 获取 API 密钥\n\n前往 [小笨羊官网](https://xiaobenyang.com) 注册并获取 API 密钥。\n"
+    },
+    {
+      "full_name": "Ghost011118/dsh-plugin-marketplace",
+      "html_url": "https://github.com/Ghost011118/dsh-plugin-marketplace",
+      "description": "Built-in plugin discovery, local requirement matching, optional GitHub stars, and one-click installation for DeepSeek Harness.",
+      "stars": 0,
+      "language": "TypeScript",
+      "pushed_at": "2026-08-29T02:13:29Z",
+      "topics": [
+        "ai-agents",
+        "deepseek-harness",
+        "dsh-plugin",
+        "plugin-marketplace",
+        "typescript"
+      ],
+      "categories": [
+        "终端/TUI"
+      ],
+      "tags": [
+        "ai-agents",
+        "deepseek-harness",
+        "dsh-plugin",
+        "plugin-marketplace",
+        "typescript",
+        "search"
+      ],
+      "readme_text": "# DSH Plugin Marketplace\n\nEnglish | [中文](README.zh.md)\n\n[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![DSH](https://img.shields.io/badge/DeepSeek%20Harness-Plugin-5b5bd6)](https://github.com/deepseek-ai/deepseek-harness) [![Local matching](https://img.shields.io/badge/requirement%20matching-local%20only-16a34a)](#privacy-and-cost)\n\nAn integrated plugin marketplace for DeepSeek Harness: discover, search, rank, classify, star, and install community plugins without leaving DSH Settings.\n\n![Marketplace feature preview](docs/marketplace-preview.svg)\n\n## Highlights\n\n- Browse a live catalog with **stars**, **recent popularity**, and **recently updated** sorting.\n- Filter by functional categories and search by text.\n- Describe what you need in plain language; matching runs locally and does not call an LLM.\n- Install a selected plugin from the same screen.\n- Connect GitHub only when you explicitly choose to star a repository.\n- Keep the marketplace independent from Profile admission management, so both plugins can be installed and upgraded separately.\n\n## Privacy and cost\n\n| Action | GitHub login | LLM request |\n| --- | --- | --- |\n| Browse, search, sort, or filter | No | No |\n| Describe a requirement | No | No — local scoring |\n| Install a plugin | No | No |\n| Star a repository | Requested at click time | No |\n\nThe marketplace never requires a GitHub account during startup or catalog browsing.\n\n<a id=\"run\"></a><a id=\"run-from-source\"></a>\n\n## Quick start\n\nThis developer preview ships as a compatible DSH source snapshot because the standalone packages depend on DSH interfaces newer than the current public npm release.\n\n### PowerShell\n\n```powershell\ngit clone https://github.com/Ghost011118/dsh-plugin-marketplace.git\nSet-Location dsh-plugin-marketplace\npnpm install\npnpm run build:lib\n\n$pluginRoot = (Resolve-Path .).Path.Replace('\\', '/')\npnpm dsh plugin --profile web add `\n  \"link:$pluginRoot/packages/host/plugin-inventory\" `\n  \"link:$pluginRoot/packages/client/ui-settings-plugin-inventory\" `\n  \"link:$pluginRoot/packages/bundle/plugin-marketplace\"\n\npnpm dsh web\n```\n\n### Bash\n\n```bash\ngit clone https://github.com/Ghost011118/dsh-plugin-marketplace.git\ncd dsh-plugin-marketplace\npnpm install\npnpm run build:lib\n\nplugin_root=\"$(pwd)\"\npnpm dsh plugin --profile web add \\\n  \"link:$plugin_root/packages/host/plugin-inventory\" \\\n  \"link:$plugin_root/packages/client/ui-settings-plugin-inventory\" \\\n  \"link:$plugin_root/packages/bundle/plugin-marketplace\"\n\npnpm dsh web\n```\n\nOpen **Settings → Plugins → Plugin Marketplace**.\n\n> Do not layer this bundle onto an older Web Profile that already inserts the same inventory rows. Run the compatible source build above until a matching public DSH package is released.\n\n## Package boundaries\n\n| Package | Responsibility |\n| --- | --- |\n| `@deepseek-ai/dsh-plugin-marketplace` | Standalone Web Profile bundle |\n| `@deepseek-ai/dsh-host-plugin-inventory` | Catalog refresh, inventory, install RPC, optional GitHub stars |\n| `@deepseek-ai/dsh-client-ui-settings-plugin-inventory` | Plugin list and marketplace Settings tabs |\n\nThe shared Remote assembly does not statically own the optional marketplace namespace. The Client captures `remote.pluginInventory` only after its own Remote contribution mounts, avoiding Cordis injection cycles.\n\n## Verified behavior\n\n- Plugin configuration, list, marketplace, and management tabs coexist in one Settings surface.\n- 171 installed entries and 2,154 marketplace entries loaded in the reference environment.\n- Marketplace browsing opens zero GitHub connection dialogs.\n- Targeted test suite: 8 files, 19 tests.\n- Host/Client TypeScript builds, Cordis configuration validation, package invariants, README gates, workspace constraints, `publint`, and package dry-runs pass.\n\n## Status\n\nThis is a community developer preview. The source is usable and locally verified; registry publishing is intentionally deferred until a compatible public DSH release exists.\n\nPromotion copy is available in [docs/launch-post.md](docs/launch-post.md).\n\n## License\n\n[MIT](LICENSE). DeepSeek Harness and DeepSeek are trademarks of their respective owners. This community repository is not an official DeepSeek release.\n"
+    },
+    {
+      "full_name": "difimim/dsh-voice-input",
+      "html_url": "https://github.com/difimim/dsh-voice-input",
+      "description": "语音输入插件 for Deepseek Harness",
+      "stars": 0,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-29T19:00:35Z",
+      "topics": [
+        "cordis-plugin",
+        "deepseek-harness",
+        "dsh-plugin",
+        "speech-to-text",
+        "voice-input",
+        "web-speech-api"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "cordis-plugin",
+        "deepseek-harness",
+        "dsh-plugin",
+        "speech-to-text",
+        "voice-input",
+        "web-speech-api"
+      ],
+      "readme_text": "# DSH Voice Input · DeepSeek Harness 语音输入插件\n\n在 DeepSeek Harness（DSH）输入框底部加入一个麦克风按钮：点击后用浏览器内置的 **Web Speech API** 把语音**实时**转成文字并填入输入框。零成本、零服务端部署，同时预留了 Host 端 **Vosk 离线识别**接口，方便以后切换为完全离线、隐私更好的方案。\n\nA DeepSeek Harness dynamic Cordis plugin that adds a microphone button to the composer. Click it to transcribe speech into the input box using the browser's built-in Web Speech API — zero cost, zero server. An offline-engine seam (Vosk / whisper.cpp) is reserved on the Host for later.\n\n---\n\n## 功能特性\n\n- 🎙️ 输入框工具行左侧新增麦克风按钮，点击开始 / 停止收音\n- ⚡ 实时识别：边说边把中间结果写进输入框草稿\n- ➕ 追加式写入：不清空已有文字，识别结果追加到当前草稿末尾\n- 🌐 零成本零服务端：直接复用浏览器内置 Web Speech API\n- 🧩 预留离线接口：Host 端 `voice.transcribe` 已挂好，未来接 Vosk 无需改动客户端\n- 🎨 跟随主题：按钮颜色使用 DSH 主题变量，自动适配明暗色\n\n## 工作原理\n\n| 部分 | 说明 |\n| --- | --- |\n| **识别引擎** | 浏览器内置 Web Speech API（`SpeechRecognition` / `webkitSpeechRecognition`） |\n| **识别语言** | 默认 `zh-CN`（中文），可在 `client.js` 顶部 `VOICE_LANG` 修改 |\n| **写入方式** | 通过输入框 Slot 提供的 `inputActions.setDraft()` 写入草稿，与手打内容共存 |\n| **按钮位置** | `conversation.input.left`（输入框工具行左侧，模型选择那一行） |\n| **离线预留** | Host 端 `voice.transcribe` 私有 RPC，当前返回「未配置」 |\n\n## 目录结构\n\n```\ndsh-voice-input/\n├── host.js      # Host 半（函数体：预留 voice.transcribe 离线接口）\n├── client.js    # Client 半（函数体：麦克风按钮 + Web Speech 识别）\n├── package.json # 仓库元信息\n├── LICENSE      # MIT\n└── README.md\n```\n\n> `host.js` 与 `client.js` 是 DSH 动态 Cordis 插件的两个「函数体」，**不是**可 `import` 的 ES 模块，因此不含 `import`/`export`。它们要整段粘贴到 DSH 的 Host / Client 代码框里运行。\n\n## 安装\n\n### 方式一：DSH 动态 Cordis 插件（当前实现形态）\n\n1. 打开 DSH 的动态 Cordis 插件面板；\n2. 把 `host.js` 全文粘贴为 **Host 代码**；\n3. 把 `client.js` 全文粘贴为 **Client 代码**；\n4. 运行，并按提示批准该包。\n\n插件即挂即用，按钮出现在输入框工具行左侧。\n\n### 方式二：固化到你的 Agent 预设 / 组合\n\n把 Host 与 Client 两个函数体分别写进你预设里的 Host/Client 插件行（参考 DSH 的 `editing-cordis-compositions` 说明），即可随预设持久挂载。具体行结构与你的组合方式有关，这里不展开。\n\n## 使用\n\n1. 点麦克风图标 → 按钮变红并出现脉冲动画，开始收音；\n2. 直接说话，文字会**实时**出现在输入框里；\n3. 再点一下（图标变方块）→ 停止收音；\n4. 确认文字无误后，正常回车发送。\n\n## 浏览器兼容性\n\n| 浏览器 | 支持 |\n| --- | --- |\n| Chrome / Edge | ✅（推荐） |\n| Safari | ✅（较新版本，行为略有差异） |\n| Firefox | ❌（不支持 Web Speech API） |\n\n- 首次点击会弹出**麦克风授权**，请点「允许」。\n- 需联网：Web Speech API 会把音频交给浏览器厂商的识别服务器。\n\n## 隐私说明\n\n当前方案（Web Speech API）为了“零成本、零部署”，会把语音发到浏览器厂商的识别服务。若你在意隐私或需要完全离线，请使用下方预留的 Vosk 接口。\n\n## 离线识别（Vosk）预留接口\n\nHost 半已注册私有 RPC：\n\n```\nharness.handle('voice.transcribe', async (args) => {\n  // args: { audio, lang }\n  // return: { ok, text }  或  { ok: false, reason }\n})\n```\n\n未来接 Vosk / whisper.cpp 时，只需在 `host.js` 里实现 `voice.transcribe`（跑本地模型 / 调用本地识别服务），并在 `client.js` 里把引擎从 Web Speech 切到 `host.call('voice.transcribe', …)` 即可，客户端其余逻辑无需重写。\n\n## Roadmap\n\n- [x] Web Speech API 实时语音输入\n- [ ] 语言切换（中文 / 英文 / 自动）\n- [ ] Vosk 离线识别接入（Host 端）\n- [ ] 语音输入过程中的可视化状态条\n\n## License\n\n[MIT](./LICENSE)\n"
     }
   ]
 }

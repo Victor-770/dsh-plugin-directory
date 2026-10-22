@@ -1,39 +1,7 @@
 {
-  "generatedAt": "2026-10-22T11:25:54.202Z",
+  "generatedAt": "2026-10-22T16:24:27.170Z",
   "count": 400,
   "plugins": [
-    {
-      "full_name": "raccoonBK/dsh-byok",
-      "html_url": "https://github.com/raccoonBK/dsh-byok",
-      "description": "DeepSeek Harness plugin: use any OpenAI-compatible provider with your own key, plus HTTP/SOCKS5 proxy",
-      "stars": 1,
-      "language": "TypeScript",
-      "pushed_at": "2026-08-14T07:07:35Z",
-      "topics": [
-        "byok",
-        "cost-saving",
-        "deepseek",
-        "dsh-plugin",
-        "llm",
-        "openai-compatible",
-        "proxy",
-        "socks5"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "byok",
-        "cost-saving",
-        "deepseek",
-        "dsh-plugin",
-        "llm",
-        "openai-compatible",
-        "proxy",
-        "socks5"
-      ],
-      "readme_text": "# dsh-byok\n\n让 DeepSeek Harness (DSH) 支持任意 OpenAI 兼容模型供应商，自带 key，一键切换，并且**支持 HTTP/SOCKS5 代理**。\n\nDeepSeek 涨价了？切到更便宜的供应商。国内访问不了？走代理。\n\n## 为什么需要这个\n\nDSH 官方内置了 DeepSeek 模型，但 DeepSeek API 涨价之后，用户需要一个出口：\n\n- 切到更便宜的模型（阿里云百炼、Gemini、本地 Ollama 等）\n- 接入公司内部中转站 / API 网关（OpenRouter、PackyCode、ZetaAPI 等）\n- 用自己的 key（BYOK），不暴露给 DSH 官方\n\nDSH 官方其实已经内置了一个 `llm-pi-ai` 插件做多供应商 BYOK。dsh-byok 跟它的区别，在于补上官方没做的两块：\n\n1. **代理**：官方两个 adapter 都没有 per-provider 的代理配置，Node 原生 fetch 只认 `HTTP(S)_PROXY` 环境变量，**SOCKS5 完全不支持**。dsh-byok 支持 http/https/socks5 代理，且按供应商单独配置。\n2. **极简透传**：不依赖 `pi-ai` 那套会拖一堆 SDK 的重型依赖，只做 OpenAI Chat Completions 的 direct-fetch + SSE 透传，代码短到可以通读、可以信任。\n\n## 快速开始\n\n```bash\nnpm install dsh-byok\n```\n\n在 DSH 的插件配置里加：\n\n```yaml\nplugins:\n  byok:\n    proxy:\n      http: http://127.0.0.1:7890\n      https: http://127.0.0.1:7890\n      # socks5: socks5://127.0.0.1:7890\n    providers:\n      openrouter:\n        baseURL: https://openrouter.ai/api/v1\n        apiKey: ${OPENROUTER_API_KEY}\n      gemini:\n        baseURL: https://generativelanguage.googleapis.com/v1beta/openai\n        apiKey: ${GEMINI_API_KEY}\n```\n\n完事。DSH 的模型选择器里直接选。\n\n## 配置说明\n\n每个供应商支持：\n\n| 字段 | 说明 |\n|------|------|\n| `baseURL` | 端点 base URL，`/chat/completions` 自动拼接 |\n| `apiKey` | 直填 key，或用 `${ENV_VAR}` 引用环境变量 |\n| `models` | 手动声明模型列表（字符串数组），可选 |\n| `proxy` | 该供应商专属代理，覆盖全局 |\n\n代理支持三种协议，`socks5` 优先级最高：\n\n```yaml\nproxy:\n  http: http://127.0.0.1:7890     # HTTP 目标走这个\n  https: http://127.0.0.1:7890    # HTTPS 目标走这个\n  socks5: socks5://127.0.0.1:7890 # 配置后所有目标都走 SOCKS5\n```\n\n本地地址（localhost / 127.0.0.1）自动直连，不走代理，所以本地 Ollama 无需单独关代理。\n\n## 常见供应商示例\n\n```yaml\nplugins:\n  byok:\n    proxy:\n      socks5: socks5://127.0.0.1:7890\n    providers:\n      # 中转站：一个 key 搞定所有模型\n      openrouter:\n        baseURL: https://openrouter.ai/api/v1\n        apiKey: ${OPENROUTER_API_KEY}\n\n      # 阿里云百炼\n      bailian:\n        baseURL: https://dashscope.aliyuncs.com/compatible-mode/v1\n        apiKey: ${BAILIAN_API_KEY}\n        models: [qwen3-235b, qwen-max]\n\n      # 本地 Ollama（不走代理，key 填任意值）\n      local:\n        baseURL: http://localhost:11434/v1\n        apiKey: ollama\n        models: [llama3.3]\n\n      # Gemini 官方 OpenAI 兼容端点\n      gemini:\n        baseURL: https://generativelanguage.googleapis.com/v1beta/openai\n        apiKey: ${GEMINI_API_KEY}\n```\n\n## 当前限制\n\n- 纯文本透传，暂不支持图片（vision）\n- 不做 DeepSeek 私有协议（thinking / reasoning_effort / reasoning_content passback）——用 DeepSeek 中转站请用官方 `llm-deepseek`\n- 模型列表默认手动声明，`/models` 自动拉取后续再加\n\n## License\n\nMIT\n"
-    },
     {
       "full_name": "anweat/dsh-voice-webspeech",
       "html_url": "https://github.com/anweat/dsh-voice-webspeech",
@@ -9864,6 +9832,24 @@
         "llm"
       ],
       "readme_text": "# DSH Plugin: LLM Provider - xAI Grok\n\n[中文](README.zh.md) | English\n\nAllows connecting to the **xAI / Grok** Coding Plan as an LLM Provider, enabling [DeepSeek Harness](https://github.com/deepseek-ai/DeepSeek-Harness) to automatically discover the latest official Grok models and select top models like **`grok-4.6`** directly from the model picker.\n\n## Target Audience and Use Cases\n\nDesigned for users with an xAI API key or xAI subscription who want to leverage Grok 4.6's advanced coding and reasoning capabilities inside the DeepSeek Harness workspace.\n\n## Key Features\n\n- **Real-Time Official Sync**: Queries the xAI `/models` endpoint to dynamically surface account-available Grok models.\n- **Out-of-the-Box Grok 4.6 Support**: Provides verified configuration presets (including context windows, output limits, and reasoning controls) for immediate and reliable use.\n- **Independent Mixed-Protocol Route**: The plugin registers its own `xai` adapter. `grok-4.3` and `grok-build-0.1` use Chat Completions; `grok-4.5` and `grok-4.6` use Responses.\n- **OAuth Resolution and Refresh**: The plugin reads JSON credentials through `XAI_OAUTH_CREDENTIAL`, reuses pi-ai's built-in xAI OAuth handler to refresh expired tokens, and writes rotations back through the Harness credential service.\n- **Secure Credential Isolation**: OAuth JSON never enters Cordis configuration or logs. Only the handler-derived access token reaches the exported `PiAiAdapter` as a request-level auth override.\n- **Zero Overhead**: Injects no extra prompts, headers, token overhead, or transport alterations.\n\n## Installation and Quick Start\n\nInstall a reviewed revision into a DeepSeek Harness profile. The repository includes a `dsh.bundle` patch and prebuilt runtime artifacts so no local build steps are required:\n\n```sh\ndsh plugin --profile <profile> add github:OpenSaozi/dsh-xai-catalog#<commit-sha>\n```\n\nThe installed bundle contributes the following Cordis configuration:\n\n```yaml\n- id: model-catalog-xai\n  name: '@deepseek-ai/dsh-model-catalog-xai'\n  config:\n    oauthCredentialEnv: XAI_OAUTH_CREDENTIAL\n    baseURL: https://api.x.ai/v1\n    displayName: xAI\n```\n\nThe plugin owns the complete `xai` route: mixed-protocol catalog, live filtering, OAuth resolution and refresh, and adapter registration all live here. It only reuses the generic `PiAiAdapter` exported by `@deepseek-ai/dsh-llm-pi-ai`.\n\n## Contributing\n\nIssues and focused pull requests are welcome. New model descriptors must include evidence for exact model ID, protocol, modalities, context/output limits, and reasoning controls. Update both README languages and run package tests in a matching DeepSeek Harness checkout.\n\n## License and Disclaimer\n\nMIT License. This independent integration is not affiliated with or endorsed by xAI, DeepSeek, or pi-ai maintainers. Grok and related model names are trademarks of their respective owners.\n\n## Model Experience\n\n### Catalog Selection\n\n#### What the model sees\n\nNo package-owned text. The plugin controls which xAI model descriptor, such as `grok-4.6`, can be selected; the exported `PiAiAdapter` owns request conversion.\n\n#### Token effect\n\nNo direct token effect. Tokenization and context use remain properties of the selected xAI model and pi-ai protocol implementation.\n\n#### KV Cache effect\n\nNo direct effect. Selecting a different model may change provider-side cache eligibility, but this plugin adds no request content.\n\n## Known Limitations and Deferred Work\n\n- Refresh runs when the plugin mounts or `XAI_OAUTH_CREDENTIAL` changes. A failed or unauthenticated refresh keeps the maintained catalog and logs the error; it does not replace the list with empty data.\n- The Models endpoint proves availability but not protocol, context capacity, modalities, or reasoning controls. New ids require a maintained descriptor before they are exposed.\n- This package provides no login UI. It reads the credential already stored at `XAI_OAUTH_CREDENTIAL` before migration and refreshes it itself. Re-login still requires the deployment to write the result of pi-ai's xAI handler to that reference.\n"
+    },
+    {
+      "full_name": "HOFO-GYG/dsh-balance-watch",
+      "html_url": "https://github.com/HOFO-GYG/dsh-balance-watch",
+      "description": "DSH Web 插件：模型选择器旁显示 DeepSeek 账户余额徽章（点击查看明细）。DSH web plugin: DeepSeek account balance badge next to the model picker.",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-14T19:05:48Z",
+      "topics": [
+        "dsh-plugin"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "dsh-plugin"
+      ],
+      "readme_text": "# dsh-balance-watch\n\nDSH Web 插件：在**模型选择器旁**显示 DeepSeek 账户余额徽章。\n\nA DSH web plugin that puts a DeepSeek account-balance badge right next to the model picker.\n\n## 功能 / Features\n\n- 徽章常显 `Balance`，点击后**向上**弹出明细面板：总余额 / 赠送余额 / 充值余额、多币种、更新时间、手动刷新\n- 数据经插件自带的本地路由 `GET /api/dsh-balance` 获取：**服务端**解析 `DEEPSEEK_API_KEY` 并缓存（60 秒），API key 永不进入浏览器\n- 每 2 分钟自动轮询，打开面板时即时刷新；provider 故障时降级显示 5 分钟内的最近数据并标注错误\n- 余额低于 ¥5 时徽章变红，悬停提示\"余额偏低\"\n- 排版与官方模型选择器一致（字号/字重/颜色层级）\n\n## 架构 / Architecture\n\n| 文件 | 说明 |\n|---|---|\n| `lib/index.js` | **host 半部**（Node，ESM，零依赖）：`ctx.webServer.register` 挂载 `/api/dsh-balance` 路由，`ctx.credentials.resolve('DEEPSEEK_API_KEY')` 在服务端取密钥；单飞（single-flight）缓存 + 失败降级；仅接受回环 Host 与 GET/HEAD |\n| `lib/client.js` | **浏览器半部**（DSH client-bundle 格式）：注册 `conversation.input.right` 槽位（模型选择器左侧），React 徽章 + 弹窗，zh/en 双语 |\n| `test-host.mjs` | host 半部单元测试（mock ctx / fetch / 时钟，15 项断言），`node test-host.mjs` 运行 |\n\n数据流：浏览器 `fetch('/api/dsh-balance')` → 本地 dsh web 服务（插件路由）→ 服务端用密钥查询 DeepSeek `/user/balance` → 只把余额 JSON 返回浏览器。\n\n## 安装 / Install（无需 pnpm / no pnpm required）\n\n1. 把本仓库复制到 `<DSH_HOME>/profiles/web/node_modules/dsh-balance-watch`（Windows 默认 `C:\\Users\\<you>\\.dsh\\profiles\\web\\node_modules\\`；注意是 **web profile 自己的** node_modules，不是上一级 `profiles\\node_modules` —— 后者在全新启动时 host 半部可能不被加载）：\n\n   ```powershell\n   Copy-Item -Recurse <本仓库路径> \"$env:USERPROFILE\\.dsh\\profiles\\web\\node_modules\\dsh-balance-watch\"\n   ```\n\n2. 在 `<DSH_HOME>/profiles/web/cordis.patch.yml` 末尾追加：\n\n   ```yaml\n   - insert:\n       - id: balance-watch\n         name: 'dsh-balance-watch'\n   ```\n\n3. 重启 `dsh web`，刷新浏览器页面。\n\n或者使用官方插件管理命令（需先安装 pnpm）：\n\n```sh\ndsh plugin --profile web add <本仓库路径>\n```\n\n## 测试 / Test\n\n```sh\nnode test-host.mjs\n```\n\n## 依赖 / Dependencies\n\n- 运行时：仅使用 DSH 内置服务（`webServer`、`credentials`）与全局 `fetch`，无第三方依赖\n- 客户端 bundle 通过 `dsh.client.inject` 复用 DSH 已提供的 `dsh-client-runtime`、`dsh-client-locale`、`dsh-client-ui-conversation`\n\n## License\n\nMIT\n"
     }
   ]
 }

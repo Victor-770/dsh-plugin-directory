@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-22T11:25:54.202Z",
+  "generatedAt": "2026-10-22T16:24:27.170Z",
   "count": 400,
   "plugins": [
     {
@@ -5692,30 +5692,6 @@
       "readme_text": "# 简介\n欢迎使用腾讯会议开发者工具套件（SDK）1.1.0，为方便 GO 开发者调试和接入腾讯云会议 API，这里向您介绍适用于 GO 的腾讯会议开发工具包，并提供首次使用开发工具包的简单示例。让您快速获取腾讯会议 GO SDK 并开始调用。\n# 依赖环境\n1. 购买腾讯会议企业版获取 SecretID、SecretKey，接入的企业 AppId。\n\n# 获取安装\n在第一次使用云API之前，用户首先需要在腾讯云控制台上申请安全凭证，安全凭证包括 SecretID 和 SecretKey，SecretID 是用于标识 API 调用者的身份，SecretKey 是用于加密签名字符串和服务器端验证签名字符串的密钥 SecretKey 必须严格保管，避免泄露。\n## 安装\n```shell\nrequire github.com/TencentCloud/wemeet-openapi-sdk-go\n```\n\n# 示例\n\n以创建会议接口为例：\n```GO\npackage example\n\nimport (\n    wemeet \"github.com/TencentCloud/wemeet-openapi-sdk-go/wemeet_openapi\"\n    wemeetcore \"github.com/TencentCloud/wemeet-openapi-sdk-go/wemeet_openapi/core\"\n    wemeethttp \"github.com/TencentCloud/wemeet-openapi-sdk-go/wemeet_openapi/core/xhttp\"\n    meetings \"github.com/TencentCloud/wemeet-openapi-sdk-go/wemeet_openapi/service/meetings\"\n    \n    \"context\"\n    \"fmt\"\n    \"math/rand\"\n    \"os\"\n    \"strconv\"\n    \"time\"\n)\n\n// CreateMeetingDemo 创建会议请求demo\nfunc CreateMeetingDemo() {\n    \n    // 1.构造 client 客户端(jwt 鉴权需要配置 appId sdkId secretID 和 secretKey)\n    client := wemeet.NewClient(wemeet.WithAppId(\"2****46\"), wemeet.WithSdkId(\"2****50\"),\n        wemeet.WithSecret(\"Zk*****J8h\", \"Y2z*****WRsVksn\"))\n    \n    // 2.构造请求体\n    request := &meetings.ApiV1MeetingsPostRequest{\n        Body: &meetings.V1MeetingsPostRequest{\n            Instanceid:  1,\n            MeetingType: wemeetcore.PtrInt32(0),\n            Subject:     \"测试会议\",\n            Type:        1,\n            Userid:      \"userid\",\n            StartTime:   \"1651334400\",\n            EndTime:     \"1651377600\",\n        },\n    }\n    \n    // 3.构造 JWT 鉴权器\n    // 随机数\n    rn := rand.New(rand.NewSource(time.Now().UnixNano()))\n    nonce := uint64(100000 + rn.Intn(900000))\n    // 当前时间戳\n    curTs := strconv.Itoa(int(time.Now().Unix()))\n    authenticator := &wemeetcore.JWTAuthenticator{\n        Nonce: nonce,\n        Timestamp: curTs,\n    }\n    \n    // 4.发送对应的请求\n    response, err := client.MeetingsApi.V1MeetingsPost(context.Background(), request,\n        wemeetcore.WithJWTAuth(authenticator))\n    \n    if err != nil {\n        fmt.Fprintf(os.Stderr, \"Error when calling `MeetingsApi.V1MeetingsPost`: %v\\n\", err)\n        if svrErr, ok := err.(*wemeetcore.ServiceError); ok {\n            fmt.Fprintf(os.Stderr, \"Full HTTP response: %s\\n\", svrErr.RawBody)\n        }\n    }\n    // response from `V1MeetingsPost`: V1MeetingsPostResponse200\n    fmt.Fprintf(os.Stdout, \"Response from `MeetingsApi.V1MeetingsPost`: %+v\\n\", response)\n    \n    return\n}\n```\n\n"
     },
     {
-      "full_name": "566001/dsh-wrapup-guard",
-      "html_url": "https://github.com/566001/dsh-wrapup-guard",
-      "description": "",
-      "stars": 1,
-      "language": "JavaScript",
-      "pushed_at": "2026-10-14T15:38:33Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "plugin"
-      ],
-      "readme_text": "# dsh-wrapup-guard · 收尾哨兵\n\n> **EN** — A DeepSeek Harness plugin that turns \"task finished\" into a gate:\n> it enforces a **check → fix → re-check** loop, auto-runs your command-class\n> checks, **blocks any round that still has unfixed problems**, and only calls\n> the task done after **three consecutive clean full checks** — then notifies the user.\n> Built to stop the \"good enough\" hand-off.\n\n一个 DeepSeek Harness 插件：**在任务收尾时强制「检查 → 修复 → 再检查」的循环，\n直到连续三次全面检查都没有发现问题，才判定收尾完成并通知用户。**\n\n它的存在意义只有一个：**拦住「差不多可以了」。**\n\n---\n\n## 它解决什么问题\n\nAI 干完活常说「改好了」，但没跑测试、没看有没有引入回归、没核对文档。\n这个插件把「收尾」变成一个有门槛的动作：\n\n```\n全面检查 → 发现问题 → 修复 → 再全面检查 → …\n        ↑__________________________|\n  直到连续 3 轮零问题 → 通知用户「收尾完成」\n```\n\n**只要有未修复的问题就必然被打回**；哪怕这轮只是修了个小 bug，也**不算干净**\n（计数归零）。这样才不会被「边查边修、修完就说好了」糊弄过去。\n\n---\n\n## 分工\n\n| 谁 | 负责什么 |\n|---|---|\n| **插件** | 轮次状态机、连续干净计数、**自动跑命令类检查**（测试 / lint / audit）、判定放行、通知用户 |\n| **AI** | 代码审查、构建 / 运行验证、一致性检查，以及**真正的修复动作** |\n\n插件是纯 JS，它没法「理解」代码审查发现的问题并动手修 —— 那是 AI 的活。\n插件做的是**纪律**：计数、拦截、放行、报告。\n\n---\n\n## 用法\n\nAI 在判断任务做完时调用 `wrapup_check`（也会在系统提示里被提醒这么做）：\n\n| action | 作用 |\n|---|---|\n| `start` | 开始一次收尾自检，重置计数。会顺带**探测**项目里可自动运行的检查命令并告诉你。 |\n| `check` | 插件自动跑命令类检查，把原始输出抓回来给你看。 |\n| `report` | 汇报本轮**全面检查**的结论。必须带 `problems` 数组（空数组才表示干净）。 |\n| `status` | 看当前轮次、连续干净计数、各轮摘要。 |\n| `abort` | 放弃本次收尾。 |\n\n`report` 的参数：\n\n- `problems`：本轮发现的问题列表，每项 `{ kind, where, what, fixed }`。\n  **有 `fixed !== true` 的项就会被立刻打回**；有修复动作的轮次不计入「连续干净」。\n- `checks`：本轮你手动做过的检查类别（`review` / `build` / `consistency`）。\n  缺项时插件会提醒你还有哪类没做。\n- `summary`：本轮小结（会出现在最终报告里）。\n\n### 自动探测哪些命令\n\n在项目根目录按顺序找：\n\n1. `package.json` 的 `scripts.test` / `scripts.lint` / `scripts.typecheck` / `scripts.check`\n2. `tools/audit.js`、`tools/check.js`、`tools/selftest.mjs`\n\n探测不到就返回「没有可自动运行的检查」——**这是合法结果**，不是错误，\n意味着命令类检查要靠 AI 手动完成。\n\n> **为什么 `check` 和 `selftest.mjs` 也在白名单里**：本插件自己的仓库用的就是\n> `npm run check` + `tools/selftest.mjs`。旧白名单只认 `test`/`lint`/`typecheck`，\n> 结果它连自己都检查不了，每次自检都报「没有可自动运行的检查」。\n> 这两个名字同样是约定俗成的检查名，纳入白名单不是「猜脚本内容」。\n>\n> 仍然**不**做的是：扫描 `scripts` 里所有 key 全跑一遍。`check` 已经是最宽的\n> 安全边界，再往外扩就可能跑到构建、发布之类有副作用的脚本。\n\n### Windows 上怎么跑这些命令\n\n`npm` 在 Windows 上只是 `npm.cmd` 批处理垫片，**没有可执行文件**，所以：\n\n- 直接 `execFile('npm', …)` 会以 `ENOENT` 失败；\n- `.cmd` 又因为 Node 24 的 CVE-2024-27980 补丁禁止带参数直跑（`EINVAL`）。\n\n因此 Windows 下统一交给 `cmd.exe /d /s /c` 解析，并只给**确实需要**的\ntoken 加引号（每个 token 都套引号反而会让 cmd 把 `\"\"npm\" \"run\"\"` 当成一个\n整体命令名）。非 Windows 平台走原来的 `spawn` + 裸参数。\n\n**超时必须杀整棵进程树**：npm → `cmd.exe` → `node` 是一条链，`child.kill()`\n只放倒第一环，孙进程会继续持有 stdout 管道，`'close'` 要等它自己结束才触发\n—— 超时就形同虚设（实测 2 秒超时拖到 60 秒才返回）。所以超时走\n`taskkill /T /F`，并额外挂一个 5 秒兜底定时器，保证一定会收尾。\n\n---\n\n## 通知\n\n达到「连续 3 轮零问题」时：\n\n- 宿主端写一份完成记录，并通过 `/dsh-wrapup-guard/status` 暴露给浏览器端；\n- 浏览器端轮询这个路由，右下角弹出**完成卡片**（含汇总：共几轮、修了几个问题、\n  完整报告），12 秒后自动收成小徽章，点开可再看；\n- 工具返回值里同时带完整报告，AI 会把它转述给用户。\n\n---\n\n## 安装\n\n```jsonc\n// profiles/<profile>/package.json\n{\n  \"dependencies\": {\n    \"dsh-wrapup-guard\": \"^0.1.0\"\n  },\n  \"dsh\": {\n    \"profile\": {\n      \"bundles\": [\"…\", \"dsh-wrapup-guard\"]\n    }\n  }\n}\n```\n\n> 本地开发时依赖可写 `file:/absolute/path/to/dsh-wrapup-guard`；\n> 从 npm 安装则直接写版本号。\n\n然后在该 profile 目录用 DSH 自带的 pnpm 安装：\n\n```bash\nnode <DSH>/resources/runtime/pnpm/bin/pnpm.cjs install --no-frozen-lockfile\n```\n\n> `file:` 依赖会被**复制**进 profile 的 `node_modules`，所以改了源码之后要重跑\n> install 才能在 DSH 里生效。\n\n**改完需要重启 DSH**（插件行的加载在启动时完成）。\n\n---\n\n## 自检\n\n```bash\nnode tools/selftest.mjs          # 状态机 30 项断言（不打桩 DSH）\nnode tools/check-commands.mjs <项目路径>   # 验证自动探测 + 真实跑命令\n```\n\n---\n\n## 设计取舍\n\n- **不 import 任何 `@deepseek-ai/*`**：profile 安装的插件从自己的目录解析模块，\n  harness 包在那里不可达。全部走 `ctx` 和 node 内置模块。\n- **状态落盘**到 `~/.dsh/wrapup-guard/<sessionId>.json`：收尾循环会跨很多轮工具\n  调用，DSH 中途重启也不该把计数丢掉 —— 否则 AI 会误以为「三轮干净」已达成。\n- **每轮都必须重新做全面检查**，而不是只看刚改的地方：这正是「发现 → 解决 →\n  检查 → 发现」循环的价值所在。\n- 状态机对「漏报」没有任何自动化防御（AI 撒谎插件管不了），所以系统提示里\n  明确写了诚实要求，且每轮会核对 AI 声明的检查类别是否齐全。\n\n## License\n\nMIT\n"
-    },
-    {
       "full_name": "WongYuYe/dsh-composer-recall",
       "html_url": "https://github.com/WongYuYe/dsh-composer-recall",
       "description": "Arrow-key input history for the DSH web composer on 0.1.2-alpha.1",
@@ -10900,6 +10876,38 @@
         "web ui"
       ],
       "readme_text": "# @steven-wu/dsh-cost-meter\n\nOut-of-tree [dsh](https://github.com/deepseek-ai/deepseek-harness) plugin that\nshows a live **USD cost badge** for the open conversation in the Web UI.\n\nIt is a dual-face `dsh.client` package:\n\n- **Host half** (`lib/index.js`) registers a `sessionCost` projection on the\n  session-projection seam. The fold tracks the current provider/model from\n  `request/header` events and accumulates cost from the provider-reported usage\n  buckets (uncached input / output / cache-read / cache-write), reusing\n  token-meter's \"replace the same `(turn, step)` sample instead of\n  double-counting\" rule. The view exposes the whole-session totals plus a\n  `byTurn` map keyed by turn number.\n- **Client half** (`lib/client.js`) registers a badge into the\n  `conversation.chat.assistant-actions` slot — the action row at the end of each\n  assistant message, alongside the turn's time/duration info. Each badge shows\n  **that turn's** cost; hovering opens a tooltip with the per-bucket breakdown\n  (input / output / cache-read / cache-write) plus the session total.\n\n## Pricing table\n\nPricing is USD per **million** tokens, keyed by `provider/model`:\n\n```jsonc\n{\n  \"per\": 1000000,\n  \"currency\": \"USD\",\n  \"default\": { \"input\": 0.6525, \"output\": 1.9575, \"cacheRead\": 0.02175, \"cacheWrite\": 0 },\n  \"models\": {\n    \"deepseek-official/deepseek-v4-pro\":   { \"input\": 0.6525, \"output\": 1.9575,  \"cacheRead\": 0.02175, \"cacheWrite\": 0 },\n    \"deepseek-official/deepseek-v4-flash\": { \"input\": 0.2175, \"output\": 0.6525,  \"cacheRead\": 0.00725, \"cacheWrite\": 0 }\n  }\n}\n```\n\nThe plugin reads `~/.dsh/cost-pricing.json` on boot (override the path with the\n`DSH_COST_PRICING` env var or the row's `config.pricingPath`). On first run it\nwrites the default table to that path; edit it and restart `dsh web` to apply\nchanges. A model without a `models` entry falls back to `default` (zero cost\nwhen no `default` is present).\n\n## Install\n\nThe package declares a `dsh.bundle` manifest, so `dsh plugin add` installs it\n**and** adds it to the profile's bundle layers automatically — no manual patch\nedit:\n\n```sh\ndsh plugin --profile web add @steven-wu/dsh-cost-meter\n# restart the web profile, then refresh the page\n```\n\nFor a local checkout during development:\n\n```sh\ndsh plugin --profile web add file:/path/to/dsh-cost-meter\n```\n\nNotes:\n- `@deepseek-ai/dsh-*` are declared as **peerDependencies** (resolved from the\n  harness), never as `dependencies` — installing them into a profile shadows the\n  harness copy and can pull a stale dist-tag.\n- The Settings \"Plugins\" panel is read-only (inventory + config cards); install\n  happens only through `dsh plugin --profile … add`.\n- Purely-cordis mounting (a `cordis.patch.yml` insert row) also works — the\n  shipped `cordis.patch.yml` holds that row for either path.\n\nThe `sessionCost` projection is delivered through the same seam as\n`tokenUsage` / `sessionStats`, so it also appears in every projection carrier\n(history tail page, `session/projection` push frames) without extra wiring.\n"
+    },
+    {
+      "full_name": "raccoonBK/dsh-byok",
+      "html_url": "https://github.com/raccoonBK/dsh-byok",
+      "description": "DeepSeek Harness plugin: use any OpenAI-compatible provider with your own key, plus HTTP/SOCKS5 proxy",
+      "stars": 1,
+      "language": "TypeScript",
+      "pushed_at": "2026-08-14T07:07:35Z",
+      "topics": [
+        "byok",
+        "cost-saving",
+        "deepseek",
+        "dsh-plugin",
+        "llm",
+        "openai-compatible",
+        "proxy",
+        "socks5"
+      ],
+      "categories": [
+        "工具/开发"
+      ],
+      "tags": [
+        "byok",
+        "cost-saving",
+        "deepseek",
+        "dsh-plugin",
+        "llm",
+        "openai-compatible",
+        "proxy",
+        "socks5"
+      ],
+      "readme_text": "# dsh-byok\n\n让 DeepSeek Harness (DSH) 支持任意 OpenAI 兼容模型供应商，自带 key，一键切换，并且**支持 HTTP/SOCKS5 代理**。\n\nDeepSeek 涨价了？切到更便宜的供应商。国内访问不了？走代理。\n\n## 为什么需要这个\n\nDSH 官方内置了 DeepSeek 模型，但 DeepSeek API 涨价之后，用户需要一个出口：\n\n- 切到更便宜的模型（阿里云百炼、Gemini、本地 Ollama 等）\n- 接入公司内部中转站 / API 网关（OpenRouter、PackyCode、ZetaAPI 等）\n- 用自己的 key（BYOK），不暴露给 DSH 官方\n\nDSH 官方其实已经内置了一个 `llm-pi-ai` 插件做多供应商 BYOK。dsh-byok 跟它的区别，在于补上官方没做的两块：\n\n1. **代理**：官方两个 adapter 都没有 per-provider 的代理配置，Node 原生 fetch 只认 `HTTP(S)_PROXY` 环境变量，**SOCKS5 完全不支持**。dsh-byok 支持 http/https/socks5 代理，且按供应商单独配置。\n2. **极简透传**：不依赖 `pi-ai` 那套会拖一堆 SDK 的重型依赖，只做 OpenAI Chat Completions 的 direct-fetch + SSE 透传，代码短到可以通读、可以信任。\n\n## 快速开始\n\n```bash\nnpm install dsh-byok\n```\n\n在 DSH 的插件配置里加：\n\n```yaml\nplugins:\n  byok:\n    proxy:\n      http: http://127.0.0.1:7890\n      https: http://127.0.0.1:7890\n      # socks5: socks5://127.0.0.1:7890\n    providers:\n      openrouter:\n        baseURL: https://openrouter.ai/api/v1\n        apiKey: ${OPENROUTER_API_KEY}\n      gemini:\n        baseURL: https://generativelanguage.googleapis.com/v1beta/openai\n        apiKey: ${GEMINI_API_KEY}\n```\n\n完事。DSH 的模型选择器里直接选。\n\n## 配置说明\n\n每个供应商支持：\n\n| 字段 | 说明 |\n|------|------|\n| `baseURL` | 端点 base URL，`/chat/completions` 自动拼接 |\n| `apiKey` | 直填 key，或用 `${ENV_VAR}` 引用环境变量 |\n| `models` | 手动声明模型列表（字符串数组），可选 |\n| `proxy` | 该供应商专属代理，覆盖全局 |\n\n代理支持三种协议，`socks5` 优先级最高：\n\n```yaml\nproxy:\n  http: http://127.0.0.1:7890     # HTTP 目标走这个\n  https: http://127.0.0.1:7890    # HTTPS 目标走这个\n  socks5: socks5://127.0.0.1:7890 # 配置后所有目标都走 SOCKS5\n```\n\n本地地址（localhost / 127.0.0.1）自动直连，不走代理，所以本地 Ollama 无需单独关代理。\n\n## 常见供应商示例\n\n```yaml\nplugins:\n  byok:\n    proxy:\n      socks5: socks5://127.0.0.1:7890\n    providers:\n      # 中转站：一个 key 搞定所有模型\n      openrouter:\n        baseURL: https://openrouter.ai/api/v1\n        apiKey: ${OPENROUTER_API_KEY}\n\n      # 阿里云百炼\n      bailian:\n        baseURL: https://dashscope.aliyuncs.com/compatible-mode/v1\n        apiKey: ${BAILIAN_API_KEY}\n        models: [qwen3-235b, qwen-max]\n\n      # 本地 Ollama（不走代理，key 填任意值）\n      local:\n        baseURL: http://localhost:11434/v1\n        apiKey: ollama\n        models: [llama3.3]\n\n      # Gemini 官方 OpenAI 兼容端点\n      gemini:\n        baseURL: https://generativelanguage.googleapis.com/v1beta/openai\n        apiKey: ${GEMINI_API_KEY}\n```\n\n## 当前限制\n\n- 纯文本透传，暂不支持图片（vision）\n- 不做 DeepSeek 私有协议（thinking / reasoning_effort / reasoning_content passback）——用 DeepSeek 中转站请用官方 `llm-deepseek`\n- 模型列表默认手动声明，`/models` 自动拉取后续再加\n\n## License\n\nMIT\n"
     }
   ]
 }
