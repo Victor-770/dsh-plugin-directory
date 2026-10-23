@@ -1,7 +1,125 @@
 {
-  "generatedAt": "2026-10-22T21:33:30.503Z",
+  "generatedAt": "2026-10-23T03:14:13.243Z",
   "count": 400,
   "plugins": [
+    {
+      "full_name": "drscrewdriver/dsh-switch-search",
+      "html_url": "https://github.com/drscrewdriver/dsh-switch-search",
+      "description": "给 DeepSeek Harness 侧边栏加一个会话内容检索——标题/内容一键切换，还能按用户/回复/工具筛选",
+      "stars": 1,
+      "language": "TypeScript",
+      "pushed_at": "2026-08-20T02:36:58Z",
+      "topics": [
+        "dedeepseek-harness",
+        "dsh",
+        "dsh-bundle",
+        "dsh-plugin",
+        "dsh-plugin-market",
+        "dsh-plugins",
+        "dsharpplus",
+        "typescript"
+      ],
+      "categories": [
+        "搜索"
+      ],
+      "tags": [
+        "dedeepseek-harness",
+        "dsh",
+        "dsh-bundle",
+        "dsh-plugin",
+        "dsh-plugin-market",
+        "dsh-plugins",
+        "dsharpplus",
+        "typescript"
+      ],
+      "readme_text": "<p align=\"center\">\r\n  <strong>给 DeepSeek Harness 侧边栏加一个会话内容检索——标题/内容一键切换，还能按用户/回复/工具筛选</strong>\r\n</p>\r\n<p align=\"center\">\r\n  <strong>中文</strong> · <a href=\"README.en.md\">English</a>\r\n</p>\r\n<p align=\"center\">\r\n  <a href=\"LICENSE\"><img alt=\"MIT License\" src=\"https://img.shields.io/badge/license-MIT-263146?style=flat-square\"></a>\r\n  <img alt=\"Public\" src=\"https://img.shields.io/badge/status-public-7da1de?style=flat-square\">\r\n</p>\r\n\r\n# dsh-switch-search\r\n\r\n> DSH web 侧边栏**会话搜索增强**：在侧边栏底部新增 **\"搜索\"** 入口，浮层面板一键在 **标题搜索 ↔ 内容搜索** 间切换；内容模式按**会话聚合**展示标题与命中片段，并按 **用户 / 回复 / 工具** 分类筛选。\r\n\r\n无需修改 dsh 源码、无需提 PR：`dsh plugin` 命令组装 + bundle patch 装配的 cordis 客户端 + 插件宿主半。\r\n\r\n## 它能做什么\r\n\r\n- **标题 ↔ 内容双模式**：一个入口两种搜法——切到\"标题\"按会话标题/工作目录子串即时过滤；切到\"内容\"走 DSH 自带 FTS5 全文索引搜会话消息正文。\r\n- **内容按会话聚合**：内容搜索结果每个会话一行（会话标题 + 最强命中片段 + 类型标签），点击即打开该会话，不刷屏逐条堆消息。\r\n- **内容类型筛选**：内容模式顶部筛选 chip——**全部 / 用户 / 回复 / 工具**；`工具` 放开 `tool/call` 与 `tool/result` 事件进结果，直接搜到工具调用参数与返回值。\r\n- **索引可用性探测**：Host 侧 `search-status` 探测 `sessionQuery` 全文索引是否开启；未开启时内容模式给出一句具体配置指引，而非裸报错\"内容搜索不可用\"。\r\n- **通用设置行**：设置 → 通用新增 **\"会话搜索\"** 行——启用开关 + 默认搜索模式（标题/内容），配置即写即生效。\r\n- **点击直达**：搜索结果点击跳转打开对应会话，定位到命中内容所在上下文。\r\n\r\n## 界面预览\r\n\r\n侧边栏底部入口与浮层面板布局示意：\r\n\r\n```text\r\n┌─ Sidebar ───────────────────────────────┐\r\n│ ▸ 会话搜索        （sidebar.footer.action）\r\n│        ┌─ 搜索面板（portalled 浮层）────────┐\r\n│        │ [标题|内容]   [🔍 搜索会话…]        │\r\n│        │ [全部|用户|回复|工具] ← 类型筛选     │\r\n│        │ ┌─ 结果列表 ──────────────────┐    │\r\n│        │ │ 📄 会话标题一              │    │\r\n│        │ │    命中片段…（snippet）     │    │\r\n│        │ │ 📄 会话标题二 · 工具调用     │    │\r\n│        │ │    bash -c \"xxx\"           │    │\r\n│        │ └───────────────────────────┘    │\r\n│        └─────────────────────────────────┘│\r\n└──────────────────────────────────────────┘\r\n```\r\n\r\n## 内容搜索的底层：DSH FTS5 派生索引\r\n\r\n内容模式不自己建库，直接复用 DSH 本体的 **SQLite FTS5 派生索引**（`session-query-sqlite`）：\r\n\r\n| 表 | 说明 |\r\n|---|---|\r\n| `persisted_docs` (FTS5) | 持久化会话的全文文档（`text` 可搜，`type/session_id/seq/...` 作过滤列） |\r\n| `temp.live_docs` (FTS5) | 当前进程存活会话的全文文档 |\r\n| `persisted_sessions` / `live_sessions` | 会话头 + `revision`/`fingerprint`（增量重建依据） |\r\n| `search_state` | generation 计数，驱动分页游标失效 |\r\n\r\n- **懒索引**：`openAt: first-search` 时首次搜索才建索引；每次搜索前**增量 reconcile**（只重建有差异的会话），大语料首搜稍慢、之后很快。\r\n- **tool 内容能搜到**：`extraction.ts` 明确提取了 `tool/call`（工具名+参数）与 `tool/result`（结果文本）进索引——这正是本插件\"工具筛选\"的数据基础。\r\n\r\n### ⚠️ 前置：开启全文索引\r\n\r\n**DSH 官方 bundle 默认关闭全文索引**（`session-query-sqlite` 的 `openAt: never`，见 `deepseek-harness/packages/bundle/web-app/cordis.patch.yml`）。要内容搜索生效，在你的 profile 的 `cordis.patch.yml` 或 overlay 里覆盖：\r\n\r\n```yaml\r\n- id: session-query-sqlite\r\n  config:\r\n    path: ':memory:'               # 或可持久化的绝对路径（重启不重建）\r\n    openAt: first-search           # 或 startup\r\n```\r\n\r\n然后重启 DSH web。不开启时插件内容模式会显示配置指引，标题模式不受影响。\r\n\r\n## 安装\r\n\r\n```sh\r\n# 方式一：从 GitHub 直装（推荐）——仓库已提交 lib/，无需本地构建\r\ndsh plugin --profile web add github:drscrewdriver/dsh-switch-search#release-v0.1.0   # 稳定版\r\ndsh plugin --profile web add github:drscrewdriver/dsh-switch-search#master          # 基线\r\ndsh plugin --profile web add github:drscrewdriver/dsh-switch-search#feat/type-filter-search  # 最新开发\r\n\r\n# 方式二：本地路径/源码组装（见\"开发\"章节）\r\n\r\n# 重启 dsh web —— 必做！运行中实例不热载 bundle 层\r\ndsh web\r\n# 或用随包脚本\r\nbash ~/.dsh/profiles/web/node_modules/dsh-switch-search/restart-dsh-web.sh\r\n```\r\n\r\n装完侧边栏底部出现 **\"搜索\"** 按钮；设置 → 通用出现 **\"会话搜索\"** 配置行。\r\n\r\n## 开发\r\n\r\n```sh\r\npnpm install            # 含 @deepseek-ai client 包链 + tsdown/tsc\r\npnpm typecheck          # tsc --noEmit\r\npnpm build              # tsc(lib/types) + tsdown(lib/index.mjs + lib/client.js)\r\n```\r\n\r\n### 工作区结构\r\n\r\n```\r\nsrc/\r\n├── index.ts            # 宿主半（node）：Config schema + installSettingsSection + 路由\r\n├── config.ts           # 纯共享配置（enabled/defaultMode + 命名空间常量，client 免 schemastery）\r\n└── client/\r\n    └── index.ts        # 浏览器半：sidebar.footer.action 入口 + 浮层面板 + settings.general.item 配置行\r\n```\r\n\r\n- **宿主半**：注册 fenced HTTP 路由 `/switch-search/api`（`list-sessions` / `content-search` / `search-status`），浏览器信任围栏与 DSH `/api` 网关一致（loopback Host 或 trustedHosts，拒绝 cross-site）。\r\n- **配置模式**：借鉴 dsh-thinking-levels——宿主经 `settings` 服务注册 `switch-search` 命名空间 + schemastery `Config`；client 半 `defineStore` + `settingsScope.bind` 镜像读写；共享纯模块 `src/config.ts` 保持 client bundle 无 schemastery。\r\n- **构建链**：tsdown 复制 harness `packages/client/tsdown.client.ts` 语义（`__ModuleLoader__.load` banner、平台模块 external 表、bundle purity gate）。\r\n- **lib/ 提交进仓库**：GitHub 直装靠已提交的构建产物运行（dsh 从 git 安装不跑 prepare），`.gitignore` 不忽略 `lib/`。\r\n\r\n## 分支说明\r\n\r\n| 分支 | 用途 |\r\n|---|---|\r\n| `master` | 稳定基线（标题 ↔ 内容切换，会话聚合） |\r\n| `feat/type-filter-search` | 开发分支（内容类型筛选 + 设置页索引进口 + 索引可用性探测） |\r\n| `release-v0.1.0` | 从已验证开发状态派生的**稳定可装版本**，含 lib/ 构建产物 |\r\n\r\n## 与官方侧边栏搜索的关系\r\n\r\n- 官方侧边栏的搜索框在 `sidebar.workspaces`（single slot），外部插件**无法替换**；本插件在侧边栏底部**新增独立入口** `sidebar.footer.action`，二者并存、互不干扰。\r\n- 官方内容搜索在 apiproxy 硬编码只搜 `user/message` + `assistant/message`；本插件通过 `types` 参数放开 `tool/call` + `tool/result`，实现工具级筛选。\r\n\r\n## 兼容性与隐私\r\n\r\n- 需要已安装 DeepSeek Harness 并使用 web profile；数据全部经 DSH 现成 `sessionQuery` 服务（live-preferred 语料库），**不改任何官方源码、不建派生库**。\r\n- 配置仅存于 DSH settings 命名空间与浏览器浮层状态；不读取、不上传会话内容以外的数据。\r\n- 宿主/客户端契约类型在 `src/*.ts` 本地结构声明（npm 上 dsh client 包链不完整），构建时以 harness 源码核实为准。\r\n\r\n## drscrewdriver DSH Plugin Family\r\n\r\n本项目是 [drscrewdriver](https://github.com/drscrewdriver) 维护的 DSH 插件系列之一。如果这个对你有用，其他插件多半也有用：\r\n\r\n| 插件 | 一句话描述 |\r\n|---|---|\r\n| [dsh-input-traffic](https://github.com/drscrewdriver/dsh-input-traffic) | DSH Web GUI 忙时输入队列：三档交通管制，拖拽重排，会话冻结 |\r\n| [dsh-thinking-levels](https://github.com/drscrewdriver/dsh-thinking-levels) | 逐轮 reasoning_effort 控制：Auto 智能调度或手动固定档位 |\r\n| [dsh-seatbelt-sandbox](https://github.com/drscrewdriver/dsh-seatbelt-sandbox) | macOS Seatbelt 沙箱适配器：libsandbox 原生 loader，接替弃用的 sandbox-exec |\r\n| **[dsh-switch-search](https://github.com/drscrewdriver/dsh-switch-search)** | 侧边栏会话搜索增强：标题/内容切换，按用户/回复/工具筛选 |\r\n\r\n## License\r\n\r\nMIT\r\n"
+    },
+    {
+      "full_name": "Chenmo0414/openanalyst",
+      "html_url": "https://github.com/Chenmo0414/openanalyst",
+      "description": "Turn your coding agent into a data analyst — DuckDB engine, auto-profiling, read-only SQL, and Vega-Lite charts. Ships as a DeepSeek Harness plugin (charts render live in the conversation) and an MCP server for Claude Code / Codex / Cursor. 把编码 Agent 变成数据分析师：dsh 插件对话内出图 + MCP server",
+      "stars": 1,
+      "language": "TypeScript",
+      "pushed_at": "2026-08-20T11:09:26Z",
+      "topics": [
+        "ai-agent",
+        "claude-code",
+        "codex",
+        "coding-agents",
+        "cursor",
+        "data-analysis",
+        "deepseek-harness",
+        "dsh",
+        "dsh-plugin",
+        "duckdb",
+        "exploratory-data-analysis",
+        "mcp",
+        "mcp-server",
+        "sql",
+        "vega-lite"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "ai-agent",
+        "claude-code",
+        "codex",
+        "coding-agents",
+        "cursor",
+        "data-analysis",
+        "deepseek-harness",
+        "dsh"
+      ],
+      "readme_text": "<p align=\"center\"><img src=\"docs/assets/logo.svg\" alt=\"OpenAnalyst logo\" width=\"96\" height=\"96\" /></p>\n<h1 align=\"center\">OpenAnalyst</h1>\n\n<p align=\"center\"><b>Turn your coding agent into a data analyst.</b><br/>\nAttach a CSV, get an automatic profile, ask questions in SQL, and see real charts rendered inside the conversation.</p>\n\n<p align=\"center\">\n  <a href=\"LICENSE\"><img alt=\"license\" src=\"https://img.shields.io/badge/license-MIT-blue.svg?style=flat\" /></a>\n  <img alt=\"tests\" src=\"https://img.shields.io/badge/tests-74%20passing-brightgreen?style=flat\" />\n  <img alt=\"runtime\" src=\"https://img.shields.io/badge/DuckDB-in--process-fff100?style=flat\" />\n  <img alt=\"charts\" src=\"https://img.shields.io/badge/charts-Vega--Lite-4c78a8?style=flat\" />\n</p>\n\n<p align=\"center\">English · <a href=\"README.zh.md\">中文</a></p>\n\nA real DeepSeek Harness session — the agent attached a CSV, profiled it, and drew\nthese charts as conversation nodes (headless-Chrome capture of the live UI; see\n[the verification record](docs/VERIFICATION.md)):\n\n<p align=\"center\">\n  <img src=\"docs/assets/conversation-full.png\" alt=\"Full DeepSeek Harness window: a heatmap and a boxplot rendered inside the conversation, with the session sidebar and composer visible\" width=\"100%\" />\n</p>\n\n> Status: **M1 + M2 + M3 complete.** The dsh plugin is live-verified inside\n> `dsh web 0.1.0-rc.8` — the full attach → profile → query → chart chain ran in\n> a real session and both charts rendered as conversation nodes\n> ([verification record](docs/VERIFICATION.md)). The MCP server passes\n> protocol-level tests plus a stdio smoke. See [Known limitations](#known-limitations).\n\n---\n\n## What it does\n\n```\ndata_attach     →  register a CSV / Parquet / JSON / XLSX file as a queryable table\ndata_attach_db  →  attach PostgreSQL / MySQL / SQLite read-only and list its tables\ndata_profile    →  types, missing values, exact distinct counts, outliers, quality issues, chart ideas\ndata_query      →  one read-only SQL statement, results as lossless JSON\ndata_chart      →  bar / line / scatter / histogram / area / heatmap / boxplot — with color\n                   series, stacked/grouped layout, facet small multiples; line & scatter pan/zoom\ndata_report     →  a self-contained HTML report (profile + charts as inline SVG); prints to PDF\ndata_sources    →  what is currently attached\n```\n\nThe same five tools ship on two hosts from one engine:\n\n| Host | Package | Chart delivery |\n|---|---|---|\n| DeepSeek Harness plugin | `openanalyst` | live conversation node (Vega canvas) |\n| MCP server (Claude Code / Codex / Cursor / any MCP client) | `openanalyst-mcp-server` | SVG file + full Vega-Lite spec in `structuredContent` |\n\nEvery tool is also reachable from Code Mode as `await tools.data_*(args)`, so\nthe agent can chain the whole analysis inside one program instead of spending a\nround trip per step.\n\nThe **workbench** — a session-header panel listing this session's data\nsources, a chart gallery with click-to-scroll, and generated reports:\n\n<p align=\"center\">\n  <img src=\"docs/assets/workbench-panel.png\" alt=\"The OpenAnalyst workbench panel open over a dsh conversation: data sources, chart gallery with locate buttons, and the report archive\" width=\"100%\" />\n</p>\n\nMore in-conversation chart kinds (same theme, exported from a live session):\n\n<p align=\"center\">\n  <img src=\"docs/assets/chart-heatmap.png\" alt=\"Heatmap: revenue by region and product\" width=\"32%\" />\n  <img src=\"docs/assets/chart-boxplot.png\" alt=\"Boxplot: revenue distribution and outliers per region\" width=\"32%\" />\n  <img src=\"docs/assets/chart-grouped-bar.png\" alt=\"Grouped bars: revenue per region split by product\" width=\"32%\" />\n</p>\n\n## Install\n\nDeepSeek Harness:\n\n```bash\ndsh plugin --profile web add openanalyst\n```\n\nClaude Code (or any MCP client, via stdio):\n\n```bash\nclaude mcp add openanalyst -- npx -y openanalyst-mcp-server\n```\n\n## Architecture\n\nThree decisions shape the codebase.\n\n**The engine knows nothing about the harness.** `@openanalyst/core` takes paths\nand SQL and returns lossless JSON. It imports no dsh, MCP, or CLI type. That is\nwhat lets the same analysis ship to Claude Code, Codex, and Cursor through an\nMCP adapter later without a second implementation — the single largest factor\nin whether a plugin reaches an audience beyond one host.\n\n**DuckDB does the statistics.** `SUMMARIZE` returns min/max/avg/std/quartiles/\napprox_unique/null_percentage for every column in one pass, and reads CSV,\nParquet and JSON directly with full-file type inference. Only IQR outliers,\nduplicate-row detection, and the judgement about what is worth flagging are\nwritten by hand.\n\n**Charts are Vega-Lite specs carried on session events.** The harness tool-card\nkinds are a closed set — `generic`, `terminal`, `diff`, `search`, `web` — with\nno chart member, so a tool result can only ever degrade a chart to text. A real\nchart has to come from a *conversation node*, which the client half registers.\n\nThat constraint turned out to pick the chart format too. A conversation node\nmust rebuild its view as a **pure function of durable events** — no clock, no\nrandom, no live state — and the engine prefers whole-value checkpoints over\ndeltas. A Vega-Lite spec with its data inlined is exactly that: one plain JSON\nvalue that replays byte-for-byte. Vega-Lite was chosen because it satisfies the\nreplay rule, not because it is a popular chart library.\n\n```\n@openanalyst/core            engine, profiling, DB connectors, chart specs  (host-agnostic)\n  ├── @openanalyst/report    Vega-Lite -> SVG (pure JS) + self-contained HTML reports\n  ├── openanalyst            dsh host half: 7 tools + chart event\n  │     └── ./client         dsh browser half: conversation node + Vega canvas\n  └── openanalyst-mcp-server stdio MCP server: same 7 tools, charts as SVG files\n```\n\n## Development\n\n```bash\npnpm install\npnpm -r run build\npnpm -r run test\n```\n\n74 tests: 46 over the core (SQL policy, JSON conversion, profiling with exact\ndistinct counts, charts, and live PostgreSQL/MySQL connector tests that\nauto-skip without the Docker fixtures), 5 over the report builder, 14 driving\nthe real dsh plugin tools end to end against DuckDB (including per-agent\nisolation), and 9 protocol-level MCP tests over the SDK's in-memory transport\n(plus a scripted stdio smoke). Live verification against a running `dsh web` is scripted in\n`scripts/mock-llm-scripted.mjs` + `scripts/verify-live.patch.yml` — see\n[docs/VERIFICATION.md](docs/VERIFICATION.md).\n\n## Known limitations\n\nThese are real and worth reading before building on this.\n\n- **PTC 模式 (Code Mode) presets reject direct tool calls** — the model must\n  wrap them in a `run_code` program there. Under the Standard preset the tools\n  are called directly. Verified behavior, documented in\n  [docs/VERIFICATION.md](docs/VERIFICATION.md).\n- **dsh per-agent engines are bounded, not lifecycle-tracked.** Each dsh agent\n  session gets its own engine (no alias collisions), but the harness does not\n  notify plugins on agent disposal, so the plugin holds at most 32 engines and\n  evicts the least-recently used — that session transparently re-attaches on\n  its next call.\n- **The client bundle is ~860 kB.** Vega is inlined because the harness serves\n  exactly one file per plugin and has no route for sibling chunks, so a\n  chart-free session still pays for it.\n- **`data_attach` takes any path the host process can read.** There is no\n  workspace fencing yet; it inherits whatever the harness sandbox allows.\n- **XLSX depends on DuckDB's `read_xlsx`**, which may need an extension\n  download on first use. CSV, Parquet and JSON are covered by tests; XLSX is\n  not.\n\n## Notes on the dsh npm packages\n\nTwo things cost time here and are worth recording for anyone else building a\nharness plugin:\n\n- **`latest` points at a broken line.** `npm view @deepseek-ai/dsh-tools\n  version` reports `0.0.1-rc.1`, but the current line is `0.1.0-rc.8`. Several\n  `0.0.1-rc.1` packages cannot be installed at all —\n  `@deepseek-ai/dsh-client-runtime@0.0.1-rc.1` depends on\n  `@deepseek-ai/dsh-compact` and `@deepseek-ai/dsh-session@0.0.1-rc.1` depends\n  on `@deepseek-ai/dsh-type-meta`; neither is published. Pin `0.1.0-rc.8`.\n- "
+    },
+    {
+      "full_name": "T-MKT/dsh-ui-settings",
+      "html_url": "https://github.com/T-MKT/dsh-ui-settings",
+      "description": "Provide generic UI customization settings for DeepSeek Harness, like wallpaper, theme color, etc. ",
+      "stars": 1,
+      "language": null,
+      "pushed_at": "2026-08-21T08:34:41Z",
+      "topics": [
+        "deepseek-harness-plugin",
+        "deepseek-harness-plugins",
+        "dsh-plugin",
+        "dsh-plugins"
+      ],
+      "categories": [
+        "皮肤/UI"
+      ],
+      "tags": [
+        "deepseek-harness-plugin",
+        "deepseek-harness-plugins",
+        "dsh-plugin",
+        "dsh-plugins"
+      ],
+      "readme_text": "# dsh-ui-settings\n"
+    },
+    {
+      "full_name": "SUJIElearning/dsh-free-search-builder",
+      "html_url": "https://github.com/SUJIElearning/dsh-free-search-builder",
+      "description": "Free web search plugin for DeepSeek Harness (DSH) - scrapes public Bing search results, no API key needed.",
+      "stars": 1,
+      "language": "JavaScript",
+      "pushed_at": "2026-08-20T15:14:03Z",
+      "topics": [
+        "agent-skill",
+        "deepseek-harness",
+        "dsh-plugin"
+      ],
+      "categories": [
+        "Agent/智能体"
+      ],
+      "tags": [
+        "agent-skill",
+        "deepseek-harness",
+        "dsh-plugin",
+        "search"
+      ],
+      "readme_text": "# 🔍 dsh-free-search-builder\n\n> 给 DeepSeek Harness (DSH) 装上**免费、无需 API key** 的联网搜索。\n> 搜网页、搜新闻、搜资料，不花一分钱。\n\n![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)\n![DSH Plugin](https://img.shields.io/badge/DSH-plugin-blue.svg)\n\n---\n\n## 🎯 解决什么问题\n\nDeepSeek Harness（简称 DSH）的官方联网搜索功能**依赖官方 API key**：\nkey 缺失或失效时，`web_search` 工具就完全用不了（报 `api key invalid`）。\n\n这个项目提供一个**替代搜索插件**（`dsh-web-search-bing`）：\n抓取公开的 Bing 搜索页面，解析出规范的搜索结果。\n\n- 🆓 **零成本**：不需要官方 key、不需要付费 API、不需要注册\n- 🔌 **一句话安装**：对 DSH 说\"帮我装免费搜索插件\"，AI 自动搞定\n- 📦 **Bundle 自包含**：装完零配置，重启即用\n\n---\n\n## 🚀 安装\n\n在 DSH 对话里复制粘贴这条命令：\n\n```sh\ndsh plugin --profile web add 'github:SUJIElearning/dsh-free-search-builder&path:/scripts/dsh-web-search-bing'\n```\n\n装完重启 DSH，搜索就能用了。**不用手动复制文件、不用手改配置**——插件自带 bundle patch，自动注册 + 自动指定搜索 provider。\n\n---\n\n## 🧪 确认装好了\n\n重启后问 DSH 几个不同的问题，看结果**是否随之变化**：\n\n| 问题 | 应该看到 |\n|---|---|\n| \"北京天气怎么样\" | 天气网站（中国天气网、2345 等） |\n| \"DeepSeek 最新动态\" | 科技新闻、知乎、百科 |\n\n每次返回不同的真实网站 = ✅ 工作正常。\n\n---\n\n## 🔧 常见问题\n\n| 现象 | 原因 | 解决 |\n|---|---|---|\n| 报 `provider bing is not registered` | bundle 没装配 | 确认 `dsh.profile.bundles` 里有这个包 |\n| 报 `Cannot read properties of undefined` | 配置空 | 确认 `config ?? {}` 兜底（源码已修复） |\n| 结果永远一样 | 缓存 | 重启 DSH，换不同问题测试 |\n\n---\n\n## 📚 进阶\n\n- **[搭建手册](references/build-guide.md)**：接口规范、解析逻辑、部署原理\n- **[验证报告](VERIFICATION.md)**：陌生用户视角的完整测试记录\n- **[源码](scripts/dsh-web-search-bing/)**：可直接运行的插件代码（含 bundle patch）\n- **[SKILL.md](SKILL.md)**：DSH 技能入口（AI 加载后自动会用）\n\n---\n\n## 🗺️ 项目结构\n\n```text\ndsh-free-search-builder/\n├── SKILL.md                          # DSH 技能入口\n├── README.md                         # 本说明\n├── VERIFICATION.md                   # 验证报告\n├── references/\n│   └── build-guide.md                # 技术搭建手册\n├── scripts/\n│   └── dsh-web-search-bing/          # 可运行的搜索插件（含 bundle patch）\n│       ├── package.json              # 声明 dsh.bundle.patch\n│       ├── cordis.patch.yml          # 自注册 + 自指定 searchProvider\n│       └── lib/                      # 插件源码\n└── evals/\n    └── trigger_cases.json            # 技能触发测试\n```\n\n---\n\n## 📄 开源协议\n\n[MIT](LICENSE) · 自由使用、修改、分发，保留版权声明即可。\n\n*Made with ❤️ for the DSH community*"
+    },
     {
       "full_name": "Howe829/dsh-runtime",
       "html_url": "https://github.com/Howe829/dsh-runtime",
@@ -9031,117 +9149,6 @@
         "agent"
       ],
       "readme_text": "# dsh-command-opt\n\n[![CI](https://github.com/csiroqa/dsh-command-opt/actions/workflows/ci.yml/badge.svg)](https://github.com/csiroqa/dsh-command-opt/actions/workflows/ci.yml)\n\nDeepSeek Harness（DSH）的**命令优化**插件：Tab/Enter 补全命令名、参数格式引导与提示弹框、tool 开启会话（subagent）补丁、空对话命令输出修复。\n\nEnglish: [README.en.md](README.en.md)\n\n## 功能\n\n- **Tab/Enter 补全**：composer 中键入 `/前缀` 后按 Tab（或菜单高亮时按 Enter），按当前会话命令目录补全——草稿任意位置可用；前缀优先、无前缀命中回退菜单同款模糊打分，最近使用过的命令置顶；多匹配先补最长公共前缀，再按 Tab 轮转候选；菜单 ↑↓ 高亮优先，Tab 与 Enter 都补全为选中的命令\n- **参数格式引导**：行首补全到带参数位的命令时直接进入 claim，参数格式（input hint）幽灵文本与输入对齐；claim 阶段按 Tab 轮转参数选项（hint 的 `|` 枚举，如 `/plan off|message`）\n- **命令提示弹框**：`conversation.input.overlay` 槽位、与内置菜单同锚点同风格——输入命令参数时始终显示弹框并固定在对应命令下，高亮当前待填参数（多参数命令如 `/schedule` 输入参数后提示不再消失）；内置菜单未展示时兜底显示候选（命令后跟参数而非说明）\n- **tool 开启的会话（subagent）补丁**：内置命令目录对 subagent 返回空，导致此类对话\"没有选项\"、无法执行 `/archive` 等操作——本插件目录直连宿主，提示弹框照常显示命令选项；回车时完整命令直接执行；会话头部注册\"操作\"菜单（归档 / 复制会话 / 定位父会话）\n- **空对话命令输出修复**：空会话中执行 `/命令` 后输出正常渲染、头部选项按钮出现、不再被\"新对话\"复用扫描当作空会话合并\n- **目录缓存**：键入 `/` 即预热、`commands/change` 与 `agent-preset/selected` 事件主动失效、TTL 兜底、同会话并发去重、会话删除时剪枝\n\n## 配置\n\n安装后，`cordis.patch.yml` 的 `command-opt` insert 行支持以下可选 config（注意：dsh 固有逻辑——浏览器半区收不到 patch config，默认值内置在代码里，修改 config 不会改变浏览器行为）：\n\n| 键 | 默认 | 说明 |\n| --- | --- | --- |\n| `tabComplete` | `true` | Tab/Enter 补全命令名 |\n| `hintPopup` | `true` | 命令提示弹框（conversation.input.overlay） |\n| `subagentPatch` | `true` | tool 开启的会话（subagent）补丁 |\n| `blankEngage` | `true` | 空对话命令输出修复 |\n| `catalogTtlMs` | `15000` | 命令目录缓存 TTL（毫秒） |\n\n## 安装\n\n前置：Node.js >= 22、pnpm、本机 `deepseek-harness` 源码检出（依赖以 `link:` 指向 `../deepseek-harness`）。\n\n```sh\ngit clone https://github.com/csiroqa/dsh-command-opt.git\ncd dsh-command-opt\npnpm install\npnpm build\n\n# 安装进 web profile（link: 指向本目录）\ndsh plugin --profile web add link:$(pwd)        # POSIX\ndsh plugin --profile web add link:D:\\path\\to\\dsh-command-opt   # Windows\n```\n\n重启 `dsh web`，浏览器 **Ctrl+F5** 硬刷新。\n\n## 使用\n\n1. 输入 `/` + 前缀，按 Tab 补全命令名（多候选先补公共前缀，再按 Tab 轮转；↑↓ 选中后 Tab/Enter 补全选中项）\n2. 行首补全到带参数位的命令（如 `/schedule`）后直接进入参数位：幽灵提示显示参数格式，Tab 轮转 `|` 枚举选项，输入参数全程提示弹框常驻\n3. 在 tool 开启的会话中：回车直接执行 `/archive` 等命令，头部\"操作\"菜单提供归档 / 复制会话 / 定位父会话\n4. 空会话里执行命令后：输出正常渲染、选项按钮出现、不会被下一次\"新建对话\"复用\n\n## 兼容性\n\n- **平台**：Windows / macOS / Linux（Node >= 22）——三平台构建与冒烟测试经 [GitHub Actions CI](https://github.com/csiroqa/dsh-command-opt/actions) 验证\n- 针对 DSH `0.1.1-rc.2` 源码检出开发验证；依赖 `dsh-client-runtime` 的公开面，少量内部面（会话激活的 `handleBlank`/`promptAttempted`、列表摘要的 `recordMutation`）以运行时特性检测保护，缺失时静默降级\n- **已知限制**：空对话激活是浏览器侧行为，宿主 summary 仍报 blank，刷新页面后该会话会从列表消失（直到有真实 turn）；浏览器半区收不到 patch config，默认值内置在代码\n- 构建产物：`tsdown`（host 半区 `lib/index.js` + browser 半区 `lib/client.js`，标准 `window.__ModuleLoader__.load` 闭包工厂格式）\n\n## 安全说明\n\n- 插件只在本机页面上生效，不涉及网络监听\n- 插件代码以 `link:` 指向本仓库目录安装，改动源码后重新构建（`pnpm build`）并硬刷新即可生效\n\n## 许可与使用声明\n\n**MIT License**（见 [LICENSE](LICENSE)）。\n\n欢迎任何人**使用、修改、引用、或把本项目收录进自己的插件合集**，只需：\n\n- 保留 `LICENSE` 文件与版权声明\n- 标明出处（本仓库链接）\n\n## 相关\n\n- [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)\n- 同系列插件：[dsh-schedule](https://github.com/csiroqa/dsh-schedule)（定时任务 + 状态监控）、[dsh-hotkeys](https://github.com/csiroqa/dsh-hotkeys)（全局快捷键）、[dsh-plugin-usage-report](https://github.com/csiroqa/dsh-plugin-usage-report)（用量统计）\n"
-    },
-    {
-      "full_name": "csiroqa/dsh-plugin-forge",
-      "html_url": "https://github.com/csiroqa/dsh-plugin-forge",
-      "description": "DeepSeek Harness（DSH）插件生成工具：AI 自发发现能力缺口，子代理开发、迁移为独立 git 仓库并自动提交、热挂载与装入 profile。AI-native plugin generator for DeepSeek Harness: self-iterating subagent pipeline, independent repos, hot-mount.",
-      "stars": 1,
-      "language": "TypeScript",
-      "pushed_at": "2026-08-15T22:33:40Z",
-      "topics": [
-        "ai-native",
-        "cordis",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "plugin-generator",
-        "self-iteration",
-        "subagent"
-      ],
-      "categories": [
-        "Agent/智能体"
-      ],
-      "tags": [
-        "ai-native",
-        "cordis",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "plugin-generator",
-        "self-iteration",
-        "subagent"
-      ],
-      "readme_text": "# dsh-plugin-forge\n\n[![CI](https://github.com/csiroqa/dsh-plugin-forge/actions/workflows/ci.yml/badge.svg)](https://github.com/csiroqa/dsh-plugin-forge/actions/workflows/ci.yml)\n\nAI-native DSH 插件生成器。`forge_plugin` 由 AI 在执行任务时调用：子代理开发 → 迁移为「项目根/dsh-plugins/<name>」独立 git 仓库（功能完成即英文 Conventional Commit）→ 热挂载当前会话。\n\n借由一切皆插件理念的智能体自迭代探索，现已实现自举（？\n\nEnglish: [README.en.md](README.en.md)\n\n## 工具 `forge_plugin`\n\n| 参数 | 类型 | 默认 | 说明 |\n| --- | --- | --- | --- |\n| `requirement` | string | 必填 | 插件需求（中文优先，尽量具体） |\n| `name` | string | 自动 | 仓库目录名（kebab-case，从需求派生） |\n| `targetRoot` | string | 项目根/dsh-plugins | 迁移根目录（参数 > 配置 > 默认） |\n| `migrate` | boolean | `true` | 迁移为独立仓库并提交 |\n| `update` | boolean | `false` | 更新既有仓库（防误覆盖） |\n| `install` | boolean | 缺省自动 | 装入 profile：缺省自动装入当前 profile；`false` 关闭；`installProfile` 可显式指定 |\n| `hot` | boolean | `true` | 热挂载到当前运行时 |\n\n输出 JSON：\n\n| 字段 | 说明 |\n| --- | --- |\n| `ok` `pluginName` `committed` `build` `files` | 必填；`build` = `passed` / `skipped` / 失败原因 |\n| `migratedTo` | 仓库绝对路径（正斜杠）；`migrate=false` 时缺省 |\n| `commitSubject` | 提交 subject；未提交时缺省 |\n| `childReport` | 子代理 REPORT notes（截断 500 字符） |\n| `installed` `installDetail` `hotMounted` `hotDetail` | profile 装入（`installed=false` 时 `installDetail` 为未装入原因）/ 热挂载结果；两者失败均不阻塞交付 |\n| `duplicated` `existingName` | 子代理判定与既有插件重复：拒绝新建，返回既有仓库名 |\n\n失败（子代理未完成 / 迁移后构建失败 / 加载冒烟未通过）throw，staging 保留。\n\n## 命令 `/forge status`\n\n逐仓库输出：\n\n```\n- <name>（<path>）\n  HEAD：<短哈希> <subject>；工作区：干净|有未提交改动|目录不存在；最近提交：<本地时间>，累计 <n> 次\n```\n\nregistry 为空时输出「plugin-forge 尚未创建任何插件仓库。」\n\n## 流程\n\nstaging → 子代理开发（typecheck/test/build）→ 重复检测 → 迁移 → 目标重建 → 加载冒烟 → git init/commit → 登记 → 装入 profile（缺省自动）→ 热挂载。\n\n- staging：`<stagingRoot>/<name>`，默认 `工作区/.forge-staging/<name>`；子代理仅写此处\n- 同名任务进程内互斥；`stagingTtlDays > 0` 时启动前清理过期目录\n- 迁移：link/CI 中 `deepseek-harness` 路径按深度改写、拒绝 registry 版 `@deepseek-ai/*` 依赖、写入 .gitignore（排除 node_modules/.git/.pnpm-store/lib/dist）\n- 更新模式额外 `syncRemoveStale`：删除目标中 staging 已不存在的源文件\n- 提交：`<type>: <name>[: <summaryEn>]`，header ≤ 72 字符，summary 超预算截断；type 非法回退 `feat`\n- 登记：`$DSH_HOME/plugin-forge.json`，形状 `{version: 1, repos: [{name, path, createdAt, lastCommitAt?, commitCount, summaryZh?}]}`，tmp+rename 原子写\n- push 仅配置显式开启时执行（默认关，遵守 AGENTS.md）\n\n## 防重复\n\n引导节不注入插件清单（省上下文）。子代理开发前自检：读 registry 与 `dsh-plugins/` 目录，需求重复则 REPORT `duplicate_of` → 宿主拒绝新建，返回 `duplicated: true` + `existingName`；迭代走 `update=true`。\n\n## 配置（cordis.patch.yml）\n\n| 键 | 默认 | 说明 |\n| --- | --- | --- |\n| `targetRoot` | `''` | 迁移根；空 = 工作区父目录/dsh-plugins |\n| `stagingRoot` | `''` | staging 根；空 = 工作区/.forge-staging |\n| `harnessRoot` | `''` | deepseek-harness 检出根；空 = 自动查找 |\n| `subagentProvider` | `spawn` | 子代理 provider |\n| `maxChildDepth` | `2` | 子代理委托深度上限（1–5） |\n| `childTimeoutMs` | `2700000` | 子代理/构建超时（≥ 60000） |\n| `commitType` | `feat` | Conventional Commit 类型 |\n| `push` | `false` | 提交后 push |\n| `gitAuthorName` | `csiroqa` | 提交作者名 |\n| `gitAuthorEmail` | `justinwangyj@163.com` | 提交作者邮箱 |\n| `keepStaging` | `true` | 保留 staging 供排查 |\n| `stagingTtlDays` | `0` | staging 保留天数；0 = 不清理 |\n| `installProfile` | `''` | 装入的 profile 名；空 = 自动探测当前 profile |\n| `autoInstall` | `true` | 成功后自动装入当前 profile（`install: false` 参数可关闭单次） |\n\n## 质量门\n\nstaging 内 typecheck/test/build → 迁移后目标 `pnpm install && pnpm build` → main/types 存在 → 拒绝 registry 版 `@deepseek-ai/*` → **加载冒烟**（真实 cordis Context 执行 apply，拦截 apply 期崩溃——真实事故：命令 `input.hint` 为空导致 DSH 启动即崩）→ **宿主工具名冲突拦截**（机制确认：dsh-tools 跨 scope 同名注册不报错但模型侧遮蔽；加载冒烟与热挂载双重拦截）→ 提交前检查 diff。\n\n## 安装\n\n```sh\npnpm install && pnpm build\ndsh plugin --profile web add link:D:\\2-OGP\\dsh-plugin-forge\n```\n\n重启 `dsh web`。前置：Node ≥ 22、pnpm、本地 deepseek-harness 检出（依赖 link: `../deepseek-harness`）。\n\n## 交付方式\n\n1. 热挂载（默认）：生成后挂载当前运行时，本会话即用\n2. 装入 profile（缺省自动）：探测当前 profile（`installProfile` 可显式指定），重启生效\n3. repository 源（家目录层 plugin-console）：`$DSH_HOME/cordis.patch.yml` 的 `repository-plugins.repositories`，面板行管理——添加=安装、更新=锁定远端最新 commit、删行=卸载、立即生效；行格式 `github:owner/repo#ref`（monorepo 子包加 `&path:/packages/<子包>`）。forge 产物是单包独立仓库，push 后可直接作源；`update=true` 迭代 push 后面板更新即拉新 commit\n\n## 真实 LLM 测试（免重启 GUI）\n\n```sh\nnode scripts/llm-e2e-host.mjs prompt <name> <stagingDir> <targetRoot> <harnessRoot> \"<需求>\"\nnode scripts/llm-e2e-host.mjs run <name> <stagingDir> <targetRoot> <harnessRoot> \"feat: <name>: <摘要>\"\n```\n\n`prompt`：生成真实子代理提示词；`run`：执行宿主侧全流程（迁移/link+CI 改写/构建/提交/登记）；`--update` 走更新链路。\n\n## 安全\n\n- forge 启动子代理、联网 pnpm install、目标目录构建、执行 git commit——只传可信需求\n- 提交前 diff 检查、.gitignore 排除构建产物与依赖、不自动 push/tag/release\n- 子代理只写 staging（工作区内）\n\n## 演示\n\nagent 自发提出建插件需求的会话截图：\n\n![demo-1：agent 自发提出「每次会话结束自动把对话要点存档为 Markdown」](docs/demo-1.png)\n\n![demo-2：审查后 agent 自发提出固化流程的任务](docs/demo-2.png)\n\n![demo-2](docs/demo-2.png)\n"
-    },
-    {
-      "full_name": "fthuu/my-skin-for-DeepSeek-Harness",
-      "html_url": "https://github.com/fthuu/my-skin-for-DeepSeek-Harness",
-      "description": "DeepSeek Harness 皮肤扩展插件 Skin plugin",
-      "stars": 1,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-20T02:29:08Z",
-      "topics": [
-        "deepseek-harness",
-        "deepseek-harness-plugin",
-        "dsh-plugin",
-        "dsh-skin"
-      ],
-      "categories": [
-        "皮肤/UI"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "deepseek-harness-plugin",
-        "dsh-plugin",
-        "dsh-skin",
-        "skin"
-      ],
-      "readme_text": "# my-skin\n\nDeepSeek Harness 的皮肤扩展插件：一套完整的主题 token 换肤方案，内置壁纸智能取色、自定义主色、全局饱和度与沉浸式滑条预览。\n\n- **预设皮肤**：紫夜 / 深海 / 午夜 / 樱花 / 纸张，覆盖深色与浅色，每套生成完整的 `--dsw-alias-*` token 集。\n- **壁纸智能取色**：上传或拖拽图片（`image/*`、≤10MB），客户端 K-means 聚类提取主色，自动生成「壁纸配色 Auto」皮肤；支持透明度、模糊、噪点三个滑条（噪点为 SVG feTurbulence 灰度层，0–40%）。\n- **自定义主色**：原生取色器 + 文本输入（`#RRGGBB` / `R,G,B`）；与壁纸 Auto 相互独立、可并存。\n- **全局饱和度**：0–200% 滑条，实时作用于所有皮肤的主色再生成 token。\n- **更顺手的皮肤交互**：单击试穿、双击直接应用、左侧色条与 hover 强调、试穿横幅淡入淡出、「已应用 ✓」短暂反馈。\n- **沉浸式滑条预览**：拖动任意滑条时，设置弹窗（含遮罩与导航）整体隐藏，露出主界面，只保留当前滑块在原位；松开即恢复。\n- **持久化**：激活皮肤、壁纸（含透明度/模糊/噪点）、Auto 主色、饱和度、自定义主色全部存 localStorage，启动自动恢复。\n\n## 截图预览\n\n<div align=\"center\">\n  <img src=\"screenshots/screenshot1.png\" width=\"45%\" alt=\"1\" />\n  <img src=\"screenshots/screenshot2.png\" width=\"45%\" alt=\"2\" />\n</div>\n\n## 安装 / 使用\n\n1. 将 my-skin 文件夹放入 deepseek-harness/ 根目录\n2. 在 deepseek-harness 根目录执行：\n   pnpm dsh plugin --profile web add -w ./my-skin\n3. 重启 dsh web\n4. 打开「设置 → 通用」的 my-skin 区域切换皮肤\n\n\n## 兼容性\n\n- 面向 DeepSeek Harness web 客户端（Cordis 动态包，浏览器半区）。\n- 现代 Chromium 系浏览器。\n\n## License\n\nGPL-3.0\n\n## 开发状态\n\n后续功能还在持续开发中，欢迎反馈与建议。\n\n\n## 作者\n\n- 小红书：@Epho\n- GitHub: https://github.com/fthuu\n\n\n## English Version\n\n# my-skin\n\nA skin extension plugin for DeepSeek Harness. It provides a complete theme token system with wallpaper-based smart color extraction, custom primary color, global saturation, and immersive slider preview.\n\n## Features\n\n- **5 preset skins**: Violet / Ocean / Midnight / Sakura / Paper, covering both dark and light schemes. Each preset generates a complete set of `--dsw-alias-*` tokens.\n\n- **Wallpaper smart color extraction**: Upload or drag an image (`image/*`, ≤10MB). Client-side K-means clustering extracts the dominant color and auto-generates a \"Wallpaper Auto\" skin. Supports three sliders: opacity, blur, and noise (SVG feTurbulence grayscale layer, 0–40%).\n\n- **Custom primary color**: Native color picker + text input (`#RRGGBB` / `R,G,B`). Works independently alongside the Wallpaper Auto skin.\n\n- **Global saturation**: 0–200% slider that reapplies to the primary color of all skins in real time.\n\n- **More responsive skin interaction**: Single-click to try on, double-click to apply directly, left color bar with hover emphasis, try-on banner with fade in/out, and a brief \"Applied ✓\" feedback.\n\n- **Immersive slider preview**: While dragging any slider, the settings modal (including overlay and navigation) hides, revealing the main interface with only the slider remaining in place. The UI restores when released.\n\n- **Persistence**: Active skin, wallpaper (opacity/blur/noise), Auto primary color, saturation, and custom primary color are all stored in localStorage and auto-restored on startup.\n\n## Installation\n\n1. Place the `my-skin` folder into the `deepseek-harness/` root directory.\n\n2. In the `deepseek-harness/` root directory, run:\npnpm dsh plugin --profile web add -w ./my-skin\n\n3. Restart `dsh web`.\n\n4. Open Settings → General and find the my-skin section to switch skins.\n\n\n## Compatibility\n\n- Built for the DeepSeek Harness web client (Cordis dynamic bundle, browser half)\n- Modern Chromium-based browsers\n\n## License\n\nGPL-3.0\n\n## Development Status\n\nMore features are in active development. Feedback and suggestions are welcome.\n\n## Author\n\n- Xiaohongshu/Rednote: @Epho\n- GitHub: https://github.com/fthuu\n\n\n"
-    },
-    {
-      "full_name": "NEVSTOP-LAB/dsh-version-inspector",
-      "html_url": "https://github.com/NEVSTOP-LAB/dsh-version-inspector",
-      "description": "DSH 版本信息插件，在 DSH 设置面板新增「版本信息」页，以紧凑多列树展示 DeepSeek Harness、插件与依赖的版本，支持按包名/版本过滤与 day/dark",
-      "stars": 1,
-      "language": "JavaScript",
-      "pushed_at": "2026-08-24T00:30:09Z",
-      "topics": [
-        "cordis",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin"
-      ],
-      "categories": [
-        "工具/开发"
-      ],
-      "tags": [
-        "cordis",
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin"
-      ],
-      "readme_text": "# DSH-Version-Inspector\n\nDSH 版本信息插件。在 DSH 的设置面板中新增一个「版本信息」页面，以树状结构展示 **DeepSeek Harness**、**插件**及其**依赖**的版本号。样式沿用 DSH 主题（`--dsw-alias-*` 变量），自动适配 **day / dark** 模式。\n\n<img width=\"803\" height=\"754\" alt=\"image\" src=\"https://github.com/user-attachments/assets/8b5720db-614f-418c-83aa-90d7d90a980f\" />\n\n## 功能\n\n- 设置面板新增「版本信息」页面（`settings.section`，`replaceRisk: none`）\n- 树状结构，分三组，节点可展开 / 折叠：\n  - **DeepSeek Harness（dsh）**：`@deepseek-ai/dsh` 版本号 + 顶层依赖（默认折叠）\n  - **插件**：从 Cordis Loader 读到的其他已挂载插件及其版本（不含本插件）\n  - **当前插件**：本插件自身的版本 + `dependencies` / `peerDependencies` 子树\n- 每个依赖项展示：名称、已解析版本（安装的真实版本）、声明范围（`^x.y.z`）、所属 section（依赖 / 对等依赖 / 可选依赖）与解析路径\n- 宿主解析不到的依赖（如客户端专用的 `react`、未安装的可选依赖）以警示色标注，并显示声明范围\n- **紧凑多列布局**：版本项以自适应多列网格（`auto-fill`）密集排布，长列表横向铺开、少滚动\n- **搜索过滤**：按包名或版本过滤，快速定位目标包（结果按 Harness / 插件 / 当前插件分组显示并计数）\n- 设置页导航中的**最后一个**条目（`order 1000`）\n- 样式与现有设置页一致，使用 DSH 主题令牌（CSS 变量），**自动适配 day / dark**\n\n## 数据来源\n\n全部数据由 Host 侧只读收集，通过一个**同源控制路由** `GET /version-info`（回环校验）提供给客户端：\n\n| 项 | 来源 |\n| --- | --- |\n| Harness 版本 | `@deepseek-ai/dsh/package.json`（模块解析） |\n| 插件列表 | Cordis Loader（`ctx.get(\"loader\").entries()`，尽力而为；可用时列出已挂载插件） |\n| 各插件版本 | 各插件包 `package.json`（`createRequire` 解析） |\n| 依赖版本 | 各包声明依赖的 `package.json`（直接解析优先，回退到模块入口向上查找） |\n\n客户端只在页面打开时做一次同源 `fetch(\"/version-info\")`，之后仅在内存中展开/折叠。\n\n## 安装\n\n需要 [dsh CLI](https://github.com/deepseek-ai/deepseek-harness)（0.1.0-rc.6 及以上）。\n\n从 GitHub 仓库安装：\n\n```sh\ndsh plugin --profile web add github:NEVSTOP-LAB/dsh-version-inspector\n```\n\n> [!NOTE]\n> `--profile web` 是默认 profile。桌面版（[DSH Desktop](https://github.com/anywhere-labs/deepseek-harness-desktop)）用 `--profile desktop`；其他 profile 把 `web` 换成对应名字即可。\n\n建议锁定提交，避免后续更新改变实际内容：\n\n```sh\ndsh plugin --profile web add github:NEVSTOP-LAB/dsh-version-inspector#<commit-sha>\n```\n\n也可以从 [Releases](https://github.com/NEVSTOP-LAB/dsh-version-inspector/releases) 下载 tarball 安装：\n\n```sh\ndsh plugin --profile web add ./dsh-version-inspector-0.1.2.tgz\n```\n\n安装后确认组合层里出现该插件：\n\n```sh\ndsh --profile web --dump-config\n```\n\n启动后，打开设置面板，「版本信息」页面出现在设置页列表。\n\n卸载：\n\n```sh\ndsh plugin --profile web remove dsh-version-inspector\n```\n\n## 目录结构\n\n```\ndsh-version-inspector/\n├── .github/workflows/   # CI / Release\n├── doc/design.md        # 设计文档\n├── index.js             # Host half（版本收集 + /version-info 路由）\n├── lib/client.js        # Client half（设置页树状 UI，__ModuleLoader__ bundle）\n├── package.json         # bundle manifest（dsh.bundle + dsh.client）\n├── cordis.patch.yml     # 组合层：插入插件行\n└── scripts/pack.mjs     # tarball 打包\n```\n\n## License\n\nMIT\n"
-    },
-    {
-      "full_name": "jackovibe/dsh-codex-pin",
-      "html_url": "https://github.com/jackovibe/dsh-codex-pin",
-      "description": "Codex 式会话置顶与归档风格的 DSH Web 插件（置顶=标记不是排序，宿主持久，零顺序改动）",
-      "stars": 1,
-      "language": "JavaScript",
-      "pushed_at": "2026-09-25T04:08:55Z",
-      "topics": [
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "pin",
-        "session",
-        "sidebar",
-        "ui"
-      ],
-      "categories": [
-        "皮肤/UI"
-      ],
-      "tags": [
-        "deepseek-harness",
-        "dsh",
-        "dsh-plugin",
-        "pin",
-        "session",
-        "sidebar",
-        "ui"
-      ],
-      "readme_text": "# dsh-codex-pin\n\n**Codex-style pinning for the DeepSeek Harness Web sidebar — a pin is a flag, not a position.**\n\nPinning a session lifts it into a single **Pinned** section above the whole\nworkspace list; pinning a workspace lifts its whole group to the front of the\ntree. Neither ever calls `workspace.insertSessionBefore` or\n`workspaces.insertBefore`, never writes the workspace view store's order, and\nnever switches the sidebar's sort mode: the durable order in\n`~/.dsh/storages/workspace.json` is not touched. That promise is guarded by a\nstatic check in this repo (`npm test`), not just by documentation.\n\n![The Pinned section above the workspace groups](assets/pinned-sidebar.png)\n\n> Independent community plugin. Not an official DeepSeek product, and not\n> affiliated with OpenAI — “Codex-style” describes the interaction model it\n> copies, not any official connection.\n\n## What you get\n\n- **A pinned flag.** Hover a session row and click the pin (📌). The session\n  moves into **已置顶 / Pinned** at the very top of the sidebar — above the host's\n  「工作区 / Workspaces」 section header, not merely above the tree — newest pin\n  first.\n- **The pinned row leaves its group**, so nothing is duplicated: click the row in\n  the section to open the session, click the pin control there to unpin, and the\n  row is back where the list order says it belongs.\n- **Pinned workspaces.** Right-click a workspace group header and choose\n  **置顶工作区 / Pin workspace**. Pinned groups rise to the front of the tree\n  under a **「置顶 / Pinned · N」** heading, newest pin first — Codex Desktop's\n  projects model exactly: the pin only changes where the project is shown, and\n  the row itself gains no button.\n- **Host-durable state.** Both ordered lists live in the host settings namespace\n  `codex-pin` (`~/.dsh/settings.yaml`), so they survive restarts and are shared by\n  every browser whose settings transport reaches the host.\n- **Honest degradation.** A browser that cannot reach the namespace keeps its own\n  `localStorage` list — one key per list — and the section header says `仅本浏览器` /\n  `This browser only`. That fallback is a fail-safe, not a one-way lock: a failed\n  host write is retried once, and even after the page has fallen back every later\n  pin keeps probing the host, so the note clears itself at the first write that\n  lands.\n- **No model-visible effects.** No session events, no tokens, no telemetry and\n  no external network calls — the browser half reaches only same-origin host\n  surfaces: the settings namespace, the row menu's `workspaces.openSession` /\n  `forkSession` / `archiveSession`, and the session's own `rename`.\n\n## How it differs from the other pinning plugins\n\n| | **dsh-codex-pin** | [dsh-pin](https://github.com/Yu-tao-Li/dsh-pin) | [dsh-session-pin](https://github.com/PerryLink/dsh-session-pin) |\n|---|---|---|---|\n| Pin levels | two flags: sessions (a Pinned section) + workspaces (whole groups lifted) | two: in-workspace + global tray | two: workspace + session |\n| Durable order | **never written** — no ordering API is called at all | in-workspace pins go through `workspace.insertSessionBefore` and switch the sort mode to manual; the global tray is display-level | pinned sessions move to the front of their account |\n| How a workspace pin shows | the pinned groups are drawn in a plugin-owned **「置顶 / Pinned · N」 block above the 「工作区」 section header**, with the real wrappers kept in the tree and positioned by CSS (`position: fixed`); React's parent-child bookkeeping is never touched | durable reorder via the ordering API | durable reorder via the ordering API |\n| Pin state | host settings namespace `codex-pin.pinned` + `codex-pin.pinnedWorkspaces`, one `localStorage` fallback key each | host order anchors + local records | host settings, per-browser durable |\n| Extras | deliberately none | anchor-exact restore, sort-mode restore | 8 colours, boards, tags, saved views, `/goto` |\n| Footprint | one bundle entry; no HTTP routes | client-only | host + browser |\n\nPick this one if you want pinning to be a purely visual, always-reversible\nannotation. Pick the others if you want pins to also drive ordering, colours or\nboards.\n\n## Requirements\n\n- DeepSeek Harness with the **web** profile (the plugin is `platform: web`).\n- Verified against `dsh web` **0.1.5-rc.1**, and re-verified against\n  **0.1.6-alpha.2** (that host rewrote the sidebar, so the browser half now\n  probes host capability shapes instead of one build's API); the declared peer\n  range is `>=0.1.2-rc.1 <0.2.0` and other builds in it are untested (see\n  Compatibility).\n- Node `>=22.19.0` (only for building from source).\n- `dsh plugin add` prints a peer-dependency warning on every known DSH build —\n  the ecosystem's peer declarations are optional overlays, so the warning is\n  expected and harmless.\n\n## Install\n\n```bash\n# straight from GitHub — the path that works today\ndsh plugin --profile web add github:jackovibe/dsh-codex-pin\n\n# pin a release instead of tracking main (any tag works)\ndsh plugin --profile web add github:jackovibe/dsh-codex-pin#v0.2.7\n\n# from the tarball attached to a release (Releases → Assets)\ndsh plugin --profile web add ./dsh-codex-pin-0.2.7.tgz\n\n# from a checkout\nnpm run build && npm pack && dsh plugin --profile web add ./dsh-codex-pin-0.2.7.tgz\n\n# from npm (once published)\ndsh plugin --profile web add dsh-codex-pin\n```\n\nThe `github:` spec is what this plugin's own development profile uses, so it is\nexercised on every local run; the npm name is reserved for a later publish and\ndoes not resolve yet.\n\nThen restart `dsh web` (the loader composes bundle layers at boot) and hard-refresh\nthe browser (`Ctrl+Shift+R`). Open the sidebar: session rows now carry the pin\ncontrol on hover.\n\n### How it mounts\n\nThe package ships a bundle patch (`cordis.patch.yml`) that inserts exactly one\nloader entry:\n\n```yaml\n- insert:\n    - id: codex-pin\n      name: dsh-codex-pin\n```\n\n`dsh plugin add` reconciles `dsh.profile.bundles` by itself, so **do not** also add\nthis insert to your profile's own `cordis.patch.yml`: two layers inserting the\nsame loader id fail the boot. Check the composition before restarting:\n\n```bash\ndsh --profile web --dump-config | grep -c 'id: codex-pin'   # must print 1\n```\n\n### Upgrade / uninstall\n\n```bash\n# upgrade: re-run the same spec (adds the newest commit on main, then restart)\ndsh plugin --profile web add github:jackovibe/dsh-codex-pin\n# or move to a specific release\ndsh plugin --profile web add github:jackovibe/dsh-codex-pin#v0.2.7\n\ndsh plugin --profile web remove dsh-codex-pin       # uninstall, then restart\n```\n\nSession ids stay in `settings.yaml` under `codex-pin` after uninstalling; delete\nthat block to clean up.\n\n## Usage\n\n| Action | How |\n|---|---|\n| Pin / unpin a session | hover the row, click the pin control (📌 toggles) |\n| Pin / unpin a workspace | right-click the group header → **置顶工作区 / Pin workspace** (there is deliberately no hover button, as in Codex) |\n| Open a pinned session | click its row in the **已置顶 / Pinned** section |\n| Unpin from the section | click the filled pin on the section row |\n| Rename / fork / archive / delete / copy title or id | right-click any session row for the row menu |\n| Pin / rename / archive the **current** session | `Ctrl+Alt+P` / `Alt+Ctrl+R` / `Ctrl+Shift+A` |\n\nPinned and unpinned rows carry the **same pair** of controls — the pin (outlined\nwhen unpinned, filled when pinned) and archive — and the rows inside the Pinned\nsection carry them too, so archiving stays available while a session is pinned.\nThe menu's red **Delete session** entry calls the archive manager's\n`workspaceRegistry.deleteSession` behind a confirmation dialog; without that\nplugin the entry reports why instead of failing silently.\n\nRight-clicking a **workspace group header** opens a smaller menu with the\nworkspace pin toggle (`置顶工作区` / `取消置顶工作区`) and a copy-title row — never\nthe session-only actions, because a header is not a session. A header the plugin\ncannot attribute to a durable workspace gets no menu at all: the plugin would\nrather do nothing than pin the wrong project. The group's own row menu\n(rename / delete the workspace) is the host's and is left untouched.\n\nOnce at "
     }
   ]
 }
